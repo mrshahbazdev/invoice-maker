@@ -308,7 +308,7 @@
                     </div>
 
                     <!-- Items Table (Desktop) -->
-                    <div class="mb-10 rounded-2xl overflow-hidden border border-gray-200 hidden sm:block">
+                    <div class="mb-10 rounded-2xl overflow-hidden border border-gray-200 hidden md:block">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr style="background-color: {{ $primaryColor }}; color: #ffffff;">
@@ -368,7 +368,7 @@
                     </div>
 
                     <!-- Items Card View (Mobile) -->
-                    <div class="mb-10 space-y-4 sm:hidden">
+                    <div class="mb-10 space-y-4 md:hidden">
                         @foreach($invoice->items as $item)
                             <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 space-y-3">
                                 <div class="flex justify-between items-start">
