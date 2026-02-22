@@ -204,7 +204,7 @@ United States',
                 'business_id' => $business->id,
                 'category' => $categories[array_rand($categories)],
                 'amount' => rand(50, 500),
-                'date' => now()->startOfYear()->addMonths($i)->subDays(rand(0, 25)),
+                'date' => now()->startOfYear()->addMonths($i)->addDays(rand(0, 25)),
                 'description' => 'Monthly business expense ' . ($i + 1),
             ]);
         }
@@ -376,8 +376,8 @@ United States',
             [
                 'client_index' => 3,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(30),
-                'due_date' => now(),
+                'invoice_date' => now()->startOfYear()->addDays(5),
+                'due_date' => now()->startOfYear()->addDays(20),
                 'items' => [
                     ['product_index' => 5, 'qty' => 6, 'discount' => 100],
                 ],
@@ -450,8 +450,8 @@ United States',
             [
                 'client_index' => 1,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(25),
-                'due_date' => now()->subDays(5),
+                'invoice_date' => now()->startOfYear()->addDays(15),
+                'due_date' => now()->startOfYear()->addDays(35),
                 'items' => [
                     ['product_index' => 1, 'qty' => 6, 'discount' => 0],
                 ],
@@ -471,8 +471,8 @@ United States',
             [
                 'client_index' => 3,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(35),
-                'due_date' => now()->subDays(5),
+                'invoice_date' => now()->startOfYear()->addDays(10),
+                'due_date' => now()->startOfYear()->addDays(30),
                 'items' => [
                     ['product_index' => 3, 'qty' => 2, 'discount' => 0],
                     ['product_index' => 4, 'qty' => 1, 'discount' => 200],
@@ -492,8 +492,8 @@ United States',
             [
                 'client_index' => 4,
                 'status' => 'overdue',
-                'invoice_date' => now()->subDays(40),
-                'due_date' => now()->subDays(10),
+                'invoice_date' => now()->startOfYear()->addDays(2),
+                'due_date' => now()->startOfYear()->addDays(15),
                 'items' => [
                     ['product_index' => 9, 'qty' => 1, 'discount' => 0],
                     ['product_index' => 5, 'qty' => 2, 'discount' => 100],
@@ -524,8 +524,8 @@ United States',
             [
                 'client_index' => 7,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(40),
-                'due_date' => now()->subDays(10),
+                'invoice_date' => now()->startOfYear()->addDays(8),
+                'due_date' => now()->startOfYear()->addDays(28),
                 'items' => [
                     ['product_index' => 2, 'qty' => 6, 'discount' => 0],
                     ['product_index' => 5, 'qty' => 1, 'discount' => 0],

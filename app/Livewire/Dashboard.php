@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\Invoice;
 use App\Models\Client;
 use App\Models\Payment;
+use App\Models\Expense;
+use App\Models\Business;
 use Illuminate\Support\Facades\Auth;
 
 class Dashboard extends Component
@@ -45,22 +47,30 @@ class Dashboard extends Component
             ->take(5)
             ->get();
 
-        $revenueByMonth = $business->invoices()
+        $revenueByMonthData = $business->invoices()
             ->where('status', Invoice::STATUS_PAID)
             ->whereYear('invoice_date', now()->year)
-            ->get()
-            ->groupBy(function ($invoice) {
-                return (int) $invoice->invoice_date->format('n');
-            })
-            ->map(fn($invoices) => $invoices->sum('grand_total'))
+            ->selectRaw('MONTH(invoice_date) as month, SUM(grand_total) as total')
+            ->groupBy('month')
+            ->pluck('total', 'month')
             ->toArray();
 
-        $expensesByMonth = $business->expenses()
+        $revenueByMonth = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $revenueByMonth[$i] = (float) ($revenueByMonthData[$i] ?? 0);
+        }
+
+        $expensesByMonthData = $business->expenses()
             ->whereYear('date', now()->year)
-            ->get()
-            ->groupBy(fn($expense) => (int) $expense->date->format('n'))
-            ->map(fn($expenses) => $expenses->sum('amount'))
+            ->selectRaw('MONTH(date) as month, SUM(amount) as total')
+            ->groupBy('month')
+            ->pluck('total', 'month')
             ->toArray();
+
+        $expensesByMonth = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $expensesByMonth[$i] = (float) ($expensesByMonthData[$i] ?? 0);
+        }
 
         $expensesByCategory = $business->expenses()
             ->selectRaw('category, sum(amount) as total')
