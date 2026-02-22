@@ -248,7 +248,17 @@
     <div class="container">
         <div class="header">
             <div class="logo-box">
-                <div class="logo">{{ $invoice->business->name }}</div>
+                @if($invoice->business->logo && file_exists(storage_path('app/public/' . $invoice->business->logo)))
+                    @php
+                        $logoPath = storage_path('app/public/' . $invoice->business->logo);
+                        $logoType = pathinfo($logoPath, PATHINFO_EXTENSION);
+                        $logoData = file_get_contents($logoPath);
+                        $logoBase64 = 'data:image/' . $logoType . ';base64,' . base64_encode($logoData);
+                    @endphp
+                    <img src="{{ $logoBase64 }}" style="max-height: 60px; max-width: 200px; margin-bottom: 10px;">
+                @else
+                    <div class="logo">{{ $invoice->business->name }}</div>
+                @endif
             </div>
             <div class="meta-box">
                 <table style="width: 100%; border-collapse: collapse;">

@@ -209,8 +209,8 @@
                     <div
                         class="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 border-b border-gray-100 mb-10">
                         <div class="w-full md:w-1/2 mb-6 md:mb-0">
-                            @if($invoice->business->logo_path)
-                                <img src="{{ Storage::url($invoice->business->logo_path) }}" alt="Logo"
+                            @if($invoice->business->logo)
+                                <img src="{{ Storage::url($invoice->business->logo) }}" alt="Logo"
                                     class="max-h-20 max-w-[200px] mb-4 object-contain">
                             @else
                                 <h2 class="text-3xl font-extrabold tracking-tight" style="color: {{ $primaryColor }};">

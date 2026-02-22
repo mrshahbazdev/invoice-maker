@@ -28,7 +28,6 @@ class Business extends Model
     ];
 
     protected $casts = [
-        'logo' => 'array',
     ];
 
     protected static function booted()
