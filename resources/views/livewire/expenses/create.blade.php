@@ -37,7 +37,8 @@
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="">{{ __('Select Category') }}</option>
                             @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                <option value="{{ $cat->id }}">{{ $cat->name }}
+                                    {{ $cat->booking_account ? "({$cat->booking_account})" : '' }}</option>
                             @endforeach
                         </select>
                         @error('category_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
@@ -70,7 +71,8 @@
                             </div>
                             <div class="ml-3">
                                 <h3 class="text-sm font-bold text-blue-800 uppercase tracking-wider">
-                                    {{ __('Posting Rule') }}</h3>
+                                    {{ __('Posting Rule') }}
+                                </h3>
                                 <p class="text-sm text-blue-700 mt-1 italic">{{ $posting_rule }}</p>
                             </div>
                         </div>
