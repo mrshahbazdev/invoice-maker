@@ -332,7 +332,7 @@ United States',
         $business = Business::first();
         $clients = Client::all();
         $products = Product::all();
-        $template = Template::where('is_default', true)->first();
+        $template = Template::where('is_default', true)->first() ?: Template::first();
 
         $invoiceData = [
             [

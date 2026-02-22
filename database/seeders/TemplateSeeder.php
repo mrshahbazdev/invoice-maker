@@ -27,7 +27,7 @@ class TemplateSeeder extends Seeder
                     'header_style' => 'simple',
                     'show_tax' => true,
                     'show_discount' => true,
-                    'is_default' => false,
+                    'is_default' => true,
                     'payment_terms' => 'Please pay within 15 days.',
                     'footer_message' => 'Thank you for your business!',
                     'enable_qr' => true,
