@@ -11,14 +11,20 @@ class Create extends Component
 {
     use WithFileUploads;
 
+    public $source = 'cash';
+    public $category_id = null;
+    public $invoice_id = null;
     public $category = '';
     public $amount;
     public $date;
     public $description = '';
     public $receipt;
+    public $posting_rule = '';
 
     protected $rules = [
-        'category' => 'required|string|max:255',
+        'source' => 'required|in:cash,bank',
+        'category_id' => 'required|exists:accounting_categories,id',
+        'invoice_id' => 'nullable|exists:invoices,id',
         'amount' => 'required|numeric|min:0',
         'date' => 'required|date',
         'description' => 'required|string|max:255',
@@ -28,6 +34,34 @@ class Create extends Component
     public function mount()
     {
         $this->date = now()->format('Y-m-d');
+
+        // Ensure default categories exist for the business
+        $this->ensureDefaultCategories();
+    }
+
+    protected function ensureDefaultCategories()
+    {
+        $business = Auth::user()->business;
+        $defaults = [
+            ['name' => 'Travel', 'type' => 'expense', 'posting_rule' => 'Requires receipt. Deductible if business related.'],
+            ['name' => 'Office Supplies', 'type' => 'expense', 'posting_rule' => 'Small items under $250.'],
+            ['name' => 'Software', 'type' => 'expense', 'posting_rule' => 'SaaS subscriptions and licenses.'],
+            ['name' => 'Rent', 'type' => 'expense', 'posting_rule' => 'Monthly office rent.'],
+        ];
+
+        foreach ($defaults as $tmpl) {
+            \App\Models\AccountingCategory::firstOrCreate(
+                ['business_id' => $business->id, 'name' => $tmpl['name']],
+                $tmpl
+            );
+        }
+    }
+
+    public function updatedCategoryId($value)
+    {
+        $category = \App\Models\AccountingCategory::find($value);
+        $this->posting_rule = $category ? $category->posting_rule : '';
+        $this->category = $category ? $category->name : '';
     }
 
     public function save()
@@ -39,28 +73,47 @@ class Create extends Component
             $receiptPath = $this->receipt->store('receipts', 'public');
         }
 
-        Expense::create([
-            'business_id' => Auth::user()->business->id,
-            'category' => $this->category,
-            'amount' => $this->amount,
-            'date' => $this->date,
-            'description' => $this->description,
-            'receipt_path' => $receiptPath,
-        ]);
+        \Illuminate\Support\Facades\DB::transaction(function () use ($receiptPath) {
+            $business = Auth::user()->business;
 
-        session()->flash('message', 'Expense recorded successfully.');
+            $expense = \App\Models\Expense::create([
+                'business_id' => $business->id,
+                'category_id' => $this->category_id,
+                'category' => $this->category,
+                'amount' => $this->amount,
+                'date' => $this->date,
+                'description' => $this->description,
+                'receipt_path' => $receiptPath,
+                'invoice_id' => $this->invoice_id,
+            ]);
+
+            // Create Cash Book Entry
+            \App\Models\CashBookEntry::create([
+                'business_id' => $business->id,
+                'date' => $this->date,
+                'amount' => $this->amount,
+                'type' => 'expense',
+                'source' => $this->source,
+                'description' => $this->description,
+                'category_id' => $this->category_id,
+                'invoice_id' => $this->invoice_id,
+                'expense_id' => $expense->id,
+            ]);
+        });
+
+        session()->flash('message', 'Expense and Cash Book entry recorded successfully.');
         return redirect()->route('expenses.index');
     }
 
     public function render()
     {
-        $recentCategories = Auth::user()->business->expenses()
-            ->select('category')
-            ->distinct()
-            ->pluck('category');
+        $business = Auth::user()->business;
+        $categories = $business->accounting_categories ?? \App\Models\AccountingCategory::where('business_id', $business->id)->get();
+        $invoices = $business->invoices()->orderBy('created_at', 'desc')->get();
 
         return view('livewire.expenses.create', [
-            'recentCategories' => $recentCategories,
+            'categories' => $categories,
+            'invoices' => $invoices,
         ]);
     }
 }

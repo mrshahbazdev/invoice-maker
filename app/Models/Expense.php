@@ -20,6 +20,8 @@ class Expense extends Model
         'date',
         'description',
         'receipt_path',
+        'invoice_id',
+        'category_id',
     ];
 
     protected $casts = [
@@ -30,5 +32,20 @@ class Expense extends Model
     public function business()
     {
         return $this->belongsTo(Business::class);
+    }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    public function accounting_category()
+    {
+        return $this->belongsTo(AccountingCategory::class, 'category_id');
+    }
+
+    public function cash_book_entry()
+    {
+        return $this->hasOne(CashBookEntry::class);
     }
 }

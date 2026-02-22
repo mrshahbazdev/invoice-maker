@@ -20,6 +20,65 @@
                         @error('date') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Payment Source') }}</label>
+                        <select wire:model="source"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="cash">{{ __('Cash (Kasse)') }}</option>
+                            <option value="bank">{{ __('Bank') }}</option>
+                        </select>
+                        @error('source') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category') }}</label>
+                        <select wire:model.live="category_id"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">{{ __('Select Category') }}</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('category_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                    <div>
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('Link to Job/Invoice (Optional)') }}</label>
+                        <select wire:model="invoice_id"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">{{ __('General / No Link') }}</option>
+                            @foreach($invoices as $inv)
+                                <option value="{{ $inv->id }}">[{{ $inv->invoice_number }}] {{ $inv->client->name }}
+                                    ({{ Auth::user()->business->currency_symbol }}{{ number_format($inv->grand_total, 2) }})
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('invoice_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+
+                @if($posting_rule)
+                    <div class="mb-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-bold text-blue-800 uppercase tracking-wider">
+                                    {{ __('Posting Rule') }}</h3>
+                                <p class="text-sm text-blue-700 mt-1 italic">{{ $posting_rule }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Amount') }}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -31,33 +90,13 @@
                         </div>
                         @error('amount') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
-                </div>
-
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category') }}</label>
-                    <input type="text" wire:model="category" list="categories"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="{{ __('e.g. Travel, Office Supplies, Software') }}">
-                    <datalist id="categories">
-                        @foreach($recentCategories as $cat)
-                            <option value="{{ $cat }}">
-                        @endforeach
-                        <option value="Travel">{{ __('Travel') }}</option>
-                        <option value="Office Supplies">{{ __('Office Supplies') }}</option>
-                        <option value="Software">{{ __('Software') }}</option>
-                        <option value="Marketing">{{ __('Marketing') }}</option>
-                        <option value="Utilities">{{ __('Utilities') }}</option>
-                        <option value="Rent">{{ __('Rent') }}</option>
-                    </datalist>
-                    @error('category') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                </div>
-
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }}</label>
-                    <input type="text" wire:model="description"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="{{ __('What was this expense for?') }}">
-                    @error('description') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }}</label>
+                        <input type="text" wire:model="description"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="{{ __('What was this expense for?') }}">
+                        @error('description') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
                 </div>
 
                 <div class="mb-6">
