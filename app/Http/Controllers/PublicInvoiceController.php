@@ -33,10 +33,11 @@ class PublicInvoiceController
 
         $invoice->load(['client', 'business', 'items.product', 'payments']);
 
-        // Set locale based on client preference
-        if ($invoice->client && $invoice->client->language) {
-            \App::setLocale($invoice->client->language);
-        }
+        // Set locale based on preference
+        $locale = $invoice->client->language
+            ?? $invoice->business->user->language
+            ?? config('app.locale');
+        \Illuminate\Support\Facades\App::setLocale($locale);
 
         return view('invoices.public', compact('invoice'));
     }
@@ -46,6 +47,12 @@ class PublicInvoiceController
         if (!$request->hasValidSignature()) {
             return response('Invalid or expired invoice link.', 403);
         }
+
+        // Set locale based on preference
+        $locale = $invoice->client->language
+            ?? $invoice->business->user->language
+            ?? config('app.locale');
+        \Illuminate\Support\Facades\App::setLocale($locale);
 
         return $pdfService->download($invoice);
     }

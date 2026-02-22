@@ -11,10 +11,11 @@ class PdfGenerationService
     {
         $invoice->load(['client', 'business', 'items.product', 'template']);
 
-        // Set locale based on client preference
-        if ($invoice->client && $invoice->client->language) {
-            \App::setLocale($invoice->client->language);
-        }
+        // Set locale based on preference
+        $locale = $invoice->client->language
+            ?? $invoice->business->user->language
+            ?? config('app.locale');
+        \Illuminate\Support\Facades\App::setLocale($locale);
 
         $pdf = Pdf::loadView('invoices.pdf', [
             'invoice' => $invoice,
@@ -27,10 +28,11 @@ class PdfGenerationService
     {
         $invoice->load(['client', 'business', 'items.product', 'template']);
 
-        // Set locale based on client preference
-        if ($invoice->client && $invoice->client->language) {
-            \App::setLocale($invoice->client->language);
-        }
+        // Set locale based on preference
+        $locale = $invoice->client->language
+            ?? $invoice->business->user->language
+            ?? config('app.locale');
+        \Illuminate\Support\Facades\App::setLocale($locale);
 
         $pdf = Pdf::loadView('invoices.pdf', [
             'invoice' => $invoice,
