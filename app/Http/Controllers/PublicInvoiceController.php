@@ -12,15 +12,23 @@ class PublicInvoiceController
 {
     public function show(Request $request, Invoice $invoice)
     {
-        die('Hitting Controller. User: ' . (auth()->check() ? auth()->id() : 'Guest'));
-        \Log::info('PublicInvoiceController@show', [
+        $hasValidSignature = $request->hasValidSignature();
+
+        \Log::info('PublicInvoiceController@show access', [
+            'id' => $invoice->id,
             'url' => $request->fullUrl(),
-            'hasValidSignature' => $request->hasValidSignature(),
+            'hasValidSignature' => $hasValidSignature,
             'user' => auth()->id(),
+            'app_url' => config('app.url'),
+            'scheme' => $request->getScheme(),
+            'host' => $request->getHost(),
         ]);
 
-        if (!$request->hasValidSignature()) {
-            return response('Invalid or expired invoice link. Signature verification failed.', 403);
+        if (!$hasValidSignature) {
+            // Log exactly why it might be failing (optional, for very deep debug)
+            return response()->view('errors.403', [
+                'exception' => new \Exception('The link has an invalid or expired signature. Please ensure you are using the exact link provided.')
+            ], 403);
         }
 
         $invoice->load(['client', 'business', 'items.product', 'payments']);
