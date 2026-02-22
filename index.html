@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>20 HTML और CSS Navigation Menus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/common.css">
+  <style>
+    body {
+      font-family: var(--font-hindi), var(--font-primary);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .showcase-header {
+      text-align: center;
+      color: white;
+      margin-bottom: var(--spacing-xl);
+      animation: fadeIn 0.8s ease;
+    }
+
+    .showcase-header h1 {
+      font-size: 3rem;
+      margin-bottom: var(--spacing-md);
+      text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .showcase-header p {
+      font-size: 1.25rem;
+      opacity: 0.95;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--spacing-lg);
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: scaleIn 0.5s ease;
+      animation-fill-mode: both;
+    }
+
+    .menu-card:nth-child(1) { animation-delay: 0.05s; }
+    .menu-card:nth-child(2) { animation-delay: 0.1s; }
+    .menu-card:nth-child(3) { animation-delay: 0.15s; }
+    .menu-card:nth-child(4) { animation-delay: 0.2s; }
+    .menu-card:nth-child(5) { animation-delay: 0.25s; }
+    .menu-card:nth-child(6) { animation-delay: 0.3s; }
+    .menu-card:nth-child(7) { animation-delay: 0.35s; }
+    .menu-card:nth-child(8) { animation-delay: 0.4s; }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-card-header {
+      padding: var(--spacing-lg);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      position: relative;
+    }
+
+    .menu-number {
+      position: absolute;
+      top: var(--spacing-sm);
+      right: var(--spacing-sm);
+      background: rgba(255, 255, 255, 0.2);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+
+    .menu-card h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .menu-card-body {
+      padding: var(--spacing-lg);
+    }
+
+    .menu-description {
+      color: var(--text-light);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .menu-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-xs);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .tag {
+      background: #f3f4f6;
+      color: var(--text-color);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .view-button {
+      display: block;
+      width: 100%;
+      padding: var(--spacing-sm) var(--spacing-md);
+      background: var(--primary-color);
+      color: white;
+      border-radius: var(--radius);
+      text-align: center;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .view-button:hover {
+      background: #1d4ed8;
+      transform: scale(1.02);
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      margin-top: var(--spacing-xl);
+      padding-top: var(--spacing-xl);
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .showcase-header h1 {
+        font-size: 2rem;
+      }
+
+      .showcase-header p {
+        font-size: 1rem;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="showcase-header">
+    <h1>🎨 20 Navigation Menus</h1>
+    <p>HTML और CSS के साथ बनाए गए विभिन्न प्रकार के Navigation Menus का संग्रह</p>
+  </div>
+
+  <div class="menu-grid">
+    <!-- Menu 1: Horizontal -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">1</span>
+        <h3>Horizontal Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">पारंपरिक क्षैतिज नेविगेशन बार hover effects के साथ</p>
+        <div class="menu-tags">
+          <span class="tag">Flexbox</span>
+          <span class="tag">Responsive</span>
+          <span class="tag">Basic</span>
+        </div>
+        <a href="menus/horizontal-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 2: Vertical -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">2</span>
+        <h3>Vertical Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">साइडबार स्टाइल में ऊर्ध्वाधर नेविगेशन मेनू</p>
+        <div class="menu-tags">
+          <span class="tag">Sidebar</span>
+          <span class="tag">Icons</span>
+          <span class="tag">Smooth</span>
+        </div>
+        <a href="menus/vertical-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 3: Dropdown -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">3</span>
+        <h3>Dropdown Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">नेस्टेड सबमेनू के साथ ड्रॉपडाउन नेविगेशन</p>
+        <div class="menu-tags">
+          <span class="tag">Nested</span>
+          <span class="tag">Hover</span>
+          <span class="tag">Animation</span>
+        </div>
+        <a href="menus/dropdown-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 4: Mega Menu -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">4</span>
+        <h3>Mega Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">बड़े ड्रॉपडाउन के साथ मेगा मेनू कॉलम्स में</p>
+        <div class="menu-tags">
+          <span class="tag">Grid</span>
+          <span class="tag">Rich Content</span>
+          <span class="tag">Large</span>
+        </div>
+        <a href="menus/mega-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 5: Hamburger -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">5</span>
+        <h3>Hamburger Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">मोबाइल के लिए हैमबर्गर आइकन और साइड पैनल</p>
+        <div class="menu-tags">
+          <span class="tag">Mobile</span>
+          <span class="tag">Slide-out</span>
+          <span class="tag">Interactive</span>
+        </div>
+        <a href="menus/hamburger-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 6: Sticky -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">6</span>
+        <h3>Sticky Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">स्क्रॉल करने पर फिक्स्ड हो जाने वाला मेनू</p>
+        <div class="menu-tags">
+          <span class="tag">Scroll</span>
+          <span class="tag">Fixed</span>
+          <span class="tag">Dynamic</span>
+        </div>
+        <a href="menus/sticky-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 7: Floating -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">7</span>
+        <h3>Floating Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">फ्लोटिंग बटन जो expand होकर मेनू दिखाता है</p>
+        <div class="menu-tags">
+          <span class="tag">FAB</span>
+          <span class="tag">Circular</span>
+          <span class="tag">Modern</span>
+        </div>
+        <a href="menus/floating-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 8: Breadcrumb -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">8</span>
+        <h3>Breadcrumb Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">पदानुक्रमित पथ दिखाने वाला ब्रेडक्रंब नेविगेशन</p>
+        <div class="menu-tags">
+          <span class="tag">Navigation</span>
+          <span class="tag">Path</span>
+          <span class="tag">Simple</span>
+        </div>
+        <a href="menus/breadcrumb-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 9: Tabs -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">9</span>
+        <h3>Tabs Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">टैब स्टाइल नेविगेशन कंटेंट स्विचिंग के साथ</p>
+        <div class="menu-tags">
+          <span class="tag">Tabs</span>
+          <span class="tag">Content</span>
+          <span class="tag">Interactive</span>
+        </div>
+        <a href="menus/tabs-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 10: Card -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">10</span>
+        <h3>Card Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">कार्ड लेआउट में नेविगेशन आइटम्स</p>
+        <div class="menu-tags">
+          <span class="tag">Cards</span>
+          <span class="tag">Grid</span>
+          <span class="tag">Visual</span>
+        </div>
+        <a href="menus/card-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 11: Circle -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">11</span>
+        <h3>Circle Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">सर्कुलर रेडियल लेआउट में मेनू आइटम्स</p>
+        <div class="menu-tags">
+          <span class="tag">Radial</span>
+          <span class="tag">Creative</span>
+          <span class="tag">Animation</span>
+        </div>
+        <a href="menus/circle-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 12: Accordion -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">12</span>
+        <h3>Accordion Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">विस्तार/संकुचित होने वाले एकॉर्डियन सेक्शन</p>
+        <div class="menu-tags">
+          <span class="tag">Collapsible</span>
+          <span class="tag">Vertical</span>
+          <span class="tag">Expand</span>
+        </div>
+        <a href="menus/accordion-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 13: Pills -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">13</span>
+        <h3>Pills Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">गोल कोनों वाले पिल्स स्टाइल बटन</p>
+        <div class="menu-tags">
+          <span class="tag">Pills</span>
+          <span class="tag">Rounded</span>
+          <span class="tag">Minimal</span>
+        </div>
+        <a href="menus/pills-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 14: Underline Animation -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">14</span>
+        <h3>Underline Animation</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">होवर पर एनिमेटेड अंडरलाइन इफेक्ट</p>
+        <div class="menu-tags">
+          <span class="tag">Animated</span>
+          <span class="tag">Elegant</span>
+          <span class="tag">Smooth</span>
+        </div>
+        <a href="menus/underline-animation.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 15: Center Navbar -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">15</span>
+        <h3>Center Navbar</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">केंद्र में लोगो और दोनों ओर लिंक्स</p>
+        <div class="menu-tags">
+          <span class="tag">Centered</span>
+          <span class="tag">Balanced</span>
+          <span class="tag">Clean</span>
+        </div>
+        <a href="menus/center-navbar.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 16: Split Navigation -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">16</span>
+        <h3>Split Navigation</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">विभाजित लेआउट में ब्रांडिंग और नेविगेशन</p>
+        <div class="menu-tags">
+          <span class="tag">Split</span>
+          <span class="tag">Two-sided</span>
+          <span class="tag">Modern</span>
+        </div>
+        <a href="menus/split-navigation.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 17: Icon-Only -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">17</span>
+        <h3>Icon-Only Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">केवल आइकन वाला मिनिमल मेनू टूलटिप्स के साथ</p>
+        <div class="menu-tags">
+          <span class="tag">Icons</span>
+          <span class="tag">Minimal</span>
+          <span class="tag">Tooltip</span>
+        </div>
+        <a href="menus/icon-only-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 18: Gradient -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">18</span>
+        <h3>Gradient Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">ग्रेडिएंट बैकग्राउंड और ग्लासमॉर्फिज्म इफेक्ट</p>
+        <div class="menu-tags">
+          <span class="tag">Gradient</span>
+          <span class="tag">Glass</span>
+          <span class="tag">Modern</span>
+        </div>
+        <a href="menus/gradient-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 19: Hover Reveal -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">19</span>
+        <h3>Hover Reveal Menu</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">होवर करने पर प्रकट होने वाला मेनू</p>
+        <div class="menu-tags">
+          <span class="tag">Hidden</span>
+          <span class="tag">Reveal</span>
+          <span class="tag">Compact</span>
+        </div>
+        <a href="menus/hover-reveal-menu.html" class="view-button">देखें</a>
+      </div>
+    </div>
+
+    <!-- Menu 20: Fullscreen Overlay -->
+    <div class="menu-card">
+      <div class="menu-card-header">
+        <span class="menu-number">20</span>
+        <h3>Fullscreen Overlay</h3>
+      </div>
+      <div class="menu-card-body">
+        <p class="menu-description">पूर्ण स्क्रीन ओवरले नेविगेशन मेनू</p>
+        <div class="menu-tags">
+          <span class="tag">Fullscreen</span>
+          <span class="tag">Overlay</span>
+          <span class="tag">Dramatic</span>
+        </div>
+        <a href="menus/fullscreen-overlay.html" class="view-button">देखें</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>✨ Made with HTML & CSS | 20 विभिन्न Navigation Menu Styles</p>
+  </div>
+</body>
+</html>

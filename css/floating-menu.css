@@ -1,0 +1,117 @@
+/* Floating Menu Styles */
+
+.fab-menu {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
+  z-index: 1000;
+}
+
+.fab-button {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.fab-button:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.fab-menu.active .fab-button {
+  transform: rotate(45deg);
+}
+
+.fab-items {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.fab-menu.active .fab-items {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.fab-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  animation: slideLeft 0.3s ease;
+  animation-fill-mode: both;
+}
+
+.fab-menu.active .fab-item:nth-child(1) { animation-delay: 0.05s; }
+.fab-menu.active .fab-item:nth-child(2) { animation-delay: 0.1s; }
+.fab-menu.active .fab-item:nth-child(3) { animation-delay: 0.15s; }
+.fab-menu.active .fab-item:nth-child(4) { animation-delay: 0.2s; }
+
+.fab-label {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+}
+
+.fab-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: white;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.fab-icon:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+  background-color: var(--primary-color);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .fab-menu {
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+  }
+
+  .fab-button {
+    width: 56px;
+    height: 56px;
+    font-size: 1.25rem;
+  }
+
+  .fab-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,113 @@
+/* Breadcrumb Menu Styles */
+
+.breadcrumb-container {
+  background-color: #f9fafb;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  list-style: none;
+  font-size: 0.875rem;
+}
+
+.breadcrumb li {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.breadcrumb a {
+  color: var(--primary-color);
+  transition: var(--transition);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius);
+}
+
+.breadcrumb a:hover {
+  background-color: rgba(37, 99, 235, 0.1);
+  text-decoration: underline;
+}
+
+.breadcrumb .separator {
+  color: var(--text-light);
+  font-size: 0.75rem;
+}
+
+.breadcrumb .current {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.breadcrumb .icon {
+  font-size: 1rem;
+}
+
+.breadcrumb-style-2 {
+  background-color: var(--bg-color);
+  padding: var(--spacing-md);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.breadcrumb-style-2 .breadcrumb li {
+  position: relative;
+}
+
+.breadcrumb-style-2 .breadcrumb a {
+  background-color: #f3f4f6;
+  padding: var(--spacing-xs) var(--spacing-md);
+  padding-right: var(--spacing-lg);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
+}
+
+.breadcrumb-style-2 .breadcrumb li:not(:first-child) a {
+  padding-left: var(--spacing-lg);
+  margin-left: -8px;
+}
+
+.breadcrumb-style-2 .breadcrumb a:hover {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+.breadcrumb-style-2 .breadcrumb .current {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: 4px;
+}
+
+.breadcrumb-style-3 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius);
+}
+
+.breadcrumb-style-3 .breadcrumb a,
+.breadcrumb-style-3 .breadcrumb .separator,
+.breadcrumb-style-3 .breadcrumb .current {
+  color: white;
+}
+
+.breadcrumb-style-3 .breadcrumb a {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.breadcrumb-style-3 .breadcrumb a:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .breadcrumb {
+    font-size: 0.75rem;
+  }
+
+  .breadcrumb a {
+    padding: 4px 8px;
+  }
+}

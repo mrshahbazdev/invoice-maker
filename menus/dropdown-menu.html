@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Menu | Navigation Menus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/dropdown-menu.css">
+</head>
+<body>
+  <nav class="dropdown-navbar">
+    <div class="container">
+      <div class="logo">🎨 मेनू</div>
+      <ul class="dropdown-menu">
+        <li><a href="#" class="active">होम</a></li>
+        <li class="has-dropdown">
+          <a href="#">
+            सेवाएं
+            <span class="arrow">▼</span>
+          </a>
+          <ul class="submenu">
+            <li><a href="#">वेब डिज़ाइन</a></li>
+            <li><a href="#">ग्राफ़िक डिज़ाइन</a></li>
+            <li><a href="#">SEO सेवाएं</a></li>
+            <li><a href="#">डिजिटल मार्केटिंग</a></li>
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="#">
+            उत्पाद
+            <span class="arrow">▼</span>
+          </a>
+          <ul class="submenu">
+            <li><a href="#">सॉफ्टवेयर</a></li>
+            <li><a href="#">टेम्पलेट्स</a></li>
+            <li><a href="#">थीम्स</a></li>
+            <li><a href="#">प्लगइन्स</a></li>
+          </ul>
+        </li>
+        <li><a href="#">ब्लॉग</a></li>
+        <li><a href="#">संपर्क</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="demo-section">
+    <div class="demo-content">
+      <h2>Dropdown Navigation Menu</h2>
+      <p>यह एक dropdown नेविगेशन मेनू है जिसमें nested submenus हैं। जब आप "सेवाएं" या "उत्पाद" पर hover करते हैं, तो एक dropdown menu दिखाई देता है।</p>
+      
+      <h3>विशेषताएं:</h3>
+      <p>✅ Nested submenu support</p>
+      <p>✅ Smooth animation effects</p>
+      <p>✅ Hover-triggered dropdowns</p>
+      <p>✅ Arrow indicator rotation</p>
+      <p>✅ Multiple levels की संभावना</p>
+      
+      <h3>उपयोग के मामले:</h3>
+      <p>यह मेनू बड़ी websites के लिए ideal है जहां कई categories और subcategories हों। E-commerce sites, corporate websites, और content-rich platforms के लिए बहुत उपयुक्त है।</p>
+      
+      <h3>Demo Content:</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+  </div>
+
+  <a href="../index.html" class="back-button">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    वापस जाएं
+  </a>
+
+  <script src="../js/common.js"></script>
+</body>
+</html>

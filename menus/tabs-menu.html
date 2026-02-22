@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabs Menu | Navigation Menus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/tabs-menu.css">
+</head>
+<body>
+  <div class="demo-section">
+    <div class="tabs-container">
+      <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">Tabs Navigation Menu</h2>
+      
+      <h3>Style 1: Underline Tabs</h3>
+      <ul class="tabs-menu">
+        <li><a href="#" class="tab-link active" onclick="switchTab(event, 'tab1')">सामान्य</a></li>
+        <li><a href="#" class="tab-link" onclick="switchTab(event, 'tab2')">सेवाएं</a></li>
+        <li><a href="#" class="tab-link" onclick="switchTab(event, 'tab3')">मूल्य</a></li>
+        <li><a href="#" class="tab-link" onclick="switchTab(event, 'tab4')">समीक्षा</a></li>
+      </ul>
+      <div id="tab1" class="tab-content active">
+        <h3>सामान्य जानकारी</h3>
+        <p>यह tabs navigation का basic example है। Tabs का उपयोग related content को organize करने के लिए किया जाता है बिना page reload किए।</p>
+        <p>Tab पर click करने से corresponding content display होता है।</p>
+      </div>
+      <div id="tab2" class="tab-content">
+        <h3>हमारी सेवाएं</h3>
+        <p>हम विभिन्न प्रकार की digital services provide करते हैं जैसे web design, development, SEO, और digital marketing।</p>
+      </div>
+      <div id="tab3" class="tab-content">
+        <h3>मूल्य निर्धारण</h3>
+        <p>हमारी सेवाओं की कीमतें competitive और affordable हैं। Custom packages भी available हैं।</p>
+      </div>
+      <div id="tab4" class="tab-content">
+        <h3>ग्राहक समीक्षा</h3>
+        <p>हमारे clients हमारी services से बहुत satisfied हैं। 5-star ratings और positive feedback मिला है।</p>
+      </div>
+
+      <h3 style="margin-top: 3rem;">Style 2: Pill Tabs</h3>
+      <div class="tabs-style-2">
+        <ul class="tabs-menu">
+          <li><a href="#" class="tab-link active">डैशबोर्ड</a></li>
+          <li><a href="#" class="tab-link">रिपोर्ट्स</a></li>
+          <li><a href="#" class="tab-link">Analytics</a></li>
+          <li><a href="#" class="tab-link">सेटिंग्स</a></li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top: 3rem;">Style 3: Button Tabs</h3>
+      <div class="tabs-style-3">
+        <ul class="tabs-menu">
+          <li><a href="#" class="tab-link active">होम</a></li>
+          <li><a href="#" class="tab-link">प्रोफ़ाइल</a></li>
+          <li><a href="#" class="tab-link">संदेश</a></li>
+          <li><a href="#" class="tab-link">नोटिफिकेशन</a></li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 3rem; padding: 1.5rem; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h3>विशेषताएं:</h3>
+        <p>✅ Content switching without page reload</p>
+        <p>✅ Clean and organized interface</p>
+        <p>✅ Active state indication</p>
+        <p>✅ Multiple style variations</p>
+        <p>✅ Smooth animations</p>
+        
+        <h3>उपयोग के मामले:</h3>
+        <p>Tabs dashboards, profile pages, settings panels, और product details pages में बहुत useful हैं। Related information को organize करने का यह एक space-efficient तरीका है।</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="../index.html" class="back-button">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    वापस जाएं
+  </a>
+
+  <script src="../js/common.js"></script>
+</body>
+</html>

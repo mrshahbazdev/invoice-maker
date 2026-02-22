@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accordion Menu | Navigation Menus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/accordion-menu.css">
+</head>
+<body>
+  <div class="accordion-container">
+    <div class="accordion-header-main">
+      <h2>Accordion Navigation Menu</h2>
+      <p>Click करके sections को expand या collapse करें</p>
+    </div>
+
+    <h3 style="margin-bottom: 1rem;">Style 1: Simple Accordion</h3>
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon-left">🏠</span>
+            <span>होम</span>
+          </div>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            होम पेज पर आप dashboard, overview, और recent activities देख सकते हैं। यहाँ से आप quick access पा सकते हैं सभी important features की।
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon-left">📊</span>
+            <span>सेवाएं</span>
+          </div>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            हम विभिन्न digital services प्रदान करते हैं जैसे Web Design, Development, SEO, Digital Marketing, Content Writing, और Brand Strategy। हर service customizable है।
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon-left">💼</span>
+            <span>पोर्टफोलियो</span>
+          </div>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            हमारे portfolio में 100+ successful projects हैं different industries में। हमने startups से लेकर enterprises तक के साथ काम किया है।
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon-left">📧</span>
+            <span>संपर्क</span>
+          </div>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            हमसे संपर्क करने के लिए email, phone, या contact form का use करें। हम 24 घंटे के भीतर respond करते हैं।
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin: 3rem 0 1rem;">Style 2: Bordered Accordion</h3>
+    <div class="accordion accordion-style-2">
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon-left">👥</span>
+            <span>टीम के सदस्य</span>
+          </div>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            हमारी टीम में experienced designers, developers, और marketers हैं जो passion के साथ काम करते हैं।
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon-left">⚙️</span>
+            <span>सेटिंग्स</span>
+          </div>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            Account settings, notifications, privacy controls, और preferences यहाँ manage करें।
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin: 3rem 0 1rem;">Style 3: Gradient Accordion</h3>
+    <div class="accordion accordion-style-3">
+      <div class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon-left">📱</span>
+            <span>मोबाइल ऐप्स</span>
+          </div>
+          <span class="accordion-icon">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="accordion-content-inner">
+            हम iOS और Android के लिए native और cross-platform mobile applications develop करते हैं।
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 3rem; padding: 2rem; background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+      <h3>विशेषताएं:</h3>
+      <p>✅ Expandable/Collapsible sections</p>
+      <p>✅ Smooth height animations</p>
+      <p>✅ Icon rotation on toggle</p>
+      <p>✅ One or multiple open sections</p>
+      <p>✅ Various style variations</p>
+      
+      <h3>उपयोग के मामले:</h3>
+      <p>Accordions FAQs, sidebar navigation, product details, और settings panels के लिए ideal हैं। Space-saving solution है जब बहुत सारा content organize करना हो।</p>
+    </div>
+  </div>
+
+  <a href="../index.html" class="back-button">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    वापस जाएं
+  </a>
+
+  <script src="../js/common.js"></script>
+</body>
+</html>

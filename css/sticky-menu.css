@@ -1,0 +1,94 @@
+/* Sticky Menu Styles */
+
+.sticky-navbar {
+  background-color: var(--bg-color);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.sticky-navbar.stuck {
+  box-shadow: var(--shadow-lg);
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.sticky-navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  transition: padding 0.3s ease;
+}
+
+.sticky-navbar.stuck .container {
+  padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+.sticky-navbar .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  transition: font-size 0.3s ease;
+}
+
+.sticky-navbar.stuck .logo {
+  font-size: 1.25rem;
+}
+
+.sticky-menu {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
+}
+
+.sticky-menu a {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-color);
+  font-weight: 500;
+  transition: var(--transition);
+  border-radius: var(--radius);
+}
+
+.sticky-menu a:hover {
+  color: var(--primary-color);
+  background-color: rgba(37, 99, 235, 0.1);
+}
+
+.sticky-menu a.active {
+  color: white;
+  background-color: var(--primary-color);
+}
+
+.hero-section {
+  height: 60vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .sticky-menu {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .sticky-navbar .container {
+    flex-direction: column;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+}

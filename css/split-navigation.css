@@ -1,0 +1,168 @@
+/* Split Navigation Styles */
+
+.split-navbar {
+  background-color: var(--bg-color);
+  box-shadow: var(--shadow);
+  position: relative;
+  z-index: 100;
+}
+
+.split-navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.split-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.split-navbar .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.split-menu-left {
+  display: flex;
+  gap: var(--spacing-sm);
+  list-style: none;
+}
+
+.split-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.split-menu-right {
+  display: flex;
+  gap: var(--spacing-sm);
+  list-style: none;
+}
+
+.split-navbar a {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-color);
+  font-weight: 500;
+  transition: var(--transition);
+  border-radius: var(--radius);
+}
+
+.split-navbar a:hover {
+  color: var(--primary-color);
+  background-color: rgba(37, 99, 235, 0.1);
+}
+
+.split-navbar a.active {
+  color: white;
+  background-color: var(--primary-color);
+}
+
+.split-navbar .btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.split-navbar .btn-primary:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.split-navbar .btn-secondary {
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: calc(var(--spacing-sm) - 2px) calc(var(--spacing-lg) - 2px);
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.split-navbar .btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.split-style-2 {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+.split-style-2 .logo,
+.split-style-2 a {
+  color: white;
+}
+
+.split-style-2 a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.split-style-2 a.active {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.split-style-2 .btn-primary {
+  background-color: white;
+  color: var(--primary-color);
+}
+
+.split-style-2 .btn-primary:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.split-style-2 .btn-secondary {
+  border-color: white;
+  color: white;
+}
+
+.split-style-2 .btn-secondary:hover {
+  background-color: white;
+  color: var(--primary-color);
+}
+
+@media (max-width: 968px) {
+  .split-navbar .container {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .split-left,
+  .split-right {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .split-menu-left,
+  .split-menu-right {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .split-left {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .split-menu-left,
+  .split-menu-right {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .split-navbar a,
+  .split-navbar .btn-primary,
+  .split-navbar .btn-secondary {
+    text-align: center;
+    width: 100%;
+  }
+}
