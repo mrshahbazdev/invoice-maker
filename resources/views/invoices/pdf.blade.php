@@ -266,7 +266,7 @@
                         <td style="text-align: {{ $metaAlign }};">
                             @if($enableQr)
                                 @php
-                                    $qrUrl = route('invoices.public.show', $invoice->id);
+                                    $qrUrl = URL::signedRoute('invoices.public.show', $invoice->id);
                                     $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(70)->generate($qrUrl));
                                 @endphp
                                 <div style="display: inline-block; vertical-align: top; margin: 0 15px;">
