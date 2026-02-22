@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
+use Livewire\Attributes\Layout;
+
 class Settings extends Component
 {
     public $name;
@@ -66,6 +68,7 @@ class Settings extends Component
         session()->flash('password_success', 'Password updated successfully.');
     }
 
+    #[Layout('layouts.client')]
     public function render()
     {
         return view('livewire.client-portal.settings');
