@@ -2,17 +2,17 @@
 @slot('title', __('Profile Settings'))
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-8 flex items-center justify-between">
+            <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">{{ __('Profile Settings') }}</h2>
-                    <p class="mt-1 text-sm text-gray-500">{{ __('Update your personal information and security settings.') }}</p>
+                    <h2 class="text-xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate sm:tracking-tight">{{ __('Profile Settings') }}</h2>
+                    <p class="mt-1 text-xs sm:text-sm text-gray-500">{{ __('Update your personal information and security settings.') }}</p>
                 </div>
-                <div>
-                    <a href="{{ route('client.dashboard') }}" class="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-500">
-                        <svg class="mr-1 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <div class="flex-shrink-0">
+                    <a href="{{ route('client.dashboard') }}" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-500 bg-blue-50 px-3 py-2 rounded-lg transition-colors">
+                        <svg class="mr-1.5 h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd" />
                         </svg>
-                        {{ __('Back to Dashboard') }}
+                        {{ __('Dashboard') }}
                     </a>
                 </div>
             </div>

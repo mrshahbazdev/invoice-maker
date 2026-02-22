@@ -307,8 +307,8 @@
                         </div>
                     </div>
 
-                    <!-- Items Table -->
-                    <div class="mb-10 rounded-2xl overflow-hidden border border-gray-200">
+                    <!-- Items Table (Desktop) -->
+                    <div class="mb-10 rounded-2xl overflow-hidden border border-gray-200 hidden sm:block">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr style="background-color: {{ $primaryColor }}; color: #ffffff;">
@@ -365,6 +365,51 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- Items Card View (Mobile) -->
+                    <div class="mb-10 space-y-4 sm:hidden">
+                        @foreach($invoice->items as $item)
+                            <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 space-y-3">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex-1">
+                                        <p class="font-bold text-gray-900">{{ explode(' - ', $item->description)[0] }}</p>
+                                        @if(count(explode(' - ', $item->description)) > 1)
+                                            <p class="text-xs text-gray-500 mt-1 leading-relaxed">
+                                                {{ substr($item->description, strpos($item->description, ' - ') + 3) }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                    <div class="text-right ml-4">
+                                        <span class="text-sm font-black" style="color: {{ $primaryColor }};">
+                                            {{ $invoice->currency_symbol }}{{ number_format($item->total, 2) }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center text-xs pt-2 border-t border-gray-200">
+                                    <div class="flex space-x-4">
+                                        <div>
+                                            <span
+                                                class="text-gray-400 uppercase tracking-widest font-bold text-[10px]">{{ __('Qty') }}</span>
+                                            <span class="block font-medium text-gray-900">{{ $item->quantity }}</span>
+                                        </div>
+                                        <div>
+                                            <span
+                                                class="text-gray-400 uppercase tracking-widest font-bold text-[10px]">{{ __('Price') }}</span>
+                                            <span
+                                                class="block font-medium text-gray-900">{{ $invoice->currency_symbol }}{{ number_format($item->unit_price, 2) }}</span>
+                                        </div>
+                                    </div>
+                                    @if(($template->show_tax ?? true) && $item->tax_rate > 0)
+                                        <div class="text-right">
+                                            <span
+                                                class="text-gray-400 uppercase tracking-widest font-bold text-[10px]">{{ __('Tax') }}</span>
+                                            <span class="block font-medium text-gray-900">{{ $item->tax_rate }}%</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
 
                     <!-- Totals Section -->
