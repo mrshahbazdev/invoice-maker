@@ -13,7 +13,7 @@ class PublicInvoiceController
     public function show(Request $request, Invoice $invoice)
     {
         if (!$request->hasValidSignature()) {
-            abort(401, 'Invalid or expired invoice link.');
+            abort(403, 'Invalid or expired invoice link.');
         }
 
         $invoice->load(['client', 'business', 'items.product', 'payments']);
@@ -29,7 +29,7 @@ class PublicInvoiceController
     public function download(Request $request, Invoice $invoice, PdfGenerationService $pdfService)
     {
         if (!$request->hasValidSignature()) {
-            abort(401, 'Invalid or expired invoice link.');
+            abort(403, 'Invalid or expired invoice link.');
         }
 
         return $pdfService->download($invoice);
@@ -38,7 +38,7 @@ class PublicInvoiceController
     public function approve(Request $request, Invoice $invoice)
     {
         if (!$request->hasValidSignature()) {
-            abort(401);
+            abort(403);
         }
 
         if (!$invoice->isEstimate()) {
@@ -53,7 +53,7 @@ class PublicInvoiceController
     public function requestRevision(Request $request, Invoice $invoice)
     {
         if (!$request->hasValidSignature()) {
-            abort(401);
+            abort(403);
         }
 
         if (!$invoice->isEstimate()) {
@@ -68,7 +68,7 @@ class PublicInvoiceController
     public function addComment(Request $request, Invoice $invoice)
     {
         if (!$request->hasValidSignature() && !auth()->check()) {
-            abort(401);
+            abort(403);
         }
 
         $request->validate([
