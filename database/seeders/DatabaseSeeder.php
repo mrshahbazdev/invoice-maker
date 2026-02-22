@@ -19,9 +19,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->createDemoUser();
+
+        $this->call([
+            TemplateSeeder::class,
+        ]);
+
         $this->createClients();
         $this->createProducts();
-        $this->createTemplates();
         $this->createInvoices();
     }
 

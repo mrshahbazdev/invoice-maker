@@ -124,11 +124,11 @@
                     <div class="flex-1 flex items-end justify-center gap-1 group relative">
                         <!-- Revenue Bar -->
                         <div class="w-2.5 bg-blue-500 rounded-t"
-                            style="height: {{ ($revenueByMonth[$month] ?? 0) ? min(100, (($revenueByMonth[$month] ?? 0) / (max($revenueByMonth ?: [1]) ?: 1)) * 100) : 0 }}%;">
+                            style="height: {{ ($revenueByMonth[$month] ?? 0) ? min(100, (($revenueByMonth[$month] ?? 0) / $maxAmount) * 100) : 0 }}%;">
                         </div>
                         <!-- Expense Bar -->
                         <div class="w-2.5 bg-red-400 rounded-t"
-                            style="height: {{ ($expensesByMonth[$month] ?? 0) ? min(100, (($expensesByMonth[$month] ?? 0) / (max($revenueByMonth ?: [1]) ?: 1)) * 100) : 0 }}%;">
+                            style="height: {{ ($expensesByMonth[$month] ?? 0) ? min(100, (($expensesByMonth[$month] ?? 0) / $maxAmount) * 100) : 0 }}%;">
                         </div>
 
                         <!-- Tooltip Combined -->

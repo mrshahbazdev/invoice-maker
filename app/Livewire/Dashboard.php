@@ -68,6 +68,12 @@ class Dashboard extends Component
             ->pluck('total', 'category')
             ->toArray();
 
-        return view('livewire.dashboard', compact('stats', 'recentInvoices', 'revenueByMonth', 'expensesByMonth', 'expensesByCategory'));
+        $maxAmount = max(
+            collect($revenueByMonth)->max() ?: 0,
+            collect($expensesByMonth)->max() ?: 0,
+            100 // Minimum floor for scaling
+        );
+
+        return view('livewire.dashboard', compact('stats', 'recentInvoices', 'revenueByMonth', 'expensesByMonth', 'expensesByCategory', 'maxAmount'));
     }
 }

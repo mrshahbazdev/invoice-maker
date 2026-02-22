@@ -17,6 +17,7 @@ class Client extends Model
         'phone',
         'company_name',
         'address',
+        'tax_number',
         'currency',
         'language',
         'notes',
