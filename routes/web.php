@@ -27,7 +27,6 @@ use App\Livewire\Settings\Team as SettingsTeam;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LanguageController;
 
-Route::get('language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
 Route::get('/', function () {
     if (auth()->check() && auth()->user()->role === 'client') {
@@ -124,3 +123,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client/dashboard', [ClientPortalController::class, 'dashboard'])->name('client.dashboard');
     Route::get('/client/settings', App\Livewire\ClientPortal\Settings::class)->name('client.settings');
 });
+
+Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
