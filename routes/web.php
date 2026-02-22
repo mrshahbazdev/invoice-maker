@@ -93,24 +93,19 @@ use App\Http\Controllers\ClientPortalController;
 
 // Public Invoice View
 Route::get('/public/invoices/{invoice}', [PublicInvoiceController::class, 'show'])
-    ->name('invoices.public.show')
-    ->middleware('signed');
+    ->name('invoices.public.show');
 
 Route::get('/public/invoices/{invoice}/download', [PublicInvoiceController::class, 'download'])
-    ->name('invoices.public.download')
-    ->middleware('signed');
+    ->name('invoices.public.download');
 
 Route::post('/public/invoices/{invoice}/approve', [PublicInvoiceController::class, 'approve'])
-    ->name('invoices.public.approve')
-    ->middleware('signed');
+    ->name('invoices.public.approve');
 
 Route::post('/public/invoices/{invoice}/revision', [PublicInvoiceController::class, 'requestRevision'])
-    ->name('invoices.public.revision')
-    ->middleware('signed');
+    ->name('invoices.public.revision');
 
 Route::post('/public/invoices/{invoice}/comment', [PublicInvoiceController::class, 'addComment'])
-    ->name('invoices.public.comment')
-    ->middleware('signed');
+    ->name('invoices.public.comment');
 
 // Client Portal Routes
 Route::get('/public/invoices/{invoice}/save', [ClientPortalController::class, 'showRegistrationForm'])

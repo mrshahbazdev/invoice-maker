@@ -12,8 +12,14 @@ class PublicInvoiceController
 {
     public function show(Request $request, Invoice $invoice)
     {
+        \Log::info('PublicInvoiceController@show', [
+            'url' => $request->fullUrl(),
+            'hasValidSignature' => $request->hasValidSignature(),
+            'user' => auth()->id(),
+        ]);
+
         if (!$request->hasValidSignature()) {
-            abort(403, 'Invalid or expired invoice link.');
+            return response('Invalid or expired invoice link. Signature verification failed.', 403);
         }
 
         $invoice->load(['client', 'business', 'items.product', 'payments']);
@@ -29,7 +35,7 @@ class PublicInvoiceController
     public function download(Request $request, Invoice $invoice, PdfGenerationService $pdfService)
     {
         if (!$request->hasValidSignature()) {
-            abort(403, 'Invalid or expired invoice link.');
+            return response('Invalid or expired invoice link.', 403);
         }
 
         return $pdfService->download($invoice);
@@ -38,7 +44,7 @@ class PublicInvoiceController
     public function approve(Request $request, Invoice $invoice)
     {
         if (!$request->hasValidSignature()) {
-            abort(403);
+            return response('Unauthorized signature.', 403);
         }
 
         if (!$invoice->isEstimate()) {
@@ -53,7 +59,7 @@ class PublicInvoiceController
     public function requestRevision(Request $request, Invoice $invoice)
     {
         if (!$request->hasValidSignature()) {
-            abort(403);
+            return response('Unauthorized signature.', 403);
         }
 
         if (!$invoice->isEstimate()) {
@@ -68,7 +74,7 @@ class PublicInvoiceController
     public function addComment(Request $request, Invoice $invoice)
     {
         if (!$request->hasValidSignature() && !auth()->check()) {
-            abort(403);
+            return response('Unauthorized.', 403);
         }
 
         $request->validate([
