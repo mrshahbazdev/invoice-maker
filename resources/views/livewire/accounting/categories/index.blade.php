@@ -71,7 +71,8 @@
     <!-- Category Modal -->
     @if($showModal)
         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-            <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+            <div
+                class="bg-white rounded-xl shadow-2xl w-full max-w-md flex flex-col max-h-[90vh] overflow-hidden transform transition-all">
                 <div class="p-6 border-b flex justify-between items-center bg-gray-50">
                     <h3 class="text-xl font-bold text-gray-900">{{ $isEditing ? __('Edit Category') : __('Add Category') }}
                     </h3>
@@ -82,8 +83,8 @@
                         </svg>
                     </button>
                 </div>
-                <form wire:submit="save">
-                    <div class="p-6 space-y-4">
+                <form wire:submit="save" class="flex flex-col flex-1 overflow-hidden">
+                    <div class="p-6 space-y-4 overflow-y-auto flex-1 text-gray-700">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category Name') }} *</label>
                             <input type="text" wire:model="name"
