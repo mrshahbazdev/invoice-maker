@@ -25,7 +25,7 @@
                         <div class="flex items-center min-w-0">
                             <!-- Mobile menu button -->
                             @if(auth()->check())
-                                <button @click="mobileMenuOpen = true"
+                                <button @click.stop="mobileMenuOpen = true"
                                     class="mr-3 text-gray-500 hover:text-blue-600 focus:outline-none lg:hidden flex-shrink-0 p-1 rounded-lg hover:bg-gray-100 transition-colors">
                                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
