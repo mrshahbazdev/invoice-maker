@@ -17,6 +17,11 @@ class Dashboard extends Component
         if (Auth::user()->role === 'client') {
             return redirect()->route('client.dashboard');
         }
+
+        $business = Auth::user()->business;
+        if ($business && $business->templates()->count() === 0) {
+            $business->seedDefaultTemplates();
+        }
     }
 
     public function render()
