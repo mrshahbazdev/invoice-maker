@@ -24,6 +24,7 @@ class Edit extends Component
     public string $currency = 'USD';
     public bool $is_recurring = false;
     public string $recurring_frequency = 'monthly';
+    public string $next_run_date = '';
 
     public array $items = [];
     public string $product_search = '';
@@ -42,6 +43,7 @@ class Edit extends Component
         'currency' => 'required|string|max:3',
         'is_recurring' => 'boolean',
         'recurring_frequency' => 'required_if:is_recurring,true|nullable|string',
+        'next_run_date' => 'required_if:is_recurring,true|nullable|date',
     ];
 
     public function mount(Invoice $invoice): void
@@ -62,8 +64,9 @@ class Edit extends Component
         $this->payment_terms = $invoice->payment_terms ?? '';
         $this->discount = $invoice->discount;
         $this->currency = $invoice->currency ?? Auth::user()->business->currency;
-        $this->is_recurring = $invoice->is_recurring;
+        $this->is_recurring = (bool) $invoice->is_recurring;
         $this->recurring_frequency = $invoice->recurring_frequency ?? 'monthly';
+        $this->next_run_date = $invoice->next_run_date instanceof \Carbon\Carbon ? $invoice->next_run_date->toDateString() : ($invoice->next_run_date ?? '');
 
         foreach ($invoice->items as $item) {
             $this->items[] = [
@@ -199,7 +202,7 @@ class Edit extends Component
             'amount_due' => $totals['grand_total'],
             'is_recurring' => $this->is_recurring,
             'recurring_frequency' => $this->is_recurring ? $this->recurring_frequency : null,
-            'next_run_date' => ($this->is_recurring && !$this->invoice->next_run_date) ? now()->toDateString() : $this->invoice->next_run_date,
+            'next_run_date' => $this->is_recurring ? $this->next_run_date : null,
         ]);
 
         $this->invoice->items()->delete();

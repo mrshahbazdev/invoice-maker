@@ -356,15 +356,13 @@
                                     </select>
                                     @error('recurring_frequency') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                                 </div>
-                                <div class="bg-blue-50 p-4 rounded-lg self-end">
-                                    <p class="text-xs text-blue-700 font-medium">
-                                        <svg class="w-4 h-4 inline mr-1 mb-0.5" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                        </svg>
-                                        {{ __('System will generate the first recurring copy today.') }}
-                                    </p>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('First Run Date') }}</label>
+                                    <input type="date" wire:model="next_run_date"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    @error('next_run_date') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                                    <p class="text-[10px] text-gray-400 mt-1 italic">
+                                        {{ __('The system will create the first copy on this date.') }}</p>
                                 </div>
                             </div>
                         @endif

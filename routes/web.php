@@ -29,6 +29,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PublicInvoiceController;
 use App\Http\Controllers\ClientPortalController;
 use App\Http\Controllers\CashBookExportController;
+use App\Livewire\Accounting\Categories\Index as CategoriesIndex;
 
 // Public Invoice View
 Route::get('/v/{invoice}', [PublicInvoiceController::class, 'show'])->name('invoices.public.show');
@@ -100,6 +101,7 @@ Route::middleware(['auth', 'business.member'])->group(function () {
         Route::get('/create', ExpensesCreate::class)->name('expenses.create');
         Route::get('/{expense}/edit', ExpensesEdit::class)->name('expenses.edit');
         Route::get('/export/csv', [CashBookExportController::class, 'exportCsv'])->name('expenses.export');
+        Route::get('/categories', CategoriesIndex::class)->name('expenses.categories');
     });
 });
 

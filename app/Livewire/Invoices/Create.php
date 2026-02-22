@@ -29,6 +29,7 @@ class Create extends Component
 
     public bool $is_recurring = false;
     public string $recurring_frequency = 'monthly';
+    public string $next_run_date = '';
 
     public array $items = [];
     public string $product_search = '';
@@ -48,12 +49,14 @@ class Create extends Component
         'currency' => 'required|string|max:3',
         'is_recurring' => 'boolean',
         'recurring_frequency' => 'required_if:is_recurring,true|nullable|string',
+        'next_run_date' => 'required_if:is_recurring,true|nullable|date',
     ];
 
     public function mount(): void
     {
         $this->invoice_date = now()->toDateString();
         $this->due_date = now()->addDays(30)->toDateString();
+        $this->next_run_date = now()->toDateString();
         $this->template_id = Auth::user()->business->templates()->where('is_default', true)->first()?->id;
         $this->payment_terms = Auth::user()->business->payment_terms ?? Auth::user()->business->templates()->where('is_default', true)->first()?->payment_terms ?? '';
         $this->currency = Auth::user()->business->currency;
@@ -231,7 +234,7 @@ class Create extends Component
             'amount_due' => $totals['grand_total'],
             'is_recurring' => $this->is_recurring,
             'recurring_frequency' => $this->is_recurring ? $this->recurring_frequency : null,
-            'next_run_date' => $this->is_recurring ? now()->toDateString() : null, // Set initial run date to now or calculate? Plan says copy copy copy...
+            'next_run_date' => $this->is_recurring ? $this->next_run_date : null,
         ]);
 
         foreach ($this->items as $item) {
