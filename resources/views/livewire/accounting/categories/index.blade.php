@@ -82,48 +82,51 @@
                         </svg>
                     </button>
                 </div>
-                <div class="p-6 space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category Name') }} *</label>
-                        <input type="text" wire:model="name"
-                            placeholder="{{ __('e.g. Office Supplies, SaaS, Client Fees') }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                <form wire:submit="save">
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category Name') }} *</label>
+                            <input type="text" wire:model="name"
+                                placeholder="{{ __('e.g. Office Supplies, SaaS, Client Fees') }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Booking Account') }}
+                                ({{ __('Number') }})</label>
+                            <input type="text" wire:model="booking_account" placeholder="{{ __('e.g. 4200, 8400') }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            @error('booking_account') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Type') }}</label>
+                            <select wire:model="type"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="expense">{{ __('Expense (Ausgabe)') }}</option>
+                                <option value="income">{{ __('Income (Einnahme)') }}</option>
+                            </select>
+                            @error('type') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label
+                                class="block text-sm font-medium text-gray-700 mb-1">{{ __('Posting Rule (Buchungsregel)') }}</label>
+                            <textarea wire:model="posting_rule" rows="3"
+                                placeholder="{{ __('e.g. Requires receipt. Only deductible if business related.') }}"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                            @error('posting_rule') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Booking Account') }}
-                            ({{ __('Number') }})</label>
-                        <input type="text" wire:model="booking_account" placeholder="{{ __('e.g. 4200, 8400') }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                        @error('booking_account') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    <div class="p-6 bg-gray-50 border-t flex justify-end gap-3">
+                        <button type="button" wire:click="closeModal()"
+                            class="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium">
+                            {{ __('Cancel') }}
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition font-bold">
+                            {{ __('Save Category') }}
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Type') }}</label>
-                        <select wire:model="type"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="expense">{{ __('Expense (Ausgabe)') }}</option>
-                            <option value="income">{{ __('Income (Einnahme)') }}</option>
-                        </select>
-                        @error('type') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                    </div>
-                    <div>
-                        <label
-                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('Posting Rule (Buchungsregel)') }}</label>
-                        <textarea wire:model="posting_rule" rows="3"
-                            placeholder="{{ __('e.g. Requires receipt. Only deductible if business related.') }}"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
-                        @error('posting_rule') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                    </div>
-                </div>
-                <div class="p-6 bg-gray-50 border-t flex justify-end gap-3">
-                    <button wire:click="closeModal()" class="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium">
-                        {{ __('Cancel') }}
-                    </button>
-                    <button wire:click="save"
-                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow-sm transition font-bold">
-                        {{ $isEditing ? __('Update Category') : __('Create Category') }}
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     @endif
