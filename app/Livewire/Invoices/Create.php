@@ -22,6 +22,7 @@ class Create extends Component
     public string $invoice_date = '';
     public string $due_date = '';
     public string $notes = '';
+    public string $payment_terms = '';
     public string $discount = '0';
     public string $currency = 'USD';
     public $quick = false;
@@ -54,6 +55,7 @@ class Create extends Component
         $this->invoice_date = now()->toDateString();
         $this->due_date = now()->addDays(30)->toDateString();
         $this->template_id = Auth::user()->business->templates()->where('is_default', true)->first()?->id;
+        $this->payment_terms = Auth::user()->business->payment_terms ?? Auth::user()->business->templates()->where('is_default', true)->first()?->payment_terms ?? '';
         $this->currency = Auth::user()->business->currency;
         $this->quick = request('quick', false) ? true : false;
 
@@ -219,6 +221,7 @@ class Create extends Component
             'invoice_date' => $this->invoice_date,
             'due_date' => $this->due_date,
             'notes' => $this->notes,
+            'payment_terms' => $this->payment_terms,
             'currency' => $this->currency,
             'subtotal' => $totals['subtotal'],
             'tax_total' => $totals['tax_total'],

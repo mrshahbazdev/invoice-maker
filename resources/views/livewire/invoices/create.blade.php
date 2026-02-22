@@ -104,7 +104,8 @@
                         </div>
                     </div>
                 @endforeach
-                <button wire:click="addItem" type="button" class="text-blue-600 text-sm font-medium hover:underline">+ {{ __('Add another item') }}</button>
+                <button wire:click="addItem" type="button" class="text-blue-600 text-sm font-medium hover:underline">+
+                    {{ __('Add another item') }}</button>
             </div>
 
             <div class="flex justify-between items-center border-t pt-4">
@@ -203,7 +204,8 @@
                                 </div>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="md:col-span-2">
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }} *</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }}
+                                            *</label>
                                         <textarea wire:model="items.{{ $index }}.description" rows="2"
                                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"></textarea>
                                     </div>
@@ -305,7 +307,14 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Notes') }}</label>
                             <textarea wire:model="notes" rows="3"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="{{ __('Payment terms, thank you note, etc...') }}"></textarea>
+                                placeholder="{{ __('Internal notes, etc...') }}"></textarea>
+                        </div>
+                        <div>
+                            <label
+                                class="block text-sm font-medium text-gray-700 mb-1">{{ __('Payment Terms & Instructions') }}</label>
+                            <textarea wire:model="payment_terms" rows="3"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="{{ __('Bank details, wire instructions, etc...') }}"></textarea>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Template') }}</label>
@@ -324,7 +333,8 @@
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <h4 class="text-sm font-semibold text-gray-900">{{ __('Recurring Invoice') }}</h4>
-                                <p class="text-xs text-gray-500">{{ __('Automatically generate this invoice on a schedule') }}</p>
+                                <p class="text-xs text-gray-500">{{ __('Automatically generate this invoice on a schedule') }}
+                                </p>
                             </div>
                             <button type="button" wire:click="$set('is_recurring', {{ !$is_recurring ? 'true' : 'false' }})"
                                 class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 {{ $is_recurring ? 'bg-blue-600' : 'bg-gray-200' }}">

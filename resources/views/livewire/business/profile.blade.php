@@ -58,6 +58,15 @@
             </div>
 
             <div class="mb-6">
+                <label
+                    class="block text-sm font-medium text-gray-700 mb-1">{{ __('Default Payment Terms & Instructions') }}</label>
+                <textarea wire:model="payment_terms" rows="3"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="{{ __('e.g. Please initiate wire transfer immediately.') }}"></textarea>
+                @error('payment_terms') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div class="mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Currency') }}</label>
                 <select wire:model="currency"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">

@@ -416,7 +416,7 @@
                     <div class="flex flex-col lg:flex-row justify-between gap-12">
                         <!-- Notes / Payment Terms -->
                         <div class="w-full lg:w-3/5 order-2 lg:order-1">
-                            @if($invoice->notes || ($template->payment_terms ?? false))
+                            @if($invoice->notes || $invoice->payment_terms || ($template->payment_terms ?? false))
                                 <div class="bg-gray-50/50 rounded-2xl p-6 border border-gray-100">
                                     @if($invoice->notes)
                                         <div class="mb-6">
@@ -426,13 +426,13 @@
                                         </div>
                                     @endif
 
-                                    @if($template->payment_terms ?? false)
+                                    @if($invoice->payment_terms || ($template->payment_terms ?? false))
                                         <div>
                                             <h4 class="text-xs font-bold uppercase tracking-widest mb-2"
                                                 style="color: {{ $primaryColor }};">{{ __('Payment Terms & Instructions') }}
                                             </h4>
                                             <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
-                                                {!! e($template->payment_terms) !!}
+                                                {!! e($invoice->payment_terms ?: $template->payment_terms) !!}
                                             </p>
                                         </div>
                                     @endif

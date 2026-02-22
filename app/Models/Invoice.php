@@ -56,6 +56,7 @@ class Invoice extends Model
         'last_run_date',
         'last_reminder_sent_at',
         'inventory_deducted',
+        'payment_terms',
     ];
 
     protected $casts = [

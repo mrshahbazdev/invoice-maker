@@ -53,8 +53,15 @@
 
         <div class="mt-6">
             <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Notes') }}</label>
-            <textarea wire:model="notes" rows="3"
+            <textarea wire:model="notes" rows="2"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+        </div>
+
+        <div class="mt-6">
+            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Payment Terms & Instructions') }}</label>
+            <textarea wire:model="payment_terms" rows="3"
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="{{ __('Bank details, wire instructions, etc...') }}"></textarea>
         </div>
 
         <div class="mt-8 pt-6 border-t border-gray-100">

@@ -19,6 +19,7 @@ class Edit extends Component
     public string $invoice_date = '';
     public string $due_date = '';
     public string $notes = '';
+    public string $payment_terms = '';
     public string $discount = '0';
     public string $currency = 'USD';
     public bool $is_recurring = false;
@@ -58,6 +59,7 @@ class Edit extends Component
         $this->invoice_date = $invoice->invoice_date instanceof \Carbon\Carbon ? $invoice->invoice_date->toDateString() : $invoice->invoice_date;
         $this->due_date = $invoice->due_date instanceof \Carbon\Carbon ? $invoice->due_date->toDateString() : $invoice->due_date;
         $this->notes = $invoice->notes ?? '';
+        $this->payment_terms = $invoice->payment_terms ?? '';
         $this->discount = $invoice->discount;
         $this->currency = $invoice->currency ?? Auth::user()->business->currency;
         $this->is_recurring = $invoice->is_recurring;
@@ -188,6 +190,7 @@ class Edit extends Component
             'invoice_date' => $this->invoice_date,
             'due_date' => $this->due_date,
             'notes' => $this->notes,
+            'payment_terms' => $this->payment_terms,
             'currency' => $this->currency,
             'subtotal' => $totals['subtotal'],
             'tax_total' => $totals['tax_total'],

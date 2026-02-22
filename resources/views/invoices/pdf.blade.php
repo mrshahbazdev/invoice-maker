@@ -11,7 +11,7 @@
         $showTax = $template?->show_tax ?? true;
         $showDiscount = $template?->show_discount ?? true;
         $enableQr = $template?->enable_qr ?? false;
-        $paymentTerms = $template?->payment_terms ?? '';
+        $paymentTerms = $invoice->payment_terms ?: ($template?->payment_terms ?: '');
         $footerMessage = $template?->footer_message ?? 'Thank you for your business!';
         $signaturePath = $template?->signature_path ?? '';
 
