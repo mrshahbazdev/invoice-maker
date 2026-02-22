@@ -47,30 +47,24 @@ class Dashboard extends Component
             ->take(5)
             ->get();
 
-        $revenueByMonthData = $business->invoices()
+        $revenueByMonth = array_fill(1, 12, 0);
+        $business->invoices()
             ->where('status', Invoice::STATUS_PAID)
             ->whereYear('invoice_date', now()->year)
-            ->selectRaw('MONTH(invoice_date) as month, SUM(grand_total) as total')
-            ->groupBy('month')
-            ->pluck('total', 'month')
-            ->toArray();
+            ->get()
+            ->each(function ($invoice) use (&$revenueByMonth) {
+                $month = (int) $invoice->invoice_date->format('n');
+                $revenueByMonth[$month] += (float) $invoice->grand_total;
+            });
 
-        $revenueByMonth = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $revenueByMonth[$i] = (float) ($revenueByMonthData[$i] ?? 0);
-        }
-
-        $expensesByMonthData = $business->expenses()
+        $expensesByMonth = array_fill(1, 12, 0);
+        $business->expenses()
             ->whereYear('date', now()->year)
-            ->selectRaw('MONTH(date) as month, SUM(amount) as total')
-            ->groupBy('month')
-            ->pluck('total', 'month')
-            ->toArray();
-
-        $expensesByMonth = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $expensesByMonth[$i] = (float) ($expensesByMonthData[$i] ?? 0);
-        }
+            ->get()
+            ->each(function ($expense) use (&$expensesByMonth) {
+                $month = (int) $expense->date->format('n');
+                $expensesByMonth[$month] += (float) $expense->amount;
+            });
 
         $expensesByCategory = $business->expenses()
             ->selectRaw('category, sum(amount) as total')

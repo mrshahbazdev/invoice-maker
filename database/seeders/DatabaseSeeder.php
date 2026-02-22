@@ -199,13 +199,13 @@ United States',
     private function createExpenses(Business $business): void
     {
         $categories = ['Office', 'Marketing', 'Software', 'Travel', 'Utilities'];
-        for ($i = 0; $i < 12; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             Expense::create([
                 'business_id' => $business->id,
                 'category' => $categories[array_rand($categories)],
-                'amount' => rand(50, 500),
-                'date' => now()->startOfYear()->addMonths($i)->addDays(rand(0, 25)),
-                'description' => 'Monthly business expense ' . ($i + 1),
+                'amount' => (float) rand(200, 800),
+                'date' => now()->startOfYear()->month($i)->day(rand(1, 25)),
+                'description' => 'Business operations month ' . $i,
             ]);
         }
     }
@@ -343,24 +343,24 @@ United States',
             [
                 'client_index' => 0,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(10),
-                'due_date' => now()->addDays(20),
+                'invoice_date' => now()->startOfYear()->month(1)->day(15),
+                'due_date' => now()->startOfYear()->month(1)->day(30),
                 'items' => [
                     ['product_index' => 0, 'qty' => 1, 'discount' => 0],
                     ['product_index' => 1, 'qty' => 3, 'discount' => 0],
                 ],
-                'payment_amount' => 2900,
+                'payment_amount' => 3100,
             ],
             [
                 'client_index' => 1,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(5),
-                'due_date' => now()->addDays(25),
+                'invoice_date' => now()->startOfYear()->month(2)->day(5),
+                'due_date' => now()->startOfYear()->month(2)->day(20),
                 'items' => [
                     ['product_index' => 2, 'qty' => 2, 'discount' => 50],
                     ['product_index' => 7, 'qty' => 2, 'discount' => 0],
                 ],
-                'payment_amount' => 900,
+                'payment_amount' => 1250,
             ],
             [
                 'client_index' => 2,
