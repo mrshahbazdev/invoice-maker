@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Invoice;
+use App\Services\PdfGenerationService;
+use PhpZip\ZipFile;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ClientPortalController
 {
@@ -75,5 +78,54 @@ class ClientPortalController
         $invoices = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return view('client-portal.dashboard', compact('invoices', 'totalPaid', 'totalPending', 'totalOverdue'));
+    }
+
+    public function downloadAllInvoices(PdfGenerationService $pdfService)
+    {
+        $user = auth()->user();
+        $clientIds = $user->clients()->pluck('id');
+        $invoices = Invoice::whereIn('client_id', $clientIds)->get();
+
+        if ($invoices->isEmpty()) {
+            return redirect()->back()->with('error', 'No invoices found to download.');
+        }
+
+        $zipFile = new ZipFile();
+
+        foreach ($invoices as $invoice) {
+            /** @var \App\Models\Invoice $invoice */
+            $pdfContent = $pdfService->generate($invoice);
+            $filename = "Invoice_{$invoice->invoice_number}.pdf";
+            $zipFile->addFromString($filename, $pdfContent);
+        }
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'invoices_zip');
+        $zipFile->saveAsFile($tempFile);
+        $zipFile->close();
+
+        return response()->download($tempFile, 'all_invoices.zip')->deleteFileAfterSend(true);
+    }
+
+    public function downloadStatement()
+    {
+        $user = auth()->user();
+        $client = $user->clients()->first();
+        $business = $client->business;
+
+        $invoices = Invoice::where('client_id', $client->id)->get();
+        $totalInvoiced = $invoices->sum('grand_total');
+        $totalPaid = $invoices->sum('amount_paid');
+        $totalOutstanding = $totalInvoiced - $totalPaid;
+
+        $pdf = Pdf::loadView('client-portal.statement-pdf', compact(
+            'client',
+            'business',
+            'invoices',
+            'totalInvoiced',
+            'totalPaid',
+            'totalOutstanding'
+        ));
+
+        return $pdf->download('Statement_of_Account.pdf');
     }
 }

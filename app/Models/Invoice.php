@@ -121,6 +121,11 @@ class Invoice extends Model
         return $this->hasMany(Payment::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(InvoiceComment::class);
+    }
+
     public function getStatusColorAttribute()
     {
         return match ($this->status) {

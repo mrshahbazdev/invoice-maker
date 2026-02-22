@@ -11,6 +11,7 @@
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
         "livewire/livewire": "^3.0",
+        "nelexa/zip": "^4.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "stripe/stripe-php": "^19.3"
     },

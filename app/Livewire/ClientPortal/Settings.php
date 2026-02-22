@@ -11,6 +11,7 @@ class Settings extends Component
 {
     public $name;
     public $email;
+    public $address;
     public $current_password;
     public $password;
     public $password_confirmation;
@@ -19,6 +20,7 @@ class Settings extends Component
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
+        $this->address = Auth::user()->clients()->first()->address ?? '';
     }
 
     public function updateProfile()
@@ -28,6 +30,7 @@ class Settings extends Component
         $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'address' => ['nullable', 'string', 'max:1000'],
         ]);
 
         $user->update([
@@ -40,6 +43,7 @@ class Settings extends Component
             $client->update([
                 'name' => $this->name,
                 'email' => $this->email,
+                'address' => $this->address,
             ]);
         }
 

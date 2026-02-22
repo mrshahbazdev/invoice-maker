@@ -55,6 +55,14 @@
                                     @error('email') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                                 </div>
                             </div>
+
+                            <div class="col-span-full">
+                                <label for="address" class="block text-sm font-medium leading-6 text-gray-900">{{ __('Billing Address') }}</label>
+                                <div class="mt-2">
+                                    <textarea wire:model="address" id="address" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"></textarea>
+                                    @error('address') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="flex items-center justify-end gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8 bg-gray-50 rounded-b-xl">

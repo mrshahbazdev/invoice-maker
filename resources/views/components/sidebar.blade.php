@@ -1,5 +1,15 @@
 <aside
-    class="fixed inset-y-0 left-0 z-50 w-64 bg-white/80 backdrop-blur-xl border-r border-gray-200/50 hidden lg:block shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white/80 backdrop-blur-xl border-r border-gray-200/50 shadow-[4px_0_24px_rgba(0,0,0,0.02)] transition-transform duration-300 lg:translate-x-0"
+    :class="mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
+    @click.away="mobileMenuOpen = false">
+    <!-- Mobile close button -->
+    <div class="lg:hidden absolute right-4 top-4">
+        <button @click="mobileMenuOpen = false" class="text-gray-400 hover:text-gray-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
     <div class="flex flex-col h-full">
         <div class="flex items-center justify-center h-20 border-b border-gray-200/50">
             <span

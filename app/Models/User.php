@@ -65,4 +65,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Client::class, 'user_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(InvoiceComment::class);
+    }
 }

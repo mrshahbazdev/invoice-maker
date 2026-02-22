@@ -100,6 +100,18 @@ Route::get('/public/invoices/{invoice}/download', [PublicInvoiceController::clas
     ->name('invoices.public.download')
     ->middleware('signed');
 
+Route::post('/public/invoices/{invoice}/approve', [PublicInvoiceController::class, 'approve'])
+    ->name('invoices.public.approve')
+    ->middleware('signed');
+
+Route::post('/public/invoices/{invoice}/revision', [PublicInvoiceController::class, 'requestRevision'])
+    ->name('invoices.public.revision')
+    ->middleware('signed');
+
+Route::post('/public/invoices/{invoice}/comment', [PublicInvoiceController::class, 'addComment'])
+    ->name('invoices.public.comment')
+    ->middleware('signed');
+
 // Client Portal Routes
 Route::get('/public/invoices/{invoice}/save', [ClientPortalController::class, 'showRegistrationForm'])
     ->name('client.register')
@@ -122,6 +134,8 @@ Route::get('/invitations/accept/{token}', [InvitationController::class, 'accept'
 Route::middleware(['auth'])->group(function () {
     Route::get('/client/dashboard', [ClientPortalController::class, 'dashboard'])->name('client.dashboard');
     Route::get('/client/settings', App\Livewire\ClientPortal\Settings::class)->name('client.settings');
+    Route::get('/client/invoices/download-all', [ClientPortalController::class, 'downloadAllInvoices'])->name('client.invoices.download-all');
+    Route::get('/client/statement', [ClientPortalController::class, 'downloadStatement'])->name('client.statement');
 });
 
 Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
