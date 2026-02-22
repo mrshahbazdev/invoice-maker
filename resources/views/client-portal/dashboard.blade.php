@@ -133,10 +133,10 @@
             <p class="text-sm font-bold text-gray-900 uppercase tracking-wider">
                 {{ __('Overall Payment Progress') }}
             </p>
-    @php
-        $totalAccounted = $totalPaid + $totalPending + $totalOverdue;
-        $progress = $totalAccounted > 0 ? min(100, round(($totalPaid / $totalAccounted) * 100)) : 0;
-    @endphp
+            @php
+                $totalAccounted = $totalPaid + $totalPending + $totalOverdue;
+                $progress = $totalAccounted > 0 ? min(100, round(($totalPaid / $totalAccounted) * 100)) : 0;
+            @endphp
             <span class="text-lg font-black text-indigo-600">{{ $progress }}%</span>
         </div>
         <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner">
@@ -158,7 +158,7 @@
                 <h3 class="text-base font-semibold leading-6 text-gray-900">Recent Transactions</h3>
             </div>
 
-            <div class="overflow-x-auto hidden sm:block">
+            <div class="overflow-x-auto hidden md:block">
                 <table class="min-w-full divide-y divide-gray-300">
                     <thead class="bg-gray-50">
                         <tr>
@@ -335,50 +335,50 @@
             </div>
 
             <!-- Mobile Card View -->
-            <div class="sm:hidden divide-y divide-gray-200">
+            <div class="md:hidden divide-y divide-gray-200">
                 @forelse($invoices as $invoice)
-                                <div class="p-4 space-y-3">
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-sm font-bold text-gray-900">{{ $invoice->invoice_number }}</span>
-                                        @php
-                                            $statusClass = match ($invoice->status) {
-                                                'paid' => 'bg-green-50 text-green-700 ring-green-600/20',
-                                                'overdue' => 'bg-red-50 text-red-700 ring-red-600/10',
-                                                'sent', 'viewed' => 'bg-blue-50 text-blue-700 ring-blue-700/10',
-                                                default => 'bg-gray-50 text-gray-600 ring-gray-500/10'
-                                            };
-                                        @endphp
-                     <span
-                                            class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ring-1 ring-inset {{ $statusClass }}">
-                                            {{ ucfirst($invoice->status) }}
-                                        </span>
-                                    </div>
-                                    <div class="flex flex-col text-sm text-gray-500">
-                                        <span class="font-medium text-gray-700">{{ $invoice->business->name }}</span>
-                                        <span>{{ $invoice->invoice_date->format('M d, Y') }}</span>
-                                    </div>
-                                    <div class="flex items-center justify-between pt-2">
-                                        <div class="text-sm">
-                                            <span class="text-gray-500">Due:</span>
-                                            <span class="font-bold text-gray-900">${{ number_format($invoice->amount_due, 2) }}</span>
-                                        </div>
-                                        <div class="flex items-center space-x-2">
-                                            <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.download', $invoice->id) }}"
-                                                class="p-2 text-gray-400 hover:text-gray-600 rounded-full bg-gray-50">
-                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                                    stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                                </svg>
-                                            </a>
-                                            <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', $invoice->id) }}"
-                                                target="_blank"
-                                                class="inline-flex items-center rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors">
-                                                View & Pay
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="p-4 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-bold text-gray-900">{{ $invoice->invoice_number }}</span>
+                            @php
+                                $statusClass = match ($invoice->status) {
+                                    'paid' => 'bg-green-50 text-green-700 ring-green-600/20',
+                                    'overdue' => 'bg-red-50 text-red-700 ring-red-600/10',
+                                    'sent', 'viewed' => 'bg-blue-50 text-blue-700 ring-blue-700/10',
+                                    default => 'bg-gray-50 text-gray-600 ring-gray-500/10'
+                                };
+                            @endphp
+                            <span
+                                class="inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ring-1 ring-inset {{ $statusClass }}">
+                                {{ ucfirst($invoice->status) }}
+                            </span>
+                        </div>
+                        <div class="flex flex-col text-sm text-gray-500">
+                            <span class="font-medium text-gray-700">{{ $invoice->business->name }}</span>
+                            <span>{{ $invoice->invoice_date->format('M d, Y') }}</span>
+                        </div>
+                        <div class="flex items-center justify-between pt-2">
+                            <div class="text-sm">
+                                <span class="text-gray-500">Due:</span>
+                                <span class="font-bold text-gray-900">${{ number_format($invoice->amount_due, 2) }}</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.download', $invoice->id) }}"
+                                    class="p-2 text-gray-400 hover:text-gray-600 rounded-full bg-gray-50">
+                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                    </svg>
+                                </a>
+                                <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', $invoice->id) }}"
+                                    target="_blank"
+                                    class="inline-flex items-center rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 transition-colors">
+                                    View & Pay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 @empty
                     <div class="py-12 px-6 text-center text-gray-500">
                         <p class="text-sm">No invoices found.</p>
