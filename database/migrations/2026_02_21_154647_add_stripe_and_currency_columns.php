@@ -16,7 +16,7 @@ return new class extends Migration {
         });
 
         Schema::table('clients', function (Blueprint $table) {
-            $table->string('currency', 3)->nullable()->after('country')->comment('Overrides business default');
+            $table->string('currency', 3)->nullable()->after('address')->comment('Overrides business default');
         });
 
         Schema::table('invoices', function (Blueprint $table) {
