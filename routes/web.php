@@ -25,6 +25,9 @@ use App\Livewire\Expenses\Create as ExpensesCreate;
 use App\Livewire\Expenses\Edit as ExpensesEdit;
 use App\Livewire\Settings\Team as SettingsTeam;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\LanguageController;
+
+Route::get('language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
 Route::get('/', function () {
     if (auth()->check() && auth()->user()->role === 'client') {

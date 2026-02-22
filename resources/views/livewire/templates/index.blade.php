@@ -1,9 +1,9 @@
-@php $title = 'Templates'; @endphp
+@php $title = __('Templates'); @endphp
 
 <div>
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900">Invoice Templates</h2>
-        <p class="text-gray-600">Customize your invoice templates</p>
+        <h2 class="text-2xl font-bold text-gray-900">{{ __('Invoice Templates') }}</h2>
+        <p class="text-gray-600">{{ __('Customize your invoice templates') }}</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -16,31 +16,32 @@
                         <span class="text-sm font-medium"
                             style="color: {{ $template->primary_color }};">{{ $template->name }}</span>
                         @if($template->is_default)
-                            <span class="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">Default</span>
+                            <span
+                                class="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">{{ __('Default') }}</span>
                         @endif
                     </div>
                 </div>
                 <div class="p-4">
                     <div class="text-sm text-gray-600 mb-4">
-                        <p>Color: <span class="inline-block w-4 h-4 rounded"
+                        <p>{{ __('Color') }}: <span class="inline-block w-4 h-4 rounded"
                                 style="background: {{ $template->primary_color }};"></span> {{ $template->primary_color }}
                         </p>
-                        <p>Font: {{ ucfirst($template->font_family) }}</p>
-                        <p>Logo: {{ ucfirst($template->logo_position) }}</p>
+                        <p>{{ __('Font') }}: {{ __(ucfirst($template->font_family)) }}</p>
+                        <p>{{ __('Logo') }}: {{ __(ucfirst($template->logo_position)) }}</p>
                     </div>
                     <div class="flex justify-between">
                         <a href="{{ route('templates.edit', $template) }}"
-                            class="text-blue-600 hover:text-blue-700 text-sm font-medium">Edit</a>
+                            class="text-blue-600 hover:text-blue-700 text-sm font-medium">{{ __('Edit') }}</a>
                         @if(!$template->is_default)
                             <button wire:click="setDefault({{ $template->id }})"
-                                class="text-green-600 hover:text-green-700 text-sm font-medium">Set Default</button>
+                                class="text-green-600 hover:text-green-700 text-sm font-medium">{{ __('Set Default') }}</button>
                         @endif
                     </div>
                 </div>
             </div>
         @empty
             <div class="col-span-3 text-center py-12 text-gray-500">
-                No templates found.
+                {{ __('No templates found.') }}
             </div>
         @endforelse
     </div>

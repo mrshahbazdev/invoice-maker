@@ -23,6 +23,8 @@ class Business extends Model
         'stripe_account_id',
         'stripe_onboarding_complete',
         'plan',
+        'invoice_number_prefix',
+        'invoice_number_next',
     ];
 
     protected $casts = [

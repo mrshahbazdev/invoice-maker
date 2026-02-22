@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Business;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 use Stripe\StripeClient;
 
 class Profile extends Component
@@ -21,6 +22,9 @@ class Profile extends Component
     public string $timezone = 'UTC';
     public string $tax_number = '';
     public string $bank_details = '';
+    public string $language = 'en';
+    public string $invoice_number_prefix = 'INV';
+    public int $invoice_number_next = 1;
     public $logo;
     public bool $stripe_onboarding_complete = false;
 
@@ -35,6 +39,9 @@ class Profile extends Component
             'timezone' => 'required|string',
             'tax_number' => 'nullable|string|max:255',
             'bank_details' => 'nullable|string',
+            'language' => 'required|string|in:en,de,es,fr,it,pt,ar,zh,ja,ru',
+            'invoice_number_prefix' => 'required|string|max:10',
+            'invoice_number_next' => 'required|integer|min:1',
             'logo' => 'nullable|image|max:2048',
         ];
     }
@@ -52,6 +59,8 @@ class Profile extends Component
             $this->timezone = $this->business->timezone;
             $this->tax_number = $this->business->tax_number ?? '';
             $this->bank_details = $this->business->bank_details ?? '';
+            $this->invoice_number_prefix = $this->business->invoice_number_prefix ?? 'INV';
+            $this->invoice_number_next = $this->business->invoice_number_next ?? 1;
             $this->stripe_onboarding_complete = $this->business->stripe_onboarding_complete;
         } else {
             // Defaults for new business
@@ -60,6 +69,8 @@ class Profile extends Component
             $this->currency = 'USD';
             $this->timezone = 'UTC';
         }
+
+        $this->language = Auth::user()->language ?? 'en';
     }
 
     public function save(): void
@@ -75,6 +86,8 @@ class Profile extends Component
             'timezone' => $this->timezone,
             'tax_number' => $this->tax_number,
             'bank_details' => $this->bank_details,
+            'invoice_number_prefix' => $this->invoice_number_prefix,
+            'invoice_number_next' => $this->invoice_number_next,
         ];
 
         if ($this->logo) {
@@ -91,7 +104,10 @@ class Profile extends Component
             Auth::user()->update(['business_id' => $this->business->id]);
         }
 
-        session()->flash('message', 'Business profile updated successfully.');
+        Auth::user()->update(['language' => $this->language]);
+        App::setLocale($this->language);
+
+        session()->flash('message', 'Business profile and language updated successfully.');
     }
 
     public function removeLogo(): void

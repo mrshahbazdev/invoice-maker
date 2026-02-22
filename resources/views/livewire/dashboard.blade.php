@@ -1,13 +1,13 @@
-@php $title = 'Dashboard'; @endphp
+@php $title = __('Dashboard'); @endphp
 
 <div>
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900">Dashboard</h2>
-        <p class="text-gray-600">Overview of your invoice business</p>
+        <h2 class="text-2xl font-bold text-gray-900">{{ __('Dashboard') }}</h2>
+        <p class="text-gray-600">{{ __('Overview of your invoice business') }}</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <x-stats-card title="Total Invoices" :value="$stats['total_invoices']" color="blue">
+        <x-stats-card title="{{ __('Total Invoices') }}" :value="$stats['total_invoices']" color="blue">
             <x-slot:icon>
                 <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -17,7 +17,7 @@
             </x-slot:icon>
         </x-stats-card>
 
-        <x-stats-card title="Total Revenue" :value="auth()->user()->business->currency_symbol . number_format($stats['total_revenue'], 2)" color="green">
+        <x-stats-card title="{{ __('Total Revenue') }}" :value="auth()->user()->business->currency_symbol . number_format($stats['total_revenue'], 2)" color="green">
             <x-slot:icon>
                 <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -27,7 +27,7 @@
             </x-slot:icon>
         </x-stats-card>
 
-        <x-stats-card title="Total Clients" :value="$stats['total_clients']" color="purple">
+        <x-stats-card title="{{ __('Total Clients') }}" :value="$stats['total_clients']" color="purple">
             <x-slot:icon>
                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -37,7 +37,7 @@
             </x-slot:icon>
         </x-stats-card>
 
-        <x-stats-card title="Total Expenses" :value="auth()->user()->business->currency_symbol . number_format($stats['total_expenses'], 2)" color="red">
+        <x-stats-card title="{{ __('Total Expenses') }}" :value="auth()->user()->business->currency_symbol . number_format($stats['total_expenses'], 2)" color="red">
             <x-slot:icon>
                 <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -46,7 +46,7 @@
             </x-slot:icon>
         </x-stats-card>
 
-        <x-stats-card title="Net Profit" :value="auth()->user()->business->currency_symbol . number_format($stats['net_profit'], 2)" color="{{ $stats['net_profit'] >= 0 ? 'indigo' : 'red' }}">
+        <x-stats-card title="{{ __('Net Profit') }}" :value="auth()->user()->business->currency_symbol . number_format($stats['net_profit'], 2)" color="{{ $stats['net_profit'] >= 0 ? 'indigo' : 'red' }}">
             <x-slot:icon>
                 <svg class="w-6 h-6 text-{{ $stats['net_profit'] >= 0 ? 'indigo' : 'red' }}-600" fill="none"
                     stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@
             </x-slot:icon>
         </x-stats-card>
 
-        <x-stats-card title="Pending Amount" :value="auth()->user()->business->currency_symbol . number_format($stats['pending_amount'], 2)" color="yellow">
+        <x-stats-card title="{{ __('Pending Amount') }}" :value="auth()->user()->business->currency_symbol . number_format($stats['pending_amount'], 2)" color="yellow">
             <x-slot:icon>
                 <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -69,15 +69,15 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Invoices</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Recent Invoices') }}</h3>
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead>
                         <tr class="border-b">
-                            <th class="text-left py-2 text-sm font-medium text-gray-600">Invoice</th>
-                            <th class="text-left py-2 text-sm font-medium text-gray-600">Client</th>
-                            <th class="text-left py-2 text-sm font-medium text-gray-600">Amount</th>
-                            <th class="text-left py-2 text-sm font-medium text-gray-600">Status</th>
+                            <th class="text-left py-2 text-sm font-medium text-gray-600">{{ __('Invoice') }}</th>
+                            <th class="text-left py-2 text-sm font-medium text-gray-600">{{ __('Client') }}</th>
+                            <th class="text-left py-2 text-sm font-medium text-gray-600">{{ __('Amount') }}</th>
+                            <th class="text-left py-2 text-sm font-medium text-gray-600">{{ __('Status') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,13 +96,13 @@
                                 <td class="py-3">
                                     <span
                                         class="px-2 py-1 text-xs font-medium rounded-full bg-{{ $invoice->status_color }}-100 text-{{ $invoice->status_color }}-700">
-                                        {{ ucfirst($invoice->status) }}
+                                        {{ __(ucfirst($invoice->status)) }}
                                     </span>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="py-4 text-center text-gray-500">No invoices yet</td>
+                                <td colspan="4" class="py-4 text-center text-gray-500">{{ __('No invoices yet') }}</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -111,14 +111,14 @@
             @if($recentInvoices->count() > 0)
                 <div class="mt-4">
                     <a href="{{ route('invoices.index') }}"
-                        class="text-blue-600 hover:text-blue-700 text-sm font-medium">View
-                        all invoices →</a>
+                        class="text-blue-600 hover:text-blue-700 text-sm font-medium">{{ __('View all invoices') }} →</a>
                 </div>
             @endif
         </div>
 
         <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Revenue vs Expenses ({{ now()->year }})</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Revenue vs Expenses') }} ({{ now()->year }})
+            </h3>
             <div class="h-64 flex items-stretch justify-between gap-2 border-b border-gray-100 pb-2">
                 @for($month = 1; $month <= 12; $month++)
                     <div class="flex-1 flex items-end justify-center gap-1 group relative">
@@ -134,10 +134,10 @@
                         <!-- Tooltip Combined -->
                         <div class="absolute bottom-full mb-2 hidden group-hover:block z-20">
                             <div class="bg-gray-800 text-white p-2 rounded text-[10px] shadow-xl whitespace-nowrap">
-                                <div class="flex justify-between gap-4"><span>Rev:</span>
+                                <div class="flex justify-between gap-4"><span>{{ __('Rev') }}:</span>
                                     <span>{{ auth()->user()->business->currency_symbol }}{{ number_format($revenueByMonth[$month] ?? 0, 0) }}</span>
                                 </div>
-                                <div class="flex justify-between gap-4 text-red-300"><span>Exp:</span>
+                                <div class="flex justify-between gap-4 text-red-300"><span>{{ __('Exp') }}:</span>
                                     <span>{{ auth()->user()->business->currency_symbol }}{{ number_format($expensesByMonth[$month] ?? 0, 0) }}</span>
                                 </div>
                             </div>
@@ -152,9 +152,11 @@
                 @endfor
             </div>
             <div class="mt-4 flex gap-4 text-xs font-medium justify-center">
-                <div class="flex items-center"><span class="w-3 h-3 bg-blue-500 rounded-full mr-1.5"></span> Revenue
+                <div class="flex items-center"><span class="w-3 h-3 bg-blue-500 rounded-full mr-1.5"></span>
+                    {{ __('Revenue') }}
                 </div>
-                <div class="flex items-center"><span class="w-3 h-3 bg-red-400 rounded-full mr-1.5"></span> Expenses
+                <div class="flex items-center"><span class="w-3 h-3 bg-red-400 rounded-full mr-1.5"></span>
+                    {{ __('Expenses') }}
                 </div>
             </div>
         </div>
@@ -162,7 +164,7 @@
 
     @if(count($expensesByCategory) > 0)
         <div class="mt-8 bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-6">Expense Breakdown</h3>
+            <h3 class="text-lg font-semibold text-gray-900 mb-6">{{ __('Expense Breakdown') }}</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 @foreach($expensesByCategory as $cat => $total)
                     <div class="p-4 border rounded-lg bg-gray-50 flex flex-col justify-between">

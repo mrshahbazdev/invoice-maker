@@ -1,9 +1,10 @@
-@php $title = 'Team Settings'; @endphp
+@php $title = __('Team Settings'); @endphp
 
 <div>
     <div class="mb-8 items-center justify-between">
-        <h2 class="text-2xl font-bold text-gray-900">Team Management</h2>
-        <p class="text-gray-600">Invite and manage collaborators for {{ auth()->user()->business->name }}</p>
+        <h2 class="text-2xl font-bold text-gray-900">{{ __('Team Management') }}</h2>
+        <p class="text-gray-600">{{ __('Invite and manage collaborators for') }} {{ auth()->user()->business->name }}
+        </p>
     </div>
 
     @if (session()->has('message'))
@@ -42,26 +43,27 @@
                             d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z">
                         </path>
                     </svg>
-                    Invite Team Member
+                    {{ __('Invite Team Member') }}
                 </h3>
                 <form wire:submit="invite" class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Email Address') }}</label>
                         <input type="email" wire:model="email"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                            placeholder="colleague@example.com">
+                            placeholder="{{ __('colleague@example.com') }}">
                         @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Role') }}</label>
                         <select wire:model="role"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
-                            <option value="viewer">Viewer (Read Only)</option>
-                            <option value="admin">Admin (Full Access)</option>
+                            <option value="viewer">{{ __('Viewer (Read Only)') }}</option>
+                            <option value="admin">{{ __('Admin (Full Access)') }}</option>
                         </select>
                         <p class="mt-2 text-xs text-gray-500">
-                            <strong>Note:</strong> Admins can create invoices, manage clients, and invite others.
-                            Viewers can only see records.
+                            <strong>{{ __('Note') }}:</strong>
+                            {{ __('Admins can create invoices, manage clients, and invite others.') }}
+                            {{ __('Viewers can only see records.') }}
                         </p>
                     </div>
                     <button type="submit"
@@ -70,7 +72,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                         </svg>
-                        Send Invitation
+                        {{ __('Send Invitation') }}
                     </button>
                 </form>
             </div>
@@ -80,7 +82,7 @@
         <div class="lg:col-span-2 space-y-8">
             <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-100">
                 <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
-                    <h3 class="text-lg font-semibold text-gray-900">Current Members</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('Current Members') }}</h3>
                 </div>
                 <div class="divide-y divide-gray-100">
                     @foreach($members as $member)
@@ -95,7 +97,7 @@
                                         {{ $member->name }}
                                         @if($member->id === auth()->id())
                                             <span
-                                                class="ml-2 px-2 py-0.5 text-[10px] bg-gray-100 text-gray-600 rounded-full">You</span>
+                                                class="ml-2 px-2 py-0.5 text-[10px] bg-gray-100 text-gray-600 rounded-full">{{ __('You') }}</span>
                                         @endif
                                     </div>
                                     <div class="text-sm text-gray-500">{{ $member->email }}</div>
@@ -108,7 +110,7 @@
                                 </span>
                                 @if(auth()->user()->isOwner() && $member->id !== auth()->id() && !$member->isOwner())
                                     <button wire:click="removeMember({{ $member->id }})"
-                                        wire:confirm="Are you sure you want to remove this member?"
+                                        wire:confirm="{{ __('Are you sure you want to remove this member?') }}"
                                         class="p-2 text-gray-400 hover:text-red-600 transition">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -127,7 +129,7 @@
             @if($invitations->count() > 0)
                 <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-100">
                     <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex items-center">
-                        <h3 class="text-lg font-semibold text-gray-900">Pending Invitations</h3>
+                        <h3 class="text-lg font-semibold text-gray-900">{{ __('Pending Invitations') }}</h3>
                         <span
                             class="ml-2 px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full font-bold">{{ $invitations->count() }}</span>
                     </div>
@@ -141,7 +143,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
-                                        Expires {{ $invite->expires_at->diffForHumans() }}
+                                        {{ __('Expires') }} {{ $invite->expires_at->diffForHumans() }}
                                     </div>
                                 </div>
                                 <div class="flex items-center space-x-3">
@@ -151,14 +153,14 @@
                                     </span>
                                     <button wire:click="cancelInvitation({{ $invite->id }})"
                                         class="text-xs font-semibold text-red-600 hover:text-red-800 transition">
-                                        Cancel
+                                        {{ __('Cancel') }}
                                     </button>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                     <div class="px-6 py-4 bg-gray-50 text-xs text-gray-500 italic">
-                        Invited users will receive a link to join your business. Links are valid for 7 days.
+                        {{ __('Invited users will receive a link to join your business. Links are valid for 7 days.') }}
                     </div>
                 </div>
             @endif

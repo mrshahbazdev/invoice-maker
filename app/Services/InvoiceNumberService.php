@@ -9,21 +9,30 @@ class InvoiceNumberService
 {
     public function generate(Business $business): string
     {
-        $year = now()->year;
-        $prefix = 'INV-' . $year;
+        $prefix = $business->invoice_number_prefix ?? 'INV';
+        $next = $business->invoice_number_next ?? 1;
 
-        $lastInvoice = Invoice::where('business_id', $business->id)
-            ->where('invoice_number', 'like', $prefix . '-%')
-            ->orderBy('invoice_number', 'desc')
-            ->first();
+        $unique = false;
+        $number = '';
 
-        if ($lastInvoice) {
-            $lastNumber = (int) str_replace($prefix . '-', '', $lastInvoice->invoice_number);
-            $newNumber = $lastNumber + 1;
-        } else {
-            $newNumber = 1;
+        while (!$unique) {
+            $number = sprintf('%s-%04d', $prefix, $next);
+
+            // Check if this number already exists for this business
+            $exists = Invoice::where('business_id', $business->id)
+                ->where('invoice_number', $number)
+                ->exists();
+
+            if (!$exists) {
+                $unique = true;
+            } else {
+                $next++;
+            }
         }
 
-        return sprintf('%s-%04d', $prefix, $newNumber);
+        // Update the business's next number for future use
+        $business->update(['invoice_number_next' => $next + 1]);
+
+        return $number;
     }
 }

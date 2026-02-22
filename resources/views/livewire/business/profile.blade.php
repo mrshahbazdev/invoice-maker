@@ -1,80 +1,99 @@
-@php $title = 'Business Profile'; @endphp
+@php $title = __('Business Profile'); @endphp
 
 <div>
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-gray-900">Business Profile</h2>
-        <p class="text-gray-600">Manage your business information</p>
+        <h2 class="text-2xl font-bold text-gray-900">{{ __('Business Profile') }}</h2>
+        <p class="text-gray-600">{{ __('Manage your business information') }}</p>
     </div>
 
     <div class="max-w-2xl">
         <form wire:submit="save" class="bg-white rounded-lg shadow p-6">
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Business Name') }}</label>
                 <input type="text" wire:model="name"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Your Business Name">
+                    placeholder="{{ __('Your Business Name') }}">
                 @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Email') }}</label>
                 <input type="email" wire:model="email"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="business@example.com">
+                    placeholder="{{ __('business@example.com') }}">
                 @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Phone') }}</label>
                 <input type="text" wire:model="phone"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="+1 (555) 123-4567">
+                    placeholder="{{ __('+1 (555) 123-4567') }}">
                 @error('phone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
-            <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+            <div class="mb-6" wire:ignore>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Address') }}</label>
                 <textarea wire:model="address" rows="3"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="123 Business Street&#10;City, State ZIP"></textarea>
+                    placeholder="{{ __('123 Business Street') }}&#10;{{ __('City, State ZIP') }}"></textarea>
                 @error('address') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Tax Number / VAT / GST</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Tax Number / VAT / GST') }}</label>
                 <input type="text" wire:model="tax_number"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="e.g. US123456789">
+                    placeholder="{{ __('e.g. US123456789') }}">
                 @error('tax_number') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Bank Details (Shown on Invoices)</label>
+                <label
+                    class="block text-sm font-medium text-gray-700 mb-1">{{ __('Bank Details (Shown on Invoices)') }}</label>
                 <textarea wire:model="bank_details" rows="3"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Bank Name: Example Bank&#10;Account No: 123456789&#10;Routing/Swift: EXMPUS33"></textarea>
+                    placeholder="{{ __('Bank Name: Example Bank') }}&#10;{{ __('Account No: 123456789') }}&#10;{{ __('Routing/Swift: EXMPUS33') }}"></textarea>
                 @error('bank_details') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Currency</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Currency') }}</label>
                 <select wire:model="currency"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="USD">USD - US Dollar</option>
-                    <option value="EUR">EUR - Euro</option>
-                    <option value="GBP">GBP - British Pound</option>
-                    <option value="CAD">CAD - Canadian Dollar</option>
-                    <option value="AUD">AUD - Australian Dollar</option>
-                    <option value="JPY">JPY - Japanese Yen</option>
-                    <option value="PKR">PKR - Pakistani Rupee</option>
-                    <option value="INR">INR - Indian Rupee</option>
-                    <option value="AED">AED - UAE Dirham</option>
+                    <option value="USD">{{ __('USD - US Dollar') }}</option>
+                    <option value="EUR">{{ __('EUR - Euro') }}</option>
+                    <option value="GBP">{{ __('GBP - British Pound') }}</option>
+                    <option value="CAD">{{ __('CAD - Canadian Dollar') }}</option>
+                    <option value="AUD">{{ __('AUD - Australian Dollar') }}</option>
+                    <option value="JPY">{{ __('JPY - Japanese Yen') }}</option>
+                    <option value="PKR">{{ __('PKR - Pakistani Rupee') }}</option>
+                    <option value="INR">{{ __('INR - Indian Rupee') }}</option>
+                    <option value="AED">{{ __('AED - UAE Dirham') }}</option>
                 </select>
                 @error('currency') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Timezone</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Language') }}</label>
+                <select wire:model="language"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <option value="en">English</option>
+                    <option value="de">German (Deutsch)</option>
+                    <option value="es">Spanish (Español)</option>
+                    <option value="fr">French (Français)</option>
+                    <option value="it">Italian (Italiano)</option>
+                    <option value="pt">Portuguese (Português)</option>
+                    <option value="ar">Arabic (العربية)</option>
+                    <option value="zh">Chinese (中文)</option>
+                    <option value="ja">Japanese (日本語)</option>
+                    <option value="ru">Russian (Русский)</option>
+                </select>
+                @error('language') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Timezone') }}</label>
                 <select wire:model="timezone"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="UTC">UTC</option>
@@ -90,13 +109,32 @@
                 @error('timezone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label
+                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('Invoice Number Prefix') }}</label>
+                    <input type="text" wire:model="invoice_number_prefix"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="e.g. INV">
+                    @error('invoice_number_prefix') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Next Invoice Number') }}</label>
+                    <input type="number" wire:model="invoice_number_next"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="1">
+                    @error('invoice_number_next') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    <p class="mt-1 text-xs text-gray-500">{{ __('The sequence will continue from this number.') }}</p>
+                </div>
+            </div>
+
             <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Logo</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Logo') }}</label>
                 @if($business && $business->logo)
                     <div class="mb-4 flex items-center gap-4">
                         <img src="{{ asset('storage/' . $business->logo) }}" alt="Logo" class="h-16 w-auto">
                         <button type="button" wire:click="removeLogo"
-                            class="text-red-600 hover:text-red-700 text-sm">Remove</button>
+                            class="text-red-600 hover:text-red-700 text-sm">{{ __('Remove') }}</button>
                     </div>
                 @endif
                 <input type="file" wire:model="logo"
@@ -105,16 +143,18 @@
             </div>
 
             <div class="mb-8 border-t border-gray-200 pt-8">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Online Payments</h3>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Online Payments') }}</h3>
                 <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h4 class="text-base font-medium text-gray-900">Stripe Integration</h4>
-                            <p class="text-sm text-gray-500 mt-1">Accept credit cards, Apple Pay, and Google Pay
-                                directly on your invoices.</p>
+                            <h4 class="text-base font-medium text-gray-900">{{ __('Stripe Integration') }}</h4>
+                            <p class="text-sm text-gray-500 mt-1">
+                                {{ __('Accept credit cards, Apple Pay, and Google Pay directly on your invoices.') }}
+                            </p>
                         </div>
                         @if(!$business)
-                            <p class="text-sm text-gray-400 italic">Create your business profile first to connect Stripe.
+                            <p class="text-sm text-gray-400 italic">
+                                {{ __('Create your business profile first to connect Stripe.') }}
                             </p>
                         @elseif($stripe_onboarding_complete)
                             <div class="flex items-center gap-2">
@@ -124,7 +164,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7"></path>
                                     </svg>
-                                    Connected
+                                    {{ __('Connected') }}
                                 </span>
                             </div>
                         @else
@@ -134,7 +174,7 @@
                                     <path
                                         d="M13.976 9.15c-2.172-.806-3.356-1.143-3.356-2.076 0-.776.78-1.42 2.308-1.42 1.34 0 2.872.54 4.02 1.258l1.325-3.56A10.824 10.824 0 0012.784 2c-3.792 0-6.19 1.947-6.19 4.796 0 3.737 4.197 4.547 5.926 5.093 2.14.678 3.12 1.256 3.12 2.238 0 .86-.88 1.488-2.617 1.488-1.503 0-3.32-.61-4.706-1.487l-1.393 3.61c1.472.8 3.518 1.257 5.564 1.257 3.96 0 6.33-1.928 6.33-4.887 0-3.5-3.615-4.14-5.842-5.02z" />
                                 </svg>
-                                Connect with Stripe
+                                {{ __('Connect with Stripe') }}
                             </button>
                         @endif
                     </div>
@@ -144,7 +184,7 @@
             <div class="flex justify-end">
                 <button type="submit"
                     class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-200">
-                    {{ $business ? 'Save Changes' : 'Create Business Profile' }}
+                    {{ $business ? __('Save Changes') : __('Create Business Profile') }}
                 </button>
             </div>
         </form>
