@@ -18,29 +18,28 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->createDemoUser();
+        $business = $this->createDemoUser();
 
-        $this->call([
-            TemplateSeeder::class,
-        ]);
+        $this->callWith(TemplateSeeder::class, ['business_id' => $business->id]);
 
-        $this->createClients();
-        $this->createProducts();
-        $this->createInvoices();
+        $this->createClients($business);
+        $this->createProducts($business);
+        $this->createInvoices($business);
     }
 
-    private function createDemoUser(): void
+    private function createDemoUser(): Business
     {
-        $user = User::firstOrCreate(
+        $user = User::updateOrCreate(
             ['email' => 'demo@invoicemaker.com'],
             [
                 'name' => 'Demo User',
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
+                'role' => User::ROLE_OWNER,
             ]
         );
 
-        Business::firstOrCreate(
+        $business = Business::updateOrCreate(
             ['user_id' => $user->id],
             [
                 'name' => 'Demo Business Inc.',
@@ -53,13 +52,17 @@ United States',
                 'logo' => null,
                 'currency' => 'USD',
                 'timezone' => 'America/Los_Angeles',
+                'plan' => 'free',
             ]
         );
+
+        $user->update(['business_id' => $business->id]);
+
+        return $business;
     }
 
-    private function createClients(): void
+    private function createClients(Business $business): void
     {
-        $business = Business::first();
         $clients = [
             [
                 'name' => 'John Smith',
@@ -71,6 +74,7 @@ New York, NY 10001
 United States',
                 'tax_number' => '123456789',
                 'notes' => 'VIP Client - Always pays on time',
+                'language' => 'en',
             ],
             [
                 'name' => 'Sarah Johnson',
@@ -82,6 +86,7 @@ Los Angeles, CA 90001
 United States',
                 'tax_number' => '987654321',
                 'notes' => '',
+                'language' => 'en',
             ],
             [
                 'name' => 'Michael Chen',
@@ -93,6 +98,7 @@ Austin, TX 78701
 United States',
                 'tax_number' => '456123789',
                 'notes' => 'Startup client - flexible payment terms',
+                'language' => 'en',
             ],
             [
                 'name' => 'Emily Rodriguez',
@@ -104,6 +110,7 @@ Chicago, IL 60601
 United States',
                 'tax_number' => '789456123',
                 'notes' => 'Design and branding services',
+                'language' => 'en',
             ],
             [
                 'name' => 'David Wilson',
@@ -115,6 +122,7 @@ Miami, FL 33101
 United States',
                 'tax_number' => '321654987',
                 'notes' => 'Long-term contract',
+                'language' => 'en',
             ],
             [
                 'name' => 'Lisa Anderson',
@@ -126,6 +134,7 @@ Seattle, WA 98101
 United States',
                 'tax_number' => '654789321',
                 'notes' => '',
+                'language' => 'en',
             ],
             [
                 'name' => 'Robert Taylor',
@@ -137,6 +146,7 @@ Detroit, MI 48201
 United States',
                 'tax_number' => '987321654',
                 'notes' => 'Industrial client',
+                'language' => 'en',
             ],
             [
                 'name' => 'Jennifer Martinez',
@@ -148,6 +158,7 @@ Boston, MA 02101
 United States',
                 'tax_number' => '147258369',
                 'notes' => 'Healthcare industry',
+                'language' => 'en',
             ],
             [
                 'name' => 'Christopher Lee',
@@ -159,6 +170,7 @@ New York, NY 10005
 United States',
                 'tax_number' => '369147258',
                 'notes' => 'Financial sector client',
+                'language' => 'en',
             ],
             [
                 'name' => 'Amanda Brown',
@@ -170,20 +182,20 @@ Denver, CO 80201
 United States',
                 'tax_number' => '258369147',
                 'notes' => 'Education technology',
+                'language' => 'en',
             ],
         ];
 
         foreach ($clients as $client) {
-            Client::firstOrCreate(
-                ['email' => $client['email']],
-                array_merge(['business_id' => $business->id], $client)
+            Client::updateOrCreate(
+                ['email' => $client['email'], 'business_id' => $business->id],
+                $client
             );
         }
     }
 
-    private function createProducts(): void
+    private function createProducts(Business $business): void
     {
-        $business = Business::first();
         $products = [
             [
                 'name' => 'Web Development Package',
@@ -293,46 +305,23 @@ United States',
         ];
 
         foreach ($products as $product) {
-            Product::firstOrCreate(
-                ['name' => $product['name']],
-                array_merge(['business_id' => $business->id], $product)
+            Product::updateOrCreate(
+                ['name' => $product['name'], 'business_id' => $business->id],
+                $product
             );
         }
     }
 
-    private function createTemplates(): void
+    private function createInvoices(Business $business): void
     {
-        $business = Business::first();
+        $clients = Client::where('business_id', $business->id)->get();
+        $products = Product::where('business_id', $business->id)->get();
+        $template = Template::where('business_id', $business->id)->where('is_default', true)->first()
+            ?: Template::where('business_id', $business->id)->first();
 
-        Template::firstOrCreate(
-            ['business_id' => $business->id, 'name' => 'Modern Blue'],
-            [
-                'name' => 'Modern Blue',
-                'is_default' => true,
-                'primary_color' => '#3B82F6',
-                'font_family' => 'sans',
-                'logo_position' => 'left',
-            ]
-        );
-
-        Template::firstOrCreate(
-            ['business_id' => $business->id, 'name' => 'Elegant Green'],
-            [
-                'name' => 'Elegant Green',
-                'is_default' => false,
-                'primary_color' => '#10B981',
-                'font_family' => 'serif',
-                'logo_position' => 'center',
-            ]
-        );
-    }
-
-    private function createInvoices(): void
-    {
-        $business = Business::first();
-        $clients = Client::all();
-        $products = Product::all();
-        $template = Template::where('is_default', true)->first() ?: Template::first();
+        if ($clients->isEmpty() || $products->isEmpty() || !$template) {
+            return;
+        }
 
         $invoiceData = [
             [
@@ -551,6 +540,9 @@ United States',
         ];
 
         foreach ($invoiceData as $data) {
+            if (!isset($clients[$data['client_index']]))
+                continue;
+
             $client = $clients[$data['client_index']];
             $invoiceNumber = 'INV-' . now()->year . '-' . str_pad((string) (Invoice::where('business_id', $business->id)->count() + 1), 4, '0', STR_PAD_LEFT);
 
@@ -559,6 +551,9 @@ United States',
             $itemData = [];
 
             foreach ($data['items'] as $item) {
+                if (!isset($products[$item['product_index']]))
+                    continue;
+
                 $product = $products[$item['product_index']];
                 $itemTotal = $item['qty'] * $product->price;
                 $itemTax = $itemTotal * ($product->tax_rate / 100);
@@ -601,7 +596,6 @@ United States',
             foreach ($itemData as $item) {
                 InvoiceItem::create(array_merge($item, [
                     'invoice_id' => $invoice->id,
-                    'product_id' => $products[$data['items'][0]['product_index']]->id,
                 ]));
             }
 

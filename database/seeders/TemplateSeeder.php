@@ -17,9 +17,12 @@ class TemplateSeeder extends Seeder
     {
         $businesses = Business::all();
 
+        if ($businesses->isEmpty()) {
+            return;
+        }
+
         foreach ($businesses as $business) {
             $templates = [
-                // Template 1 (Already existing 'Default', we'll just add more)
                 [
                     'name' => 'Minimalist Professional',
                     'primary_color' => '#1f2937',
@@ -32,7 +35,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'Thank you for your business!',
                     'enable_qr' => true,
                 ],
-                // Template 2
                 [
                     'name' => 'Creative Studio Orange',
                     'primary_color' => '#f97316',
@@ -45,7 +47,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'We appreciate your creative collaboration.',
                     'enable_qr' => true,
                 ],
-                // Template 3
                 [
                     'name' => 'Tech Startup Blue',
                     'primary_color' => '#3b82f6',
@@ -58,7 +59,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'Built with code & coffee.',
                     'enable_qr' => true,
                 ],
-                // Template 4
                 [
                     'name' => 'Elegant Emerald',
                     'primary_color' => '#10b981',
@@ -71,7 +71,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'Partnering for your success.',
                     'enable_qr' => false,
                 ],
-                // Template 5
                 [
                     'name' => 'Corporate Navy',
                     'primary_color' => '#1e3a8a',
@@ -84,7 +83,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'Reliable & Professional Service.',
                     'enable_qr' => true,
                 ],
-                // Template 6
                 [
                     'name' => 'Modern Purple',
                     'primary_color' => '#8b5cf6',
@@ -97,7 +95,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'Designing the future.',
                     'enable_qr' => true,
                 ],
-                // Template 7
                 [
                     'name' => 'Sunset Red',
                     'primary_color' => '#ef4444',
@@ -110,7 +107,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'Fast and secure.',
                     'enable_qr' => false,
                 ],
-                // Template 8
                 [
                     'name' => 'Boutique Rose',
                     'primary_color' => '#f43f5e',
@@ -123,7 +119,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'Thank you for shopping local!',
                     'enable_qr' => true,
                 ],
-                // Template 9
                 [
                     'name' => 'Midnight Black',
                     'primary_color' => '#000000',
@@ -136,7 +131,6 @@ class TemplateSeeder extends Seeder
                     'footer_message' => 'Premium Quality Delivered.',
                     'enable_qr' => true,
                 ],
-                // Template 10
                 [
                     'name' => 'Eco Green',
                     'primary_color' => '#65a30d',
@@ -152,8 +146,7 @@ class TemplateSeeder extends Seeder
             ];
 
             foreach ($templates as $tmpl) {
-                // Check if template exists to avoid duplicates if run multiple times
-                Template::firstOrCreate([
+                Template::updateOrCreate([
                     'business_id' => $business->id,
                     'name' => $tmpl['name']
                 ], $tmpl);
