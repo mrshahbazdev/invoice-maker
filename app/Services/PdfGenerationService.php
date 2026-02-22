@@ -9,7 +9,7 @@ class PdfGenerationService
 {
     public function generate(Invoice $invoice)
     {
-        $invoice->load(['client', 'business', 'items.product', 'template']);
+        $invoice->load(['client', 'business.user', 'items.product', 'template']);
 
         // Set locale based on preference
         $locale = $invoice->client->language

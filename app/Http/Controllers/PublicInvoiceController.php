@@ -31,7 +31,7 @@ class PublicInvoiceController
             ], 403);
         }
 
-        $invoice->load(['client', 'business', 'items.product', 'payments']);
+        $invoice->load(['client', 'business.user', 'items.product', 'payments']);
 
         // Set locale based on preference
         $locale = $invoice->client->language
