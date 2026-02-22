@@ -12,6 +12,7 @@ class PublicInvoiceController
 {
     public function show(Request $request, Invoice $invoice)
     {
+        die('Hitting Controller. User: ' . (auth()->check() ? auth()->id() : 'Guest'));
         \Log::info('PublicInvoiceController@show', [
             'url' => $request->fullUrl(),
             'hasValidSignature' => $request->hasValidSignature(),
