@@ -10,6 +10,7 @@ use App\Models\Template;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Payment;
+use App\Models\Expense;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
 
         $this->createClients($business);
         $this->createProducts($business);
+        $this->createExpenses($business);
         $this->createInvoices($business);
     }
 
@@ -194,6 +196,20 @@ United States',
         }
     }
 
+    private function createExpenses(Business $business): void
+    {
+        $categories = ['Office', 'Marketing', 'Software', 'Travel', 'Utilities'];
+        for ($i = 0; $i < 12; $i++) {
+            Expense::create([
+                'business_id' => $business->id,
+                'category' => $categories[array_rand($categories)],
+                'amount' => rand(50, 500),
+                'date' => now()->startOfYear()->addMonths($i)->subDays(rand(0, 25)),
+                'description' => 'Monthly business expense ' . ($i + 1),
+            ]);
+        }
+    }
+
     private function createProducts(Business $business): void
     {
         $products = [
@@ -327,8 +343,8 @@ United States',
             [
                 'client_index' => 0,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(60),
-                'due_date' => now()->subDays(30),
+                'invoice_date' => now()->subDays(10),
+                'due_date' => now()->addDays(20),
                 'items' => [
                     ['product_index' => 0, 'qty' => 1, 'discount' => 0],
                     ['product_index' => 1, 'qty' => 3, 'discount' => 0],
@@ -338,8 +354,8 @@ United States',
             [
                 'client_index' => 1,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(45),
-                'due_date' => now()->subDays(15),
+                'invoice_date' => now()->subDays(5),
+                'due_date' => now()->addDays(25),
                 'items' => [
                     ['product_index' => 2, 'qty' => 2, 'discount' => 50],
                     ['product_index' => 7, 'qty' => 2, 'discount' => 0],
@@ -370,8 +386,8 @@ United States',
             [
                 'client_index' => 4,
                 'status' => 'overdue',
-                'invoice_date' => now()->subDays(60),
-                'due_date' => now()->subDays(30),
+                'invoice_date' => now()->subDays(20),
+                'due_date' => now()->subDays(5),
                 'items' => [
                     ['product_index' => 6, 'qty' => 1, 'discount' => 0],
                     ['product_index' => 8, 'qty' => 10, 'discount' => 50],
@@ -434,8 +450,8 @@ United States',
             [
                 'client_index' => 1,
                 'status' => 'paid',
-                'invoice_date' => now()->subDays(50),
-                'due_date' => now()->subDays(20),
+                'invoice_date' => now()->subDays(25),
+                'due_date' => now()->subDays(5),
                 'items' => [
                     ['product_index' => 1, 'qty' => 6, 'discount' => 0],
                 ],
@@ -476,8 +492,8 @@ United States',
             [
                 'client_index' => 4,
                 'status' => 'overdue',
-                'invoice_date' => now()->subDays(90),
-                'due_date' => now()->subDays(60),
+                'invoice_date' => now()->subDays(40),
+                'due_date' => now()->subDays(10),
                 'items' => [
                     ['product_index' => 9, 'qty' => 1, 'discount' => 0],
                     ['product_index' => 5, 'qty' => 2, 'discount' => 100],
