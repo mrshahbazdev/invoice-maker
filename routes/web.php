@@ -26,7 +26,22 @@ use App\Livewire\Expenses\Edit as ExpensesEdit;
 use App\Livewire\Settings\Team as SettingsTeam;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PublicInvoiceController;
+use App\Http\Controllers\ClientPortalController;
 
+// Public Invoice View
+Route::get('/v/{invoice}', [PublicInvoiceController::class, 'show'])->name('invoices.public.show');
+Route::get('/v/{invoice}/download', [PublicInvoiceController::class, 'download'])->name('invoices.public.download');
+Route::post('/v/{invoice}/approve', [PublicInvoiceController::class, 'approve'])->name('invoices.public.approve');
+Route::post('/v/{invoice}/revision', [PublicInvoiceController::class, 'requestRevision'])->name('invoices.public.revision');
+Route::post('/v/{invoice}/comment', [PublicInvoiceController::class, 'addComment'])->name('invoices.public.comment');
+
+// Client Portal Routes (Signed for first-time login/registration)
+Route::get('/v/{invoice}/save', [ClientPortalController::class, 'showRegistrationForm'])->name('client.register')->middleware('signed');
+Route::post('/v/{invoice}/save', [ClientPortalController::class, 'register'])->name('client.register.post')->middleware('signed');
+
+// Stripe Payments
+Route::get('/v/{invoice}/pay', [StripeController::class, 'createCheckoutSession'])->name('invoices.pay');
 
 Route::get('/', function () {
     if (auth()->check() && auth()->user()->role === 'client') {
@@ -88,40 +103,7 @@ Route::middleware(['auth', 'business.member'])->group(function () {
 
 require __DIR__ . '/auth.php';
 
-use App\Http\Controllers\PublicInvoiceController;
-use App\Http\Controllers\ClientPortalController;
-
-// Public Invoice View
-Route::get('/public/invoices/{invoice}', [PublicInvoiceController::class, 'show'])
-    ->name('invoices.public.show');
-
-Route::get('/public/invoices/{invoice}/download', [PublicInvoiceController::class, 'download'])
-    ->name('invoices.public.download');
-
-Route::post('/public/invoices/{invoice}/approve', [PublicInvoiceController::class, 'approve'])
-    ->name('invoices.public.approve');
-
-Route::post('/public/invoices/{invoice}/revision', [PublicInvoiceController::class, 'requestRevision'])
-    ->name('invoices.public.revision');
-
-Route::post('/public/invoices/{invoice}/comment', [PublicInvoiceController::class, 'addComment'])
-    ->name('invoices.public.comment');
-
-// Client Portal Routes
-Route::get('/public/invoices/{invoice}/save', [ClientPortalController::class, 'showRegistrationForm'])
-    ->name('client.register')
-    ->middleware('signed');
-
-Route::post('/public/invoices/{invoice}/save', [ClientPortalController::class, 'register'])
-    ->name('client.register.post')
-    ->middleware('signed');
-
-// Stripe Payments
-Route::get('/public/invoices/{invoice}/pay', [StripeController::class, 'createCheckoutSession'])
-    ->name('invoices.pay');
-
-Route::post('/webhooks/stripe', [StripeController::class, 'handleWebhook'])
-    ->name('stripe.webhook');
+Route::post('/webhooks/stripe', [StripeController::class, 'handleWebhook'])->name('stripe.webhook');
 
 // Invitation Accept (Public/Guest)
 Route::get('/invitations/accept/{token}', [InvitationController::class, 'accept'])->name('invitations.accept');
