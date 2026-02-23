@@ -1,5 +1,7 @@
 {
     "Dashboard": "Cruscotto",
+    "Team": "Team",
+    "My Invoices": "Le mie fatture",
     "Invoices": "Fatture",
     "Clients": "Clienti",
     "Products": "Prodotti",
@@ -250,8 +252,20 @@
     "Record your first expense": "Registra la tua prima spesa",
     "Edit Expense": "Modifica Spesa",
     "Update your expense details": "Aggiorna i dettagli della spesa",
-    "Preview New:": "Anteprima Nuova:",
-    "Current Receipt:": "Ricevuta Attuale:",
+    "Preview New:": "Anteprima nuova:",
+    "Current Receipt:": "Ricevuta attuale:",
     "Upload new file": "Carica nuovo file",
-    "Revenue": "Entrate"
+    "Revenue": "Entrate",
+    "Email Settings (Optional SMTP)": "Impostazioni e-mail (SMTP opzionale)",
+    "Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.": "Configura il tuo server SMTP per inviare e-mail dal tuo dominio. Se lasciato vuoto, verrà utilizzato il valore predefinito del sistema.",
+    "SMTP Host": "Host SMTP",
+    "SMTP Port": "Porta SMTP",
+    "SMTP Username": "Nome utente SMTP",
+    "SMTP Password": "Password SMTP",
+    "Encryption": "Crittografia",
+    "None": "Nessuna",
+    "Test Connection": "Test connettività",
+    "Testing...": "Test in corso...",
+    "From Email": "E-mail del mittente",
+    "From Name": "Nome del mittente"
 }

@@ -112,9 +112,16 @@
                 <div class="text-2xl font-bold">{{ __('Total') }}:
                     {{ $this->currency_symbol }}{{ number_format((float) $this->totals['grand_total'], 2) }}
                 </div>
-                <button wire:click="save"
-                    class="px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 shadow transition text-lg">
-                    ✔ {{ __('Create Invoice') }}
+                <button wire:click="save" wire:loading.attr="disabled"
+                    class="inline-flex items-center px-8 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 shadow transition text-lg disabled:opacity-50">
+                    <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span>✔ {{ __('Create Invoice') }}</span>
                 </button>
             </div>
         </div>
@@ -362,7 +369,8 @@
                                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     @error('next_run_date') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                                     <p class="text-[10px] text-gray-400 mt-1 italic">
-                                        {{ __('The system will create the first copy on this date.') }}</p>
+                                        {{ __('The system will create the first copy on this date.') }}
+                                    </p>
                                 </div>
                             </div>
                         @endif
@@ -442,8 +450,16 @@
                     {{ __('Next') }} →
                 </button>
             @else
-                <button wire:click="save" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
-                    {{ __('Create Invoice') }}
+                <button wire:click="save" wire:loading.attr="disabled"
+                    class="inline-flex items-center px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:opacity-50">
+                    <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span>{{ __('Create Invoice') }}</span>
                 </button>
             @endif
         </div>

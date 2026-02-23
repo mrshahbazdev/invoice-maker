@@ -1,5 +1,7 @@
 {
     "Dashboard": "لوحة القيادة",
+    "Team": "الفريق",
+    "My Invoices": "فواتيري",
     "Invoices": "الفواتير",
     "Clients": "العملاء",
     "Products": "المنتجات",
@@ -250,8 +252,20 @@
     "Record your first expense": "سجل أول مصروف لك",
     "Edit Expense": "تعديل المصروف",
     "Update your expense details": "تحديث تفاصيل المصروف الخاص بك",
-    "Preview New:": "معاينة جديد:",
+    "Preview New:": "معاينة جديدة:",
     "Current Receipt:": "الإيصال الحالي:",
     "Upload new file": "تحميل ملف جديد",
-    "Revenue": "الإيرادات"
+    "Revenue": "الإيرادات",
+    "Email Settings (Optional SMTP)": "إعدادات البريد الإلكتروني (SMTP اختياري)",
+    "Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.": "قم بتتهيئ خادم SMTP الخاص بك لإرسال رسائل البريد الإلكتروني من نطاقك الخاص. إذا ترك فارغًا، فسيتم استخدام الافتراضي للنظام.",
+    "SMTP Host": "مضيف SMTP",
+    "SMTP Port": "منفذ SMTP",
+    "SMTP Username": "اسم مستخدم SMTP",
+    "SMTP Password": "كلمة مرور SMTP",
+    "Encryption": "التشفير",
+    "None": "لا شيء",
+    "Test Connection": "اختبار الاتصال",
+    "Testing...": "جاري الاختبار...",
+    "From Email": "بريد المرسل",
+    "From Name": "اسم المرسل"
 }

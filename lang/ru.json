@@ -1,5 +1,7 @@
 {
     "Dashboard": "Панель управления",
+    "Team": "Команда",
+    "My Invoices": "Мои счета",
     "Invoices": "Счета",
     "Clients": "Клиенты",
     "Products": "Продукты",
@@ -250,8 +252,20 @@
     "Record your first expense": "Записать первый расход",
     "Edit Expense": "Изменить расход",
     "Update your expense details": "Обновить детали расхода",
-    "Preview New:": "Новый предпросмотр:",
-    "Current Receipt:": "Текущий чек:",
+    "Preview New:": "Предварительный просмотр новых:",
+    "Current Receipt:": "Текущая квитанция:",
     "Upload new file": "Загрузить новый файл",
-    "Revenue": "Выручка"
+    "Revenue": "Выручка",
+    "Email Settings (Optional SMTP)": "Настройки электронной почты (дополнительный SMTP)",
+    "Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.": "Настройте собственный SMTP-сервер для отправки писем с вашего домена. Если поле не заполнено, будет использоваться значение по умолчанию в системе.",
+    "SMTP Host": "SMTP-хост",
+    "SMTP Port": "SMTP-порт",
+    "SMTP Username": "Имя пользователя SMTP",
+    "SMTP Password": "Пароль SMTP",
+    "Encryption": "Шифрование",
+    "None": "Нет",
+    "Test Connection": "Проверить соединение",
+    "Testing...": "Тестирование...",
+    "From Email": "Электронная почта отправителя",
+    "From Name": "Имя отправителя"
 }

@@ -1,5 +1,7 @@
 {
     "Dashboard": "Tableau de bord",
+    "Team": "Équipe",
+    "My Invoices": "Mes factures",
     "Invoices": "Factures",
     "Clients": "Clients",
     "Products": "Produits",
@@ -250,8 +252,20 @@
     "Record your first expense": "Enregistrez votre première dépense",
     "Edit Expense": "Modifier la dépense",
     "Update your expense details": "Mettez à jour les détails de votre dépense",
-    "Preview New:": "Aperçu nouveau :",
+    "Preview New:": "Nouvel aperçu :",
     "Current Receipt:": "Reçu actuel :",
     "Upload new file": "Télécharger un nouveau fichier",
-    "Revenue": "Revenu"
+    "Revenue": "Revenu",
+    "Email Settings (Optional SMTP)": "Paramètres de messagerie (SMTP facultatif)",
+    "Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.": "Configurez votre propre serveur SMTP pour envoyer des e-mails depuis votre propre domaine. Si laissé vide, la valeur par défaut du système sera utilisée.",
+    "SMTP Host": "Hôte SMTP",
+    "SMTP Port": "Port SMTP",
+    "SMTP Username": "Nom d'utilisateur SMTP",
+    "SMTP Password": "Mot de passe SMTP",
+    "Encryption": "Chiffrement",
+    "None": "Aucun",
+    "Test Connection": "Tester la connexion",
+    "Testing...": "Test en cours...",
+    "From Email": "E-mail de l'expéditeur",
+    "From Name": "Nom de l'expéditeur"
 }

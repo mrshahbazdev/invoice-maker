@@ -1,5 +1,7 @@
 {
     "Dashboard": "ダッシュボード",
+    "Team": "チーム",
+    "My Invoices": "マイ請求書",
     "Invoices": "請求書",
     "Clients": "顧客",
     "Products": "商品",
@@ -250,8 +252,20 @@
     "Record your first expense": "最初の経費を記録する",
     "Edit Expense": "経費を編集",
     "Update your expense details": "経費の詳細を更新",
-    "Preview New:": "新しいプレビュー:",
-    "Current Receipt:": "現在の領収書:",
+    "Preview New:": "新しいプレビュー：",
+    "Current Receipt:": "現在の領収書：",
     "Upload new file": "新しいファイルをアップロード",
-    "Revenue": "収益"
+    "Revenue": "収益",
+    "Email Settings (Optional SMTP)": "メール設定 (オプションの SMTP)",
+    "Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.": "独自のドメインからメールを送信するには、独自の SMTP サーバーを設定します。空のままにすると、システムのデフォルトが使用されます。",
+    "SMTP Host": "SMTP ホスト",
+    "SMTP Port": "SMTP ポート",
+    "SMTP Username": "SMTP ユーザー名",
+    "SMTP Password": "SMTP パスワード",
+    "Encryption": "暗号化",
+    "None": "なし",
+    "Test Connection": "接続テスト",
+    "Testing...": "テスト中...",
+    "From Email": "送信元メールアドレス",
+    "From Name": "送信元名称"
 }

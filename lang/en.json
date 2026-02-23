@@ -1,5 +1,7 @@
 {
     "Dashboard": "Dashboard",
+    "Team": "Team",
+    "My Invoices": "My Invoices",
     "Invoices": "Invoices",
     "Clients": "Clients",
     "Products": "Products",
@@ -256,5 +258,17 @@
     "Preview New:": "Preview New:",
     "Current Receipt:": "Current Receipt:",
     "Upload new file": "Upload new file",
-    "Revenue": "Revenue"
+    "Revenue": "Revenue",
+    "Email Settings (Optional SMTP)": "Email Settings (Optional SMTP)",
+    "Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.": "Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.",
+    "SMTP Host": "SMTP Host",
+    "SMTP Port": "SMTP Port",
+    "SMTP Username": "SMTP Username",
+    "SMTP Password": "SMTP Password",
+    "Encryption": "Encryption",
+    "None": "None",
+    "Test Connection": "Test Connection",
+    "Testing...": "Testing...",
+    "From Email": "From Email",
+    "From Name": "From Name"
 }

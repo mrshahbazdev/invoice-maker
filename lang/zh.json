@@ -1,5 +1,7 @@
 {
     "Dashboard": "仪表板",
+    "Team": "团队",
+    "My Invoices": "我的账单",
     "Invoices": "发票",
     "Clients": "客户",
     "Products": "产品",
@@ -250,8 +252,20 @@
     "Record your first expense": "记录您的首笔费用",
     "Edit Expense": "编辑费用",
     "Update your expense details": "更新您的费用详情",
-    "Preview New:": "预览新文件：",
+    "Preview New:": "预览新：",
     "Current Receipt:": "当前收据：",
     "Upload new file": "上传新文件",
-    "Revenue": "收入"
+    "Revenue": "收入",
+    "Email Settings (Optional SMTP)": "电子邮件设置 (可选 SMTP)",
+    "Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.": "配置您自己的 SMTP 服务器以从您自己的域发送电子邮件。如果留空，将使用系统默认值。",
+    "SMTP Host": "SMTP 主机",
+    "SMTP Port": "SMTP 端口",
+    "SMTP Username": "SMTP 用户名",
+    "SMTP Password": "SMTP 密码",
+    "Encryption": "加密",
+    "None": "无",
+    "Test Connection": "测试连接",
+    "Testing...": "测试中...",
+    "From Email": "发件人电子邮箱",
+    "From Name": "发件人姓名"
 }
