@@ -103,6 +103,7 @@ Route::middleware(['auth', 'business.member'])->group(function () {
         Route::get('/export/pdf', [CashBookExportController::class, 'exportPdf'])->name('accounting.cash-book.export.pdf');
         Route::get('/categories', CategoriesIndex::class)->name('expenses.categories');
         Route::get('/cash-book', CashBookIndex::class)->name('accounting.cash-book');
+        Route::get('/profitability', \App\Livewire\Reports\Profitability::class)->name('reports.profitability');
     });
 });
 

@@ -14,6 +14,7 @@ class Product extends Model
         'name',
         'description',
         'price',
+        'purchase_price',
         'stock_quantity',
         'manage_stock',
         'unit',
@@ -23,6 +24,7 @@ class Product extends Model
 
     protected $casts = [
         'price' => 'decimal:2',
+        'purchase_price' => 'decimal:2',
         'tax_rate' => 'decimal:2',
         'manage_stock' => 'boolean',
         'stock_quantity' => 'integer',

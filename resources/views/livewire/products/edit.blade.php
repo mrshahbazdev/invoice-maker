@@ -24,17 +24,25 @@
 
             <div class="grid grid-cols-2 gap-4 mb-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Price') }} *</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Selling Price') }} *</label>
                     <input type="number" step="0.01" wire:model="price"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     @error('price') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Unit') }}</label>
-                    <input type="text" wire:model="unit"
+                    <label
+                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('Purchase Price (Cost)') }}</label>
+                    <input type="number" step="0.01" wire:model="purchase_price"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    @error('unit') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    @error('purchase_price') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Unit') }}</label>
+                <input type="text" wire:model="unit"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                @error('unit') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
             </div>
 
             <div class="mb-6">

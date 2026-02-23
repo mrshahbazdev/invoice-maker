@@ -26,19 +26,31 @@ class CashBookExportController
             ->orderBy('booking_number', 'asc')
             ->get();
 
-        $fileName = 'CashBook_' . str_replace(' ', '_', $business->name) . '_' . now()->format('Y-m-d') . '.csv';
+        $fileName = 'CashBook_' . str_replace(' ', '_', $business->name) . '_' . now()->format('Y-m-d') . '.xls';
 
         $headers = [
-            'Content-Type' => 'text/csv',
+            'Content-Type' => 'application/vnd.ms-excel',
             'Content-Disposition' => "attachment; filename=\"$fileName\"",
         ];
 
         return new StreamedResponse(function () use ($entries) {
             $handle = fopen('php://output', 'w');
-            fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM
-            fwrite($handle, "sep=,\n"); // Tell Excel the separator is comma
 
-            fputcsv($handle, [
+            // Output XML/HTML Header for Excel
+            fwrite($handle, '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">');
+            fwrite($handle, '<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">');
+            fwrite($handle, '<style>
+                table { border-collapse: collapse; }
+                th { background-color: #f1f5f9; border: 1px solid #cbd5e1; font-weight: bold; padding: 10px; }
+                td { border: 1px solid #e2e8f0; padding: 8px; vertical-align: top; }
+                .amount { text-align: right; font-family: monospace; }
+                .income { color: #15803d; }
+                .expense { color: #b91c1c; }
+            </style></head><body>');
+
+            fwrite($handle, '<table>');
+            fwrite($handle, '<thead><tr>');
+            foreach ([
                 __('Booking Number'),
                 __('Date'),
                 __('Type'),
@@ -48,22 +60,27 @@ class CashBookExportController
                 __('Amount'),
                 __('Linked Job'),
                 __('Posting Rule')
-            ]);
+            ] as $header) {
+                fwrite($handle, '<th>' . $header . '</th>');
+            }
+            fwrite($handle, '</tr></thead><tbody>');
 
             foreach ($entries as $entry) {
-                fputcsv($handle, [
-                    $entry->booking_number,
-                    $entry->date->format('d.m.Y'),
-                    ucfirst($entry->type),
-                    ucfirst($entry->source),
-                    $entry->category ? $entry->category->name : 'N/A',
-                    $entry->description,
-                    $entry->amount,
-                    $entry->invoice ? $entry->invoice->invoice_number : 'General',
-                    $entry->category ? $entry->category->posting_rule : ''
-                ]);
+                $typeClass = $entry->type === 'income' ? 'income' : 'expense';
+                fwrite($handle, '<tr>');
+                fwrite($handle, '<td>' . $entry->booking_number . '</td>');
+                fwrite($handle, '<td>' . $entry->date->format('d.m.Y') . '</td>');
+                fwrite($handle, '<td class="' . $typeClass . '">' . ucfirst($entry->type) . '</td>');
+                fwrite($handle, '<td>' . ucfirst($entry->source) . '</td>');
+                fwrite($handle, '<td>' . ($entry->category ? $entry->category->name : 'N/A') . '</td>');
+                fwrite($handle, '<td>' . $entry->description . '</td>');
+                fwrite($handle, '<td class="amount ' . $typeClass . '">' . number_format($entry->amount, 2, ',', '.') . ' €</td>');
+                fwrite($handle, '<td>' . ($entry->invoice ? $entry->invoice->invoice_number : 'General') . '</td>');
+                fwrite($handle, '<td>' . ($entry->category ? $entry->category->posting_rule : '') . '</td>');
+                fwrite($handle, '</tr>');
             }
 
+            fwrite($handle, '</tbody></table></body></html>');
             fclose($handle);
         }, 200, $headers);
     }
