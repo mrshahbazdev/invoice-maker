@@ -46,17 +46,43 @@
                     </div>
                     <div>
                         <label
-                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('Link to Job/Invoice (Optional)') }}</label>
+                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('Link to Invoice (Optional)') }}</label>
                         <select wire:model="invoice_id"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="">{{ __('General / No Link') }}</option>
+                            <option value="">{{ __('No Link') }}</option>
                             @foreach($invoices as $inv)
                                 <option value="{{ $inv->id }}">[{{ $inv->invoice_number }}] {{ $inv->client->name }}
-                                    ({{ Auth::user()->business->currency_symbol }}{{ number_format($inv->grand_total, 2) }})
                                 </option>
                             @endforeach
                         </select>
                         @error('invoice_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('Link to Client (Optional)') }}</label>
+                        <select wire:model="client_id"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">{{ __('No Link') }}</option>
+                            @foreach($clients as $client)
+                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('client_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                    <div>
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('Link to Product (Optional)') }}</label>
+                        <select wire:model="product_id"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">{{ __('No Link') }}</option>
+                            @foreach($products as $product)
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('product_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
                 </div>
 

@@ -15,6 +15,8 @@ class Expense extends Model
 
     protected $fillable = [
         'business_id',
+        'client_id',
+        'product_id',
         'category',
         'amount',
         'date',
@@ -29,11 +31,23 @@ class Expense extends Model
     protected $casts = [
         'date' => 'date',
         'amount' => 'decimal:2',
+        'client_id' => 'integer',
+        'product_id' => 'integer',
     ];
 
     public function business()
     {
         return $this->belongsTo(Business::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 
     public function invoice()

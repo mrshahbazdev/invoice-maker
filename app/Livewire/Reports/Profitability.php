@@ -104,14 +104,21 @@ class Profitability extends Component
             ->groupBy('products.id', 'products.name')
             ->get()
             ->map(function ($product) {
+                // Sum direct expenses linked to this product (e.g. specific stock purchases)
+                $productDirectExpenses = Expense::where('product_id', $product->id)
+                    ->whereBetween('date', [$this->startDate, $this->endDate])
+                    ->sum('amount');
+
+                $totalCosts = (float) ($product->total_cost + $productDirectExpenses);
+
                 return [
                     'id' => $product->id,
                     'name' => $product->name,
                     'sold' => (float) $product->total_sold,
                     'sales' => (float) $product->total_revenue,
-                    'costs' => (float) $product->total_cost,
-                    'difference' => (float) ($product->total_revenue - $product->total_cost),
-                    'margin' => $product->total_revenue > 0 ? (($product->total_revenue - $product->total_cost) / $product->total_revenue) * 100 : 0
+                    'costs' => $totalCosts,
+                    'difference' => (float) ($product->total_revenue - $totalCosts),
+                    'margin' => $product->total_revenue > 0 ? (($product->total_revenue - $totalCosts) / $product->total_revenue) * 100 : 0
                 ];
             })
             ->sortByDesc('difference');

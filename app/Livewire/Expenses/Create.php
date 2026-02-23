@@ -14,6 +14,8 @@ class Create extends Component
     public $source = 'cash';
     public $category_id = null;
     public $invoice_id = null;
+    public $client_id = null;
+    public $product_id = null;
     public $category = '';
     public $amount;
     public $date;
@@ -27,6 +29,8 @@ class Create extends Component
         'source' => 'required|in:cash,bank',
         'category_id' => 'required|exists:accounting_categories,id',
         'invoice_id' => 'nullable|exists:invoices,id',
+        'client_id' => 'nullable|exists:clients,id',
+        'product_id' => 'nullable|exists:products,id',
         'amount' => 'required|numeric|min:0',
         'date' => 'required|date',
         'description' => 'required|string|max:255',
@@ -80,9 +84,13 @@ class Create extends Component
         \Illuminate\Support\Facades\DB::transaction(function () use ($receiptPath) {
             $business = Auth::user()->business;
             $invoice_id = $this->invoice_id ?: null;
+            $client_id = $this->client_id ?: null;
+            $product_id = $this->product_id ?: null;
 
             $expense = \App\Models\Expense::create([
                 'business_id' => $business->id,
+                'client_id' => $client_id,
+                'product_id' => $product_id,
                 'category_id' => $this->category_id,
                 'category' => $this->category,
                 'amount' => $this->amount,
@@ -120,10 +128,14 @@ class Create extends Component
         $business = Auth::user()->business;
         $categories = $business->accounting_categories ?? \App\Models\AccountingCategory::where('business_id', $business->id)->get();
         $invoices = $business->invoices()->orderBy('created_at', 'desc')->get();
+        $clients = $business->clients()->orderBy('name')->get();
+        $products = $business->products()->orderBy('name')->get();
 
         return view('livewire.expenses.create', [
             'categories' => $categories,
             'invoices' => $invoices,
+            'clients' => $clients,
+            'products' => $products,
         ]);
     }
 }
