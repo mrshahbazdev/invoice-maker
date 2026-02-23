@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\InvoiceController;
 use App\Livewire\Dashboard;
 use App\Livewire\Business\Profile;
@@ -31,6 +32,16 @@ use App\Http\Controllers\ClientPortalController;
 use App\Http\Controllers\CashBookExportController;
 use App\Livewire\Accounting\Categories\Index as CategoriesIndex;
 use App\Livewire\Accounting\CashBook\Index as CashBookIndex;
+
+// Temporary Migration Route
+Route::get('/run-migrations', function () {
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        return "Migrations successful!<br><pre>" . Artisan::output() . "</pre>";
+    } catch (\Exception $e) {
+        return "Migration failed: " . $e->getMessage();
+    }
+});
 
 // Public Invoice View
 Route::get('/v/{invoice}', [PublicInvoiceController::class, 'show'])->name('invoices.public.show');
