@@ -172,9 +172,6 @@
                             @if($sortBy === 'amount') <span
                             class="text-[10px]">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span> @endif
                         </th>
-                        <th class="px-3 py-3 text-right font-bold text-gray-500 uppercase tracking-wider">
-                            {{ __('Diff.') }}
-                        </th>
                         <th class="px-3 py-3 text-left font-bold text-gray-500 uppercase tracking-wider">
                             {{ __('Category') }}
                         </th>
@@ -210,9 +207,6 @@
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap text-right font-extrabold text-gray-900">
                                 {{ number_format($entry->amount, 2, ',', '.') }} €
-                            </td>
-                            <td class="px-3 py-2 whitespace-nowrap text-right text-gray-400">
-                                0,00 €
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap text-gray-600">
                                 <span

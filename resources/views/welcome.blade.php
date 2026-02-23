@@ -119,15 +119,15 @@
                             <div class="p-10 space-y-6">
                                 <div class="flex justify-between items-center group">
                                     <span
-                                        class="text-xs font-mono text-gray-500 group-hover:text-blue-400 transition-colors tracking-tighter uppercase">[RECORD]
-                                        RE-2024-001</span>
+                                        class="text-xs font-mono text-gray-500 group-hover:text-blue-400 transition-colors tracking-tighter uppercase">{{ __('[RECORD]') }}
+                                        {{ __('RE-2024-001') }}</span>
                                     <span class="text-sm font-black text-green-400 tracking-tight">+€1,250.00</span>
                                 </div>
                                 <div class="h-px bg-white/5"></div>
                                 <div class="flex justify-between items-center group">
                                     <span
-                                        class="text-xs font-mono text-gray-500 group-hover:text-red-400 transition-colors tracking-tighter uppercase">[DEBIT]
-                                        OFFICE EQUIP.</span>
+                                        class="text-xs font-mono text-gray-500 group-hover:text-red-400 transition-colors tracking-tighter uppercase">{{ __('[DEBIT]') }}
+                                        {{ __('OFFICE EQUIP.') }}</span>
                                     <span class="text-sm font-black text-red-400 tracking-tight">-€79.00</span>
                                 </div>
                                 <div class="h-px bg-white/5"></div>
@@ -228,7 +228,8 @@
                 <div
                     class="reveal glass-card p-12 rounded-[2.5rem] border-gray-100 flex flex-col items-center hover:shadow-2xl transition-all">
                     <h3 class="text-xl font-bold mb-2 text-gray-400 uppercase tracking-widest text-xs">
-                        {{ __('Essential') }}</h3>
+                        {{ __('Essential') }}
+                    </h3>
                     <div class="flex items-baseline mb-8">
                         <span class="text-5xl font-black text-gray-900">$0</span>
                         <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
@@ -261,7 +262,8 @@
                         {{ __('Most Popular') }}
                     </div>
                     <h3 class="text-xl font-bold mb-2 text-blue-600 uppercase tracking-widest text-xs">
-                        {{ __('Professional') }}</h3>
+                        {{ __('Professional') }}
+                    </h3>
                     <div class="flex items-baseline mb-8">
                         <span class="text-6xl font-black text-gray-900">$19</span>
                         <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
@@ -295,7 +297,8 @@
                 <div
                     class="reveal glass-card p-12 rounded-[2.5rem] border-gray-100 flex flex-col items-center hover:shadow-2xl transition-all">
                     <h3 class="text-xl font-bold mb-2 text-gray-400 uppercase tracking-widest text-xs">
-                        {{ __('Enterprise') }}</h3>
+                        {{ __('Enterprise') }}
+                    </h3>
                     <div class="flex items-baseline mb-8">
                         <span class="text-5xl font-black text-gray-900">$49</span>
                         <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
@@ -336,7 +339,8 @@
                 {{ __('Create Your Account Free') }}
             </a>
             <p class="mt-8 text-gray-500 font-bold uppercase tracking-widest text-[10px]">
-                {{ __('No credit card required') }}</p>
+                {{ __('No credit card required') }}
+            </p>
         </div>
     </section>
 </x-landing-layout>
