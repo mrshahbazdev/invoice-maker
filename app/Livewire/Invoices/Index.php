@@ -16,6 +16,13 @@ class Index extends Component
     public string $sortBy = 'invoice_date';
     public string $sortDirection = 'desc';
 
+    // Mark as Paid State
+    public bool $showPaidModal = false;
+    public $selectedInvoiceId;
+    public $paymentDate;
+    public $paymentSource = 'bank';
+    public $paymentDescription = '';
+
     public function sortBy(string $field): void
     {
         if ($this->sortBy === $field) {
@@ -31,6 +38,58 @@ class Index extends Component
         $invoice = Auth::user()->business->invoices()->findOrFail($id);
         $invoice->delete();
         session()->flash('message', 'Invoice deleted successfully.');
+    }
+
+    public function openPaidModal(int $id): void
+    {
+        $invoice = Auth::user()->business->invoices()->findOrFail($id);
+        $this->selectedInvoiceId = $id;
+        $this->paymentDate = now()->format('Y-m-d');
+        $this->paymentDescription = __('Payment for Invoice') . ' ' . $invoice->invoice_number;
+        $this->showPaidModal = true;
+    }
+
+    public function closePaidModal(): void
+    {
+        $this->showPaidModal = false;
+        $this->reset(['selectedInvoiceId', 'paymentDate', 'paymentSource', 'paymentDescription']);
+    }
+
+    public function markAsPaid(): void
+    {
+        $this->validate([
+            'paymentDate' => 'required|date',
+            'paymentSource' => 'required|in:cash,bank',
+            'paymentDescription' => 'required|string|max:255',
+        ]);
+
+        \Illuminate\Support\Facades\DB::transaction(function () {
+            $invoice = Auth::user()->business->invoices()->findOrFail($this->selectedInvoiceId);
+
+            // Update Invoice Status
+            $invoice->update([
+                'status' => \App\Models\Invoice::STATUS_PAID,
+                'amount_paid' => $invoice->grand_total,
+                'amount_due' => 0,
+            ]);
+
+            // Create Cash Book Entry
+            \App\Models\CashBookEntry::create([
+                'business_id' => Auth::user()->business_id,
+                'date' => $this->paymentDate,
+                'document_date' => $invoice->invoice_date,
+                'amount' => $invoice->grand_total,
+                'type' => 'income',
+                'source' => $this->paymentSource,
+                'description' => $this->paymentDescription,
+                'partner_name' => $invoice->client->company_name ?? $invoice->client->name,
+                'reference_number' => $invoice->invoice_number,
+                'invoice_id' => $invoice->id,
+            ]);
+        });
+
+        $this->closePaidModal();
+        session()->flash('message', __('Invoice marked as paid and Cash Book entry created.'));
     }
 
     public function render()

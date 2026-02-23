@@ -20,6 +20,8 @@ class Create extends Component
     public $description = '';
     public $receipt;
     public $posting_rule = '';
+    public $partner_name = '';
+    public $reference_number = '';
 
     protected $rules = [
         'source' => 'required|in:cash,bank',
@@ -28,6 +30,8 @@ class Create extends Component
         'amount' => 'required|numeric|min:0',
         'date' => 'required|date',
         'description' => 'required|string|max:255',
+        'partner_name' => 'nullable|string|max:255',
+        'reference_number' => 'nullable|string|max:255',
         'receipt' => 'nullable|image|max:2048', // 2MB Max
     ];
 
@@ -83,6 +87,8 @@ class Create extends Component
                 'amount' => $this->amount,
                 'date' => $this->date,
                 'description' => $this->description,
+                'partner_name' => $this->partner_name,
+                'reference_number' => $this->reference_number,
                 'receipt_path' => $receiptPath,
                 'invoice_id' => $this->invoice_id,
             ]);
@@ -91,10 +97,13 @@ class Create extends Component
             \App\Models\CashBookEntry::create([
                 'business_id' => $business->id,
                 'date' => $this->date,
+                'document_date' => $this->date,
                 'amount' => $this->amount,
                 'type' => 'expense',
                 'source' => $this->source,
                 'description' => $this->description,
+                'partner_name' => $this->partner_name,
+                'reference_number' => $this->reference_number,
                 'category_id' => $this->category_id,
                 'invoice_id' => $this->invoice_id,
                 'expense_id' => $expense->id,

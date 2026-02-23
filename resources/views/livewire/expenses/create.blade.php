@@ -38,7 +38,8 @@
                             <option value="">{{ __('Select Category') }}</option>
                             @foreach($categories as $cat)
                                 <option value="{{ $cat->id }}">{{ $cat->name }}
-                                    {{ $cat->booking_account ? "({$cat->booking_account})" : '' }}</option>
+                                    {{ $cat->booking_account ? "({$cat->booking_account})" : '' }}
+                                </option>
                             @endforeach
                         </select>
                         @error('category_id') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
@@ -78,6 +79,25 @@
                         </div>
                     </div>
                 @endif
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('Partner / Company') }}</label>
+                        <input type="text" wire:model="partner_name"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="{{ __('Apple, Microsoft, etc.') }}">
+                        @error('partner_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                    <div>
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('External Reference / Invoice #') }}</label>
+                        <input type="text" wire:model="reference_number"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="{{ __('RE-12345') }}">
+                        @error('reference_number') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div>

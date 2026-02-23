@@ -19,6 +19,8 @@ class Expense extends Model
         'amount',
         'date',
         'description',
+        'partner_name',
+        'reference_number',
         'receipt_path',
         'invoice_id',
         'category_id',

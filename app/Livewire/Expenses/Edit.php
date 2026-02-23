@@ -22,6 +22,8 @@ class Edit extends Component
     public $description = '';
     public $receipt;
     public $posting_rule = '';
+    public $partner_name = '';
+    public $reference_number = '';
 
     protected $rules = [
         'source' => 'required|in:cash,bank',
@@ -30,6 +32,8 @@ class Edit extends Component
         'amount' => 'required|numeric|min:0',
         'date' => 'required|date',
         'description' => 'required|string|max:255',
+        'partner_name' => 'nullable|string|max:255',
+        'reference_number' => 'nullable|string|max:255',
         'receipt' => 'nullable|image|max:2048',
     ];
 
@@ -42,6 +46,8 @@ class Edit extends Component
         $this->amount = $expense->amount;
         $this->date = $expense->date->format('Y-m-d');
         $this->description = $expense->description;
+        $this->partner_name = $expense->partner_name;
+        $this->reference_number = $expense->reference_number;
         $this->invoice_id = $expense->invoice_id;
 
         // Try to get source from CashBookEntry
@@ -70,6 +76,8 @@ class Edit extends Component
             'amount' => $this->amount,
             'date' => $this->date,
             'description' => $this->description,
+            'partner_name' => $this->partner_name,
+            'reference_number' => $this->reference_number,
             'invoice_id' => $this->invoice_id,
         ];
 
@@ -94,6 +102,8 @@ class Edit extends Component
                     'type' => 'expense',
                     'source' => $this->source,
                     'description' => $this->description,
+                    'partner_name' => $this->partner_name,
+                    'reference_number' => $this->reference_number,
                     'category_id' => $this->category_id,
                     'invoice_id' => $this->invoice_id,
                 ]

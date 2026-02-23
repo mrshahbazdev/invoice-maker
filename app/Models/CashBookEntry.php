@@ -12,11 +12,14 @@ class CashBookEntry extends Model
     protected $fillable = [
         'business_id',
         'booking_number',
+        'reference_number',
         'date',
+        'document_date',
         'amount',
         'type',
         'source',
         'description',
+        'partner_name',
         'category_id',
         'invoice_id',
         'expense_id',
@@ -24,6 +27,7 @@ class CashBookEntry extends Model
 
     protected $casts = [
         'date' => 'date',
+        'document_date' => 'date',
         'amount' => 'decimal:2',
     ];
 
