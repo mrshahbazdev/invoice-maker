@@ -36,19 +36,43 @@ use App\Livewire\Accounting\CashBook\Index as CashBookIndex;
 // Temporary Migration Route
 Route::get('/run-migrations', function () {
     try {
-        $output = "";
+        $output = "<h1>Migration Debugger</h1>";
+
+        // 0. Manual Fix Parameter
+        if (request()->has('fix')) {
+            if (!Schema::hasColumn('businesses', 'smtp_host')) {
+                Schema::table('businesses', function ($table) {
+                    $table->string('smtp_host')->nullable();
+                    $table->integer('smtp_port')->nullable();
+                    $table->string('smtp_username')->nullable();
+                    $table->string('smtp_password')->nullable();
+                    $table->string('smtp_encryption')->nullable();
+                    $table->string('smtp_from_address')->nullable();
+                    $table->string('smtp_from_name')->nullable();
+                });
+                $output .= "<b style='color:green'>MANUAL FIX APPLIED: Columns added!</b><br>";
+            } else {
+                $output .= "<b>Columns already exist, no manual fix needed.</b><br>";
+            }
+        }
 
         // 1. Run migrations
         Artisan::call('migrate', ['--force' => true]);
-        $output .= "<b>Migration Output:</b><br><pre>" . Artisan::output() . "</pre><br>";
+        $output .= "<b>Migration Output:</b><pre>" . Artisan::output() . "</pre>";
 
-        // 2. Check columns
+        // 2. Check migrations table
+        $migration = DB::table('migrations')->where('migration', 'like', '%add_smtp_settings_to_businesses_table%')->first();
+        $output .= "<b>Migration status in DB:</b> " . ($migration ? "RECORDED (Batch {$migration->batch})" : "NOT RECORDED") . "<br>";
+
+        // 3. Check columns
         $columns = DB::select('SHOW COLUMNS FROM businesses');
-        $output .= "<b>Table 'businesses' columns:</b><br><ul>";
+        $output .= "<b>Table 'businesses' columns:</b><ul>";
         foreach ($columns as $col) {
             $output .= "<li>{$col->Field} ({$col->Type})</li>";
         }
         $output .= "</ul>";
+
+        $output .= "<br><a href='?fix=1' style='padding:10px; background:blue; color:white; text-decoration:none;'>Click here to FORCE ADD columns Manually</a>";
 
         return $output;
     } catch (\Exception $e) {
