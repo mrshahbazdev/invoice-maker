@@ -68,8 +68,10 @@ class CashBookExportController
 
             foreach ($entries as $entry) {
                 $typeClass = $entry->type === 'income' ? 'income' : 'expense';
-                // Use negative value for expenses to make totals easier to calculate in Excel
+                // Use numeric value for calculation, but visual value for the cell content
                 $numericAmount = $entry->type === 'income' ? $entry->amount : -$entry->amount;
+                // Add explicit minus sign for expenses in display
+                $displayAmount = $entry->type === 'income' ? number_format($entry->amount, 2, ',', '.') : '-' . number_format($entry->amount, 2, ',', '.');
 
                 fwrite($handle, '<tr>');
                 fwrite($handle, '<td class="text">' . $entry->booking_number . '</td>');
@@ -78,8 +80,8 @@ class CashBookExportController
                 fwrite($handle, '<td>' . ucfirst($entry->source) . '</td>');
                 fwrite($handle, '<td>' . ($entry->category ? $entry->category->name : __('N/A')) . '</td>');
                 fwrite($handle, '<td>' . $entry->description . '</td>');
-                // Use x:num attribute for Excel to recognize it as a number
-                fwrite($handle, '<td class="amount ' . $typeClass . '" x:num="' . $numericAmount . '">' . number_format($entry->amount, 2, ',', '.') . '</td>');
+                // Use x:num attribute for Excel calculation, but $displayAmount for visual clarity
+                fwrite($handle, '<td class="amount ' . $typeClass . '" x:num="' . $numericAmount . '">' . $displayAmount . '</td>');
                 fwrite($handle, '<td>' . ($entry->invoice ? $entry->invoice->invoice_number : __('General')) . '</td>');
                 fwrite($handle, '<td>' . ($entry->category ? $entry->category->posting_rule : '') . '</td>');
                 fwrite($handle, '</tr>');
@@ -131,6 +133,7 @@ class CashBookExportController
             ]);
 
             foreach ($entries as $entry) {
+                $numericAmount = $entry->type === 'income' ? $entry->amount : -$entry->amount;
                 fputcsv($handle, [
                     $entry->booking_number,
                     $entry->date->format('d.m.Y'),
@@ -138,7 +141,7 @@ class CashBookExportController
                     ucfirst($entry->source),
                     $entry->category ? $entry->category->name : __('N/A'),
                     $entry->description,
-                    $entry->amount,
+                    $numericAmount,
                     $entry->invoice ? $entry->invoice->invoice_number : __('General'),
                     $entry->category ? $entry->category->posting_rule : ''
                 ]);
