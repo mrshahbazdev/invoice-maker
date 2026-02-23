@@ -384,5 +384,13 @@
     "[RECORD]": "[BUCHUNG]",
     "[DEBIT]": "[LASTSCHRIFT]",
     "RE-2024-001": "RE-2024-001",
-    "OFFICE EQUIP.": "BÜROAUSSTATTUNG"
+    "OFFICE EQUIP.": "BÜROAUSSTATTUNG",
+    "Search client or product...": "Kunde oder Produkt suchen...",
+    "Sales": "Umsatz",
+    "Costs": "Kosten",
+    "Difference": "Differenz",
+    "Performance": "Leistung",
+    "KEEP": "BEHALTEN",
+    "OPTIMIZE": "OPTIMIEREN",
+    "REVIEW": "PRÜFEN"
 }

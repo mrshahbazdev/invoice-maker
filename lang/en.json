@@ -384,5 +384,13 @@
     "[RECORD]": "[RECORD]",
     "[DEBIT]": "[DEBIT]",
     "RE-2024-001": "RE-2024-001",
-    "OFFICE EQUIP.": "OFFICE EQUIP."
+    "OFFICE EQUIP.": "OFFICE EQUIP.",
+    "Search client or product...": "Search client or product...",
+    "Sales": "Sales",
+    "Costs": "Costs",
+    "Difference": "Difference",
+    "Performance": "Performance",
+    "KEEP": "KEEP",
+    "OPTIMIZE": "OPTIMIZE",
+    "REVIEW": "REVIEW"
 }

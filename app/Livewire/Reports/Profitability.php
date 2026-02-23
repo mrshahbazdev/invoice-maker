@@ -13,6 +13,7 @@ use Livewire\Component;
 
 class Profitability extends Component
 {
+    public $search = '';
     public $startDate;
     public $endDate;
 
@@ -20,6 +21,13 @@ class Profitability extends Component
     {
         $this->startDate = now()->startOfMonth()->format('Y-m-d');
         $this->endDate = now()->endOfMonth()->format('Y-m-d');
+    }
+
+    public function updated($property)
+    {
+        if (in_array($property, ['startDate', 'endDate'])) {
+            $this->resetPage(); // If pagination is used later
+        }
     }
 
     public function render()
@@ -40,6 +48,12 @@ class Profitability extends Component
 
         // 2. Customer Profitability (Invoices vs Linked Expenses)
         $clientProfitability = Client::where('business_id', $business->id)
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('company_name', 'like', '%' . $this->search . '%');
+                });
+            })
             ->with([
                 'invoices' => function ($query) {
                     $query->whereBetween('invoice_date', [$this->startDate, $this->endDate])
@@ -48,29 +62,35 @@ class Profitability extends Component
             ])
             ->get()
             ->map(function ($client) {
-                $revenue = $client->invoices->sum('total');
+                $sales = $client->invoices->sum('grand_total');
 
                 $invoiceIds = $client->invoices->pluck('id');
                 $directCosts = Expense::whereIn('invoice_id', $invoiceIds)->sum('amount');
 
                 return [
                     'name' => $client->company_name ?? $client->name,
-                    'revenue' => $revenue,
+                    'sales' => $sales,
                     'costs' => $directCosts,
-                    'profit' => $revenue - $directCosts,
-                    'margin' => $revenue > 0 ? (($revenue - $directCosts) / $revenue) * 100 : 0
+                    'difference' => $sales - $directCosts,
+                    'margin' => $sales > 0 ? (($sales - $directCosts) / $sales) * 100 : 0
                 ];
             })
-            ->filter(fn($c) => $c['revenue'] > 0 || $c['costs'] > 0)
-            ->sortByDesc('profit');
+            ->filter(fn($c) => $c['sales'] > 0 || $c['costs'] > 0)
+            ->sortByDesc('difference');
 
         // 3. Product Profitability (Price vs Purchase Price)
-        $productProfitability = DB::table('invoice_items')
+        $productQuery = DB::table('invoice_items')
             ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
             ->join('products', 'invoice_items.product_id', '=', 'products.id')
             ->where('invoices.business_id', $business->id)
             ->where('invoices.status', 'paid')
-            ->whereBetween('invoices.invoice_date', [$this->startDate, $this->endDate])
+            ->whereBetween('invoices.invoice_date', [$this->startDate, $this->endDate]);
+
+        if ($this->search) {
+            $productQuery->where('products.name', 'like', '%' . $this->search . '%');
+        }
+
+        $productProfitability = $productQuery
             ->select(
                 'products.name',
                 DB::raw('SUM(invoice_items.quantity) as total_sold'),
@@ -83,13 +103,13 @@ class Profitability extends Component
                 return [
                     'name' => $product->name,
                     'sold' => $product->total_sold,
-                    'revenue' => $product->total_revenue,
+                    'sales' => $product->total_revenue,
                     'costs' => $product->total_cost,
-                    'profit' => $product->total_revenue - $product->total_cost,
+                    'difference' => $product->total_revenue - $product->total_cost,
                     'margin' => $product->total_revenue > 0 ? (($product->total_revenue - $product->total_cost) / $product->total_revenue) * 100 : 0
                 ];
             })
-            ->sortByDesc('profit');
+            ->sortByDesc('difference');
 
         return view('livewire.reports.profitability', [
             'totalRevenue' => $totalRevenue,
