@@ -78,47 +78,45 @@ class Profitability extends Component
                     'margin' => $sales > 0 ? (($sales - $directCosts) / $sales) * 100 : ($directCosts > 0 ? -100 : 0)
                 ];
             })
-            ->filter(fn($c) => $c['sales'] > 0 || $c['costs'] > 0)
             ->sortByDesc('difference');
 
-        // 3. Product Profitability (Price vs Purchase Price)
-        $productQuery = DB::table('invoice_items')
-            ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
-            ->join('products', 'invoice_items.product_id', '=', 'products.id')
-            ->where('invoices.business_id', $business->id)
-            ->where('invoices.status', 'paid')
-            ->whereBetween('invoices.invoice_date', [$this->startDate, $this->endDate]);
-
-        if ($this->search) {
-            $productQuery->where('products.name', 'like', '%' . $this->search . '%');
-        }
-
-        $productProfitability = $productQuery
-            ->select(
-                'products.id',
-                'products.name',
-                DB::raw('SUM(invoice_items.quantity) as total_sold'),
-                DB::raw('SUM(invoice_items.total) as total_revenue'),
-                DB::raw('SUM(invoice_items.quantity * products.purchase_price) as total_cost')
-            )
-            ->groupBy('products.id', 'products.name')
+        // 3. Product Profitability (Price vs Purchase Price) - Comprehensive List
+        $productProfitability = Product::where('business_id', $business->id)
+            ->when($this->search, function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%');
+            })
             ->get()
             ->map(function ($product) {
+                // Sum sales for this product in range
+                $salesData = DB::table('invoice_items')
+                    ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
+                    ->where('invoice_items.product_id', $product->id)
+                    ->where('invoices.status', 'paid')
+                    ->whereBetween('invoices.invoice_date', [$this->startDate, $this->endDate])
+                    ->select(
+                        DB::raw('SUM(invoice_items.quantity) as total_sold'),
+                        DB::raw('SUM(invoice_items.total) as total_revenue')
+                    )
+                    ->first();
+
                 // Sum direct expenses linked to this product (e.g. specific stock purchases)
                 $productDirectExpenses = Expense::where('product_id', $product->id)
                     ->whereBetween('date', [$this->startDate, $this->endDate])
                     ->sum('amount');
 
-                $totalCosts = (float) ($product->total_cost + $productDirectExpenses);
+                $totalSold = (float) ($salesData->total_sold ?? 0);
+                $totalRevenue = (float) ($salesData->total_revenue ?? 0);
+                $purchaseCost = $totalSold * (float) ($product->purchase_price ?? 0);
+                $totalCosts = (float) ($purchaseCost + $productDirectExpenses);
 
                 return [
                     'id' => $product->id,
                     'name' => $product->name,
-                    'sold' => (float) $product->total_sold,
-                    'sales' => (float) $product->total_revenue,
+                    'sold' => $totalSold,
+                    'sales' => $totalRevenue,
                     'costs' => $totalCosts,
-                    'difference' => (float) ($product->total_revenue - $totalCosts),
-                    'margin' => $product->total_revenue > 0 ? (($product->total_revenue - $totalCosts) / $product->total_revenue) * 100 : 0
+                    'difference' => (float) ($totalRevenue - $totalCosts),
+                    'margin' => $totalRevenue > 0 ? (($totalRevenue - $totalCosts) / $totalRevenue) * 100 : ($totalCosts > 0 ? -100 : 0)
                 ];
             })
             ->sortByDesc('difference');

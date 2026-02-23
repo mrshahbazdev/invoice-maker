@@ -78,10 +78,9 @@ class ProfitabilityExportController
                         'revenue' => (float) $sales,
                         'costs' => (float) $costs,
                         'profit' => (float) ($sales - $costs),
-                        'margin' => $sales > 0 ? (($sales - $costs) / $sales) : 0
+                        'margin' => $sales > 0 ? (($sales - $costs) / $sales) : ($costs > 0 ? -1.0 : 0)
                     ];
                 })
-                ->filter(fn($c) => $c['revenue'] > 0 || $c['costs'] > 0)
                 ->sortByDesc('profit');
 
             fwrite($handle, '<div class="title">' . __('Customer Profitability Analysis') . '</div>');
@@ -104,35 +103,39 @@ class ProfitabilityExportController
             }
             fwrite($handle, '</tbody></table>');
 
-            // --- 3. TOP PRODUCTS ---
-            $productData = DB::table('invoice_items')
-                ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
-                ->join('products', 'invoice_items.product_id', '=', 'products.id')
-                ->where('invoices.business_id', $business->id)
-                ->where('invoices.status', 'paid')
-                ->whereBetween('invoices.invoice_date', [$startDate, $endDate])
-                ->select(
-                    'products.id',
-                    'products.name',
-                    DB::raw('SUM(invoice_items.quantity) as total_sold'),
-                    DB::raw('SUM(invoice_items.total) as total_revenue'),
-                    DB::raw('SUM(invoice_items.quantity * products.purchase_price) as total_purchase_cost')
-                )
-                ->groupBy('products.id', 'products.name')
+            // --- 3. TOP PRODUCTS (Comprehensive) ---
+            $productData = Product::where('business_id', $business->id)
                 ->get()
                 ->map(function ($product) use ($startDate, $endDate) {
+                    // Replicate logic from Livewire component
+                    $salesData = DB::table('invoice_items')
+                        ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
+                        ->where('invoice_items.product_id', $product->id)
+                        ->where('invoices.status', 'paid')
+                        ->whereBetween('invoices.invoice_date', [$startDate, $endDate])
+                        ->select(
+                            DB::raw('SUM(invoice_items.quantity) as total_sold'),
+                            DB::raw('SUM(invoice_items.total) as total_revenue')
+                        )
+                        ->first();
+
                     $directExpenses = Expense::where('product_id', $product->id)
                         ->whereBetween('date', [$startDate, $endDate])
                         ->sum('amount');
-                    $totalCost = (float) ($product->total_purchase_cost + $directExpenses);
-                    $profit = $product->total_revenue - $totalCost;
+
+                    $totalSold = (float) ($salesData->total_sold ?? 0);
+                    $totalRevenue = (float) ($salesData->total_revenue ?? 0);
+                    $purchaseCost = $totalSold * (float) ($product->purchase_price ?? 0);
+                    $totalCost = (float) ($purchaseCost + $directExpenses);
+                    $profit = $totalRevenue - $totalCost;
+
                     return [
                         'name' => $product->name,
-                        'sold' => (float) $product->total_sold,
-                        'revenue' => (float) $product->total_revenue,
+                        'sold' => $totalSold,
+                        'revenue' => $totalRevenue,
                         'costs' => $totalCost,
                         'profit' => (float) $profit,
-                        'margin' => $product->total_revenue > 0 ? ($profit / $product->total_revenue) : 0
+                        'margin' => $totalRevenue > 0 ? ($profit / $totalRevenue) : ($totalCost > 0 ? -1.0 : 0)
                     ];
                 })
                 ->sortByDesc('profit');
