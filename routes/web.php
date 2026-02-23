@@ -36,10 +36,23 @@ use App\Livewire\Accounting\CashBook\Index as CashBookIndex;
 // Temporary Migration Route
 Route::get('/run-migrations', function () {
     try {
+        $output = "";
+
+        // 1. Run migrations
         Artisan::call('migrate', ['--force' => true]);
-        return "Migrations successful!<br><pre>" . Artisan::output() . "</pre>";
+        $output .= "<b>Migration Output:</b><br><pre>" . Artisan::output() . "</pre><br>";
+
+        // 2. Check columns
+        $columns = DB::select('SHOW COLUMNS FROM businesses');
+        $output .= "<b>Table 'businesses' columns:</b><br><ul>";
+        foreach ($columns as $col) {
+            $output .= "<li>{$col->Field} ({$col->Type})</li>";
+        }
+        $output .= "</ul>";
+
+        return $output;
     } catch (\Exception $e) {
-        return "Migration failed: " . $e->getMessage();
+        return "Failed: " . $e->getMessage();
     }
 });
 
