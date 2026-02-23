@@ -63,6 +63,12 @@ class CashBookSeeder extends Seeder
 
         foreach ($invoices as $index => $invoice) {
             /** @var Invoice $invoice */
+
+            // Check if entry already exists for this invoice
+            if (CashBookEntry::where('invoice_id', $invoice->id)->exists()) {
+                continue;
+            }
+
             CashBookEntry::create([
                 'business_id' => $business->id,
                 'invoice_id' => $invoice->id,
@@ -94,6 +100,15 @@ class CashBookSeeder extends Seeder
         foreach ($expenseData as $index => $data) {
             $cat = $categories->random();
             $date = now()->subDays(rand(1, 15));
+
+            // Check if expense with this reference already exists for this business
+            $existingExpense = Expense::where('business_id', $business->id)
+                ->where('reference_number', $data['ref'])
+                ->first();
+
+            if ($existingExpense) {
+                continue;
+            }
 
             $expense = Expense::create([
                 'business_id' => $business->id,
