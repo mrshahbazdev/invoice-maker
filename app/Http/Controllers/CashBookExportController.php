@@ -33,7 +33,7 @@ class CashBookExportController
             'Content-Disposition' => "attachment; filename=\"$fileName\"",
         ];
 
-        return new StreamedResponse(function () use ($entries) {
+        return new StreamedResponse(function () use ($entries, $business) {
             $handle = fopen('php://output', 'w');
 
             // Output XML/HTML Header for Excel
@@ -43,7 +43,8 @@ class CashBookExportController
                 table { border-collapse: collapse; }
                 th { background-color: #f1f5f9; border: 1px solid #cbd5e1; font-weight: bold; padding: 10px; }
                 td { border: 1px solid #e2e8f0; padding: 8px; vertical-align: top; }
-                .amount { text-align: right; font-family: monospace; }
+                .amount { text-align: right; font-family: monospace; mso-number-format: "Standard"; }
+                .text { mso-number-format: "\@"; }
                 .income { color: #15803d; }
                 .expense { color: #b91c1c; }
             </style></head><body>');
@@ -57,7 +58,7 @@ class CashBookExportController
                 __('Source'),
                 __('Category'),
                 __('Description'),
-                __('Amount'),
+                __('Amount') . ' (' . $business->currency . ')',
                 __('Linked Job'),
                 __('Posting Rule')
             ] as $header) {
@@ -67,15 +68,19 @@ class CashBookExportController
 
             foreach ($entries as $entry) {
                 $typeClass = $entry->type === 'income' ? 'income' : 'expense';
+                // Use negative value for expenses to make totals easier to calculate in Excel
+                $numericAmount = $entry->type === 'income' ? $entry->amount : -$entry->amount;
+
                 fwrite($handle, '<tr>');
-                fwrite($handle, '<td>' . $entry->booking_number . '</td>');
+                fwrite($handle, '<td class="text">' . $entry->booking_number . '</td>');
                 fwrite($handle, '<td>' . $entry->date->format('d.m.Y') . '</td>');
                 fwrite($handle, '<td class="' . $typeClass . '">' . ucfirst($entry->type) . '</td>');
                 fwrite($handle, '<td>' . ucfirst($entry->source) . '</td>');
-                fwrite($handle, '<td>' . ($entry->category ? $entry->category->name : 'N/A') . '</td>');
+                fwrite($handle, '<td>' . ($entry->category ? $entry->category->name : __('N/A')) . '</td>');
                 fwrite($handle, '<td>' . $entry->description . '</td>');
-                fwrite($handle, '<td class="amount ' . $typeClass . '">' . number_format($entry->amount, 2, ',', '.') . ' €</td>');
-                fwrite($handle, '<td>' . ($entry->invoice ? $entry->invoice->invoice_number : 'General') . '</td>');
+                // Use x:num attribute for Excel to recognize it as a number
+                fwrite($handle, '<td class="amount ' . $typeClass . '" x:num="' . $numericAmount . '">' . number_format($entry->amount, 2, ',', '.') . '</td>');
+                fwrite($handle, '<td>' . ($entry->invoice ? $entry->invoice->invoice_number : __('General')) . '</td>');
                 fwrite($handle, '<td>' . ($entry->category ? $entry->category->posting_rule : '') . '</td>');
                 fwrite($handle, '</tr>');
             }
@@ -131,10 +136,10 @@ class CashBookExportController
                     $entry->date->format('d.m.Y'),
                     ucfirst($entry->type),
                     ucfirst($entry->source),
-                    $entry->category ? $entry->category->name : 'N/A',
+                    $entry->category ? $entry->category->name : __('N/A'),
                     $entry->description,
                     $entry->amount,
-                    $entry->invoice ? $entry->invoice->invoice_number : 'General',
+                    $entry->invoice ? $entry->invoice->invoice_number : __('General'),
                     $entry->category ? $entry->category->posting_rule : ''
                 ]);
             }

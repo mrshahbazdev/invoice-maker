@@ -30,7 +30,7 @@ class Profitability extends Component
         $totalRevenue = Invoice::where('business_id', $business->id)
             ->whereBetween('invoice_date', [$this->startDate, $this->endDate])
             ->where('status', 'paid')
-            ->sum('total');
+            ->sum('grand_total');
 
         $totalExpenses = Expense::where('business_id', $business->id)
             ->whereBetween('date', [$this->startDate, $this->endDate])

@@ -44,7 +44,7 @@
                         <div
                             class="absolute -inset-10 bg-gradient-to-tr from-blue-400/20 to-indigo-400/20 blur-[80px] opacity-70 group-hover:opacity-100 transition-opacity">
                         </div>
-                        <img src="{{ asset('images/landing_hero_v2.png') }}" alt="InvoiceMaker V2 Dashboard"
+                        <img src="{{ asset('images/landing_hero_v2.png') }}" alt="{{ __('InvoiceMaker V2 Dashboard') }}"
                             class="w-full h-auto drop-shadow-2xl animate-float relative z-10 rounded-3xl">
                     </div>
                 </div>
@@ -144,7 +144,8 @@
                 <div class="lg:w-1/2 reveal">
                     <h2 class="text-5xl font-black text-white mb-8 leading-tight">
                         {{ __('Accountant-Grade') }}<br /><span
-                            class="text-blue-500">{{ __('Cash Book Ledger') }}</span></h2>
+                            class="text-blue-500">{{ __('Cash Book Ledger') }}</span>
+                    </h2>
                     <p class="text-gray-400 text-lg mb-10 leading-relaxed font-medium">
                         {{ __('No more messy spreadsheets. Our professional Cash Book Ledger system automatically tracks every transaction with double-entry precision. Built for speed, accuracy, and accountants.') }}
                     </p>
@@ -218,21 +219,36 @@
             <div class="text-center mb-24 reveal">
                 <h2 class="text-5xl font-black mb-6 tracking-tight">{{ __('Simple, Transparent Pricing') }}</h2>
                 <p class="text-gray-500 max-w-2xl mx-auto text-lg font-medium">
-                    {{ __('Start for free and scale as you grow. No hidden fees, just pure professional power.') }}</p>
+                    {{ __('Start for free and scale as you grow. No hidden fees, just pure professional power.') }}
+                </p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
                 <!-- Free Plan -->
-                <div class="reveal glass-card p-12 rounded-[2.5rem] border-gray-100 flex flex-col items-center hover:shadow-2xl transition-all">
-                    <h3 class="text-xl font-bold mb-2 text-gray-400 uppercase tracking-widest text-xs">{{ __('Essential') }}</h3>
+                <div
+                    class="reveal glass-card p-12 rounded-[2.5rem] border-gray-100 flex flex-col items-center hover:shadow-2xl transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-gray-400 uppercase tracking-widest text-xs">
+                        {{ __('Essential') }}</h3>
                     <div class="flex items-baseline mb-8">
                         <span class="text-5xl font-black text-gray-900">$0</span>
                         <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
                     </div>
                     <ul class="space-y-4 mb-12 text-gray-500 text-sm w-full font-medium">
-                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Up to 10 Invoices/mo') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('All 10 Languages') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Manual Cash Book') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Up to 10 Invoices/mo') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('All 10 Languages') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Manual Cash Book') }}</li>
                     </ul>
                     <a href="{{ route('register') }}"
                         class="w-full py-4 bg-gray-100 text-gray-700 font-bold rounded-2xl hover:bg-gray-200 transition-all text-center">{{ __('Start Free') }}</a>
@@ -242,32 +258,64 @@
                     class="reveal bg-white p-12 rounded-[3rem] border-2 border-blue-600 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2)] scale-110 z-10 relative flex flex-col items-center group">
                     <div
                         class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-black px-6 py-2 rounded-full uppercase tracking-widest shadow-xl">
-                        {{ __('Most Popular') }}</div>
-                    <h3 class="text-xl font-bold mb-2 text-blue-600 uppercase tracking-widest text-xs">{{ __('Professional') }}</h3>
+                        {{ __('Most Popular') }}
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-blue-600 uppercase tracking-widest text-xs">
+                        {{ __('Professional') }}</h3>
                     <div class="flex items-baseline mb-8">
                         <span class="text-6xl font-black text-gray-900">$19</span>
                         <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
                     </div>
                     <ul class="space-y-4 mb-12 text-gray-600 text-sm w-full font-bold">
-                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Unlimited Invoices') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Custom SMTP Support') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Automated Records') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Priority Support') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Unlimited Invoices') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Custom SMTP Support') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Automated Records') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Priority Support') }}</li>
                     </ul>
                     <a href="{{ route('register') }}"
                         class="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-2xl hover:scale-105 transition-all shadow-2xl shadow-blue-500/40 text-center">{{ __('Get Started Now') }}</a>
                 </div>
                 <!-- Enterprise Plan -->
-                <div class="reveal glass-card p-12 rounded-[2.5rem] border-gray-100 flex flex-col items-center hover:shadow-2xl transition-all">
-                    <h3 class="text-xl font-bold mb-2 text-gray-400 uppercase tracking-widest text-xs">{{ __('Enterprise') }}</h3>
+                <div
+                    class="reveal glass-card p-12 rounded-[2.5rem] border-gray-100 flex flex-col items-center hover:shadow-2xl transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-gray-400 uppercase tracking-widest text-xs">
+                        {{ __('Enterprise') }}</h3>
                     <div class="flex items-baseline mb-8">
                         <span class="text-5xl font-black text-gray-900">$49</span>
                         <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
                     </div>
                     <ul class="space-y-4 mb-12 text-gray-500 text-sm w-full font-medium">
-                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Advanced Analytics') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Dedicated Manager') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Custom Integration') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Advanced Analytics') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Dedicated Manager') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                    d="M5 13l4 4L19 7"></path>
+                            </svg> {{ __('Custom Integration') }}</li>
                     </ul>
                     <a href="{{ route('register') }}"
                         class="w-full py-4 bg-gray-900 text-white font-bold rounded-2xl hover:bg-black transition-all text-center">{{ __('Contact Sales') }}</a>
@@ -280,12 +328,15 @@
     <section class="py-32 bg-gray-950 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-indigo-600/20 opacity-30"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
-            <h2 class="text-5xl lg:text-7xl text-white font-black mb-10 tracking-tighter leading-none">{{ __('Ready to simplify your') }}<br/><span class="text-blue-500">{{ __('financial empire?') }}</span></h2>
+            <h2 class="text-5xl lg:text-7xl text-white font-black mb-10 tracking-tighter leading-none">
+                {{ __('Ready to simplify your') }}<br /><span class="text-blue-500">{{ __('financial empire?') }}</span>
+            </h2>
             <a href="{{ route('register') }}"
                 class="inline-block px-12 py-6 bg-white text-blue-600 font-black text-xl rounded-3xl hover:scale-110 transition-all shadow-[0_20px_50px_rgba(255,255,255,0.15)] transform active:scale-95">
                 {{ __('Create Your Account Free') }}
             </a>
-            <p class="mt-8 text-gray-500 font-bold uppercase tracking-widest text-[10px]">{{ __('No credit card required') }}</p>
+            <p class="mt-8 text-gray-500 font-bold uppercase tracking-widest text-[10px]">
+                {{ __('No credit card required') }}</p>
         </div>
     </section>
 </x-landing-layout>

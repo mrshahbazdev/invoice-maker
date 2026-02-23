@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', config('app.name', 'InvoiceMaker')) - Professional Invoicing for Everyone</title>
+    <title>@yield('title', config('app.name', 'InvoiceMaker')) - {{ __('Professional Invoicing for Everyone') }}</title>
     <meta name="description"
-        content="@yield('meta_description', 'The ultimate invoicing solution for freelancers and small businesses worldwide. Create, send, and track invoices in minutes.')">
+        content="@yield('meta_description', __('The ultimate invoicing solution for freelancers and small businesses worldwide. Create, send, and track invoices in minutes.'))">
 
     <!-- Open Graph / SEO -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('title', config('app.name', 'InvoiceMaker'))">
     <meta property="og:description"
-        content="@yield('meta_description', 'The ultimate invoicing solution for freelancers and small businesses worldwide.')">
+        content="@yield('meta_description', __('The ultimate invoicing solution for freelancers and small businesses worldwide.'))">
     <meta name="twitter:card" content="summary_large_image">
 
     <!-- Fonts -->
