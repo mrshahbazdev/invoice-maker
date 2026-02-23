@@ -16,6 +16,8 @@ class Show extends Component
     public string $payment_method = 'bank_transfer';
     public string $payment_date = '';
     public string $payment_notes = '';
+    public float $total_expenses = 0;
+    public float $profit = 0;
     public float $margin_percentage = 0;
     public bool $showPaidModal = false;
     public $paymentSource = 'bank';
