@@ -10,9 +10,11 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Profitability extends Component
 {
+    use WithPagination;
     public $search = '';
     public $startDate;
     public $endDate;
