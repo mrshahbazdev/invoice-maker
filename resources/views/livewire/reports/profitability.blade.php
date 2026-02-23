@@ -31,7 +31,8 @@
                 <span
                     class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{{ __('Total Revenue') }}</span>
                 <p class="text-3xl font-black text-gray-900 leading-none mt-2">
-                    {{ number_format($totalRevenue, 2, ',', '.') }} €</p>
+                    {{ number_format($totalRevenue, 2, ',', '.') }} €
+                </p>
             </div>
         </div>
 
@@ -48,7 +49,8 @@
                 <span
                     class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{{ __('Total Expenses') }}</span>
                 <p class="text-3xl font-black text-red-600 leading-none mt-2">
-                    {{ number_format($totalExpenses, 2, ',', '.') }} €</p>
+                    {{ number_format($totalExpenses, 2, ',', '.') }} €
+                </p>
             </div>
         </div>
 
@@ -99,7 +101,7 @@
                             <tr class="hover:bg-gray-50/50 transition-colors">
                                 <td class="px-8 py-5">
                                     <span class="block text-sm font-bold text-gray-900">{{ $client['name'] }}</span>
-                                    <span class="block text-[10px] text-gray-400">Rev:
+                                    <span class="block text-[10px] text-gray-400">{{ __('Rev:') }}
                                         {{ number_format($client['revenue'], 2, ',', '.') }} €</span>
                                 </td>
                                 <td class="px-8 py-5 text-right font-black text-gray-900">
@@ -139,7 +141,8 @@
                             <tr class="hover:bg-gray-50/50 transition-colors">
                                 <td class="px-8 py-5">
                                     <span class="block text-sm font-bold text-gray-900">{{ $product['name'] }}</span>
-                                    <span class="block text-[10px] text-gray-400">{{ $product['sold'] }} sold</span>
+                                    <span class="block text-[10px] text-gray-400">{{ $product['sold'] }}
+                                        {{ __('sold') }}</span>
                                 </td>
                                 <td class="px-8 py-5 text-right font-black text-gray-900">
                                     {{ number_format($product['profit'], 2, ',', '.') }} €
