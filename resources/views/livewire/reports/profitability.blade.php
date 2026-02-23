@@ -5,7 +5,8 @@
         <div>
             <h2 class="text-4xl font-extrabold text-gray-900 tracking-tight">{{ __('Profitability Report') }}</h2>
             <p class="text-gray-600 text-lg font-medium">
-                {{ __('Analyze which customers and products drive your growth.') }}</p>
+                {{ __('Analyze which customers and products drive your growth.') }}
+            </p>
         </div>
 
         <div class="flex flex-col md:flex-row items-center gap-6">
@@ -70,7 +71,7 @@
             <div>
                 <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">{{ __('Total Revenue') }}</span>
                 <p class="text-3xl font-extrabold text-gray-900 leading-none mt-2">
-                    {{ number_format($totalRevenue, 2, ',', '.') }} €
+                    {{ number_format($totalRevenue, 2, '.', ',') }} €
                 </p>
             </div>
         </div>
@@ -88,7 +89,7 @@
                 <span
                     class="text-xs font-bold text-gray-500 uppercase tracking-widest">{{ __('Total Expenses') }}</span>
                 <p class="text-3xl font-extrabold text-red-600 leading-none mt-2">
-                    {{ number_format($totalExpenses, 2, ',', '.') }} €
+                    {{ number_format($totalExpenses, 2, '.', ',') }} €
                 </p>
             </div>
         </div>
@@ -113,8 +114,70 @@
             <div class="relative z-10">
                 <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">{{ __('Net Profit') }}</span>
                 <p class="text-3xl font-extrabold text-white leading-none mt-2">
-                    {{ number_format($netIncome, 2, ',', '.') }}
-                    €</p>
+                    {{ number_format($netIncome, 2, '.', ',') }}
+                    €
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Performers Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <!-- Top Clients -->
+        <div class="bg-blue-50/50 rounded-3xl p-6 border border-blue-100/50">
+            <div class="flex items-center justify-between mb-4">
+                <h4 class="text-xs font-black text-blue-600 uppercase tracking-widest">
+                    {{ __('Top Profit Drivers: Clients') }}</h4>
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+            </div>
+            <div class="space-y-3">
+                @forelse($topClients as $client)
+                    <div
+                        class="bg-white px-4 py-3 rounded-2xl flex items-center justify-between shadow-sm border border-blue-50">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="w-6 h-6 rounded-full bg-blue-600 text-white text-[10px] flex items-center justify-center font-bold">{{ $loop->iteration }}</span>
+                            <span class="text-sm font-bold text-gray-800">{{ $client['name'] }}</span>
+                        </div>
+                        <span class="text-sm font-black text-blue-600">+
+                            {{ number_format($client['difference'], 2, '.', ',') }} €</span>
+                    </div>
+                @empty
+                    <p class="text-xs text-gray-400 font-medium italic">
+                        {{ __('No data available for the selected range.') }}</p>
+                @endforelse
+            </div>
+        </div>
+
+        <!-- Top Products -->
+        <div class="bg-indigo-50/50 rounded-3xl p-6 border border-indigo-100/50">
+            <div class="flex items-center justify-between mb-4">
+                <h4 class="text-xs font-black text-indigo-600 uppercase tracking-widest">
+                    {{ __('Top Profit Drivers: Products') }}</h4>
+                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+            </div>
+            <div class="space-y-3">
+                @forelse($topProducts as $product)
+                    <div
+                        class="bg-white px-4 py-3 rounded-2xl flex items-center justify-between shadow-sm border border-indigo-50">
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="w-6 h-6 rounded-full bg-indigo-600 text-white text-[10px] flex items-center justify-center font-bold">{{ $loop->iteration }}</span>
+                            <span class="text-sm font-bold text-gray-800">{{ $product['name'] }}</span>
+                        </div>
+                        <span class="text-sm font-black text-indigo-600">+
+                            {{ number_format($product['difference'], 2, '.', ',') }} €</span>
+                    </div>
+                @empty
+                    <p class="text-xs text-gray-400 font-medium italic">
+                        {{ __('No data available for the selected range.') }}</p>
+                @endforelse
             </div>
         </div>
     </div>
@@ -136,15 +199,20 @@
                     <thead>
                         <tr class="bg-gray-50/50 border-b border-gray-100">
                             <th class="px-8 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Client') }}</th>
+                                {{ __('Client') }}
+                            </th>
                             <th class="px-8 py-5 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Sales') }}</th>
+                                {{ __('Sales') }}
+                            </th>
                             <th class="px-8 py-5 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Costs') }}</th>
+                                {{ __('Costs') }}
+                            </th>
                             <th class="px-8 py-5 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Difference') }}</th>
+                                {{ __('Difference') }}
+                            </th>
                             <th class="px-8 py-5 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Performance') }}</th>
+                                {{ __('Performance') }}
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
@@ -155,14 +223,14 @@
                                         class="block text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{{ $client['name'] }}</span>
                                 </td>
                                 <td class="px-8 py-6 text-right font-bold text-gray-600 text-base">
-                                    {{ number_format($client['sales'], 2, ',', '.') }} €
+                                    {{ number_format($client['sales'], 2, '.', ',') }} €
                                 </td>
                                 <td class="px-8 py-6 text-right font-bold text-red-500 text-base">
-                                    {{ number_format($client['costs'], 2, ',', '.') }} €
+                                    {{ number_format($client['costs'], 2, '.', ',') }} €
                                 </td>
                                 <td
                                     class="px-8 py-6 text-right font-extrabold text-base {{ $client['difference'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
-                                    {{ number_format($client['difference'], 2, ',', '.') }} €
+                                    {{ number_format($client['difference'], 2, '.', ',') }} €
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex flex-col items-end gap-1">
@@ -193,7 +261,8 @@
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-8 bg-indigo-600 rounded-full"></div>
                     <h3 class="text-xl font-extrabold text-gray-900 uppercase tracking-tight">
-                        {{ __('Product Margins') }}</h3>
+                        {{ __('Product Margins') }}
+                    </h3>
                 </div>
                 <span
                     class="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-white px-3 py-1 rounded-full border border-gray-100">{{ __('Sales vs Purchase Cost') }}</span>
@@ -203,15 +272,20 @@
                     <thead>
                         <tr class="bg-gray-50/50 border-b border-gray-100">
                             <th class="px-8 py-5 text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Product') }}</th>
+                                {{ __('Product') }}
+                            </th>
                             <th class="px-8 py-5 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Sales') }}</th>
+                                {{ __('Sales') }}
+                            </th>
                             <th class="px-8 py-5 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Costs') }}</th>
+                                {{ __('Costs') }}
+                            </th>
                             <th class="px-8 py-5 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Difference') }}</th>
+                                {{ __('Difference') }}
+                            </th>
                             <th class="px-8 py-5 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">
-                                {{ __('Performance') }}</th>
+                                {{ __('Performance') }}
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
@@ -226,14 +300,14 @@
                                     </span>
                                 </td>
                                 <td class="px-8 py-6 text-right font-bold text-gray-600 text-base">
-                                    {{ number_format($product['sales'], 2, ',', '.') }} €
+                                    {{ number_format($product['sales'], 2, '.', ',') }} €
                                 </td>
                                 <td class="px-8 py-6 text-right font-bold text-red-500 text-base">
-                                    {{ number_format($product['costs'], 2, ',', '.') }} €
+                                    {{ number_format($product['costs'], 2, '.', ',') }} €
                                 </td>
                                 <td
                                     class="px-8 py-6 text-right font-extrabold text-base {{ $product['difference'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
-                                    {{ number_format($product['difference'], 2, ',', '.') }} €
+                                    {{ number_format($product['difference'], 2, '.', ',') }} €
                                 </td>
                                 <td class="px-8 py-6 text-right">
                                     <div class="flex flex-col items-end gap-1">

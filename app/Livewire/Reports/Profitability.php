@@ -64,15 +64,18 @@ class Profitability extends Component
             ->map(function ($client) {
                 $sales = $client->invoices->sum('grand_total');
 
-                $invoiceIds = $client->invoices->pluck('id');
-                $directCosts = Expense::whereIn('invoice_id', $invoiceIds)->sum('amount');
+                // Sum ALL direct expenses linked to this client in the date range
+                $directCosts = Expense::where('client_id', $client->id)
+                    ->whereBetween('date', [$this->startDate, $this->endDate])
+                    ->sum('amount');
 
                 return [
+                    'id' => $client->id,
                     'name' => $client->company_name ?? $client->name,
-                    'sales' => $sales,
-                    'costs' => $directCosts,
-                    'difference' => $sales - $directCosts,
-                    'margin' => $sales > 0 ? (($sales - $directCosts) / $sales) * 100 : 0
+                    'sales' => (float) $sales,
+                    'costs' => (float) $directCosts,
+                    'difference' => (float) ($sales - $directCosts),
+                    'margin' => $sales > 0 ? (($sales - $directCosts) / $sales) * 100 : ($directCosts > 0 ? -100 : 0)
                 ];
             })
             ->filter(fn($c) => $c['sales'] > 0 || $c['costs'] > 0)
@@ -92,6 +95,7 @@ class Profitability extends Component
 
         $productProfitability = $productQuery
             ->select(
+                'products.id',
                 'products.name',
                 DB::raw('SUM(invoice_items.quantity) as total_sold'),
                 DB::raw('SUM(invoice_items.total) as total_revenue'),
@@ -101,15 +105,20 @@ class Profitability extends Component
             ->get()
             ->map(function ($product) {
                 return [
+                    'id' => $product->id,
                     'name' => $product->name,
-                    'sold' => $product->total_sold,
-                    'sales' => $product->total_revenue,
-                    'costs' => $product->total_cost,
-                    'difference' => $product->total_revenue - $product->total_cost,
+                    'sold' => (float) $product->total_sold,
+                    'sales' => (float) $product->total_revenue,
+                    'costs' => (float) $product->total_cost,
+                    'difference' => (float) ($product->total_revenue - $product->total_cost),
                     'margin' => $product->total_revenue > 0 ? (($product->total_revenue - $product->total_cost) / $product->total_revenue) * 100 : 0
                 ];
             })
             ->sortByDesc('difference');
+
+        // Top Performers for Summary Overview
+        $topClients = $clientProfitability->take(3);
+        $topProducts = $productProfitability->take(3);
 
         return view('livewire.reports.profitability', [
             'totalRevenue' => $totalRevenue,
@@ -117,6 +126,8 @@ class Profitability extends Component
             'netIncome' => $netIncome,
             'clientProfitability' => $clientProfitability,
             'productProfitability' => $productProfitability,
+            'topClients' => $topClients,
+            'topProducts' => $topProducts,
         ]);
     }
 }
