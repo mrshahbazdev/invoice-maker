@@ -16,6 +16,9 @@ class Show extends Component
     public string $payment_method = 'bank_transfer';
     public string $payment_date = '';
     public string $payment_notes = '';
+    public float $total_expenses = 0;
+    public float $profit = 0;
+    public float $margin_percentage = 0;
 
     protected array $rules = [
         'payment_amount' => 'required|numeric|min:0.01',
@@ -26,8 +29,18 @@ class Show extends Component
     public function mount(Invoice $invoice): void
     {
         $this->authorize('view', $invoice);
-        $this->invoice = $invoice->load(['items.product', 'payments', 'client', 'business']);
+        $this->invoice = $invoice->load(['items.product', 'payments', 'client', 'business', 'expenses']);
         $this->payment_date = now()->toDateString();
+        $this->calculateProfitability();
+    }
+
+    public function calculateProfitability(): void
+    {
+        $this->total_expenses = (float) $this->invoice->expenses->sum('amount');
+        $this->profit = (float) $this->invoice->grand_total - $this->total_expenses;
+        $this->margin_percentage = $this->invoice->grand_total > 0
+            ? ($this->profit / (float) $this->invoice->grand_total) * 100
+            : 0;
     }
 
     public function markAsSent(): void

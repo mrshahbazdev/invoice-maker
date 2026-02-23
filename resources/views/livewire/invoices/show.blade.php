@@ -256,6 +256,50 @@
                 </div>
             </div>
 
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 {{ $profit >= 0 ? 'border-green-500' : 'border-red-500' }}">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">{{ __('Job Profitability') }}</h3>
+                    <span class="text-xs font-bold px-2 py-1 rounded {{ $profit >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                        {{ number_format($margin_percentage, 1) }}% {{ __('Margin') }}
+                    </span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">{{ __('Revenue') }}:</span>
+                        <span class="font-medium text-gray-900">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">{{ __('Linked Costs') }}:</span>
+                        <span class="font-medium text-red-600">-{{ $invoice->currency_symbol }}{{ number_format($total_expenses, 2) }}</span>
+                    </div>
+                    <div class="flex justify-between pt-2 border-t font-bold text-base">
+                        <span>{{ __('Net Profit') }}:</span>
+                        <span class="{{ $profit >= 0 ? 'text-green-600' : 'text-red-600' }}">{{ $invoice->currency_symbol }}{{ number_format($profit, 2) }}</span>
+                    </div>
+
+                    @if($invoice->expenses->count() > 0)
+                        <div class="mt-4 pt-4 border-t">
+                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{{ __('Linked Expenses') }}</h4>
+                            <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                                @foreach($invoice->expenses as $expense)
+                                    <div class="flex justify-between items-center text-xs p-2 bg-gray-50 rounded border border-gray-100">
+                                        <div class="truncate mr-2">
+                                            <p class="font-semibold text-gray-900 truncate">{{ $expense->description }}</p>
+                                            <p class="text-gray-500 italic">{{ $expense->date->format('d.m.Y') }}</p>
+                                        </div>
+                                        <span class="font-bold text-red-600 whitespace-nowrap">-{{ $invoice->currency_symbol }}{{ number_format($expense->amount, 2) }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @else
+                        <div class="mt-4 p-3 bg-gray-50 rounded text-center">
+                            <p class="text-xs text-gray-500 italic">{{ __('No expenses linked to this invoice yet.') }}</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             @if($invoice->amount_due > 0)
                 <div class="bg-white rounded-lg shadow p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Record Payment') }}</h3>
