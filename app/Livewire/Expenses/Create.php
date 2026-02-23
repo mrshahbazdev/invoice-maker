@@ -79,6 +79,7 @@ class Create extends Component
 
         \Illuminate\Support\Facades\DB::transaction(function () use ($receiptPath) {
             $business = Auth::user()->business;
+            $invoice_id = $this->invoice_id ?: null;
 
             $expense = \App\Models\Expense::create([
                 'business_id' => $business->id,
@@ -90,7 +91,7 @@ class Create extends Component
                 'partner_name' => $this->partner_name,
                 'reference_number' => $this->reference_number,
                 'receipt_path' => $receiptPath,
-                'invoice_id' => $this->invoice_id,
+                'invoice_id' => $invoice_id,
             ]);
 
             // Create Cash Book Entry
@@ -105,7 +106,7 @@ class Create extends Component
                 'partner_name' => $this->partner_name,
                 'reference_number' => $this->reference_number,
                 'category_id' => $this->category_id,
-                'invoice_id' => $this->invoice_id,
+                'invoice_id' => $invoice_id,
                 'expense_id' => $expense->id,
             ]);
         });

@@ -78,7 +78,7 @@ class Edit extends Component
             'description' => $this->description,
             'partner_name' => $this->partner_name,
             'reference_number' => $this->reference_number,
-            'invoice_id' => $this->invoice_id,
+            'invoice_id' => $this->invoice_id ?: null,
         ];
 
         if ($this->receipt) {
@@ -105,7 +105,7 @@ class Edit extends Component
                     'partner_name' => $this->partner_name,
                     'reference_number' => $this->reference_number,
                     'category_id' => $this->category_id,
-                    'invoice_id' => $this->invoice_id,
+                    'invoice_id' => $this->invoice_id ?: null,
                 ]
             );
         });
