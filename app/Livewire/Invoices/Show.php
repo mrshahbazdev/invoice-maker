@@ -46,7 +46,9 @@ class Show extends Component
 
         $pdfContent = $pdfService->generate($this->invoice);
 
-        Mail::to($this->invoice->client->email)->send(new InvoiceMail($this->invoice, $pdfContent));
+        \App\Services\MailConfigurationService::getMailer($this->invoice->business)
+            ->to($this->invoice->client->email)
+            ->send(new InvoiceMail($this->invoice, $pdfContent));
 
         if ($this->invoice->status === Invoice::STATUS_DRAFT) {
             $this->invoice->update(['status' => Invoice::STATUS_SENT]);

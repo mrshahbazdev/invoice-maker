@@ -73,7 +73,9 @@ class SendInvoiceReminders extends Command
     protected function sendReminder(Invoice $invoice, string $type)
     {
         try {
-            Mail::to($invoice->client->email)->send(new InvoiceReminder($invoice, $type));
+            \App\Services\MailConfigurationService::getMailer($invoice->business)
+                ->to($invoice->client->email)
+                ->send(new InvoiceReminder($invoice, $type));
 
             $invoice->update([
                 'last_reminder_sent_at' => now(),

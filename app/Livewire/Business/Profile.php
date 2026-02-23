@@ -8,6 +8,9 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Stripe\StripeClient;
+use Illuminate\Support\Facades\Mail;
+use App\Services\MailConfigurationService;
+use Exception;
 
 class Profile extends Component
 {
@@ -28,6 +31,13 @@ class Profile extends Component
     public int $invoice_number_next = 1;
     public string $bank_booking_account = '1000';
     public string $cash_booking_account = '1200';
+    public string $smtp_host = '';
+    public ?int $smtp_port = 587;
+    public string $smtp_username = '';
+    public string $smtp_password = '';
+    public string $smtp_encryption = 'tls';
+    public string $smtp_from_address = '';
+    public string $smtp_from_name = '';
     public $logo;
     public bool $stripe_onboarding_complete = false;
 
@@ -48,6 +58,13 @@ class Profile extends Component
             'invoice_number_next' => 'required|integer|min:1',
             'bank_booking_account' => 'nullable|string|max:20',
             'cash_booking_account' => 'nullable|string|max:20',
+            'smtp_host' => 'nullable|string|max:255',
+            'smtp_port' => 'nullable|integer',
+            'smtp_username' => 'nullable|string|max:255',
+            'smtp_password' => 'nullable|string|max:255',
+            'smtp_encryption' => 'nullable|string|max:10',
+            'smtp_from_address' => 'nullable|email|max:255',
+            'smtp_from_name' => 'nullable|string|max:255',
             'logo' => 'nullable|image|max:2048',
         ];
     }
@@ -70,6 +87,13 @@ class Profile extends Component
             $this->invoice_number_next = $this->business->invoice_number_next ?? 1;
             $this->bank_booking_account = $this->business->bank_booking_account ?? '1000';
             $this->cash_booking_account = $this->business->cash_booking_account ?? '1200';
+            $this->smtp_host = $this->business->smtp_host ?? '';
+            $this->smtp_port = $this->business->smtp_port ?? 587;
+            $this->smtp_username = $this->business->smtp_username ?? '';
+            $this->smtp_password = $this->business->smtp_password ?? '';
+            $this->smtp_encryption = $this->business->smtp_encryption ?? 'tls';
+            $this->smtp_from_address = $this->business->smtp_from_address ?? '';
+            $this->smtp_from_name = $this->business->smtp_from_name ?? '';
             $this->stripe_onboarding_complete = $this->business->stripe_onboarding_complete;
         } else {
             // Defaults for new business
@@ -100,6 +124,13 @@ class Profile extends Component
             'invoice_number_next' => $this->invoice_number_next,
             'bank_booking_account' => $this->bank_booking_account,
             'cash_booking_account' => $this->cash_booking_account,
+            'smtp_host' => $this->smtp_host,
+            'smtp_port' => $this->smtp_port,
+            'smtp_username' => $this->smtp_username,
+            'smtp_password' => $this->smtp_password,
+            'smtp_encryption' => $this->smtp_encryption,
+            'smtp_from_address' => $this->smtp_from_address,
+            'smtp_from_name' => $this->smtp_from_name,
         ];
 
         if ($this->logo) {
@@ -167,6 +198,48 @@ class Profile extends Component
         ]);
 
         return redirect()->away($accountLink->url);
+    }
+
+    public function testSmtpConnection(): void
+    {
+        $this->validate([
+            'smtp_host' => 'required|string',
+            'smtp_port' => 'required|integer',
+            'smtp_username' => 'required|string',
+            'smtp_password' => 'required|string',
+            'smtp_from_address' => 'required|email',
+        ]);
+
+        try {
+            $mailer = MailConfigurationService::getMailer((object) [
+                'smtp_host' => $this->smtp_host,
+                'smtp_port' => $this->smtp_port,
+                'smtp_username' => $this->smtp_username,
+                'smtp_password' => $this->smtp_password,
+                'smtp_encryption' => $this->smtp_encryption,
+                'hasCustomSmtp' => function () {
+                    return true; }
+            ]);
+
+            // For testing, we send a simple raw email to the authenticated user
+            $userEmail = Auth::user()->email;
+
+            MailConfigurationService::getMailer($this->business ?? new Business([
+                'smtp_host' => $this->smtp_host,
+                'smtp_port' => $this->smtp_port,
+                'smtp_username' => $this->smtp_username,
+                'smtp_password' => $this->smtp_password,
+                'smtp_encryption' => $this->smtp_encryption,
+            ]))->raw('This is a test email to verify your SMTP settings for ' . config('app.name'), function ($message) use ($userEmail) {
+                $message->to($userEmail)
+                    ->subject('SMTP Connection Test')
+                    ->from($this->smtp_from_address, $this->smtp_from_name ?: config('mail.from.name'));
+            });
+
+            session()->flash('message', 'SMTP test email sent successfully to ' . $userEmail);
+        } catch (Exception $e) {
+            session()->flash('error', 'SMTP Connection failed: ' . $e->getMessage());
+        }
     }
 
     public function render()

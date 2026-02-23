@@ -31,7 +31,11 @@ class InvoiceMail extends Mailable
      */
     public function envelope(): Envelope
     {
+        $fromAddress = $this->invoice->business->smtp_from_address ?: config('mail.from.address');
+        $fromName = $this->invoice->business->smtp_from_name ?: $this->invoice->business->name;
+
         return new Envelope(
+            from: new \Illuminate\Mail\Mailables\Address($fromAddress, $fromName),
             subject: 'Invoice ' . $this->invoice->invoice_number . ' from ' . $this->invoice->business->name,
         );
     }

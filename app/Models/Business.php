@@ -30,6 +30,13 @@ class Business extends Model
         'invoice_number_next',
         'bank_booking_account',
         'cash_booking_account',
+        'smtp_host',
+        'smtp_port',
+        'smtp_username',
+        'smtp_password',
+        'smtp_encryption',
+        'smtp_from_address',
+        'smtp_from_name',
     ];
 
     protected $casts = [
@@ -227,5 +234,13 @@ class Business extends Model
             'AED' => 'د.إ',
             default => '$',
         };
+    }
+
+    public function hasCustomSmtp(): bool
+    {
+        return !empty($this->smtp_host) &&
+            !empty($this->smtp_port) &&
+            !empty($this->smtp_username) &&
+            !empty($this->smtp_password);
     }
 }
