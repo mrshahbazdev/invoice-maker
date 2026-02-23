@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\InvoiceController;
 use App\Livewire\Dashboard;
 use App\Livewire\Business\Profile;
@@ -33,53 +32,6 @@ use App\Http\Controllers\CashBookExportController;
 use App\Livewire\Accounting\Categories\Index as CategoriesIndex;
 use App\Livewire\Accounting\CashBook\Index as CashBookIndex;
 
-// Temporary Migration Route
-Route::get('/run-migrations', function () {
-    try {
-        $output = "<h1>Migration Debugger</h1>";
-
-        // 0. Manual Fix Parameter
-        if (request()->has('fix')) {
-            if (!Schema::hasColumn('businesses', 'smtp_host')) {
-                Schema::table('businesses', function ($table) {
-                    $table->string('smtp_host')->nullable();
-                    $table->integer('smtp_port')->nullable();
-                    $table->string('smtp_username')->nullable();
-                    $table->string('smtp_password')->nullable();
-                    $table->string('smtp_encryption')->nullable();
-                    $table->string('smtp_from_address')->nullable();
-                    $table->string('smtp_from_name')->nullable();
-                });
-                $output .= "<b style='color:green'>MANUAL FIX APPLIED: Columns added!</b><br>";
-            } else {
-                $output .= "<b>Columns already exist, no manual fix needed.</b><br>";
-            }
-        }
-
-        // 1. Run migrations
-        Artisan::call('migrate', ['--force' => true]);
-        $output .= "<b>Migration Output:</b><pre>" . Artisan::output() . "</pre>";
-
-        // 2. Check migrations table
-        $migration = DB::table('migrations')->where('migration', 'like', '%add_smtp_settings_to_businesses_table%')->first();
-        $output .= "<b>Migration status in DB:</b> " . ($migration ? "RECORDED (Batch {$migration->batch})" : "NOT RECORDED") . "<br>";
-
-        // 3. Check columns
-        $columns = DB::select('SHOW COLUMNS FROM businesses');
-        $output .= "<b>Table 'businesses' columns:</b><ul>";
-        foreach ($columns as $col) {
-            $output .= "<li>{$col->Field} ({$col->Type})</li>";
-        }
-        $output .= "</ul>";
-
-        $output .= "<br><a href='?fix=1' style='padding:10px; background:blue; color:white; text-decoration:none;'>Click here to FORCE ADD columns Manually</a>";
-
-        return $output;
-    } catch (\Exception $e) {
-        return "Failed: " . $e->getMessage();
-    }
-});
-
 // Public Invoice View
 Route::get('/v/{invoice}', [PublicInvoiceController::class, 'show'])->name('invoices.public.show');
 Route::get('/v/{invoice}/download', [PublicInvoiceController::class, 'download'])->name('invoices.public.download');
@@ -95,11 +47,14 @@ Route::post('/v/{invoice}/save', [ClientPortalController::class, 'register'])->n
 Route::get('/v/{invoice}/pay', [StripeController::class, 'createCheckoutSession'])->name('invoices.pay');
 
 Route::get('/', function () {
-    if (auth()->check() && auth()->user()->role === 'client') {
-        return redirect()->route('client.dashboard');
+    if (auth()->check()) {
+        if (auth()->user()->role === 'client') {
+            return redirect()->route('client.dashboard');
+        }
+        return redirect()->route('dashboard');
     }
-    return redirect()->route('dashboard');
-})->middleware(['auth', 'verified']);
+    return view('welcome');
+});
 
 Route::middleware(['auth', 'business.member'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
