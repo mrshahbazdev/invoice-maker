@@ -3,26 +3,33 @@
 <div>
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-gray-900">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} {{ __('Details') }}</h2>
+            <h2 class="text-2xl font-bold text-gray-900">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
+                {{ __('Details') }}</h2>
             <p class="text-gray-600">{{ $invoice->invoice_number }}</p>
         </div>
         <div class="flex flex-wrap gap-2">
             @if($invoice->status === 'draft')
                 <button wire:click="markAsSent" wire:loading.attr="disabled"
                     class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50">
-                    <svg wire:loading wire:target="markAsSent" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg wire:loading wire:target="markAsSent" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
                     </svg>
                     <span>{{ __('Mark as Sent') }}</span>
                 </button>
             @endif
             @if(in_array($invoice->status, ['sent', 'overdue']))
-                <button wire:click="markAsPaid" wire:loading.attr="disabled"
+                <button wire:click="openPaidModal" wire:loading.attr="disabled"
                     class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:opacity-50">
-                    <svg wire:loading wire:target="markAsPaid" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg wire:loading wire:target="openPaidModal" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
                     </svg>
                     <span>{{ __('Mark as Paid') }}</span>
                 </button>
@@ -30,9 +37,12 @@
             @if($invoice->status === 'sent' && $invoice->due_date->isPast())
                 <button wire:click="markAsOverdue" wire:loading.attr="disabled"
                     class="inline-flex items-center px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition disabled:opacity-50">
-                    <svg wire:loading wire:target="markAsOverdue" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg wire:loading wire:target="markAsOverdue" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
                     </svg>
                     <span>{{ __('Mark as Overdue') }}</span>
                 </button>
@@ -40,9 +50,12 @@
             @if(in_array($invoice->status, ['draft', 'sent', 'overdue']))
                 <button wire:click="cancelInvoice" wire:loading.attr="disabled"
                     class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition disabled:opacity-50">
-                    <svg wire:loading wire:target="cancelInvoice" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg wire:loading wire:target="cancelInvoice" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
                     </svg>
                     <span>{{ __('Cancel') }}</span>
                 </button>
@@ -58,9 +71,12 @@
             </a>
             <button wire:click="sendEmail" wire:loading.attr="disabled"
                 class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center disabled:opacity-50">
-                <svg wire:loading wire:target="sendEmail" class="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24">
+                <svg wire:loading wire:target="sendEmail" class="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-600"
+                    fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
                 </svg>
                 <div wire:loading.remove wire:target="sendEmail">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,11 +106,15 @@
                 </a>
             @endif
             @if($invoice->isEstimate() && $invoice->status !== 'cancelled')
-                <button wire:click="convertToInvoice" wire:confirm="{{ __('Convert this estimate to a standard invoice?') }}" wire:loading.attr="disabled"
+                <button wire:click="convertToInvoice"
+                    wire:confirm="{{ __('Convert this estimate to a standard invoice?') }}" wire:loading.attr="disabled"
                     class="inline-flex items-center bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 shadow-sm transition duration-200 text-center font-medium disabled:opacity-50">
-                    <svg wire:loading wire:target="convertToInvoice" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                    <svg wire:loading wire:target="convertToInvoice" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
                     </svg>
                     <span>{{ __('Convert to Invoice') }}</span>
                 </button>
@@ -120,7 +140,8 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">{{ $invoice->isEstimate() ? __('ESTIMATE') : __('INVOICE') }} {{ __('TO') }}</h4>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                            {{ $invoice->isEstimate() ? __('ESTIMATE') : __('INVOICE') }} {{ __('TO') }}</h4>
                         <div>
                             <p class="font-semibold text-gray-900">{{ $invoice->client->name }}</p>
                             @if($invoice->client->company_name)
@@ -136,18 +157,22 @@
                     </div>
                 </div>
 
-                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">{{ $invoice->isEstimate() ? __('ESTIMATE') : __('INVOICE') }} {{ __('INFO') }}</h4>
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+                    {{ $invoice->isEstimate() ? __('ESTIMATE') : __('INVOICE') }} {{ __('INFO') }}</h4>
                 <div class="space-y-1">
                     <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} #:</span>
+                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
+                            #:</span>
                         <span class="font-medium text-gray-900">{{ $invoice->invoice_number }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} {{ __('Date') }}:</span>
+                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
+                            {{ __('Date') }}:</span>
                         <span class="font-medium text-gray-900">{{ $invoice->invoice_date->format('M d, Y') }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Expiration') : __('Due') }} {{ __('Date') }}:</span>
+                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Expiration') : __('Due') }}
+                            {{ __('Date') }}:</span>
                         <span class="font-medium text-gray-900">{{ $invoice->due_date->format('M d, Y') }}</span>
                     </div>
                 </div>
@@ -156,7 +181,8 @@
                     <table class="w-full">
                         <thead>
                             <tr class="border-b">
-                                <th class="text-left py-3 text-sm font-semibold text-gray-700">{{ __('Description') }}</th>
+                                <th class="text-left py-3 text-sm font-semibold text-gray-700">{{ __('Description') }}
+                                </th>
                                 <th class="text-right py-3 text-sm font-semibold text-gray-700">{{ __('Qty') }}</th>
                                 <th class="text-right py-3 text-sm font-semibold text-gray-700">{{ __('Price') }}</th>
                                 <th class="text-right py-3 text-sm font-semibold text-gray-700">{{ __('Total') }}</th>
@@ -228,7 +254,11 @@
                     </span>
                     @if($invoice->last_reminder_sent_at)
                         <span class="text-xs text-gray-500" title="{{ __('Last automated reminder sent') }}">
-                            <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
                             {{ $invoice->last_reminder_sent_at->diffForHumans() }}
                         </span>
                     @endif
@@ -256,38 +286,46 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 {{ $profit >= 0 ? 'border-green-500' : 'border-red-500' }}">
+            <div
+                class="bg-white rounded-lg shadow p-6 border-l-4 {{ $profit >= 0 ? 'border-green-500' : 'border-red-500' }}">
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="text-lg font-semibold text-gray-900">{{ __('Job Profitability') }}</h3>
-                    <span class="text-xs font-bold px-2 py-1 rounded {{ $profit >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                    <span
+                        class="text-xs font-bold px-2 py-1 rounded {{ $profit >= 0 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
                         {{ number_format($margin_percentage, 1) }}% {{ __('Margin') }}
                     </span>
                 </div>
                 <div class="space-y-3">
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-600">{{ __('Revenue') }}:</span>
-                        <span class="font-medium text-gray-900">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
+                        <span
+                            class="font-medium text-gray-900">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-600">{{ __('Linked Costs') }}:</span>
-                        <span class="font-medium text-red-600">-{{ $invoice->currency_symbol }}{{ number_format($total_expenses, 2) }}</span>
+                        <span
+                            class="font-medium text-red-600">-{{ $invoice->currency_symbol }}{{ number_format($total_expenses, 2) }}</span>
                     </div>
                     <div class="flex justify-between pt-2 border-t font-bold text-base">
                         <span>{{ __('Net Profit') }}:</span>
-                        <span class="{{ $profit >= 0 ? 'text-green-600' : 'text-red-600' }}">{{ $invoice->currency_symbol }}{{ number_format($profit, 2) }}</span>
+                        <span
+                            class="{{ $profit >= 0 ? 'text-green-600' : 'text-red-600' }}">{{ $invoice->currency_symbol }}{{ number_format($profit, 2) }}</span>
                     </div>
 
                     @if($invoice->expenses->count() > 0)
                         <div class="mt-4 pt-4 border-t">
-                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{{ __('Linked Expenses') }}</h4>
+                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                                {{ __('Linked Expenses') }}</h4>
                             <div class="space-y-2 max-h-48 overflow-y-auto pr-1">
                                 @foreach($invoice->expenses as $expense)
-                                    <div class="flex justify-between items-center text-xs p-2 bg-gray-50 rounded border border-gray-100">
+                                    <div
+                                        class="flex justify-between items-center text-xs p-2 bg-gray-50 rounded border border-gray-100">
                                         <div class="truncate mr-2">
                                             <p class="font-semibold text-gray-900 truncate">{{ $expense->description }}</p>
                                             <p class="text-gray-500 italic">{{ $expense->date->format('d.m.Y') }}</p>
                                         </div>
-                                        <span class="font-bold text-red-600 whitespace-nowrap">-{{ $invoice->currency_symbol }}{{ number_format($expense->amount, 2) }}</span>
+                                        <span
+                                            class="font-bold text-red-600 whitespace-nowrap">-{{ $invoice->currency_symbol }}{{ number_format($expense->amount, 2) }}</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -336,9 +374,13 @@
                         </div>
                         <button type="submit" wire:loading.attr="disabled"
                             class="inline-flex items-center justify-center w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition disabled:opacity-50">
-                            <svg wire:loading wire:target="recordPayment" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            <svg wire:loading wire:target="recordPayment" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                                </circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
                             </svg>
                             <span>{{ __('Record Payment') }}</span>
                         </button>
@@ -354,12 +396,15 @@
                             <div class="flex justify-between items-start pb-3 border-b last:border-0">
                                 <div>
                                     <p class="font-medium">
-                                        {{ $invoice->currency_symbol }}{{ number_format($payment->amount, 2) }}</p>
+                                        {{ $invoice->currency_symbol }}{{ number_format($payment->amount, 2) }}
+                                    </p>
                                     <p class="text-sm text-gray-500">{{ $payment->date->format('M d, Y') }}</p>
                                 </div>
                                 <div class="text-right">
-                                    <p class="text-sm text-gray-600">{{ __(ucfirst(str_replace('_', ' ', $payment->method))) }}</p>
-                                    <button wire:click="deletePayment({{ $payment->id }})" wire:confirm="{{ __('Delete this payment?') }}"
+                                    <p class="text-sm text-gray-600">{{ __(ucfirst(str_replace('_', ' ', $payment->method))) }}
+                                    </p>
+                                    <button wire:click="deletePayment({{ $payment->id }})"
+                                        wire:confirm="{{ __('Delete this payment?') }}"
                                         class="text-xs text-red-600 hover:text-red-700">{{ __('Delete') }}</button>
                                 </div>
                             </div>
@@ -369,4 +414,63 @@
             @endif
         </div>
     </div>
+
+    @if($showPaidModal)
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+                <div class="p-6 border-b flex justify-between items-center bg-gray-50">
+                    <h3 class="text-xl font-bold text-gray-900">{{ __('Mark as Paid') }}</h3>
+                    <button wire:click="closePaidModal()" class="text-gray-400 hover:text-gray-600">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <form wire:submit="markAsPaid">
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Payment Date') }} *</label>
+                            <input type="date" wire:model="payment_date"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            @error('payment_date') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Source') }} *</label>
+                            <select wire:model="paymentSource"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="bank">{{ __('Bank') }}</option>
+                                <option value="cash">{{ __('Cash (Kasse)') }}</option>
+                            </select>
+                            @error('paymentSource') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }} *</label>
+                            <input type="text" wire:model="paymentDescription"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            @error('paymentDescription') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+                    <div class="p-6 bg-gray-50 border-t flex justify-end gap-3">
+                        <button type="button" wire:click="closePaidModal()"
+                            class="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium">
+                            {{ __('Cancel') }}
+                        </button>
+                        <button type="submit" wire:loading.attr="disabled"
+                            class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 shadow-sm transition font-bold disabled:opacity-50 flex items-center gap-2">
+                            <svg wire:loading wire:target="markAsPaid" class="animate-spin h-4 w-4 text-white" fill="none"
+                                viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                                </circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            <span>{{ __('Save Payment') }}</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
 </div>

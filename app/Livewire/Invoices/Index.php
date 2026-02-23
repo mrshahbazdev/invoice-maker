@@ -73,6 +73,15 @@ class Index extends Component
                 'amount_due' => 0,
             ]);
 
+            // Create Payment History record
+            \App\Models\Payment::create([
+                'invoice_id' => $invoice->id,
+                'amount' => $invoice->grand_total,
+                'method' => $this->paymentSource === 'cash' ? 'cash' : 'bank_transfer',
+                'date' => $this->paymentDate,
+                'notes' => $this->paymentDescription,
+            ]);
+
             // Create Cash Book Entry
             \App\Models\CashBookEntry::create([
                 'business_id' => Auth::user()->business_id,

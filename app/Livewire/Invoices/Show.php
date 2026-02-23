@@ -16,9 +16,10 @@ class Show extends Component
     public string $payment_method = 'bank_transfer';
     public string $payment_date = '';
     public string $payment_notes = '';
-    public float $total_expenses = 0;
-    public float $profit = 0;
     public float $margin_percentage = 0;
+    public bool $showPaidModal = false;
+    public $paymentSource = 'bank';
+    public $paymentDescription = '';
 
     protected array $rules = [
         'payment_amount' => 'required|numeric|min:0.01',
@@ -85,15 +86,63 @@ class Show extends Component
         session()->flash('message', 'Estimate converted to Invoice successfully.');
     }
 
+    public function openPaidModal(): void
+    {
+        $this->payment_date = now()->format('Y-m-d');
+        $this->paymentDescription = __('Payment for Invoice') . ' ' . $this->invoice->invoice_number;
+        $this->showPaidModal = true;
+    }
+
+    public function closePaidModal(): void
+    {
+        $this->showPaidModal = false;
+        $this->reset(['paymentSource', 'paymentDescription']);
+    }
+
     public function markAsPaid(): void
     {
-        $this->invoice->update([
-            'status' => Invoice::STATUS_PAID,
-            'amount_paid' => $this->invoice->grand_total,
-            'amount_due' => 0,
+        $this->validate([
+            'payment_date' => 'required|date',
+            'paymentSource' => 'required|in:cash,bank',
+            'paymentDescription' => 'required|string|max:255',
         ]);
-        $this->invoice->deductInventory();
-        session()->flash('message', 'Invoice marked as paid.');
+
+        \Illuminate\Support\Facades\DB::transaction(function () {
+            // Update Invoice Status
+            $this->invoice->update([
+                'status' => Invoice::STATUS_PAID,
+                'amount_paid' => $this->invoice->grand_total,
+                'amount_due' => 0,
+            ]);
+
+            // Create Payment History record
+            Payment::create([
+                'invoice_id' => $this->invoice->id,
+                'amount' => $this->invoice->grand_total,
+                'method' => $this->paymentSource === 'cash' ? 'cash' : 'bank_transfer',
+                'date' => $this->payment_date,
+                'notes' => $this->paymentDescription,
+            ]);
+
+            // Create Cash Book Entry
+            \App\Models\CashBookEntry::create([
+                'business_id' => $this->invoice->business_id,
+                'date' => $this->payment_date,
+                'document_date' => $this->invoice->invoice_date,
+                'amount' => $this->invoice->grand_total,
+                'type' => 'income',
+                'source' => $this->paymentSource,
+                'description' => $this->paymentDescription,
+                'partner_name' => $this->invoice->client->company_name ?? $this->invoice->client->name,
+                'reference_number' => $this->invoice->invoice_number,
+                'invoice_id' => $this->invoice->id,
+            ]);
+
+            $this->invoice->deductInventory();
+        });
+
+        $this->closePaidModal();
+        session()->flash('message', __('Invoice marked as paid and Cash Book entry created.'));
     }
 
     public function markAsOverdue(): void
@@ -119,29 +168,45 @@ class Show extends Component
             return;
         }
 
-        Payment::create([
-            'invoice_id' => $this->invoice->id,
-            'amount' => $amount,
-            'method' => $this->payment_method,
-            'date' => $this->payment_date,
-            'notes' => $this->payment_notes,
-        ]);
+        \Illuminate\Support\Facades\DB::transaction(function () use ($amount) {
+            Payment::create([
+                'invoice_id' => $this->invoice->id,
+                'amount' => $amount,
+                'method' => $this->payment_method,
+                'date' => $this->payment_date,
+                'notes' => $this->payment_notes,
+            ]);
 
-        $totalPaid = $this->invoice->payments->sum('amount') + $amount;
-        $this->invoice->update([
-            'amount_paid' => $totalPaid,
-            'amount_due' => $this->invoice->grand_total - $totalPaid,
-        ]);
+            // Create Cash Book Entry for partial payment
+            \App\Models\CashBookEntry::create([
+                'business_id' => $this->invoice->business_id,
+                'date' => $this->payment_date,
+                'document_date' => $this->invoice->invoice_date,
+                'amount' => $amount,
+                'type' => 'income',
+                'source' => in_array($this->payment_method, ['cash']) ? 'cash' : 'bank',
+                'description' => $this->payment_notes ?: __('Partial payment for') . ' ' . $this->invoice->invoice_number,
+                'partner_name' => $this->invoice->client->company_name ?? $this->invoice->client->name,
+                'reference_number' => $this->invoice->invoice_number,
+                'invoice_id' => $this->invoice->id,
+            ]);
 
-        if ($this->invoice->amount_due <= 0) {
-            $this->invoice->update(['status' => Invoice::STATUS_PAID]);
-            $this->invoice->deductInventory();
-        }
+            $totalPaid = $this->invoice->payments->sum('amount') + $amount;
+            $this->invoice->update([
+                'amount_paid' => $totalPaid,
+                'amount_due' => $this->invoice->grand_total - $totalPaid,
+            ]);
+
+            if ($this->invoice->amount_due <= 0) {
+                $this->invoice->update(['status' => Invoice::STATUS_PAID]);
+                $this->invoice->deductInventory();
+            }
+        });
 
         $this->payment_amount = '';
         $this->payment_notes = '';
         $this->invoice->load('payments');
-        session()->flash('message', 'Payment recorded successfully.');
+        session()->flash('message', __('Payment recorded and Cash Book entry created.'));
     }
 
     public function deletePayment(int $paymentId): void
