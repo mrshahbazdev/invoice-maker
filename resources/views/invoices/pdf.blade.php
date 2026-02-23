@@ -266,8 +266,9 @@
                         <td style="text-align: {{ $metaAlign }};">
                             @if($enableQr)
                                 @php
-                                    $qrUrl = URL::signedRoute('invoices.public.show', $invoice->id);
-                                    $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(70)->generate($qrUrl));
+                                    $epcQrString = $invoice->business->getEpcQrCodeString($invoice);
+                                    $qrData = $epcQrString ?? URL::signedRoute('invoices.public.show', $invoice->id);
+                                    $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(70)->generate($qrData));
                                 @endphp
                                 <div style="display: inline-block; vertical-align: top; margin: 0 15px;">
                                     <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code" width="70" height="70">

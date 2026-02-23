@@ -12,42 +12,47 @@ class CashBookExportController
     public function exportCsv(Request $request)
     {
         $business = Auth::user()->business;
-        $entries = CashBookEntry::with(['category', 'invoice', 'expense'])
-            ->where('business_id', $business->id)
-            ->orderBy('date', 'asc')
+        $query = CashBookEntry::with(['category', 'invoice', 'expense'])
+            ->where('business_id', $business->id);
+
+        if ($request->has('startDate')) {
+            $query->whereDate('date', '>=', $request->startDate);
+        }
+        if ($request->has('endDate')) {
+            $query->whereDate('date', '<=', $request->endDate);
+        }
+
+        $entries = $query->orderBy('date', 'asc')
             ->orderBy('booking_number', 'asc')
             ->get();
 
-        $fileName = 'CashBook_' . $business->name . '_' . now()->format('Y-m-d') . '.csv';
+        $fileName = 'CashBook_' . $business->name . '_' . ($request->startDate ?? 'all') . '_to_' . ($request->endDate ?? now()->format('Y-m-d')) . '.csv';
 
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=\"$fileName\"",
-            'Pragma' => 'no-cache',
-            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
-            'Expires' => '0',
         ];
 
         return new StreamedResponse(function () use ($entries) {
             $handle = fopen('php://output', 'w');
+            fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM for Excel UTF-8 support
 
-            // Header row for Sweet Spot Pro compatibility
             fputcsv($handle, [
-                'Booking Number',
-                'Date',
-                'Type',
-                'Source',
-                'Category',
-                'Description',
-                'Amount',
-                'Linked Job',
-                'Posting Rule'
+                __('Booking Number'),
+                __('Date'),
+                __('Type'),
+                __('Source'),
+                __('Category'),
+                __('Description'),
+                __('Amount'),
+                __('Linked Job'),
+                __('Posting Rule')
             ]);
 
             foreach ($entries as $entry) {
                 fputcsv($handle, [
                     $entry->booking_number,
-                    $entry->date->format('Y-m-d'),
+                    $entry->date->format('d.m.Y'),
                     ucfirst($entry->type),
                     ucfirst($entry->source),
                     $entry->category ? $entry->category->name : 'N/A',
@@ -60,5 +65,39 @@ class CashBookExportController
 
             fclose($handle);
         }, 200, $headers);
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $business = Auth::user()->business;
+        $query = CashBookEntry::with(['category', 'invoice', 'expense'])
+            ->where('business_id', $business->id);
+
+        if ($request->has('startDate')) {
+            $query->whereDate('date', '>=', $request->startDate);
+        }
+        if ($request->has('endDate')) {
+            $query->whereDate('date', '<=', $request->endDate);
+        }
+
+        $entries = $query->orderBy('date', 'asc')
+            ->orderBy('booking_number', 'asc')
+            ->get();
+
+        $incomeTotal = $entries->where('type', 'income')->sum('amount');
+        $expenseTotal = $entries->where('type', 'expense')->sum('amount');
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('exports.cash-book', [
+            'business' => $business,
+            'entries' => $entries,
+            'incomeTotal' => $incomeTotal,
+            'expenseTotal' => $expenseTotal,
+            'startDate' => $request->startDate,
+            'endDate' => $request->endDate,
+        ]);
+
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download('CashBook_' . $business->name . '_' . now()->format('Y-m-d') . '.pdf');
     }
 }

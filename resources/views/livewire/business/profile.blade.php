@@ -59,6 +59,24 @@
                     @error('bank_details') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
+                <div class="space-y-4">
+                    <div>
+                        <label
+                            class="block text-sm font-medium text-gray-700 mb-1">{{ __('IBAN (For EPC-QR Bank Transfer)') }}</label>
+                        <input type="text" wire:model="iban"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="DE00 0000 0000 0000 0000 00">
+                        @error('iban') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('BIC') }}</label>
+                        <input type="text" wire:model="bic"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="EXAMPPBBXXX">
+                        @error('bic') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+                </div>
+
                 <div class="md:col-span-2">
                     <label
                         class="block text-sm font-medium text-gray-700 mb-1">{{ __('Default Payment Terms & Instructions') }}</label>

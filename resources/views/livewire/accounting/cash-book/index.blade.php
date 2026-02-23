@@ -10,18 +10,40 @@
             <div class="bg-green-50 px-4 py-2 rounded-lg border border-green-100 shadow-sm">
                 <span class="text-xs font-bold text-green-600 uppercase tracking-wider">{{ __('Income') }}</span>
                 <p class="text-xl font-extrabold text-green-700 tracking-tight">
-                    {{ number_format($incomeTotal, 2, ',', '.') }} €</p>
+                    {{ number_format($incomeTotal, 2, ',', '.') }} €
+                </p>
             </div>
             <div class="bg-red-50 px-4 py-2 rounded-lg border border-red-100 shadow-sm">
                 <span class="text-xs font-bold text-red-600 uppercase tracking-wider">{{ __('Expense') }}</span>
                 <p class="text-xl font-extrabold text-red-700 tracking-tight">
-                    {{ number_format($expenseTotal, 2, ',', '.') }} €</p>
+                    {{ number_format($expenseTotal, 2, ',', '.') }} €
+                </p>
             </div>
             <div class="bg-blue-600 px-6 py-2 rounded-lg shadow-md flex flex-col justify-center">
                 <span class="text-xs font-bold text-blue-100 uppercase tracking-wider">{{ __('Balance') }}</span>
                 <p class="text-xl font-extrabold text-white tracking-tight">{{ number_format($balance, 2, ',', '.') }} €
                 </p>
             </div>
+        </div>
+        <div class="flex gap-2">
+            <a href="{{ route('accounting.cash-book.export.excel', ['startDate' => $startDate, 'endDate' => $endDate]) }}"
+                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                <svg class="w-4 h-4 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                    </path>
+                </svg>
+                {{ __('Excel') }}
+            </a>
+            <a href="{{ route('accounting.cash-book.export.pdf', ['startDate' => $startDate, 'endDate' => $endDate]) }}"
+                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                <svg class="w-4 h-4 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                    </path>
+                </svg>
+                {{ __('PDF') }}
+            </a>
         </div>
     </div>
 

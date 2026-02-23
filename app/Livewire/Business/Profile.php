@@ -25,6 +25,8 @@ class Profile extends Component
     public string $timezone = 'UTC';
     public string $tax_number = '';
     public string $bank_details = '';
+    public string $iban = '';
+    public string $bic = '';
     public string $payment_terms = '';
     public string $language = 'en';
     public string $invoice_number_prefix = 'INV';
@@ -52,6 +54,8 @@ class Profile extends Component
             'timezone' => 'required|string',
             'tax_number' => 'nullable|string|max:255',
             'bank_details' => 'nullable|string',
+            'iban' => 'nullable|string|max:34',
+            'bic' => 'nullable|string|max:11',
             'payment_terms' => 'nullable|string',
             'language' => 'required|string|in:en,de,es,fr,it,pt,ar,zh,ja,ru',
             'invoice_number_prefix' => 'required|string|max:10',
@@ -82,6 +86,8 @@ class Profile extends Component
             $this->timezone = $this->business->timezone;
             $this->tax_number = $this->business->tax_number ?? '';
             $this->bank_details = $this->business->bank_details ?? '';
+            $this->iban = $this->business->iban ?? '';
+            $this->bic = $this->business->bic ?? '';
             $this->payment_terms = $this->business->payment_terms ?? '';
             $this->invoice_number_prefix = $this->business->invoice_number_prefix ?? 'INV';
             $this->invoice_number_next = $this->business->invoice_number_next ?? 1;
@@ -119,6 +125,8 @@ class Profile extends Component
             'timezone' => $this->timezone,
             'tax_number' => $this->tax_number,
             'bank_details' => $this->bank_details,
+            'iban' => $this->iban,
+            'bic' => $this->bic,
             'payment_terms' => $this->payment_terms,
             'invoice_number_prefix' => $this->invoice_number_prefix,
             'invoice_number_next' => $this->invoice_number_next,
@@ -218,7 +226,8 @@ class Profile extends Component
                 'smtp_password' => $this->smtp_password,
                 'smtp_encryption' => $this->smtp_encryption,
                 'hasCustomSmtp' => function () {
-                    return true; }
+                    return true;
+                }
             ]);
 
             // For testing, we send a simple raw email to the authenticated user

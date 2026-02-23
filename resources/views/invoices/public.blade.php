@@ -235,8 +235,9 @@
                             <div class="flex items-start md:items-center justify-start md:justify-end gap-6 mb-6">
                                 @if($enableQr)
                                     @php
-                                        $qrUrl = URL::signedRoute('invoices.public.show', $invoice->id);
-                                        $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(72)->generate($qrUrl));
+                                        $epcQrString = $invoice->business->getEpcQrCodeString($invoice);
+                                        $qrData = $epcQrString ?? URL::signedRoute('invoices.public.show', $invoice->id);
+                                        $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(72)->generate($qrData));
                                     @endphp
                                     <div class="p-1.5 bg-white rounded-xl shadow-sm border border-gray-100">
                                         <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code"
