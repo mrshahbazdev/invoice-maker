@@ -131,7 +131,6 @@
                             style="height: {{ ($expensesByMonth[$month] ?? 0) ? min(100, (($expensesByMonth[$month] ?? 0) / $maxAmount) * 100) : 0 }}%;">
                         </div>
 
-                        <!-- Tooltip Combined -->
                         <div class="absolute bottom-full mb-2 hidden group-hover:block z-20">
                             <div class="bg-gray-800 text-white p-2 rounded text-[10px] shadow-xl whitespace-nowrap">
                                 <div class="flex justify-between gap-4"><span>{{ __('Rev') }}:</span>

@@ -39,7 +39,7 @@
                     <tr class="border-b bg-gray-50">
                         <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700 cursor-pointer"
                             wire:click="sortBy('invoice_number')">
-                            {{ __('Estimate') }} #
+                            {{ __('Estimate Number') }}
                             @if($sortBy === 'invoice_number')
                                 <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                             @endif

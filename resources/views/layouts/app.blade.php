@@ -35,7 +35,7 @@
                             @endif
                             <h1
                                 class="text-lg sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 truncate pr-2">
-                                {{ $title ?? 'Dashboard' }}
+                                {{ $title ?? __('Dashboard') }}
                             </h1>
                         </div>
                         <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
