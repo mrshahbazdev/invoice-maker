@@ -148,12 +148,19 @@
                 </div>
 
                 <div class="flex items-center space-x-4 ml-4 pl-4 border-l border-gray-200">
-                    <a href="{{ route('login') }}"
-                        class="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors">{{ __('Sign In') }}</a>
-                    <a href="{{ route('register') }}"
-                        class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 shadow-lg shadow-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all">
-                        {{ __('Get Started') }}
-                    </a>
+                    @auth
+                        <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
+                            class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-200 transition-all transform hover:-translate-y-0.5">
+                            {{ __('Go to Dashboard') }}
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="text-sm font-semibold text-gray-700 hover:text-blue-600 transition-colors">{{ __('Sign In') }}</a>
+                        <a href="{{ route('register') }}"
+                            class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 shadow-lg shadow-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all">
+                            {{ __('Get Started') }}
+                        </a>
+                    @endauth
                 </div>
             </div>
 
@@ -211,10 +218,17 @@
                 <a href="#how-it-works" @click="mobileMenuOpen = false"
                     class="block text-lg font-medium text-gray-900">{{ __('How it Works') }}</a>
                 <div class="pt-6 border-t border-gray-100 space-y-4">
-                    <a href="{{ route('login') }}"
-                        class="block w-full text-center px-6 py-3 text-lg font-semibold text-gray-900 border border-gray-200 rounded-2xl">{{ __('Sign In') }}</a>
-                    <a href="{{ route('register') }}"
-                        class="block w-full text-center px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-2xl">{{ __('Get Started') }}</a>
+                    @auth
+                        <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
+                            class="block w-full text-center px-6 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl">
+                            {{ __('Go to Dashboard') }}
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="block w-full text-center px-6 py-3 text-lg font-semibold text-gray-900 border border-gray-200 rounded-2xl">{{ __('Sign In') }}</a>
+                        <a href="{{ route('register') }}"
+                            class="block w-full text-center px-6 py-3 text-lg font-semibold text-white bg-blue-600 rounded-2xl">{{ __('Get Started') }}</a>
+                    @endauth
                 </div>
             </div>
         </div>

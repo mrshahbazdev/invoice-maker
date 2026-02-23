@@ -47,12 +47,6 @@ Route::post('/v/{invoice}/save', [ClientPortalController::class, 'register'])->n
 Route::get('/v/{invoice}/pay', [StripeController::class, 'createCheckoutSession'])->name('invoices.pay');
 
 Route::get('/', function () {
-    if (auth()->check()) {
-        if (auth()->user()->role === 'client') {
-            return redirect()->route('client.dashboard');
-        }
-        return redirect()->route('dashboard');
-    }
     return view('welcome');
 });
 

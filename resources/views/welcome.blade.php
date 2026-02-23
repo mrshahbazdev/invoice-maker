@@ -1,44 +1,51 @@
 <x-landing-layout>
     <!-- Hero Section -->
     <section class="mesh-gradient relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Floating decorative elements -->
+        <div class="absolute top-1/4 -left-20 w-64 h-64 bg-blue-400/20 blur-[100px] rounded-full animate-float"></div>
+        <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-indigo-400/20 blur-[120px] rounded-full animate-float"
+            style="animation-delay: 2s"></div>
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col lg:flex-row items-center gap-16">
                 <div class="lg:w-1/2 text-left reveal">
                     <div
-                        class="inline-flex items-center space-x-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-bold mb-8">
-                        <span class="relative flex h-3 w-3">
+                        class="inline-flex items-center space-x-2 bg-white/80 backdrop-blur-md border border-blue-100 text-blue-600 px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-8 shadow-sm">
+                        <span class="relative flex h-2 w-2">
                             <span
                                 class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
                         </span>
-                        <span>{{ __('Global Version 2.0 Now Live') }}</span>
+                        <span>{{ __('V2.1 Enterprise Ready') }}</span>
                     </div>
-                    <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight mb-8 leading-tight text-gray-900">
-                        {{ __('Invoicing that feels like') }}
-                        <span class="text-blue-600">
-                            {{ __('magic.') }}
+                    <h1 class="text-6xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-gray-900">
+                        {{ __('Invoicing') }}<br />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                            {{ __('Perfected.') }}
                         </span>
                     </h1>
-                    <p class="text-xl text-gray-600 mb-10 leading-relaxed max-w-xl">
-                        {{ __('The ultimate multi-tenant SaaS platform built for the modern global entrepreneur. Professional invoices, automated cash books, and multi-currency support.') }}
+                    <p class="text-xl text-gray-500 mb-10 leading-relaxed max-w-xl font-medium">
+                        {{ __('The ultimate multi-tenant SaaS platform built for modern global entrepreneurs. Professional invoices, job profitability tracking, and accountant-grade books.') }}
                     </p>
-                    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
                         <a href="{{ route('register') }}"
-                            class="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-bold rounded-2xl shadow-2xl shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 transition-all text-center">
-                            {{ __('Start For Free') }}
+                            class="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-2xl shadow-2xl shadow-blue-500/20 hover:scale-105 transition-all text-center">
+                            {{ __('Start Free Trial') }}
                         </a>
                         <a href="#features"
-                            class="w-full sm:w-auto px-8 py-4 bg-white text-gray-700 font-bold rounded-2xl border border-gray-200 hover:bg-gray-50 transition-all text-center">
-                            {{ __('See Features') }}
+                            class="w-full sm:w-auto px-10 py-5 bg-white text-gray-900 font-bold rounded-2xl border border-gray-200 hover:bg-gray-50 transition-all text-center">
+                            {{ __('Explore Features') }}
                         </a>
                     </div>
                 </div>
 
                 <div class="lg:w-1/2 reveal">
-                    <div class="relative">
-                        <div class="absolute -inset-4 bg-blue-600/10 blur-3xl opacity-50 rounded-full"></div>
+                    <div class="relative group">
+                        <div
+                            class="absolute -inset-10 bg-gradient-to-tr from-blue-400/20 to-indigo-400/20 blur-[80px] opacity-70 group-hover:opacity-100 transition-opacity">
+                        </div>
                         <img src="{{ asset('images/landing_hero_v2.png') }}" alt="InvoiceMaker V2 Dashboard"
-                            class="w-full h-auto drop-shadow-2xl animate-float">
+                            class="w-full h-auto drop-shadow-2xl animate-float relative z-10 rounded-3xl">
                     </div>
                 </div>
             </div>
@@ -51,7 +58,8 @@
             <div class="text-center mb-20 reveal">
                 <h2 class="text-4xl font-black mb-4">{{ __('How It Works') }}</h2>
                 <p class="text-gray-500 max-w-2xl mx-auto">
-                    {{ __('Three simple steps to professional financial management.') }}</p>
+                    {{ __('Three simple steps to professional financial management.') }}
+                </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -90,70 +98,84 @@
     </section>
 
     <!-- Professional Ledger (Cash Book) Highlight -->
-    <section class="py-24 bg-gray-900 overflow-hidden">
+    <section class="py-32 bg-gray-950 overflow-hidden relative">
+        <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent">
+        </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
+            <div class="flex flex-col lg:flex-row items-center gap-20">
                 <div class="lg:w-1/2 reveal">
-                    <div class="glass-card p-1 rounded-3xl overflow-hidden border border-white/10">
-                        <div class="bg-gray-800 p-6 flex items-center justify-between border-b border-white/5">
-                            <div class="flex space-x-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-[1px] rounded-[2.5rem] shadow-2xl">
+                        <div class="bg-gray-950 rounded-[2.5rem] overflow-hidden">
+                            <div
+                                class="bg-gray-900/50 px-8 py-5 flex items-center justify-between border-b border-white/5 backdrop-blur-xl">
+                                <div class="flex space-x-2">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                                </div>
+                                <span
+                                    class="text-blue-400/50 text-[10px] font-mono tracking-tighter">realtime-ledger.sys</span>
                             </div>
-                            <span class="text-white/50 text-xs font-mono">cash-book-ledger.vhd</span>
-                        </div>
-                        <div class="p-8 bg-gray-950">
-                            <div class="space-y-4 font-mono text-xs">
-                                <div class="flex justify-between text-blue-400">
-                                    <span>[ENTRY] RE-2024-001</span>
-                                    <span>+€1,250.00</span>
+                            <div class="p-10 space-y-6">
+                                <div class="flex justify-between items-center group">
+                                    <span
+                                        class="text-xs font-mono text-gray-500 group-hover:text-blue-400 transition-colors tracking-tighter uppercase">[RECORD]
+                                        RE-2024-001</span>
+                                    <span class="text-sm font-black text-green-400 tracking-tight">+€1,250.00</span>
                                 </div>
-                                <div class="w-full h-px bg-white/5"></div>
-                                <div class="flex justify-between text-red-400">
-                                    <span>[EXP] Office Supplies</span>
-                                    <span>-€42.30</span>
+                                <div class="h-px bg-white/5"></div>
+                                <div class="flex justify-between items-center group">
+                                    <span
+                                        class="text-xs font-mono text-gray-500 group-hover:text-red-400 transition-colors tracking-tighter uppercase">[DEBIT]
+                                        OFFICE EQUIP.</span>
+                                    <span class="text-sm font-black text-red-400 tracking-tight">-€79.00</span>
                                 </div>
-                                <div class="w-full h-px bg-white/5"></div>
-                                <div class="flex justify-between text-green-400">
-                                    <span>[BAL] Current Ledger Balance</span>
-                                    <span>€16,420.70</span>
+                                <div class="h-px bg-white/5"></div>
+                                <div
+                                    class="flex justify-between items-center bg-blue-500/5 p-4 rounded-xl border border-blue-500/10">
+                                    <span
+                                        class="text-xs font-mono text-blue-400 uppercase font-black tracking-widest">{{ __('Net Profit') }}</span>
+                                    <span class="text-xl font-black text-white tracking-tight">€1,171.00</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="lg:w-1/2 reveal">
-                    <h2 class="text-4xl font-bold text-white mb-6">{{ __('Accountant-Ready Cash Book') }}</h2>
-                    <p class="text-gray-400 text-lg mb-8 leading-relaxed">
-                        {{ __('No more messy spreadsheets. Our professional Cash Book Ledger system automatically tracks every transaction. Double-entry style reporting that accountants love.') }}
+                    <h2 class="text-5xl font-black text-white mb-8 leading-tight">
+                        {{ __('Accountant-Grade') }}<br /><span
+                            class="text-blue-500">{{ __('Cash Book Ledger') }}</span></h2>
+                    <p class="text-gray-400 text-lg mb-10 leading-relaxed font-medium">
+                        {{ __('No more messy spreadsheets. Our professional Cash Book Ledger system automatically tracks every transaction with double-entry precision. Built for speed, accuracy, and accountants.') }}
                     </p>
-                    <ul class="space-y-4 text-gray-300">
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                            {{ __('Unified Income & Expense Ledger') }}
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                            {{ __('Professional Booking Numbers') }}
-                        </li>
-                        <li class="flex items-center">
-                            <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path d="M5 13l4 4L19 7" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                            {{ __('One-Click Professional CSV Export') }}
-                        </li>
-                    </ul>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="flex items-start space-x-4">
+                            <div
+                                class="w-10 h-10 bg-blue-600/20 text-blue-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm mb-1">{{ __('Unified Ledger') }}</h4>
+                                <p class="text-gray-500 text-xs">{{ __('Income & Expense in one view.') }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div
+                                class="w-10 h-10 bg-indigo-600/20 text-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm mb-1">{{ __('Smart Profitability') }}</h4>
+                                <p class="text-gray-500 text-xs">{{ __('Real-time job margin analysis.') }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -165,7 +187,8 @@
             <div class="text-center mb-20 reveal">
                 <h2 class="text-4xl font-black mb-4">{{ __('Global Scale, Local Reach') }}</h2>
                 <p class="text-gray-500 max-w-2xl mx-auto">
-                    {{ __('Professionalism translated into the native tongues of your clients.') }}</p>
+                    {{ __('Professionalism translated into the native tongues of your clients.') }}
+                </p>
             </div>
 
             <div class="grid grid-cols-2 lg:grid-cols-5 gap-8">
@@ -190,117 +213,79 @@
     </section>
 
     <!-- Pricing Section -->
-    <section id="pricing" class="py-24 bg-gray-50">
+    <section id="pricing" class="py-32 bg-gray-50 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-4xl font-black mb-4">{{ __('Simple, Transparent Pricing') }}</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto">
-                    {{ __('Start for free and scale as you grow. No hidden fees.') }}</p>
+            <div class="text-center mb-24 reveal">
+                <h2 class="text-5xl font-black mb-6 tracking-tight">{{ __('Simple, Transparent Pricing') }}</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg font-medium">
+                    {{ __('Start for free and scale as you grow. No hidden fees, just pure professional power.') }}</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
                 <!-- Free Plan -->
-                <div class="reveal glass-card p-10 rounded-3xl border-gray-100 flex flex-col items-center">
-                    <h3 class="text-xl font-bold mb-2">{{ __('Essential') }}</h3>
+                <div class="reveal glass-card p-12 rounded-[2.5rem] border-gray-100 flex flex-col items-center hover:shadow-2xl transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-gray-400 uppercase tracking-widest text-xs">{{ __('Essential') }}</h3>
                     <div class="flex items-baseline mb-8">
-                        <span class="text-4xl font-black text-gray-900">$0</span>
-                        <span class="text-gray-500 ml-2">/{{ __('month') }}</span>
+                        <span class="text-5xl font-black text-gray-900">$0</span>
+                        <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
                     </div>
-                    <ul class="space-y-4 mb-10 text-gray-600 text-sm w-full">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('Up to 10 Invoices/mo') }}</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('All 10 Languages') }}</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('Manual Cash Book') }}</li>
+                    <ul class="space-y-4 mb-12 text-gray-500 text-sm w-full font-medium">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Up to 10 Invoices/mo') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('All 10 Languages') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Manual Cash Book') }}</li>
                     </ul>
                     <a href="{{ route('register') }}"
-                        class="w-full py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors text-center">{{ __('Start Free') }}</a>
+                        class="w-full py-4 bg-gray-100 text-gray-700 font-bold rounded-2xl hover:bg-gray-200 transition-all text-center">{{ __('Start Free') }}</a>
                 </div>
                 <!-- Pro Plan -->
                 <div
-                    class="reveal bg-white p-10 rounded-4xl border-2 border-blue-600 shadow-2xl scale-110 z-10 relative flex flex-col items-center">
+                    class="reveal bg-white p-12 rounded-[3rem] border-2 border-blue-600 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2)] scale-110 z-10 relative flex flex-col items-center group">
                     <div
-                        class="absolute -top-4 bg-blue-600 text-white text-xs font-bold px-4 py-1 rounded-full uppercase">
+                        class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-black px-6 py-2 rounded-full uppercase tracking-widest shadow-xl">
                         {{ __('Most Popular') }}</div>
-                    <h3 class="text-xl font-bold mb-2">{{ __('Professional') }}</h3>
+                    <h3 class="text-xl font-bold mb-2 text-blue-600 uppercase tracking-widest text-xs">{{ __('Professional') }}</h3>
                     <div class="flex items-baseline mb-8">
-                        <span class="text-4xl font-black text-gray-900">$19</span>
-                        <span class="text-gray-500 ml-2">/{{ __('month') }}</span>
+                        <span class="text-6xl font-black text-gray-900">$19</span>
+                        <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
                     </div>
-                    <ul class="space-y-4 mb-10 text-gray-600 text-sm w-full">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('Unlimited Invoices') }}</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('Custom SMTP Support') }}</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-blue-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('Automated Record Generation') }}</li>
+                    <ul class="space-y-4 mb-12 text-gray-600 text-sm w-full font-bold">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Unlimited Invoices') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Custom SMTP Support') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Automated Records') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Priority Support') }}</li>
                     </ul>
                     <a href="{{ route('register') }}"
-                        class="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-xl shadow-blue-200 text-center">{{ __('Get Started Now') }}</a>
+                        class="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-2xl hover:scale-105 transition-all shadow-2xl shadow-blue-500/40 text-center">{{ __('Get Started Now') }}</a>
                 </div>
                 <!-- Enterprise Plan -->
-                <div class="reveal glass-card p-10 rounded-3xl border-gray-100 flex flex-col items-center">
-                    <h3 class="text-xl font-bold mb-2">{{ __('Enterprise') }}</h3>
+                <div class="reveal glass-card p-12 rounded-[2.5rem] border-gray-100 flex flex-col items-center hover:shadow-2xl transition-all">
+                    <h3 class="text-xl font-bold mb-2 text-gray-400 uppercase tracking-widest text-xs">{{ __('Enterprise') }}</h3>
                     <div class="flex items-baseline mb-8">
-                        <span class="text-4xl font-black text-gray-900">$49</span>
-                        <span class="text-gray-500 ml-2">/{{ __('month') }}</span>
+                        <span class="text-5xl font-black text-gray-900">$49</span>
+                        <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
                     </div>
-                    <ul class="space-y-4 mb-10 text-gray-600 text-sm w-full">
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('Advanced Team Analytics') }}</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('Dedicated Account Manager') }}</li>
-                        <li class="flex items-center"><svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor"
-                                viewBox="0 0 20 20">
-                                <path
-                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                            </svg> {{ __('24/7 Priority Support') }}</li>
+                    <ul class="space-y-4 mb-12 text-gray-500 text-sm w-full font-medium">
+                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Advanced Analytics') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Dedicated Manager') }}</li>
+                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg> {{ __('Custom Integration') }}</li>
                     </ul>
                     <a href="{{ route('register') }}"
-                        class="w-full py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors text-center">{{ __('Contact Sales') }}</a>
+                        class="w-full py-4 bg-gray-900 text-white font-bold rounded-2xl hover:bg-black transition-all text-center">{{ __('Contact Sales') }}</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Final CTA -->
-    <section class="py-24 bg-blue-600 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0 100 C 20 0 50 0 100 100" stroke="white" fill="transparent" />
-            </svg>
-        </div>
+    <section class="py-32 bg-gray-950 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-indigo-600/20 opacity-30"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
-            <h2 class="text-4xl text-white font-bold mb-8">{{ __('Ready to simplify your business?') }}</h2>
+            <h2 class="text-5xl lg:text-7xl text-white font-black mb-10 tracking-tighter leading-none">{{ __('Ready to simplify your') }}<br/><span class="text-blue-500">{{ __('financial empire?') }}</span></h2>
             <a href="{{ route('register') }}"
-                class="inline-block px-10 py-5 bg-white text-blue-600 font-extrabold rounded-2xl hover:scale-105 transition-all shadow-xl">
-                {{ __('Create Your Account Now') }}
+                class="inline-block px-12 py-6 bg-white text-blue-600 font-black text-xl rounded-3xl hover:scale-110 transition-all shadow-[0_20px_50px_rgba(255,255,255,0.15)] transform active:scale-95">
+                {{ __('Create Your Account Free') }}
             </a>
+            <p class="mt-8 text-gray-500 font-bold uppercase tracking-widest text-[10px]">{{ __('No credit card required') }}</p>
         </div>
     </section>
 </x-landing-layout>

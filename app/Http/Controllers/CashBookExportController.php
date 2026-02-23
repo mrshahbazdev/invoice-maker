@@ -26,16 +26,17 @@ class CashBookExportController
             ->orderBy('booking_number', 'asc')
             ->get();
 
-        $fileName = 'CashBook_' . str_replace(' ', '_', $business->name) . '_' . now()->format('Y-m-d') . '.xlsx';
+        $fileName = 'CashBook_' . str_replace(' ', '_', $business->name) . '_' . now()->format('Y-m-d') . '.csv';
 
         $headers = [
-            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=\"$fileName\"",
         ];
 
         return new StreamedResponse(function () use ($entries) {
             $handle = fopen('php://output', 'w');
-            fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM for Excel UTF-8 support
+            fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM
+            fwrite($handle, "sep=,\n"); // Tell Excel the separator is comma
 
             fputcsv($handle, [
                 __('Booking Number'),

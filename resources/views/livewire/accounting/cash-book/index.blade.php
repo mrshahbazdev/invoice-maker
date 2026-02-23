@@ -1,34 +1,82 @@
 @php $title = __('Cash Book'); @endphp
 
 <div>
-    <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-            <h2 class="text-2xl font-bold text-gray-900">{{ __('Cash Book') }}</h2>
-            <p class="text-gray-600">{{ __('Professional financial overview') }}</p>
+    <div class="mb-8 flex flex-col xl:flex-row items-stretch justify-between gap-6">
+        <div class="flex-1">
+            <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ __('Cash Book') }}</h2>
+            <p class="text-gray-500 font-medium">{{ __('Monitor your flow of capital with precision.') }}</p>
         </div>
-        <div class="flex gap-4">
-            <div class="bg-green-50 px-4 py-2 rounded-lg border border-green-100 shadow-sm">
-                <span class="text-xs font-bold text-green-600 uppercase tracking-wider">{{ __('Income') }}</span>
-                <p class="text-xl font-extrabold text-green-700 tracking-tight">
-                    {{ number_format($incomeTotal, 2, ',', '.') }} €
-                </p>
+
+        <div
+            class="xl:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-0 bg-white rounded-2xl shadow-xl shadow-blue-900/5 border border-gray-100 overflow-hidden">
+            <!-- Income Card -->
+            <div
+                class="px-6 py-5 border-b sm:border-b-0 sm:border-r border-gray-100 flex items-center group hover:bg-green-50/30 transition-colors">
+                <div
+                    class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span
+                        class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{{ __('Total Income') }}</span>
+                    <p class="text-xl font-black text-green-700 leading-none mt-1">
+                        {{ number_format($incomeTotal, 2, ',', '.') }} €
+                    </p>
+                </div>
             </div>
-            <div class="bg-red-50 px-4 py-2 rounded-lg border border-red-100 shadow-sm">
-                <span class="text-xs font-bold text-red-600 uppercase tracking-wider">{{ __('Expense') }}</span>
-                <p class="text-xl font-extrabold text-red-700 tracking-tight">
-                    {{ number_format($expenseTotal, 2, ',', '.') }} €
-                </p>
+
+            <!-- Expense Card -->
+            <div
+                class="px-6 py-5 border-b sm:border-b-0 sm:border-r border-gray-100 flex items-center group hover:bg-red-50/30 transition-colors">
+                <div
+                    class="w-12 h-12 bg-red-100 text-red-600 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                    </svg>
+                </div>
+                <div>
+                    <span
+                        class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{{ __('Total Expenses') }}</span>
+                    <p class="text-xl font-black text-red-700 leading-none mt-1">
+                        {{ number_format($expenseTotal, 2, ',', '.') }} €
+                    </p>
+                </div>
             </div>
-            <div class="bg-blue-600 px-6 py-2 rounded-lg shadow-md flex flex-col justify-center">
-                <span class="text-xs font-bold text-blue-100 uppercase tracking-wider">{{ __('Balance') }}</span>
-                <p class="text-xl font-extrabold text-white tracking-tight">{{ number_format($balance, 2, ',', '.') }} €
-                </p>
+
+            <!-- Balance Card -->
+            <div
+                class="px-6 py-5 flex items-center group bg-gradient-to-br from-blue-600 to-indigo-700 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <svg class="w-16 h-16" fill="white" viewBox="0 0 24 24">
+                        <path
+                            d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m0 10c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8m0-18C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z">
+                        </path>
+                    </svg>
+                </div>
+                <div
+                    class="w-12 h-12 bg-white/20 text-white rounded-xl flex items-center justify-center mr-4 backdrop-blur-md">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                </div>
+                <div class="relative z-10">
+                    <span
+                        class="text-[10px] font-black text-blue-100 uppercase tracking-[0.2em]">{{ __('Net Balance') }}</span>
+                    <p class="text-2xl font-black text-white leading-none mt-1">
+                        {{ number_format($balance, 2, ',', '.') }} €
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="flex gap-2">
+
+        <div class="flex items-center gap-3">
             <a href="{{ route('accounting.cash-book.export.excel', ['startDate' => $startDate, 'endDate' => $endDate]) }}"
-                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
-                <svg class="w-4 h-4 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-white border border-gray-200 rounded-xl shadow-lg shadow-gray-200/50 text-sm font-bold text-gray-700 hover:bg-green-600 hover:text-white hover:border-green-600 transition-all group">
+                <svg class="w-5 h-5 mr-2 text-green-600 group-hover:text-white" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
                     </path>
@@ -36,8 +84,9 @@
                 {{ __('Excel') }}
             </a>
             <a href="{{ route('accounting.cash-book.export.pdf', ['startDate' => $startDate, 'endDate' => $endDate]) }}"
-                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
-                <svg class="w-4 h-4 mr-2 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-white border border-gray-200 rounded-xl shadow-lg shadow-gray-200/50 text-sm font-bold text-gray-700 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all group">
+                <svg class="w-5 h-5 mr-2 text-red-600 group-hover:text-white" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
                     </path>
