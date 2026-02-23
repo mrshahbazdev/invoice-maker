@@ -104,6 +104,7 @@ Route::middleware(['auth', 'business.member'])->group(function () {
         Route::get('/categories', CategoriesIndex::class)->name('expenses.categories');
         Route::get('/cash-book', CashBookIndex::class)->name('accounting.cash-book');
         Route::get('/profitability', \App\Livewire\Reports\Profitability::class)->name('reports.profitability');
+        Route::get('/profitability/export', [App\Http\Controllers\ProfitabilityExportController::class, 'exportExcel'])->name('reports.profitability.export');
     });
 });
 
