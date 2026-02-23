@@ -105,7 +105,7 @@ Route::middleware(['auth', 'business.member'])->group(function () {
         Route::get('/create', ExpensesCreate::class)->name('expenses.create');
         Route::get('/{expense}/edit', ExpensesEdit::class)->name('expenses.edit');
         Route::get('/export/csv', [CashBookExportController::class, 'exportCsv'])->name('expenses.export');
-        Route::get('/export/excel', [CashBookExportController::class, 'exportCsv'])->name('accounting.cash-book.export.excel');
+        Route::get('/export/excel', [CashBookExportController::class, 'exportExcel'])->name('accounting.cash-book.export.excel');
         Route::get('/export/pdf', [CashBookExportController::class, 'exportPdf'])->name('accounting.cash-book.export.pdf');
         Route::get('/categories', CategoriesIndex::class)->name('expenses.categories');
         Route::get('/cash-book', CashBookIndex::class)->name('accounting.cash-book');

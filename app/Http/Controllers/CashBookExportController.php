@@ -9,6 +9,64 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class CashBookExportController
 {
+    public function exportExcel(Request $request)
+    {
+        $business = Auth::user()->business;
+        $query = CashBookEntry::with(['category', 'invoice', 'expense'])
+            ->where('business_id', $business->id);
+
+        if ($request->has('startDate')) {
+            $query->whereDate('date', '>=', $request->startDate);
+        }
+        if ($request->has('endDate')) {
+            $query->whereDate('date', '<=', $request->endDate);
+        }
+
+        $entries = $query->orderBy('date', 'asc')
+            ->orderBy('booking_number', 'asc')
+            ->get();
+
+        $fileName = 'CashBook_' . str_replace(' ', '_', $business->name) . '_' . now()->format('Y-m-d') . '.xlsx';
+
+        $headers = [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
+        ];
+
+        return new StreamedResponse(function () use ($entries) {
+            $handle = fopen('php://output', 'w');
+            fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM for Excel UTF-8 support
+
+            fputcsv($handle, [
+                __('Booking Number'),
+                __('Date'),
+                __('Type'),
+                __('Source'),
+                __('Category'),
+                __('Description'),
+                __('Amount'),
+                __('Linked Job'),
+                __('Posting Rule')
+            ]);
+
+            foreach ($entries as $entry) {
+                fputcsv($handle, [
+                    $entry->booking_number,
+                    $entry->date->format('d.m.Y'),
+                    ucfirst($entry->type),
+                    ucfirst($entry->source),
+                    $entry->category ? $entry->category->name : 'N/A',
+                    $entry->description,
+                    $entry->amount,
+                    $entry->invoice ? $entry->invoice->invoice_number : 'General',
+                    $entry->category ? $entry->category->posting_rule : ''
+                ]);
+            }
+
+            fclose($handle);
+        }, 200, $headers);
+    }
+
     public function exportCsv(Request $request)
     {
         $business = Auth::user()->business;
