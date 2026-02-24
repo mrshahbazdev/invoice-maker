@@ -138,6 +138,7 @@ Route::middleware(['auth', 'is_super_admin'])->prefix('admin')->name('admin.')->
     Route::get('/settings/general', \App\Livewire\Admin\Settings\General::class)->name('settings.general');
     Route::get('/settings/seo', \App\Livewire\Admin\Settings\Seo::class)->name('settings.seo');
     Route::get('/settings/ai', \App\Livewire\Admin\Settings\Ai::class)->name('settings.ai');
+    Route::get('/settings/languages', \App\Livewire\Admin\Settings\Languages::class)->name('settings.languages');
 });
 
 Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
