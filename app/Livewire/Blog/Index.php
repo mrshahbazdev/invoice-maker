@@ -18,7 +18,7 @@ class Index extends Component
         $this->category = $category;
     }
 
-    #[\Livewire\Attributes\Layout('layouts.guest', ['title' => 'Blog'])]
+    #[\Livewire\Attributes\Layout('layouts.public', ['title' => 'Blog'])]
     public function render()
     {
         $query = Post::where('is_published', true)->orderBy('published_at', 'desc');

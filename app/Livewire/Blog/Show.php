@@ -23,7 +23,7 @@ class Show extends Component
         $description = $this->post->meta_description ?: $this->post->excerpt;
 
         return view('livewire.blog.show')
-            ->layout('layouts.guest', [
+            ->layout('layouts.public', [
                 'title' => $title,
                 'metaDescription' => $description
             ]);
