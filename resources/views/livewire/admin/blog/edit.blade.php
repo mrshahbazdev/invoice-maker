@@ -30,9 +30,88 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">Content <span
                                 class="text-red-500">*</span></label>
-                        <textarea wire:model="content" rows="15"
-                            class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-3 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
-                        @error('content') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+
+                        <!-- Include Quill CSS and JS -->
+                        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+                        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+                        <!-- Quill Editor Container mapped to Livewire property via Alpine -->
+                        <div x-data="{
+                                content: @entangle('content'),
+                                quill: null
+                            }" x-init="
+                                quill = new Quill($refs.quillEditor, {
+                                    theme: 'snow',
+                                    placeholder: 'Write your post content here...',
+                                    modules: {
+                                        toolbar: [
+                                            [{ header: [2, 3, 4, false] }],
+                                            ['bold', 'italic', 'underline', 'strike'],
+                                            [{ list: 'ordered' }, { list: 'bullet' }],
+                                            ['link', 'blockquote', 'code-block', 'image'],
+                                            ['clean']
+                                        ]
+                                    }
+                                });
+                                // Set initial content
+                                if (content) {
+                                    quill.root.innerHTML = content;
+                                }
+                                // Update Livewire component on change
+                                quill.on('text-change', function () {
+                                    content = quill.root.innerHTML;
+                                });
+                            " class="rounded-xl border border-gray-700 overflow-hidden bg-gray-900">
+                            <div wire:ignore>
+                                <div x-ref="quillEditor" class="text-white min-h-[400px]"></div>
+                            </div>
+                        </div>
+
+                        <!-- Override default Quill styles for dark mode -->
+                        <style>
+                            .ql-toolbar.ql-snow {
+                                border: none !important;
+                                border-bottom: 1px solid #374151 !important;
+                                background-color: #1f2937 !important;
+                                border-radius: 0.75rem 0.75rem 0 0;
+                            }
+
+                            .ql-container.ql-snow {
+                                border: none !important;
+                                color: white !important;
+                                font-size: 1rem !important;
+                                font-family: inherit !important;
+                            }
+
+                            .ql-editor.ql-blank::before {
+                                color: #9ca3af !important;
+                                font-style: normal !important;
+                            }
+
+                            .ql-snow .ql-stroke {
+                                stroke: #d1d5db !important;
+                            }
+
+                            .ql-snow .ql-fill,
+                            .ql-snow .ql-stroke.ql-fill {
+                                fill: #d1d5db !important;
+                            }
+
+                            .ql-snow .ql-picker {
+                                color: #d1d5db !important;
+                            }
+
+                            .ql-snow .ql-picker-options {
+                                background-color: #374151 !important;
+                                border: 1px solid #4b5563 !important;
+                            }
+
+                            .ql-editor {
+                                padding: 1.5rem !important;
+                            }
+                        </style>
+
+                        @error('content') <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span> @enderror
                     </div>
 
                     <div>
