@@ -23,6 +23,7 @@ use App\Livewire\Templates\Builder as TemplatesBuilder;
 use App\Livewire\Expenses\Index as ExpensesIndex;
 use App\Livewire\Expenses\Create as ExpensesCreate;
 use App\Livewire\Expenses\Edit as ExpensesEdit;
+use App\Livewire\Expenses\Show as ExpensesShow;
 use App\Livewire\Settings\Team as SettingsTeam;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LanguageController;
@@ -105,6 +106,7 @@ Route::middleware(['auth', 'business.member'])->group(function () {
         Route::get('/cash-book', CashBookIndex::class)->name('accounting.cash-book');
         Route::get('/profitability', \App\Livewire\Reports\Profitability::class)->name('reports.profitability');
         Route::get('/profitability/export', [App\Http\Controllers\ProfitabilityExportController::class, 'exportExcel'])->name('reports.profitability.export');
+        Route::get('/{expense}', ExpensesShow::class)->name('expenses.show');
     });
 });
 

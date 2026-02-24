@@ -80,4 +80,13 @@ class Index extends Component
             'balance' => $incomeTotal - $expenseTotal,
         ]);
     }
+
+    public function delete($id)
+    {
+        $businessId = Auth::user()->business_id;
+        $entry = CashBookEntry::where('business_id', $businessId)->findOrFail($id);
+        $entry->delete();
+
+        session()->flash('message', __('Entry deleted successfully.'));
+    }
 }

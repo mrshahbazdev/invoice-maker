@@ -1,6 +1,12 @@
 @php $title = __('Cash Book'); @endphp
 
 <div>
+    @if (session()->has('message'))
+        <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+            {{ session('message') }}
+        </div>
+    @endif
+
     <div class="mb-8 flex flex-col xl:flex-row items-stretch justify-between gap-6">
         <div class="flex-1">
             <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ __('Cash Book') }}</h2>
@@ -178,11 +184,23 @@
                         <th class="px-3 py-3 text-left font-bold text-gray-500 uppercase tracking-wider">
                             {{ __('Entry Date') }}
                         </th>
+                        <th class="px-3 py-3 text-right font-bold text-gray-500 uppercase tracking-wider">
+                            {{ __('Actions') }}
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @forelse($entries as $entry)
-                        <tr class="hover:bg-gray-50 transition-colors {{ $loop->odd ? 'bg-white' : 'bg-gray-50/20' }}">
+                        @php
+                            $routeUrl = '#';
+                            if ($entry->type === 'income' && $entry->invoice_id) {
+                                $routeUrl = route('invoices.show', $entry->invoice_id);
+                            } elseif ($entry->type === 'expense' && $entry->expense_id) {
+                                $routeUrl = route('expenses.show', $entry->expense_id);
+                            }
+                        @endphp
+                        <tr class="hover:bg-gray-50 cursor-pointer transition-colors {{ $loop->odd ? 'bg-white' : 'bg-gray-50/20' }}"
+                            onclick="if('{{ $routeUrl }}' !== '#') window.location='{{ $routeUrl }}'">
                             <td class="px-3 py-2 text-center">
                                 <span
                                     class="inline-block w-2.5 h-2.5 rounded-full {{ $entry->type === 'income' ? 'bg-green-500' : 'bg-red-500' }}"></span>
@@ -216,6 +234,18 @@
                             </td>
                             <td class="px-3 py-2 whitespace-nowrap text-gray-400 text-[11px]">
                                 {{ $entry->created_at->format('d.m.y') }}
+                            </td>
+                            <td class="px-3 py-2 whitespace-nowrap text-right" onclick="event.stopPropagation()">
+                                <button wire:click="delete({{ $entry->id }})"
+                                    wire:confirm="{{ __('Are you sure you want to delete this entry?') }}"
+                                    class="text-red-600 hover:text-red-800 p-1 rounded hover:bg-red-50 transition"
+                                    title="{{ __('Delete') }}">
+                                    <svg class="w-4 h-4 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                        </path>
+                                    </svg>
+                                </button>
                             </td>
                         </tr>
                     @empty

@@ -73,7 +73,8 @@
                 </thead>
                 <tbody>
                     @forelse($expenses as $expense)
-                        <tr class="border-b hover:bg-gray-50">
+                        <tr class="border-b hover:bg-gray-50 cursor-pointer"
+                            onclick="window.location='{{ route('expenses.show', $expense) }}'">
                             <td class="py-3 px-4 text-gray-600">{{ $expense->date->format('M d, Y') }}</td>
                             <td class="py-3 px-4">
                                 <span class="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
@@ -84,8 +85,10 @@
                             <td class="py-3 px-4 text-right font-semibold text-gray-900">
                                 {{ Auth::user()->business->currency_symbol }}{{ number_format($expense->amount, 2) }}
                             </td>
-                            <td class="py-3 px-4 text-right">
+                            <td class="py-3 px-4 text-right" onclick="event.stopPropagation()">
                                 <div class="flex justify-end gap-3">
+                                    <a href="{{ route('expenses.show', $expense) }}"
+                                        class="text-blue-600 hover:text-blue-700 text-sm font-medium pr-2">{{ __('View') }}</a>
                                     @if($expense->receipt_path)
                                         <a href="{{ Storage::url($expense->receipt_path) }}" target="_blank"
                                             class="text-blue-600 hover:text-blue-700 text-sm font-medium"
