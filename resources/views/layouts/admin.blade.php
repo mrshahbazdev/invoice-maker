@@ -81,6 +81,14 @@
                     </svg>
                     SEO & Settings
                 </a>
+                <a href="{{ route('admin.settings.ai') }}"
+                    class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.settings.ai') ? 'bg-indigo-600/20 text-indigo-400 font-bold border border-indigo-500/30' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                    AI Configuration
+                </a>
                 <a href="#"
                     class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 text-gray-400 hover:bg-gray-800 hover:text-white">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
