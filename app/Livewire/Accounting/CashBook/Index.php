@@ -72,8 +72,10 @@ class Index extends Component
             ->with(['category', 'invoice', 'expense']);
 
         if ($this->search) {
-            $query->where('description', 'like', '%' . $this->search . '%')
-                ->orWhere('booking_number', 'like', '%' . $this->search . '%');
+            $query->where(function ($q) {
+                $q->where('description', 'like', '%' . $this->search . '%')
+                    ->orWhere('booking_number', 'like', '%' . $this->search . '%');
+            });
         }
 
         if ($this->type) {
@@ -94,14 +96,27 @@ class Index extends Component
 
         $entries = $query->orderBy($this->sortBy, $this->sortDirection)->paginate(20);
 
-        // Totals
-        $incomeTotal = CashBookEntry::where('business_id', $businessId)
-            ->where('type', 'income')
-            ->sum('amount');
+        // Totals based on current filters (ignoring 'type' filter so we can show both income/expense cards)
+        $totalsQuery = CashBookEntry::where('business_id', $businessId);
 
-        $expenseTotal = CashBookEntry::where('business_id', $businessId)
-            ->where('type', 'expense')
-            ->sum('amount');
+        if ($this->search) {
+            $totalsQuery->where(function ($q) {
+                $q->where('description', 'like', '%' . $this->search . '%')
+                    ->orWhere('booking_number', 'like', '%' . $this->search . '%');
+            });
+        }
+        if ($this->source) {
+            $totalsQuery->where('source', $this->source);
+        }
+        if ($this->startDate) {
+            $totalsQuery->where('date', '>=', $this->startDate);
+        }
+        if ($this->endDate) {
+            $totalsQuery->where('date', '<=', $this->endDate);
+        }
+
+        $incomeTotal = (clone $totalsQuery)->where('type', 'income')->sum('amount');
+        $expenseTotal = (clone $totalsQuery)->where('type', 'expense')->sum('amount');
 
         return view('livewire.accounting.cash-book.index', [
             'entries' => $entries,
