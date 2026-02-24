@@ -5,7 +5,7 @@
             <div class="flex items-center justify-between z-10 relative">
                 <div>
                     <p class="text-sm font-medium text-gray-400 mb-1">Total Users</p>
-                    <h3 class="text-3xl font-bold text-white">{{ \App\Models\User::count() }}</h3>
+                    <h3 class="text-3xl font-bold text-white">{{ number_format($totalUsers) }}</h3>
                 </div>
                 <div class="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,7 +24,7 @@
             <div class="flex items-center justify-between z-10 relative">
                 <div>
                     <p class="text-sm font-medium text-gray-400 mb-1">Total Businesses</p>
-                    <h3 class="text-3xl font-bold text-white">{{ \App\Models\Business::count() }}</h3>
+                    <h3 class="text-3xl font-bold text-white">{{ number_format($totalBusinesses) }}</h3>
                 </div>
                 <div class="p-3 bg-teal-500/20 text-teal-400 rounded-xl">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -43,7 +43,7 @@
             <div class="flex items-center justify-between z-10 relative">
                 <div>
                     <p class="text-sm font-medium text-gray-400 mb-1">Invoices Generated</p>
-                    <h3 class="text-3xl font-bold text-white">{{ \App\Models\Invoice::count() }}</h3>
+                    <h3 class="text-3xl font-bold text-white">{{ number_format($invoicesGenerated) }}</h3>
                 </div>
                 <div class="p-3 bg-blue-500/20 text-blue-400 rounded-xl">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,8 +61,8 @@
         <div class="bg-gray-800 rounded-2xl p-6 border border-gray-700 shadow-sm relative overflow-hidden">
             <div class="flex items-center justify-between z-10 relative">
                 <div>
-                    <p class="text-sm font-medium text-gray-400 mb-1">Est. MRR (Demo)</p>
-                    <h3 class="text-3xl font-bold text-white">$0</h3>
+                    <p class="text-sm font-medium text-gray-400 mb-1">Total Revenue (Paid)</p>
+                    <h3 class="text-3xl font-bold text-white">${{ number_format($totalRevenue, 2) }}</h3>
                 </div>
                 <div class="p-3 bg-emerald-500/20 text-emerald-400 rounded-xl">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +84,7 @@
             <h2 class="text-lg font-semibold text-white">Recent Users</h2>
         </div>
         <div class="divide-y divide-gray-700/50">
-            @foreach(\App\Models\User::latest()->take(5)->get() as $user)
+            @foreach($recentUsers as $user)
                 <div class="p-4 flex items-center justify-between hover:bg-gray-700/20 transition-colors">
                     <div class="flex items-center">
                         <div
