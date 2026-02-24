@@ -429,5 +429,22 @@
     "Profile Information": "معلومات الملف الشخصي",
     "Update your account's profile information and email address.": "قم بتحديث معلومات الملف الشخصي لحسابك وعنوان بريدك الإلكتروني.",
     "Two-Factor Authentication": "المصادقة الثنائية",
-    "Update Password": "تحديث كلمة المرور"
+    "Update Password": "تحديث كلمة المرور",
+    "Create Client": "إنشاء عميل",
+    "Edit Client": "تعديل العميل",
+    "Update Client": "تحديث العميل",
+    "Add a new client to your list": "أضف عميل جديد إلى قائمتك",
+    "Update client information": "تحديث معلومات العميل",
+    "Contact Name": "اسم جهة الاتصال",
+    "Company Name": "اسم الشركة",
+    "Tax Number": "الرقم الضريبي",
+    "Currency Override": "تجاوز العملة",
+    "Language Preference": "تفضيل اللغة",
+    "This language will be used for PDFs and portal experiences.": "سيتم استخدام هذه اللغة لملفات PDF وتجارب البوابة.",
+    "Default Email Settings (Optional)": "إعدادات البريد الإلكتروني الافتراضية (اختياري)",
+    "Predefine a subject and body pattern for invoices sent to this client. You can use available placeholders like:": "حدد مسبقًا نمط الموضوع والنص للفواتير المرسلة إلى هذا العميل. يمكنك استخدام العناصر النائبة المتاحة مثل:",
+    "Custom Subject": "موضوع مخصص",
+    "Invoice {invoice_number} from {business_name}": "فاتورة {invoice_number} من {business_name}",
+    "Custom Body Template": "قالب نص مخصص",
+    "Hello {client_name},\\n\\nHere is your new invoice {invoice_number}...": "مرحبًا {client_name}،\\n\\nإليك فاتورتك الجديدة {invoice_number}..."
 }

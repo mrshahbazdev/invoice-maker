@@ -74,9 +74,11 @@ class Show extends Component
             '{public_link}' => \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $this->invoice->id]),
         ];
 
-        // Default German Subject & Template
-        $defaultSubject = 'Ihre Rechnung {invoice_number} von {business_name}';
-        $defaultTemplate = "Hallo {client_name},\n\nanbei erhalten Sie Ihre neue Rechnung {invoice_number}.\n\nDer offene Betrag in Höhe von {amount_due} ist bis zum {due_date} fällig.\n\nSie können die Rechnung auch online einsehen und herunterladen:\n{public_link}\n\nVielen Dank für Ihr Vertrauen!\n\nMit freundlichen Grüßen,\n{business_name}";
+        $lang = $client->language ?? 'en';
+
+        // Dynamic Default Subject & Template based on client language
+        $defaultSubject = $this->getDefaultEmailSubject($lang);
+        $defaultTemplate = $this->getDefaultEmailTemplate($lang);
 
         $subjectTemplate = $client->email_subject ?: $defaultSubject;
         $bodyTemplate = $client->email_template ?: $defaultTemplate;
@@ -274,6 +276,49 @@ class Show extends Component
 
         $this->invoice->load('payments');
         session()->flash('message', 'Payment deleted successfully.');
+    }
+
+    private function getDefaultEmailSubject(string $lang): string
+    {
+        $subjects = [
+            'en' => 'Invoice {invoice_number} from {business_name}',
+            'de' => 'Ihre Rechnung {invoice_number} von {business_name}',
+            'fr' => 'Votre facture {invoice_number} de {business_name}',
+            'es' => 'Su factura {invoice_number} de {business_name}',
+            'ar' => 'فاتورة {invoice_number} من {business_name}',
+            'nl' => 'Uw factuur {invoice_number} van {business_name}',
+            'pl' => 'Twoja faktura {invoice_number} od {business_name}',
+            'it' => 'La tua fattura {invoice_number} da {business_name}',
+            'hi' => '{business_name} से इनवॉइस {invoice_number}',
+            'zh' => '来自 {business_name} 的发票 {invoice_number}',
+        ];
+        return $subjects[$lang] ?? $subjects['en'];
+    }
+
+    private function getDefaultEmailTemplate(string $lang): string
+    {
+        $templates = [
+            'en' => "Hello {client_name},\n\nHere is your new invoice {invoice_number}.\n\nThe outstanding amount of {amount_due} is due by {due_date}.\n\nYou can view and download your invoice online here:\n{public_link}\n\nThank you for your business!\n\nBest regards,\n{business_name}",
+
+            'de' => "Hallo {client_name},\n\nanbei erhalten Sie Ihre neue Rechnung {invoice_number}.\n\nDer offene Betrag in Höhe von {amount_due} ist bis zum {due_date} fällig.\n\nSie können die Rechnung auch online einsehen und herunterladen:\n{public_link}\n\nVielen Dank für Ihr Vertrauen!\n\nMit freundlichen Grüßen,\n{business_name}",
+
+            'fr' => "Bonjour {client_name},\n\nVeuillez trouver ci-joint votre nouvelle facture {invoice_number}.\n\nLe montant de {amount_due} est dû pour le {due_date}.\n\nVous pouvez consulter et télécharger votre facture en ligne ici :\n{public_link}\n\nMerci pour votre confiance !\n\nCordialement,\n{business_name}",
+
+            'es' => "Hola {client_name},\n\nAdjunto encontrará su nueva factura {invoice_number}.\n\nEl monto pendiente de {amount_due} vence el {due_date}.\n\nPuede ver y descargar su factura en línea aquí:\n{public_link}\n\n¡Gracias por hacer negocios con nosotros!\n\nAtentamente,\n{business_name}",
+
+            'ar' => "مرحبًا {client_name}،\n\nإليك فاتورتك الجديدة {invoice_number}.\n\nالمبلغ المستحق {amount_due} مستحق الدفع بحلول {due_date}.\n\nيمكنك عرض وتنزيل فاتورتك عبر الإنترنت هنا:\n{public_link}\n\nشكرًا لتعاملك معنا!\n\nمع أطيب التحيات،\n{business_name}",
+
+            'nl' => "Hallo {client_name},\n\nHierbij ontvangt u uw nieuwe factuur {invoice_number}.\n\nHet openstaande bedrag van {amount_due} dient betaald te worden voor {due_date}.\n\nU kunt uw factuur hier online bekijken en downloaden:\n{public_link}\n\nBedankt voor uw vertrouwen!\n\nMet vriendelijke groet,\n{business_name}",
+
+            'pl' => "Dzień dobry {client_name},\n\nW załączniku przesyłamy nową fakturę {invoice_number}.\n\nKwota do zapłaty w wysokości {amount_due} jest wymagalna do {due_date}.\n\nFakturę można również sprawdzić i pobrać online tutaj:\n{public_link}\n\nDziękujemy za współpracę!\n\nZ poważaniem,\n{business_name}",
+
+            'it' => "Gentile {client_name},\n\nIn allegato trovate la vostra nuova fattura {invoice_number}.\n\nL'importo in sospeso di {amount_due} scade il {due_date}.\n\nPotete visualizzare e scaricare la fattura online qui:\n{public_link}\n\nGrazie per aver scelto i nostri servizi!\n\nCordiali saluti,\n{business_name}",
+
+            'hi' => "नमस्ते {client_name},\n\nयहाँ आपका नया इनवॉइस {invoice_number} है।\n\n{amount_due} की बकाया राशि {due_date} तक देय है।\n\nआप यहाँ अपना इनवॉइस ऑनलाइन देख और डाउनलोड कर सकते हैं:\n{public_link}\n\nआपके व्यवसाय के लिए धन्यवाद!\n\nसादर,\n{business_name}",
+
+            'zh' => "您好 {client_name}，\n\n这是您的新发票 {invoice_number}。\n\n未结金额 {amount_due} 需要在 {due_date} 之前支付。\n\n您可以在此处在线查看和下载您的发票：\n{public_link}\n\n感谢您对我们业务的支持！\n\n此致，\n{business_name}",
+        ];
+        return $templates[$lang] ?? $templates['en'];
     }
 
     public function render()
