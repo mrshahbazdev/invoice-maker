@@ -34,8 +34,15 @@ class Index extends Component
     public function delete(Expense $expense)
     {
         $this->authorize('delete', $expense);
+
+        // Also delete the associated Cash Book Entry explicitly if it exists
+        // (the DB constraints are just set null, but we want it fully removed to clean up)
+        if ($expense->cash_book_entry) {
+            $expense->cash_book_entry->delete();
+        }
+
         $expense->delete();
-        session()->flash('message', 'Expense deleted successfully.');
+        session()->flash('message', 'Expense and its accounting entry deleted successfully.');
     }
 
     public function render()

@@ -31,6 +31,8 @@ class Profile extends Component
     public string $language = 'en';
     public string $invoice_number_prefix = 'INV';
     public int $invoice_number_next = 1;
+    public string $booking_number_prefix = 'EXP';
+    public int $booking_number_next = 1;
     public string $bank_booking_account = '1000';
     public string $cash_booking_account = '1200';
     public string $smtp_host = '';
@@ -60,6 +62,8 @@ class Profile extends Component
             'language' => 'required|string|in:en,de,es,fr,it,pt,ar,zh,ja,ru',
             'invoice_number_prefix' => 'required|string|max:10',
             'invoice_number_next' => 'required|integer|min:1',
+            'booking_number_prefix' => 'nullable|string|max:10',
+            'booking_number_next' => 'required|integer|min:1',
             'bank_booking_account' => 'nullable|string|max:20',
             'cash_booking_account' => 'nullable|string|max:20',
             'smtp_host' => 'nullable|string|max:255',
@@ -91,6 +95,8 @@ class Profile extends Component
             $this->payment_terms = $this->business->payment_terms ?? '';
             $this->invoice_number_prefix = $this->business->invoice_number_prefix ?? 'INV';
             $this->invoice_number_next = $this->business->invoice_number_next ?? 1;
+            $this->booking_number_prefix = $this->business->booking_number_prefix ?? 'EXP';
+            $this->booking_number_next = $this->business->booking_number_next ?? 1;
             $this->bank_booking_account = $this->business->bank_booking_account ?? '1000';
             $this->cash_booking_account = $this->business->cash_booking_account ?? '1200';
             $this->smtp_host = $this->business->smtp_host ?? '';
@@ -130,6 +136,8 @@ class Profile extends Component
             'payment_terms' => $this->payment_terms,
             'invoice_number_prefix' => $this->invoice_number_prefix,
             'invoice_number_next' => $this->invoice_number_next,
+            'booking_number_prefix' => $this->booking_number_prefix,
+            'booking_number_next' => $this->booking_number_next,
             'bank_booking_account' => $this->bank_booking_account,
             'cash_booking_account' => $this->cash_booking_account,
             'smtp_host' => $this->smtp_host,

@@ -130,8 +130,13 @@ class Index extends Component
     {
         $businessId = Auth::user()->business_id;
         $entry = CashBookEntry::where('business_id', $businessId)->findOrFail($id);
+
+        if ($entry->expense) {
+            $entry->expense->delete();
+        }
+
         $entry->delete();
 
-        session()->flash('message', __('Entry deleted successfully.'));
+        session()->flash('message', __('Entry and associated expense deleted successfully.'));
     }
 }

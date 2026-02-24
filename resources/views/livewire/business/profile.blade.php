@@ -179,6 +179,22 @@
                 </div>
 
                 <div>
+                    <label
+                        class="block text-sm font-medium text-gray-700 mb-1">{{ __('Booking Number Prefix (Expenses)') }}</label>
+                    <input type="text" wire:model="booking_number_prefix"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="e.g. EXP">
+                    @error('booking_number_prefix') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Next Booking Number') }}</label>
+                    <input type="number" wire:model="booking_number_next"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="1">
+                    @error('booking_number_next') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Bank Booking Account') }}</label>
                     <input type="text" wire:model="bank_booking_account"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"

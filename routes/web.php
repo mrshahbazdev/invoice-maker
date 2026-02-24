@@ -129,6 +129,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client/invoices/download-all', [ClientPortalController::class, 'downloadAllInvoices'])->name('client.invoices.download-all');
     Route::get('/client/statement', [ClientPortalController::class, 'downloadStatement'])->name('client.statement');
 
+    // Client Tickets
+    Route::prefix('client/tickets')->name('client.tickets.')->group(function () {
+        Route::get('/', \App\Livewire\Client\Tickets\Index::class)->name('index');
+        Route::get('/create', \App\Livewire\Client\Tickets\Create::class)->name('create');
+        Route::get('/{ticket}', \App\Livewire\Client\Tickets\Show::class)->name('show');
+    });
+
     // Impersonation
     Route::post('/impersonate/leave', [\App\Http\Controllers\ImpersonateController::class, 'leave'])->name('impersonate.leave');
 });
@@ -149,6 +156,11 @@ Route::middleware(['auth', 'is_super_admin'])->prefix('admin')->name('admin.')->
         Route::get('/', \App\Livewire\Admin\Blog\Index::class)->name('index');
         Route::get('/create', \App\Livewire\Admin\Blog\Create::class)->name('create');
         Route::get('/{post}/edit', \App\Livewire\Admin\Blog\Edit::class)->name('edit');
+    });
+
+    Route::prefix('support')->name('support.')->group(function () {
+        Route::get('/', \App\Livewire\Admin\Support\Index::class)->name('index');
+        Route::get('/{ticket}', \App\Livewire\Admin\Support\Show::class)->name('show');
     });
 });
 

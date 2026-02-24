@@ -126,13 +126,14 @@
                     </svg>
                     AI Configuration
                 </a>
-                <a href="#"
-                    class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 text-gray-400 hover:bg-gray-800 hover:text-white">
+                <a href="{{ route('admin.support.index') }}"
+                    class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.support.*') ? 'bg-indigo-600/20 text-indigo-400 font-bold border border-indigo-500/30' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
                     </svg>
-                    AI Integration
+                    Support Tickets
                 </a>
             </nav>
             <div class="p-4 border-t border-gray-800">

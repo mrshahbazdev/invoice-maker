@@ -42,23 +42,27 @@ class CashBookEntry extends Model
 
     public static function generateBookingNumber($businessId)
     {
+        $business = Business::find($businessId);
+
+        $prefix = $business->booking_number_prefix ?? 'EXP';
+        $next = $business->booking_number_next ?? 1;
         $year = now()->year;
-        $lastEntry = static::where('business_id', $businessId)
-            ->whereYear('date', $year)
-            ->orderBy('id', 'desc')
-            ->first();
 
-        $nextNumber = 1;
-
-        if ($lastEntry && $lastEntry->booking_number) {
-            // Format is 01-2026
-            $parts = explode('-', $lastEntry->booking_number);
-            if (count($parts) === 2) {
-                $nextNumber = (int) $parts[0] + 1;
-            }
+        // Ensure uniqueness
+        $number = "{$prefix}-" . str_pad($next, 4, '0', STR_PAD_LEFT) . "-{$year}";
+        while (
+            static::where('business_id', $businessId)
+                ->where('booking_number', $number)
+                ->exists()
+        ) {
+            $next++;
+            $number = "{$prefix}-" . str_pad($next, 4, '0', STR_PAD_LEFT) . "-{$year}";
         }
 
-        return str_pad($nextNumber, 2, '0', STR_PAD_LEFT) . '-' . $year;
+        // Increment for next time
+        $business->update(['booking_number_next' => $next + 1]);
+
+        return $number;
     }
 
     public function business()
