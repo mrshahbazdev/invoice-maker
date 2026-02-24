@@ -23,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'business.member' => \App\Http\Middleware\BusinessMember::class,
+            'is_super_admin' => \App\Http\Middleware\IsSuperAdmin::class,
         ]);
 
         $middleware->trustProxies(at: '*');

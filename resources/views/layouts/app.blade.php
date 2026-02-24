@@ -86,6 +86,17 @@
                                 <span class="hidden sm:inline">{{ __('Profile') }}</span>
                             </a>
 
+                            @if(auth()->user() && auth()->user()->is_super_admin)
+                                <a href="{{ route('admin.dashboard') }}"
+                                    class="flex items-center text-xs sm:text-sm text-indigo-600 hover:text-indigo-800 focus:outline-none transition-colors px-2 py-1.5 rounded-md hover:bg-indigo-50 font-bold border border-indigo-200 mr-2 sm:mr-0">
+                                    <svg class="w-4 h-4 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                    <span class="hidden sm:inline">Admin Mode</span>
+                                </a>
+                            @endif
+
                             <form action="{{ route('logout') }}" method="POST" class="inline">
                                 @csrf
                                 <button type="submit"

@@ -126,4 +126,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client/statement', [ClientPortalController::class, 'downloadStatement'])->name('client.statement');
 });
 
+// Super Admin Routes
+Route::middleware(['auth', 'is_super_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard');
+});
+
 Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
