@@ -78,7 +78,19 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center justify-end gap-3">
+            <button wire:click="generateInsights" wire:loading.attr="disabled"
+                class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-indigo-600 border border-transparent rounded-xl shadow-lg shadow-indigo-600/30 text-sm font-bold text-white hover:bg-indigo-700 transition-all group disabled:opacity-50">
+                <svg wire:loading wire:target="generateInsights" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                    fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+                <span wire:loading.remove wire:target="generateInsights" class="mr-2">✨</span>
+                {{ __('AI Insights') }}
+            </button>
             <a href="{{ route('accounting.cash-book.export.excel', ['startDate' => $startDate, 'endDate' => $endDate]) }}"
                 class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-white border border-gray-200 rounded-xl shadow-lg shadow-gray-200/50 text-sm font-bold text-gray-700 hover:bg-green-600 hover:text-white hover:border-green-600 transition-all group">
                 <svg class="w-5 h-5 mr-2 text-green-600 group-hover:text-white" fill="none" stroke="currentColor"
@@ -101,6 +113,33 @@
             </a>
         </div>
     </div>
+
+    @if($aiInsights)
+        <div
+            class="mb-8 p-6 bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl shadow-sm relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-5">
+                <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+            </div>
+            <div class="relative z-10">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-xl font-bold text-indigo-900 flex items-center">
+                        <span class="mr-2">✨</span> {{ __('AI Cash Flow Insights') }}
+                    </h3>
+                    <button wire:click="$set('aiInsights', null)" class="text-indigo-400 hover:text-indigo-600 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                            </path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="prose prose-indigo max-w-none text-gray-700 text-sm leading-relaxed">
+                    {!! nl2br(e($aiInsights)) !!}
+                </div>
+            </div>
+        </div>
+    @endif
 
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <!-- Filters -->

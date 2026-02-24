@@ -18,6 +18,36 @@ class Index extends Component
     public $endDate;
     public $sortBy = 'date';
     public $sortDirection = 'desc';
+    public $aiInsights = null;
+
+    public function generateInsights(\App\Services\AiService $aiService)
+    {
+        $businessId = Auth::user()->business_id;
+        $entries = CashBookEntry::where('business_id', $businessId)
+            ->with('category')
+            ->orderBy('date', 'desc')
+            ->limit(30)
+            ->get();
+
+        if ($entries->isEmpty()) {
+            session()->flash('error', __('Not enough data for AI insights.'));
+            return;
+        }
+
+        $promptBase = \App\Models\Setting::get('ai.business_insights_prompt', 'Analyze the following cash book entries and provide a brief summary of cash flow health, highlighting any potential areas for cost savings.');
+
+        $data = $entries->map(function ($entry) {
+            return "- {$entry->date->format('Y-m-d')}: {$entry->type} of {$entry->amount} for {$entry->description} (Category: " . ($entry->category->name ?? 'General') . ")";
+        })->implode("\n");
+
+        $prompt = $promptBase . "\n\nData:\n" . $data;
+
+        try {
+            $this->aiInsights = $aiService->generateText($prompt);
+        } catch (\Exception $e) {
+            session()->flash('error', __('AI Generation failed: ') . $e->getMessage());
+        }
+    }
 
     public function mount()
     {

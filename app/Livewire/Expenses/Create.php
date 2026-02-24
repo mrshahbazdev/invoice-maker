@@ -123,6 +123,57 @@ class Create extends Component
         return redirect()->route('expenses.index');
     }
 
+    public function scanReceipt(\App\Services\AiService $aiService)
+    {
+        if (!$this->receipt) {
+            session()->flash('error', __('Please upload a receipt image first.'));
+            return;
+        }
+
+        if (!in_array(strtolower($this->receipt->extension()), ['png', 'jpg', 'jpeg', 'webp'])) {
+            session()->flash('error', __('AI Scanning currently only supports images (PNG, JPG, WEBP).'));
+            return;
+        }
+
+        $imagePath = $this->receipt->getRealPath();
+
+        $prompt = \App\Models\Setting::get(
+            'ai.receipt_scanner_prompt',
+            'Analyze this receipt and extract the following information in JSON format: ' .
+            '{"amount": float, "date": "YYYY-MM-DD", "description": "string", "partner_name": "string", "reference_number": "string"}. ' .
+            'Do not wrap it in markdown block quotes, just output the raw JSON.'
+        );
+
+        try {
+            $jsonResponse = $aiService->generateText($prompt, $imagePath);
+
+            if (preg_match('/\{.*\}/s', $jsonResponse, $matches)) {
+                $jsonResponse = $matches[0];
+            }
+
+            $data = json_decode($jsonResponse, true);
+
+            if ($data && json_last_error() === JSON_ERROR_NONE) {
+                if (isset($data['amount']))
+                    $this->amount = $data['amount'];
+                if (isset($data['date']))
+                    $this->date = $data['date'];
+                if (isset($data['description']))
+                    $this->description = $data['description'];
+                if (isset($data['partner_name']))
+                    $this->partner_name = $data['partner_name'];
+                if (isset($data['reference_number']))
+                    $this->reference_number = $data['reference_number'];
+
+                session()->flash('message', __('Receipt scanned successfully!'));
+            } else {
+                session()->flash('error', __('Failed to parse AI response. Try again.'));
+            }
+        } catch (\Exception $e) {
+            session()->flash('error', __('AI Scanning failed: ') . $e->getMessage());
+        }
+    }
+
     public function render()
     {
         $business = Auth::user()->business;

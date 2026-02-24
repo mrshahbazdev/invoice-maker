@@ -209,6 +209,29 @@ class Create extends Component
         }
     }
 
+    public function generateNotesWithAi(\App\Services\AiService $aiService): void
+    {
+        if (empty($this->items) || count(array_filter(array_column($this->items, 'description'))) === 0) {
+            session()->flash('error', __('Please add some items with descriptions first before generating notes.'));
+            return;
+        }
+
+        $promptBase = \App\Models\Setting::get('ai.invoice_description_prompt', 'Generate a professional, polite, and concise description for this invoice based on the following items:');
+
+        $itemsList = collect($this->items)
+            ->filter(fn($item) => !empty($item['description']))
+            ->map(fn($item) => "- {$item['quantity']}x {$item['description']}")
+            ->implode("\n");
+
+        $prompt = $promptBase . "\n\n" . "Items:\n" . $itemsList;
+
+        try {
+            $this->notes = trim($aiService->generateText($prompt));
+        } catch (\Exception $e) {
+            session()->flash('error', __('AI Generation failed') . ': ' . $e->getMessage());
+        }
+    }
+
     public function save(): void
     {
         $this->validate();
