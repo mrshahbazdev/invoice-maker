@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'InvoiceMaker') }} - Login</title>
+    <title>@yield('title', \App\Models\Setting::get('seo.meta_title', config('app.name', 'InvoiceMaker'))) -
+        @yield('subtitle', 'Access')</title>
+
+    <!-- Custom Header Scripts & GA -->
+    @if(\App\Models\Setting::get('seo.google_analytics_id'))
+        <!-- Google tag (gtag.js) -->
+        <script async
+            src="https://www.googletagmanager.com/gtag/js?id={{ \App\Models\Setting::get('seo.google_analytics_id') }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', '{{ \App\Models\Setting::get('seo.google_analytics_id') }}');
+        </script>
+    @endif
+
+    {!! \App\Models\Setting::get('seo.custom_header_scripts') !!}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
+
 <body class="bg-gray-50 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         @if(session('message'))
@@ -30,4 +49,5 @@
 
     @livewireScripts
 </body>
+
 </html>

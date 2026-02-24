@@ -6,16 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', config('app.name', 'InvoiceMaker')) - {{ __('Professional Invoicing for Everyone') }}</title>
+    <title>@yield('title', \App\Models\Setting::get('seo.meta_title', config('app.name', 'InvoiceMaker'))) -
+        {{ __('Professional Invoicing for Everyone') }}</title>
     <meta name="description"
-        content="@yield('meta_description', __('The ultimate invoicing solution for freelancers and small businesses worldwide. Create, send, and track invoices in minutes.'))">
+        content="@yield('meta_description', \App\Models\Setting::get('seo.meta_description', __('The ultimate invoicing solution for freelancers and small businesses worldwide. Create, send, and track invoices in minutes.')))">
+    <meta name="keywords"
+        content="{{ \App\Models\Setting::get('seo.meta_keywords', 'invoice, saas, billing, creator') }}">
 
     <!-- Open Graph / SEO -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="@yield('title', config('app.name', 'InvoiceMaker'))">
+    <meta property="og:title"
+        content="@yield('title', \App\Models\Setting::get('seo.og_title', config('app.name', 'InvoiceMaker')))">
     <meta property="og:description"
-        content="@yield('meta_description', __('The ultimate invoicing solution for freelancers and small businesses worldwide.'))">
+        content="@yield('meta_description', \App\Models\Setting::get('seo.og_description', __('The ultimate invoicing solution for freelancers and small businesses worldwide.')))">
+
+    @if(\App\Models\Setting::get('seo.og_image'))
+        <meta property="og:image" content="{{ url(Storage::url(\App\Models\Setting::get('seo.og_image'))) }}">
+    @endif
+
     <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Custom Header Scripts & GA -->
+    @if(\App\Models\Setting::get('seo.google_analytics_id'))
+        <!-- Google tag (gtag.js) -->
+        <script async
+            src="https://www.googletagmanager.com/gtag/js?id={{ \App\Models\Setting::get('seo.google_analytics_id') }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', '{{ \App\Models\Setting::get('seo.google_analytics_id') }}');
+        </script>
+    @endif
+
+    {!! \App\Models\Setting::get('seo.custom_header_scripts') !!}
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

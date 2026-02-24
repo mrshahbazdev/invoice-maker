@@ -134,6 +134,7 @@ Route::middleware(['auth', 'is_super_admin'])->prefix('admin')->name('admin.')->
     Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard');
     Route::get('/users', \App\Livewire\Admin\Users\Index::class)->name('users.index');
     Route::get('/businesses', \App\Livewire\Admin\Businesses\Index::class)->name('businesses.index');
+    Route::get('/settings/seo', \App\Livewire\Admin\Settings\Seo::class)->name('settings.seo');
 });
 
 Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
