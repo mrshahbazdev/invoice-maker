@@ -48,7 +48,6 @@
     "Language": "اللغة",
     "Save Changes": "حفظ التغييرات",
     "Profile Settings": "إعدادات الملف الشخصي",
-    "Update your account's profile information.": "قم بتحديث معلومات الملف الشخصي لحسابك.",
     "Name": "الاسم",
     "Email": "البريد الإلكتروني",
     "From": "من",
@@ -426,5 +425,8 @@
     "Two-factor authentication has been disabled.": "تم تعطيل المصادقة الثنائية.",
     "Welcome Back": "مرحبًا بعودتك",
     "Sign in to your account": "تسجيل الدخول إلى حسابك",
-    "Remember me": "تذكرني"
+    "Remember me": "تذكرني",
+    "Profile Information": "معلومات الملف الشخصي",
+    "Update your account's profile information and email address.": "قم بتحديث معلومات الملف الشخصي لحسابك وعنوان بريدك الإلكتروني.",
+    "Two-Factor Authentication": "المصادقة الثنائية"
 }

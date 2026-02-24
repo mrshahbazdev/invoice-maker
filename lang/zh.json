@@ -48,7 +48,6 @@
     "Language": "语言",
     "Save Changes": "保存更改",
     "Profile Settings": "个人资料设置",
-    "Update your account's profile information.": "更新您的帐户配置文件信息。",
     "Name": "名称",
     "Email": "电子邮件",
     "From": "来自",
@@ -426,5 +425,8 @@
     "Two-factor authentication has been disabled.": "双重身份验证已禁用。",
     "Welcome Back": "欢迎回来",
     "Sign in to your account": "登录您的帐户",
-    "Remember me": "记住我"
+    "Remember me": "记住我",
+    "Profile Information": "个人资料信息",
+    "Update your account's profile information and email address.": "更新您的帐户个人资料信息和电子邮件地址。",
+    "Two-Factor Authentication": "双重身份验证"
 }

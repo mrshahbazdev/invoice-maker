@@ -48,7 +48,6 @@
     "Language": "Язык",
     "Save Changes": "Сохранить изменения",
     "Profile Settings": "Настройки профиля",
-    "Update your account's profile information.": "Обновите информацию профиля вашей учетной записи.",
     "Name": "Имя",
     "Email": "Электронная почта",
     "From": "От",
@@ -426,5 +425,8 @@
     "Two-factor authentication has been disabled.": "Двухфакторная аутентификация отключена.",
     "Welcome Back": "С возвращением",
     "Sign in to your account": "Войдите в свою учетную запись",
-    "Remember me": "Запомнить меня"
+    "Remember me": "Запомнить меня",
+    "Profile Information": "Информация профиля",
+    "Update your account's profile information and email address.": "Обновите информацию профиля вашей учетной записи и адрес электронной почты.",
+    "Two-Factor Authentication": "Двухфакторная аутентификация"
 }

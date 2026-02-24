@@ -48,7 +48,6 @@
     "Language": "Langue",
     "Save Changes": "Enregistrer les modifications",
     "Profile Settings": "Paramètres du profil",
-    "Update your account's profile information.": "Mettez à jour les informations du profil de votre compte.",
     "Name": "Nom",
     "Email": "E-mail",
     "From": "De",
@@ -426,5 +425,8 @@
     "Two-factor authentication has been disabled.": "L'authentification à deux facteurs a été désactivée.",
     "Welcome Back": "Bon retour",
     "Sign in to your account": "Connectez-vous à votre compte",
-    "Remember me": "Se souvenir de moi"
+    "Remember me": "Se souvenir de moi",
+    "Profile Information": "Informations sur le profil",
+    "Update your account's profile information and email address.": "Mettez à jour les informations du profil de votre compte et votre adresse e-mail.",
+    "Two-Factor Authentication": "Authentification à deux facteurs"
 }

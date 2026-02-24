@@ -48,7 +48,6 @@
     "Language": "言語",
     "Save Changes": "変更を保存",
     "Profile Settings": "プロフィール設定",
-    "Update your account's profile information.": "アカウントのプロファイル情報を更新します。",
     "Name": "氏名",
     "Email": "メールアドレス",
     "From": "差出人",
@@ -426,5 +425,8 @@
     "Two-factor authentication has been disabled.": "2要素認証が無効になりました。",
     "Welcome Back": "お帰りなさい",
     "Sign in to your account": "アカウントにサインイン",
-    "Remember me": "ログイン状態を保持"
+    "Remember me": "ログイン状態を保持",
+    "Profile Information": "プロファイル情報",
+    "Update your account's profile information and email address.": "アカウントのプロファイル情報とメールアドレスを更新します。",
+    "Two-Factor Authentication": "2要素認証"
 }

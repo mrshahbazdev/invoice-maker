@@ -48,7 +48,6 @@
     "Language": "Language",
     "Save Changes": "Save Changes",
     "Profile Settings": "Profile Settings",
-    "Update your account's profile information.": "Update your account's profile information.",
     "Name": "Name",
     "Email": "Email",
     "From": "From",
@@ -421,5 +420,8 @@
     "Two-factor authentication has been disabled.": "Two-factor authentication has been disabled.",
     "Welcome Back": "Welcome Back",
     "Sign in to your account": "Sign in to your account",
-    "Remember me": "Remember me"
+    "Remember me": "Remember me",
+    "Profile Information": "Profile Information",
+    "Update your account's profile information and email address.": "Update your account's profile information and email address.",
+    "Two-Factor Authentication": "Two-Factor Authentication"
 }
