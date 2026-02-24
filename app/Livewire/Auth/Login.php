@@ -30,7 +30,8 @@ class Login extends Component
                     'login.remember' => $this->remember,
                 ]);
 
-                return $this->redirect(route('two-factor.challenge'), navigate: true);
+                $this->redirect(route('two-factor.challenge'), navigate: true);
+                return;
             }
 
             Auth::login($user, $this->remember);

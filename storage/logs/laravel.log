@@ -13297,3 +13297,7 @@ Rgo=
 #3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/artisan(12): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
 #4 {main}
 "} 
+[2026-02-24 09:43:01] local.ERROR: A void function must not return a value {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): A void function must not return a value at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/app/Livewire/Auth/Login.php:33)
+[stacktrace]
+#0 {main}
+"} 
