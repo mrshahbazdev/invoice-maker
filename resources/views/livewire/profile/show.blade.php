@@ -31,10 +31,10 @@
 
                         <div>
                             <label class="block font-medium text-sm text-gray-700" for="email">{{ __('Email') }}</label>
-                            <input wire:model="email" id="email" type="email"
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                required autocomplete="username" />
-                            @error('email') <span class="text-sm text-red-600 mt-2">{{ $message }}</span> @enderror
+                            <input id="email" type="email"
+                                class="bg-gray-100 border-gray-300 rounded-md shadow-sm mt-1 block w-full text-gray-500 cursor-not-allowed"
+                                value="{{ $email }}" disabled />
+                            <p class="mt-1 text-xs text-gray-500">{{ __('Your email address cannot be changed.') }}</p>
                         </div>
 
                         <div class="flex items-center gap-4">

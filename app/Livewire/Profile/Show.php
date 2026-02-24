@@ -39,12 +39,10 @@ class Show extends Component
     {
         $this->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . Auth::id(),
         ]);
 
         $user = Auth::user();
         $user->name = $this->name;
-        $user->email = $this->email;
         $user->save();
 
         session()->flash('profile_message', __('Profile information updated successfully.'));
