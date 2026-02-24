@@ -18,6 +18,8 @@ class Edit extends Component
     public string $notes = '';
     public string $currency = 'USD';
     public string $language = 'en';
+    public string $email_subject = '';
+    public string $email_template = '';
 
     protected array $rules = [
         'name' => 'required|string|max:255',
@@ -29,6 +31,8 @@ class Edit extends Component
         'notes' => 'nullable|string',
         'currency' => 'nullable|string|max:3',
         'language' => 'required|string|in:en,es,fr,de',
+        'email_subject' => 'nullable|string|max:255',
+        'email_template' => 'nullable|string',
     ];
 
     public function mount(Client $client): void
@@ -44,6 +48,8 @@ class Edit extends Component
         $this->notes = $client->notes ?? '';
         $this->currency = $client->currency ?? Auth::user()->business->currency;
         $this->language = $client->language ?? 'en';
+        $this->email_subject = $client->email_subject ?? '';
+        $this->email_template = $client->email_template ?? '';
     }
 
     public function save(): void
@@ -60,6 +66,8 @@ class Edit extends Component
             'notes' => $this->notes,
             'currency' => $this->currency,
             'language' => $this->language,
+            'email_subject' => $this->email_subject,
+            'email_template' => $this->email_template,
         ]);
 
         session()->flash('message', 'Client updated successfully.');

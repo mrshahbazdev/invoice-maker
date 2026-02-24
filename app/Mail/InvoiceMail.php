@@ -16,14 +16,18 @@ class InvoiceMail extends Mailable
 
     public $invoice;
     public $pdfContent;
+    public $customSubject;
+    public $customBody;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Invoice $invoice, string $pdfContent)
+    public function __construct(Invoice $invoice, string $pdfContent, string $customSubject = '', string $customBody = '')
     {
         $this->invoice = $invoice;
         $this->pdfContent = $pdfContent;
+        $this->customSubject = $customSubject ?: 'Invoice ' . $this->invoice->invoice_number . ' from ' . $this->invoice->business->name;
+        $this->customBody = $customBody;
     }
 
     /**
@@ -36,7 +40,7 @@ class InvoiceMail extends Mailable
 
         return new Envelope(
             from: new \Illuminate\Mail\Mailables\Address($fromAddress, $fromName),
-            subject: 'Invoice ' . $this->invoice->invoice_number . ' from ' . $this->invoice->business->name,
+            subject: $this->customSubject,
         );
     }
 
@@ -53,6 +57,7 @@ class InvoiceMail extends Mailable
                 'amountDue' => $this->invoice->amount_due,
                 'dueDate' => $this->invoice->due_date->format('M d, Y'),
                 'publicLink' => \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $this->invoice->id]),
+                'customBody' => $this->customBody,
             ],
         );
     }

@@ -19,14 +19,16 @@ class Show extends Component
     public float $total_expenses = 0;
     public float $profit = 0;
     public float $margin_percentage = 0;
-    public bool $showPaidModal = false;
-    public $paymentSource = 'bank';
-    public $paymentDescription = '';
+    public bool $showEmailModal = false;
+    public string $emailSubject = '';
+    public string $emailBody = '';
 
     protected array $rules = [
         'payment_amount' => 'required|numeric|min:0.01',
         'payment_method' => 'required|in:bank_transfer,credit_card,cash,check,paypal,stripe',
         'payment_date' => 'required|date',
+        'emailSubject' => 'nullable|string|max:255',
+        'emailBody' => 'nullable|string',
     ];
 
     public function mount(Invoice $invoice): void
@@ -53,6 +55,44 @@ class Show extends Component
         session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' marked as sent.');
     }
 
+    public function openEmailModal(): void
+    {
+        if (!$this->invoice->client->email) {
+            session()->flash('error', 'Client does not have an email address.');
+            return;
+        }
+
+        $client = $this->invoice->client;
+        $business = $this->invoice->business;
+
+        $placeholders = [
+            '{invoice_number}' => $this->invoice->invoice_number,
+            '{client_name}' => $client->name,
+            '{business_name}' => $business->name,
+            '{amount_due}' => $this->invoice->currency_symbol . number_format($this->invoice->amount_due, 2),
+            '{due_date}' => $this->invoice->due_date->format('d.m.Y'),
+            '{public_link}' => \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $this->invoice->id]),
+        ];
+
+        // Default German Subject & Template
+        $defaultSubject = 'Ihre Rechnung {invoice_number} von {business_name}';
+        $defaultTemplate = "Hallo {client_name},\n\nanbei erhalten Sie Ihre neue Rechnung {invoice_number}.\n\nDer offene Betrag in Höhe von {amount_due} ist bis zum {due_date} fällig.\n\nSie können die Rechnung auch online einsehen und herunterladen:\n{public_link}\n\nVielen Dank für Ihr Vertrauen!\n\nMit freundlichen Grüßen,\n{business_name}";
+
+        $subjectTemplate = $client->email_subject ?: $defaultSubject;
+        $bodyTemplate = $client->email_template ?: $defaultTemplate;
+
+        $this->emailSubject = str_replace(array_keys($placeholders), array_values($placeholders), $subjectTemplate);
+        $this->emailBody = str_replace(array_keys($placeholders), array_values($placeholders), $bodyTemplate);
+
+        $this->showEmailModal = true;
+    }
+
+    public function closeEmailModal(): void
+    {
+        $this->showEmailModal = false;
+        $this->reset(['emailSubject', 'emailBody']);
+    }
+
     public function sendEmail(PdfGenerationService $pdfService): void
     {
         if (!$this->invoice->client->email) {
@@ -60,17 +100,23 @@ class Show extends Component
             return;
         }
 
+        $this->validate([
+            'emailSubject' => 'required|string|max:255',
+            'emailBody' => 'required|string',
+        ]);
+
         $pdfContent = $pdfService->generate($this->invoice);
 
         \App\Services\MailConfigurationService::getMailer($this->invoice->business)
             ->to($this->invoice->client->email)
-            ->send(new InvoiceMail($this->invoice, $pdfContent));
+            ->send(new InvoiceMail($this->invoice, $pdfContent, $this->emailSubject, $this->emailBody));
 
         if ($this->invoice->status === Invoice::STATUS_DRAFT) {
             $this->invoice->update(['status' => Invoice::STATUS_SENT]);
             $this->invoice->deductInventory();
         }
 
+        $this->closeEmailModal();
         session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' emailed successfully to ' . $this->invoice->client->email);
     }
 

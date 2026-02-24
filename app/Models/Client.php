@@ -21,6 +21,8 @@ class Client extends Model
         'currency',
         'language',
         'notes',
+        'email_subject',
+        'email_template',
     ];
 
     public function business()

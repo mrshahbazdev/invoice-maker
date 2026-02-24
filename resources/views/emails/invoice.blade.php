@@ -65,22 +65,26 @@
             <h2>{{ $businessName }}</h2>
         </div>
         <div class="content">
-            <p>Hello <strong>{{ $clientName }}</strong>,</p>
-            <p>A new invoice has been generated for you by {{ $businessName }}. Please find the PDF version attached to
-                this email.</p>
+            @if(!empty($customBody))
+                {!! nl2br(e($customBody)) !!}
+            @else
+                <p>Hello <strong>{{ $clientName }}</strong>,</p>
+                <p>A new invoice has been generated for you by {{ $businessName }}. Please find the PDF version attached to
+                    this email.</p>
 
-            <div class="amount-box">
-                <p style="margin:0;"><strong>Amount Due:</strong> ${{ number_format($amountDue, 2) }}</p>
-                <p style="margin:0; margin-top: 5px;"><strong>Due Date:</strong> {{ $dueDate }}</p>
-            </div>
+                <div class="amount-box">
+                    <p style="margin:0;"><strong>Amount Due:</strong> ${{ number_format($amountDue, 2) }}</p>
+                    <p style="margin:0; margin-top: 5px;"><strong>Due Date:</strong> {{ $dueDate }}</p>
+                </div>
 
-            <p>You can also view your invoice securely online and make payments by clicking the button below:</p>
+                <p>You can also view your invoice securely online and make payments by clicking the button below:</p>
 
-            <div style="text-align: center;">
-                <a href="{{ $publicLink }}" class="button" style="color:white;">View Invoice Online</a>
-            </div>
+                <div style="text-align: center;">
+                    <a href="{{ $publicLink }}" class="button" style="color:white;">View Invoice Online</a>
+                </div>
 
-            <p style="margin-top: 30px;">Thank you for your business!</p>
+                <p style="margin-top: 30px;">Thank you for your business!</p>
+            @endif
         </div>
         <div class="footer">
             <p>This email was sent via InvoiceMaker SaaS.</p>
