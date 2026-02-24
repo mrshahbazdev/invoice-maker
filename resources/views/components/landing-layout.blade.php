@@ -6,8 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', \App\Models\Setting::get('seo.meta_title', config('app.name', 'InvoiceMaker'))) -
-        {{ __('Professional Invoicing for Everyone') }}</title>
+    <title>
+        @yield('title', \App\Models\Setting::get('seo.meta_title', \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker'))))
+        -
+        {{ __('Professional Invoicing for Everyone') }}
+    </title>
+
+    @if($favicon = \App\Models\Setting::get('site.favicon'))
+        <link rel="icon" href="{{ Storage::url($favicon) }}">
+    @endif
     <meta name="description"
         content="@yield('meta_description', \App\Models\Setting::get('seo.meta_description', __('The ultimate invoicing solution for freelancers and small businesses worldwide. Create, send, and track invoices in minutes.')))">
     <meta name="keywords"
@@ -114,18 +121,23 @@
         <nav class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center">
                 <a href="/" class="flex items-center group">
-                    <div
-                        class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                            </path>
-                        </svg>
-                    </div>
-                    <span
-                        class="ml-3 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                        {{ config('app.name', 'InvoiceMaker') }}
-                    </span>
+                    @if($logo = \App\Models\Setting::get('site.logo'))
+                        <img src="{{ Storage::url($logo) }}" alt="Logo"
+                            class="h-10 w-auto group-hover:scale-105 transition-transform">
+                    @else
+                        <div
+                            class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <span
+                            class="ml-3 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                            {{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}
+                        </span>
+                    @endif
                 </a>
             </div>
 
@@ -150,7 +162,7 @@
                     <div x-show="open" @click.away="open = false" x-cloak
                         class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50 overflow-hidden transform transition-all">
                         @php
-                            $locales = [
+                            $locales = \App\Models\Setting::get('site.enabled_languages', [
                                 'en' => 'English',
                                 'de' => 'Deutsch',
                                 'es' => 'Español',
@@ -161,7 +173,7 @@
                                 'zh' => '中文',
                                 'ja' => '日本語',
                                 'ru' => 'Русский',
-                            ];
+                            ]);
                         @endphp
                         @foreach($locales as $code => $name)
                             <a href="{{ route('language.switch', $code) }}"
@@ -225,10 +237,14 @@
             class="md:hidden fixed inset-0 z-50 flex flex-col bg-white overflow-y-auto">
             <div class="px-4 py-5 flex items-center justify-between border-b border-gray-100">
                 <a href="/" class="flex items-center">
-                    <span
-                        class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                        {{ config('app.name', 'InvoiceMaker') }}
-                    </span>
+                    @if($logo = \App\Models\Setting::get('site.logo'))
+                        <img src="{{ Storage::url($logo) }}" alt="Logo" class="h-8 w-auto">
+                    @else
+                        <span
+                            class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                            {{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}
+                        </span>
+                    @endif
                 </a>
                 <button @click="mobileMenuOpen = false" class="p-2 text-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -270,7 +286,13 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 border-b border-gray-800 pb-12">
                 <div class="col-span-1 md:col-span-1">
                     <a href="/" class="flex items-center mb-6">
-                        <span class="text-2xl font-bold text-white">{{ config('app.name', 'InvoiceMaker') }}</span>
+                        @if($logo = \App\Models\Setting::get('site.logo'))
+                            <img src="{{ Storage::url($logo) }}" alt="Logo"
+                                class="h-8 w-auto filter brightness-0 invert opacity-75">
+                        @else
+                            <span
+                                class="text-2xl font-bold text-white">{{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}</span>
+                        @endif
                     </a>
                     <p class="text-sm leading-relaxed">
                         {{ __('Manage your business smarter, not harder. The most automated invoicing platform built for modern entrepreneurs.') }}
@@ -315,7 +337,10 @@
                 </div>
             </div>
             <div class="flex flex-col md:flex-row justify-between items-center text-xs">
-                <p>&copy; {{ date('Y') }} {{ config('app.name', 'InvoiceMaker') }}. {{ __('All rights reserved.') }}</p>
+                <p>&copy; {{ date('Y') }}
+                    {{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}.
+                    {{ __('All rights reserved.') }}
+                </p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
                     <p>{{ __('Built with passion for global entrepreneurs.') }}</p>
                 </div>

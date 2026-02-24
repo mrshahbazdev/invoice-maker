@@ -20,8 +20,12 @@
     </div>
     <div class="flex flex-col h-full">
         <div class="flex items-center justify-center h-20 border-b border-gray-200/50">
-            <span
-                class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 tracking-tight">{{ config('app.name') }}</span>
+            @if($logo = \App\Models\Setting::get('site.logo'))
+                <img src="{{ Storage::url($logo) }}" alt="Logo" class="max-h-12 max-w-[80%] object-contain">
+            @else
+                <span
+                    class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 tracking-tight">{{ \App\Models\Setting::get('site.name', config('app.name')) }}</span>
+            @endif
         </div>
 
         <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">

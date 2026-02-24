@@ -4,7 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'InvoiceMaker') }} - Super Admin</title>
+    <title>{{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }} - Super Admin</title>
+
+    @if($favicon = \App\Models\Setting::get('site.favicon'))
+        <link rel="icon" href="{{ Storage::url($favicon) }}">
+    @endif
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -20,12 +25,16 @@
             :class="{ '-translate-x-full': !mobileMenuOpen, 'translate-x-0': mobileMenuOpen }">
             <div class="p-4 sm:p-6 border-b border-gray-800 flex items-center justify-between">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-2">
-                    <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
-                        </path>
-                    </svg>
-                    <span class="text-xl font-bold tracking-wider">Super Admin</span>
+                    @if($logo = \App\Models\Setting::get('site.logo'))
+                        <img src="{{ Storage::url($logo) }}" alt="Logo" class="h-8 w-auto">
+                    @else
+                        <svg class="w-8 h-8 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
+                            </path>
+                        </svg>
+                        <span class="text-xl font-bold tracking-wider">Super Admin</span>
+                    @endif
                 </a>
                 <button @click="mobileMenuOpen = false" class="lg:hidden text-gray-400 hover:text-white">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -63,14 +72,32 @@
                     </svg>
                     Businesses
                 </a>
-                <a href="#"
-                    class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 text-gray-400 hover:bg-gray-800 hover:text-white">
+                <a href="{{ route('admin.plans.index') }}"
+                    class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.plans.*') ? 'bg-indigo-600/20 text-indigo-400 font-bold border border-indigo-500/30' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                         </path>
                     </svg>
                     Plans & Pricing
+                </a>
+                <a href="{{ route('admin.settings.general') }}"
+                    class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.settings.general') ? 'bg-indigo-600/20 text-indigo-400 font-bold border border-indigo-500/30' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                        </path>
+                    </svg>
+                    Global Branding
+                </a>
+                <a href="{{ route('admin.settings.languages') }}"
+                    class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.settings.languages') ? 'bg-indigo-600/20 text-indigo-400 font-bold border border-indigo-500/30' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.53 3 18.051">
+                        </path>
+                    </svg>
+                    Languages
                 </a>
                 <a href="{{ route('admin.settings.seo') }}"
                     class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.settings.seo') ? 'bg-indigo-600/20 text-indigo-400 font-bold border border-indigo-500/30' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">

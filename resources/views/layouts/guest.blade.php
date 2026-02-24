@@ -4,8 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', \App\Models\Setting::get('seo.meta_title', config('app.name', 'InvoiceMaker'))) -
+    <title>@yield('title', \App\Models\Setting::get('seo.meta_title', \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')))) -
         @yield('subtitle', 'Access')</title>
+
+    @if($favicon = \App\Models\Setting::get('site.favicon'))
+        <link rel="icon" href="{{ Storage::url($favicon) }}">
+    @endif
 
     <!-- Custom Header Scripts & GA -->
     @if(\App\Models\Setting::get('seo.google_analytics_id'))

@@ -4,7 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'InvoiceMaker') }}</title>
+    <title>{{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}</title>
+
+    @if($favicon = \App\Models\Setting::get('site.favicon'))
+        <link rel="icon" href="{{ Storage::url($favicon) }}">
+    @endif
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
@@ -77,7 +82,7 @@
                                     class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-100 ring-1 ring-black ring-opacity-5"
                                     style="display: none;">
                                     @php
-                                        $locales = [
+                                        $locales = \App\Models\Setting::get('site.enabled_languages', [
                                             'en' => 'English',
                                             'de' => 'Deutsch',
                                             'es' => 'Español',
@@ -88,7 +93,7 @@
                                             'zh' => '中文',
                                             'ja' => '日本語',
                                             'ru' => 'Русский',
-                                        ];
+                                        ]);
                                     @endphp
                                     @foreach($locales as $code => $name)
                                         <a href="{{ route('language.switch', $code) }}"

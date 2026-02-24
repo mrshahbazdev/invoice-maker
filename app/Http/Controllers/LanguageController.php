@@ -10,7 +10,20 @@ class LanguageController
 {
     public function switch($locale)
     {
-        if (!in_array($locale, ['en', 'de', 'es', 'fr', 'it', 'pt', 'ar', 'zh', 'ja', 'ru'])) {
+        $enabledLanguages = \App\Models\Setting::get('site.enabled_languages', [
+            'en' => 'English',
+            'de' => 'Deutsch',
+            'es' => 'Español',
+            'fr' => 'Français',
+            'it' => 'Italiano',
+            'pt' => 'Português',
+            'ar' => 'العربية',
+            'zh' => '中文',
+            'ja' => '日本語',
+            'ru' => 'Русский'
+        ]);
+
+        if (!array_key_exists($locale, $enabledLanguages)) {
             abort(400);
         }
 
