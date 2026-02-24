@@ -16,13 +16,34 @@
         </div>
     @endif
 
+    @if (session()->has('error'))
+        <div class="mb-6 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-xl flex items-center">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Language List -->
         <div class="lg:col-span-1 space-y-6">
             <div class="bg-gray-800 rounded-2xl border border-gray-700 p-6 shadow-sm">
-                <h3 class="text-lg font-bold text-white mb-4">Available Languages</h3>
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-bold text-white">Available Languages</h3>
+                    <button wire:click="showAddLanguageModal"
+                        class="text-sm px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors flex items-center shadow-sm">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                            </path>
+                        </svg>
+                        Add Custom
+                    </button>
+                </div>
+
                 <div class="space-y-3">
-                    @foreach($availableLocales as $code => $name)
+                    @foreach($this->availableLocales as $code => $name)
                         @php
                             $isEnabled = isset($enabledLanguages[$code]);
                             $isBase = $code === 'en';
@@ -67,25 +88,49 @@
         <div class="lg:col-span-2 space-y-6">
             @if($editingLocale)
                 <div class="bg-gray-800 rounded-2xl border border-gray-700 p-6 shadow-sm flex flex-col h-[800px]">
-                    <div class="flex justify-between items-center mb-6 pb-6 border-b border-gray-700">
+                    <div
+                        class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 pb-6 border-b border-gray-700 gap-4">
                         <div>
                             <h3 class="text-xl font-bold text-white flex items-center">
                                 Translating to <span
-                                    class="ml-2 px-2 py-1 bg-indigo-500/20 text-indigo-400 rounded-md text-sm border border-indigo-500/30">{{ $availableLocales[$editingLocale] }}
+                                    class="ml-2 px-2 py-1 bg-indigo-500/20 text-indigo-400 rounded-md text-sm border border-indigo-500/30">{{ $this->availableLocales[$editingLocale] }}
                                     ({{ strtoupper($editingLocale) }})</span>
                             </h3>
                             <p class="text-sm text-gray-400 mt-1">Translate the base English strings into
-                                {{ $availableLocales[$editingLocale] }}.</p>
+                                {{ $this->availableLocales[$editingLocale] }}.</p>
                         </div>
-                        <button wire:click="saveTranslations"
-                            class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
-                                </path>
-                            </svg>
-                            Save Changes
-                        </button>
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <button wire:click="autoTranslate" wire:loading.attr="disabled"
+                                class="w-full sm:w-auto px-4 py-2 bg-purple-600/20 hover:bg-purple-600/30 text-purple-400 border border-purple-500/30 rounded-xl font-bold transition-all flex items-center justify-center gap-2">
+                                <span wire:loading.remove wire:target="autoTranslate" class="flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                    Auto-Translate Missing (AI)
+                                </span>
+                                <span wire:loading wire:target="autoTranslate" class="flex items-center gap-2">
+                                    <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                            stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                        </path>
+                                    </svg>
+                                    Translating...
+                                </span>
+                            </button>
+                            <button wire:click="saveTranslations"
+                                class="w-full sm:w-auto px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                                    </path>
+                                </svg>
+                                Save Changes
+                            </button>
+                        </div>
                     </div>
 
                     <div class="mb-4">
@@ -102,7 +147,8 @@
                         </div>
                     </div>
 
-                    <div class="flex-1 overflow-y-auto pr-2 space-y-4 rounded-xl custom-scrollbar">
+                    <div class="flex-1 overflow-y-auto pr-2 space-y-4 rounded-xl custom-scrollbar"
+                        wire:loading.class="opacity-50 pointer-events-none" wire:target="autoTranslate">
                         @if(empty($filteredKeys))
                             <div class="text-center py-12 text-gray-500">
                                 No matching strings found.
@@ -142,4 +188,58 @@
             @endif
         </div>
     </div>
+
+    <!-- Create Custom Language Modal -->
+    @if($isAddingLanguage)
+        <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div wire:click="$set('isAddingLanguage', false)"
+                    class="fixed inset-0 bg-gray-900 bg-opacity-75 backdrop-blur-sm transition-opacity" aria-hidden="true">
+                </div>
+
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                <div
+                    class="inline-block align-bottom bg-gray-800 border border-gray-700 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <form wire:submit.prevent="addLanguage">
+                        <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-700">
+                            <h3 class="text-lg leading-6 font-bold text-white mb-6" id="modal-title">
+                                Add Custom Language
+                            </h3>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-1">Language Code</label>
+                                    <input type="text" wire:model.defer="newLanguageCode"
+                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 font-mono uppercase"
+                                        placeholder="e.g. KO, HI, UR, etc." required>
+                                    <p class="text-xs text-gray-500 mt-1">Short ISO code for the language.</p>
+                                    @error('newLanguageCode') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-400 mb-1">Language Name</label>
+                                    <input type="text" wire:model.defer="newLanguageName"
+                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        placeholder="e.g. Korean, Hindi, Urdu" required>
+                                    @error('newLanguageName') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse border-t border-gray-700">
+                            <button type="submit"
+                                class="w-full inline-flex justify-center rounded-xl shadow-sm px-4 py-2 bg-indigo-600 font-bold text-white hover:bg-indigo-700 focus:outline-none sm:ml-3 sm:w-auto transition-colors">
+                                Add Language
+                            </button>
+                            <button type="button" wire:click="$set('isAddingLanguage', false)"
+                                class="mt-3 w-full inline-flex justify-center rounded-xl shadow-sm px-4 py-2 bg-gray-700 font-bold text-gray-300 hover:bg-gray-600 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto transition-colors">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

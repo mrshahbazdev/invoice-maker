@@ -34,6 +34,41 @@ class AiService
         }
     }
 
+    public function translateJson(array $englishJson, string $targetLanguageName): array
+    {
+        $jsonString = json_encode($englishJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+        $prompt = "You are a professional software localization translator. Translate the following JSON object values from English to {$targetLanguageName}. Keep the original JSON keys exactly as they are. Do not add any markdown formatting, backticks, or extra text. RETURN ONLY VALID JSON.\n\n" . $jsonString;
+
+        try {
+            // Force a slightly higher timeout for translation as it might take longer
+            $response = $this->generateText($prompt);
+
+            // Clean up backticks in case the AI ignores instructions
+            $cleaned = str_replace(['```json', '```'], '', $response);
+            $cleaned = trim($cleaned);
+
+            $translatedArray = json_decode($cleaned, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE || !is_array($translatedArray)) {
+                throw new Exception("AI returned invalid JSON: " . json_last_error_msg());
+            }
+
+            // Ensure all original keys exist
+            foreach ($englishJson as $key => $value) {
+                if (!isset($translatedArray[$key])) {
+                    $translatedArray[$key] = $value; // Fallback to english if missing
+                }
+            }
+
+            return $translatedArray;
+
+        } catch (Exception $e) {
+            Log::error('AI Translation Error: ' . $e->getMessage());
+            throw $e;
+        }
+    }
+
     protected function callOpenAi(string $prompt, ?string $imagePath = null): string
     {
         if (!$this->openaiKey) {
