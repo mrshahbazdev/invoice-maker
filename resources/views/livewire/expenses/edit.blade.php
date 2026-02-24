@@ -132,14 +132,38 @@
                             @if ($receipt)
                                 <div class="mb-4">
                                     <p class="text-xs text-gray-500 mb-1 caps">{{ __('Preview New:') }}</p>
-                                    <img src="{{ $receipt->temporaryUrl() }}"
-                                        class="mx-auto h-32 w-auto rounded-lg shadow-sm border">
+                                    @if (in_array(strtolower($receipt->extension()), ['png', 'jpg', 'jpeg', 'gif', 'webp']))
+                                        <img src="{{ $receipt->temporaryUrl() }}"
+                                            class="mx-auto h-32 w-auto rounded-lg shadow-sm border">
+                                    @else
+                                        <div class="flex flex-col items-center justify-center p-4 border rounded-lg bg-gray-50">
+                                            <svg class="h-12 w-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            <span
+                                                class="mt-2 text-sm text-gray-600">{{ $receipt->getClientOriginalName() }}</span>
+                                        </div>
+                                    @endif
                                 </div>
                             @elseif ($expense->receipt_path)
                                 <div class="mb-4">
                                     <p class="text-xs text-gray-500 mb-1 caps">{{ __('Current Receipt:') }}</p>
-                                    <img src="{{ Storage::url($expense->receipt_path) }}"
-                                        class="mx-auto h-32 w-auto rounded-lg shadow-sm border">
+                                    @if (in_array(strtolower(pathinfo($expense->receipt_path, PATHINFO_EXTENSION)), ['png', 'jpg', 'jpeg', 'gif', 'webp']))
+                                        <img src="{{ Storage::url($expense->receipt_path) }}"
+                                            class="mx-auto h-32 w-auto rounded-lg shadow-sm border">
+                                    @else
+                                        <div class="flex flex-col items-center justify-center p-4 border rounded-lg bg-gray-50">
+                                            <svg class="h-12 w-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            <a href="{{ Storage::url($expense->receipt_path) }}" target="_blank"
+                                                class="mt-2 text-sm text-blue-600 hover:text-blue-800">{{ __('View Document') }}</a>
+                                        </div>
+                                    @endif
                                 </div>
                             @else
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
@@ -157,7 +181,7 @@
                                 </label>
                             </div>
                             <p class="text-xs text-gray-500">
-                                PNG, JPG, GIF {{ __('up to 2MB') }}
+                                PNG, JPG, GIF, PDF {{ __('up to 2MB') }}
                             </p>
                         </div>
                     </div>

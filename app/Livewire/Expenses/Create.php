@@ -36,7 +36,7 @@ class Create extends Component
         'description' => 'required|string|max:255',
         'partner_name' => 'nullable|string|max:255',
         'reference_number' => 'nullable|string|max:255',
-        'receipt' => 'nullable|image|max:2048', // 2MB Max
+        'receipt' => 'nullable|file|mimes:jpeg,png,jpg,gif,pdf|max:2048', // 2MB Max
     ];
 
     public function mount()
