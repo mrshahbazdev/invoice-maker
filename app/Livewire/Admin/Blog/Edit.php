@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Livewire\Admin\Blog;
+
+use App\Models\Category;
+use App\Models\Post;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
+class Edit extends Component
+{
+    use WithFileUploads;
+
+    public Post $post;
+
+    public $title, $slug, $category_id, $excerpt, $content, $meta_title, $meta_description;
+    public $is_published = false;
+    public $featured_image;
+    public $new_featured_image;
+
+    public function mount(Post $post)
+    {
+        $this->post = $post;
+        $this->title = $post->title;
+        $this->slug = $post->slug;
+        $this->category_id = $post->category_id;
+        $this->excerpt = $post->excerpt;
+        $this->content = $post->content;
+        $this->meta_title = $post->meta_title;
+        $this->meta_description = $post->meta_description;
+        $this->is_published = (bool) $post->is_published;
+        $this->featured_image = $post->featured_image;
+    }
+
+    #[\Livewire\Attributes\Layout('layouts.admin', ['title' => 'Edit Post'])]
+    public function render()
+    {
+        return view('livewire.admin.blog.edit', [
+            'categories' => Category::orderBy('name')->get()
+        ]);
+    }
+
+    public function updatedTitle()
+    {
+        if (empty($this->slug)) {
+            $this->slug = Str::slug($this->title);
+        }
+    }
+
+    public function save()
+    {
+        $this->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:posts,slug,' . $this->post->id,
+            'category_id' => 'nullable|exists:categories,id',
+            'content' => 'required|string',
+            'excerpt' => 'nullable|string',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'is_published' => 'boolean',
+            'new_featured_image' => 'nullable|image|max:2048',
+        ]);
+
+        $imagePath = $this->featured_image;
+        if ($this->new_featured_image) {
+            $imagePath = $this->new_featured_image->store('blog/images', 'public');
+
+            // Delete old image if it exists
+            if ($this->featured_image && Storage::disk('public')->exists($this->featured_image)) {
+                Storage::disk('public')->delete($this->featured_image);
+            }
+        }
+
+        $wasPublished = (bool) $this->post->is_published;
+
+        $this->post->update([
+            'title' => $this->title,
+            'slug' => Str::slug($this->slug),
+            'category_id' => $this->category_id === '' ? null : $this->category_id,
+            'content' => $this->content,
+            'excerpt' => $this->excerpt,
+            'meta_title' => $this->meta_title,
+            'meta_description' => $this->meta_description,
+            'is_published' => $this->is_published,
+            'published_at' => (!$wasPublished && $this->is_published) ? now() : $this->post->published_at,
+            'featured_image' => $imagePath,
+        ]);
+
+        session()->flash('message', 'Post updated successfully.');
+        return $this->redirect(route('admin.blog.index'), navigate: true);
+    }
+}

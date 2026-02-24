@@ -52,6 +52,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Public Blog Routes
+Route::get('/blog', \App\Livewire\Blog\Index::class)->name('public.blog.index');
+Route::get('/blog/{slug}', \App\Livewire\Blog\Show::class)->name('public.blog.show');
+
 Route::middleware(['auth', 'business.member'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/profile', UserProfileShow::class)->name('profile.show');
@@ -139,6 +143,13 @@ Route::middleware(['auth', 'is_super_admin'])->prefix('admin')->name('admin.')->
     Route::get('/settings/seo', \App\Livewire\Admin\Settings\Seo::class)->name('settings.seo');
     Route::get('/settings/ai', \App\Livewire\Admin\Settings\Ai::class)->name('settings.ai');
     Route::get('/settings/languages', \App\Livewire\Admin\Settings\Languages::class)->name('settings.languages');
+
+    Route::prefix('blog')->name('blog.')->group(function () {
+        Route::get('/categories', \App\Livewire\Admin\Blog\Categories::class)->name('categories');
+        Route::get('/', \App\Livewire\Admin\Blog\Index::class)->name('index');
+        Route::get('/create', \App\Livewire\Admin\Blog\Create::class)->name('create');
+        Route::get('/{post}/edit', \App\Livewire\Admin\Blog\Edit::class)->name('edit');
+    });
 });
 
 Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');

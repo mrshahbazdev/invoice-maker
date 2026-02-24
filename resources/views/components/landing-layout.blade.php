@@ -143,10 +143,12 @@
 
             <!-- Desktop Nav -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#features"
+                <a href="/#features"
                     class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">{{ __('Features') }}</a>
-                <a href="#how-it-works"
+                <a href="/#how-it-works"
                     class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">{{ __('How it Works') }}</a>
+                <a href="{{ route('public.blog.index') }}"
+                    class="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">{{ __('Blog') }}</a>
 
                 <!-- Language Selector -->
                 <div class="relative" x-data="{ open: false }">
@@ -254,10 +256,12 @@
                 </button>
             </div>
             <div class="px-4 py-8 space-y-6">
-                <a href="#features" @click="mobileMenuOpen = false"
+                <a href="/#features" @click="mobileMenuOpen = false"
                     class="block text-lg font-medium text-gray-900">{{ __('Features') }}</a>
-                <a href="#how-it-works" @click="mobileMenuOpen = false"
+                <a href="/#how-it-works" @click="mobileMenuOpen = false"
                     class="block text-lg font-medium text-gray-900">{{ __('How it Works') }}</a>
+                <a href="{{ route('public.blog.index') }}" @click="mobileMenuOpen = false"
+                    class="block text-lg font-medium text-gray-900">{{ __('Blog') }}</a>
                 <div class="pt-6 border-t border-gray-100 space-y-4">
                     @auth
                         <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
@@ -301,12 +305,14 @@
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">{{ __('Product') }}</h4>
                     <ul class="space-y-4 text-sm">
-                        <li><a href="#features" class="hover:text-blue-400 transition-colors">{{ __('Features') }}</a>
+                        <li><a href="/#features" class="hover:text-blue-400 transition-colors">{{ __('Features') }}</a>
                         </li>
-                        <li><a href="#pricing" class="hover:text-blue-400 transition-colors">{{ __('Pricing') }}</a>
+                        <li><a href="/#pricing" class="hover:text-blue-400 transition-colors">{{ __('Pricing') }}</a>
                         </li>
                         <li><a href="/client/login"
                                 class="hover:text-blue-400 transition-colors">{{ __('Client Portal') }}</a></li>
+                        <li><a href="{{ route('public.blog.index') }}"
+                                class="hover:text-blue-400 transition-colors">{{ __('Blog') }}</a></li>
                     </ul>
                 </div>
                 <div>
