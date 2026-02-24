@@ -20,7 +20,20 @@ class Login extends Component
     {
         $this->validate();
 
-        if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+        if (Auth::validate(['email' => $this->email, 'password' => $this->password])) {
+            $user = \App\Models\User::where('email', $this->email)->first();
+
+            if ($user->two_factor_secret && $user->two_factor_confirmed_at) {
+                // Prepare 2FA session details
+                session([
+                    'login.id' => $user->id,
+                    'login.remember' => $this->remember,
+                ]);
+
+                return $this->redirect(route('two-factor.challenge'), navigate: true);
+            }
+
+            Auth::login($user, $this->remember);
             session()->regenerate();
 
             if (Auth::user()->role === 'client') {

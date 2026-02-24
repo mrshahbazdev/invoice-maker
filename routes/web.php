@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvoiceController;
 use App\Livewire\Dashboard;
-use App\Livewire\Business\Profile;
+use App\Livewire\Business\Profile as BusinessProfile;
+use App\Livewire\Profile\Show as UserProfileShow;
 use App\Http\Controllers\StripeController;
 use App\Livewire\Clients\Index as ClientsIndex;
 use App\Livewire\Clients\Create as ClientsCreate;
@@ -53,9 +54,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'business.member'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/profile', UserProfileShow::class)->name('profile.show');
 
     Route::prefix('business')->group(function () {
-        Route::get('/profile', Profile::class)->name('business.profile');
+        Route::get('/profile', BusinessProfile::class)->name('business.profile');
         Route::get('/stripe/return', [StripeController::class, 'handleReturn'])->name('stripe.return');
     });
 
