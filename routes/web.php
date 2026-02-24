@@ -124,11 +124,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client/settings', App\Livewire\ClientPortal\Settings::class)->name('client.settings');
     Route::get('/client/invoices/download-all', [ClientPortalController::class, 'downloadAllInvoices'])->name('client.invoices.download-all');
     Route::get('/client/statement', [ClientPortalController::class, 'downloadStatement'])->name('client.statement');
+
+    // Impersonation
+    Route::post('/impersonate/leave', [\App\Http\Controllers\ImpersonateController::class, 'leave'])->name('impersonate.leave');
 });
 
 // Super Admin Routes
 Route::middleware(['auth', 'is_super_admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('dashboard');
+    Route::get('/users', \App\Livewire\Admin\Users\Index::class)->name('users.index');
+    Route::get('/businesses', \App\Livewire\Admin\Businesses\Index::class)->name('businesses.index');
 });
 
 Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');

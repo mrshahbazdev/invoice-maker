@@ -25,6 +25,7 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'two_factor_confirmed_at',
         'is_super_admin',
+        'is_active',
     ];
 
     protected $hidden = [
@@ -42,6 +43,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'two_factor_recovery_codes' => 'array',
             'is_super_admin' => 'boolean',
+            'is_active' => 'boolean',
         ];
     }
 

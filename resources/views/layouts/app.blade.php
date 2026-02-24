@@ -12,6 +12,28 @@
 <body
     class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen"
     x-data="{ mobileMenuOpen: false }">
+
+    @if(session()->has('impersonated_by'))
+        <div
+            class="fixed top-0 inset-x-0 z-[100] bg-red-600 text-white px-4 py-2.5 flex justify-center sm:justify-between items-center shadow-md flex-wrap gap-2 text-sm sm:text-base">
+            <span class="font-medium text-center">
+                🕵️ You are currently masquerading as <strong
+                    class="font-bold border-b border-red-300">{{ auth()->user()->name }}</strong>.
+            </span>
+            <form action="{{ route('impersonate.leave') }}" method="POST" class="m-0">
+                @csrf
+                <button type="submit"
+                    class="bg-white text-red-600 px-3 py-1.5 rounded-md text-xs sm:text-sm font-bold shadow-sm hover:bg-gray-100 transition-colors">
+                    Leave God Mode
+                </button>
+            </form>
+        </div>
+        <style>
+            body {
+                padding-top: 50px;
+            }
+        </style>
+    @endif
     <div class="flex min-h-screen">
         @if(auth()->check())
             @include('components.sidebar')
