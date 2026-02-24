@@ -428,5 +428,6 @@
     "Remember me": "ログイン状態を保持",
     "Profile Information": "プロファイル情報",
     "Update your account's profile information and email address.": "アカウントのプロファイル情報とメールアドレスを更新します。",
-    "Two-Factor Authentication": "2要素認証"
+    "Two-Factor Authentication": "2要素認証",
+    "Update Password": "パスワードを更新"
 }
