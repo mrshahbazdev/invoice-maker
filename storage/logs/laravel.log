@@ -13537,3 +13537,145 @@ Did you mean one of these?
 [2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
 [2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
 [2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 05:39:50] local.ERROR: Failed to process recurring invoice ID 57: Missing required parameter for [Route: invoices.public.show] [URI: v/{invoice}] [Missing parameter: invoice].  
+[2026-02-25 05:41:50] local.ERROR: Command "tinker" is not defined. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"tinker\" is not defined. at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php:759)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php(298): Symfony/Component/Console/Application->find('tinker')
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php(195): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/artisan(12): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#4 {main}
+"} 
+[2026-02-25 05:43:11] local.DEBUG: From: InvoiceMaker <hello@example.com>
+To: a.brown@education.edu
+Subject: New Invoice from Demo Business Inc. - INV-0002
+Reply-To: "Demo Business Inc." <contact@demobusiness.com>
+MIME-Version: 1.0
+Date: Wed, 25 Feb 2026 05:43:11 +0000
+Message-ID: <555afe4e714ae96b18c8c249beeb9ccd@example.com>
+Content-Type: multipart/mixed; boundary=_Ci2kRns
+
+--_Ci2kRns
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+
+                                <p>Hi Amanda Brown,</p>
+                                <p>Please find attached your latest invoice (<b>INV-0002</b>) from Demo Business Inc..</p>
+                                <p>This invoice is automatically generated as part of your recurring subscription.</p>
+                                <br>
+                                <p>You can view and pay this invoice online by clicking here:<br>
+                                <a href='https://invoice.allocore.de/v/59'>View Invoice Online</a></p>
+                                <br>
+                                <p>Thank you for your business!</p>
+                            
+--_Ci2kRns
+Content-Type: application/pdf; name=Invoice-INV-0002.pdf
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; name=Invoice-INV-0002.pdf;
+ filename=Invoice-INV-0002.pdf
+
+JVBERi0xLjcKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZwovT3V0bGluZXMgMiAwIFIKL1BhZ2Vz
+IDMgMCBSID4+CmVuZG9iagoyIDAgb2JqCjw8IC9UeXBlIC9PdXRsaW5lcyAvQ291bnQgMCA+Pgpl
+bmRvYmoKMyAwIG9iago8PCAvVHlwZSAvUGFnZXMKL0tpZHMgWzYgMCBSCl0KL0NvdW50IDEKL1Jl
+c291cmNlcyA8PAovUHJvY1NldCA0IDAgUgovRm9udCA8PCAKL0YxIDggMCBSCi9GMiA5IDAgUgo+
+PgovRXh0R1N0YXRlIDw8IAovR1MxIDEwIDAgUgovR1MyIDExIDAgUgo+Pgo+PgovTWVkaWFCb3gg
+WzAuMDAwIDAuMDAwIDU5NS4yODAgODQxLjg5MF0KID4+CmVuZG9iago0IDAgb2JqClsvUERGIC9U
+ZXh0IF0KZW5kb2JqCjUgMCBvYmoKPDwKL1Byb2R1Y2VyICj+/wBkAG8AbQBwAGQAZgAgADIALgAw
+AC4AOAAgACsAIABDAFAARABGKQovQ3JlYXRpb25EYXRlIChEOjIwMjYwMjI1MDU0MzExKzAwJzAw
+JykKL01vZERhdGUgKEQ6MjAyNjAyMjUwNTQzMTErMDAnMDAnKQo+PgplbmRvYmoKNiAwIG9iago8
+PCAvVHlwZSAvUGFnZQovTWVkaWFCb3ggWzAuMDAwIDAuMDAwIDU5NS4yODAgODQxLjg5MF0KL1Bh
+cmVudCAzIDAgUgovQW5ub3RzIFsgMTIgMCBSIF0KL0NvbnRlbnRzIDcgMCBSCj4+CmVuZG9iago3
+IDAgb2JqCjw8IC9GaWx0ZXIgL0ZsYXRlRGVjb2RlCi9MZW5ndGggNDA5MiA+PgpzdHJlYW0KeJyd
+nF1zHbeRhu/5Kya1N/mwTwbfmL2KZMsupSwrlpjdSiW5OCKPbK45pMMPe121F/npiyEPGtMvXp5D
+u1wi9Yy6gQbQABqN8ZyYzTiOw/rnzbcn48NfHn+GKWxsHofszSZP5Z93w8ciYKwtAiaa8tOauGi9
+PB3co07KeeN9Gk7Phz9+YQeTN+Nw+nEY/v7bz3fz9fDy/vbiand7O7y+Otv87p/D6Z+HV6cn/zop
+RaVQ660/lycu+00uFaYwbVyx4Ww+2Ru7lv10/Sg9/iqSYydYbDXDT8M4/Ln8+Z9SMe2EtcjYl7z/
+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
+34Uaj3yoM6ZpM/lcrZhkrL549/bNuv4qH8Ime9pHT3/Yc6VepsQ0MevPrq/utmd3fzovxXzYl7I5
+u55ZIWWzMSGQQv5ghn/8NoTwj98NxrpPfYiJ6IfJbZwxRL8otSa8v7vZ7e6YfoqlI5l7vb+/uNuV
+ByPTCtNmKZ9oba+GL262V2cXt2fXnwyfvRgmb7SL1jJ8mfqWdd9fr0rN58Xm4je3WjNvnI9PD/TL
+1199NZy+pTpPDvaLeXt1vh1e3lz/dEU1nxznV+f3p7uz74b315f3dxfXV9zYJ0d4u/mw1Pmn3fn9
+2XbR35S/sSKeHuSjTrIvINmNj2yUc7DDZ9v5h/vb4eX1/eXux+3NOS2hdJ9LbMQ/3139uLspQ/12
+yKMdDdUucYZNv2qsQ4l6vWPdd7r937JmlnUpuzgZn1bLxJRiWSCmPD789MsyUYMPHzdlRMqRY9zk
+IlWC2Vi6YP8dYL6E109AhbKveN973eev3n/27vVfTl+//fqwDTY9VlqNyGURm+yzbLBTLMve9LQR
+3/z1xdenr0//dqQXyoJtYhYLzFh29/C8bvBl90v2QD/85Z3eEEn9i661/lfVH8puYcv+9GT9p29P
+X3y1qj9Peal5fLCibBzvviyxSth/Lvjvw/DP8pfz5hhlfYh+mIc2So9PLof3J8uXm59QdClsfEgr
+xfrkUZEHKdWnymHZO7Zxvpq3F5fLNvj97u7i6tvh/e7u/ofh0+Hx+VyfqylT4+0yVX0gZf5wub37
+eH0zD7dLYZ8Md7t5ebQbzne3F99efTKUhZAU6HIZtGBIgWdl5dgWzWF7f3c9P65hUgDpa+zaeWgO
+ebizsW+b5rq3F5tLsOgc9ILeGA9ZiPbMQ3PZI+4A9jRNsNAb8xDRPW3hv1NYfOuQnWjVPIT4+Gnz
+Y3aiVU0T7FwiUOfcL7DzSHzmyi4wjYksHC/+9ubV16fD6at3b94fjajlTZnyu1SxN2tV2uVue7sb
+ftj+PPx0cffdxdVgwnC+/fl2/XV2Ga0yAZPLa39alrny5LL1C3liuyeuBNHLk1ZOffLfwxVfjQ66
+UVE3xq2HZ/9kGZ5vnu6dqr/MAxtpYPfh7vpue7nq6KcOUqkcoJaibBu3X3iQCqYcf8o2/rQ56ERt
+bMreWHptvUrYyTw8af3OntjuidtE71dj0578qrFZ1G3ZjGdVxfLkmWMzxuIalsc0zx+W0W3GSM9r
+x4fFlTWo/MvTlvwbZvbhFtmYH5aOukW41qJf5Go2+tImS8p5RpvG4mrukC3E1fYZ3BKGxBgXT6sP
+8sODlRORJ6l7EjeTWZ5IMfXBL/OzZlXx77Wb7Z9UN4tm6YhYAojyM9eOsGXfXnYAU+JLM/l+hTz9
+bnv1/fDz9f1QooHl981Qj6m/kc7545fvzfDt7fLbLr9LwSbbh14vfzZpsn3BX+6udjfbJaD/8POw
+z2u82X6/uxmur1QSYfi/QQUaZcjMeKDgF5eX12fXN7vN+a7q/T+XY2jWCmVuZHN0cmVhbQplbmRv
+YmoKOCAwIG9iago8PCAvVHlwZSAvRm9udAovU3VidHlwZSAvVHlwZTEKL05hbWUgL0YxCi9CYXNl
+Rm9udCAvSGVsdmV0aWNhCi9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nCj4+CmVuZG9iago5IDAg
+b2JqCjw8IC9UeXBlIC9Gb250Ci9TdWJ0eXBlIC9UeXBlMQovTmFtZSAvRjIKL0Jhc2VGb250IC9I
+ZWx2ZXRpY2EtQm9sZAovRW5jb2RpbmcgL1dpbkFuc2lFbmNvZGluZwo+PgplbmRvYmoKMTAgMCBv
+YmoKPDwgL1R5cGUgL0V4dEdTdGF0ZQovQk0gL05vcm1hbAovQ0EgMC41Cj4+CmVuZG9iagoxMSAw
+IG9iago8PCAvVHlwZSAvRXh0R1N0YXRlCi9CTSAvTm9ybWFsCi9jYSAwLjUKPj4KZW5kb2JqCjEy
+IDAgb2JqCjw8IC9UeXBlIC9Bbm5vdAovU3VidHlwZSAvTGluawovQSAxMyAwIFIKL0JvcmRlciBb
+MCAwIDBdCi9IIC9JCi9SZWN0IFsgMzY4LjEwMTAgMTYwLjA0NDEgNDEzLjExOTAgMTY5LjIwMTYg
+XQo+PgplbmRvYmoKMTMgMCBvYmoKPDwgL1R5cGUgL0FjdGlvbgovUyAvVVJJCi9VUkkgKGh0dHBz
+Oi8vYWxsb2NvcmUuZGUpCj4+CmVuZG9iagp4cmVmCjAgMTQKMDAwMDAwMDAwMCA2NTUzNSBmIAow
+MDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNzQgMDAwMDAgbiAKMDAwMDAwMDEyMCAwMDAwMCBu
+IAowMDAwMDAwMzI2IDAwMDAwIG4gCjAwMDAwMDAzNTUgMDAwMDAgbiAKMDAwMDAwMDUwNCAwMDAw
+MCBuIAowMDAwMDAwNjI2IDAwMDAwIG4gCjAwMDAwMDQ3OTEgMDAwMDAgbiAKMDAwMDAwNDg5OCAw
+MDAwMCBuIAowMDAwMDA1MDEwIDAwMDAwIG4gCjAwMDAwMDUwNjkgMDAwMDAgbiAKMDAwMDAwNTEy
+OCAwMDAwMCBuIAowMDAwMDA1MjU2IDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgMTQKL1Jvb3Qg
+MSAwIFIKL0luZm8gNSAwIFIKL0lEWzxjMmU1ZDBmYjYwZDE3Mzg2MDQ0NWJmYTBiNzg0MDgzYj48
+YzJlNWQwZmI2MGQxNzM4NjA0NDViZmEwYjc4NDA4M2I+XQo+PgpzdGFydHhyZWYKNTMyNwolJUVP
+Rgo=
+--_Ci2kRns--
+  

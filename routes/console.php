@@ -8,5 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command('invoices:generate-recurring')->daily();
+Schedule::command('app:process-recurring-invoices')->daily();
 Schedule::command('invoices:send-reminders')->daily();
