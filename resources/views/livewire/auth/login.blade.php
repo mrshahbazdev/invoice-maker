@@ -21,12 +21,15 @@
             @error('password') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
         </div>
 
-        <div class="mb-6">
+        <div class="mb-6 flex items-center justify-between">
             <label class="flex items-center">
                 <input type="checkbox" wire:model="remember"
                     class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                 <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
+            <a href="{{ route('password.request') }}" class="text-sm font-medium text-blue-600 hover:text-blue-500">
+                {{ __('Forgot password?') }}
+            </a>
         </div>
 
         <button type="submit" wire:loading.attr="disabled"
