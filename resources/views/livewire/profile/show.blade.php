@@ -232,7 +232,7 @@
                                 <!-- Default (Null) Option -->
                                 <label
                                     class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none {{ is_null($theme_id) ? 'border-brand-500 ring-2 ring-brand-500' : 'border-gray-300' }}">
-                                    <input type="radio" wire:model="theme_id" value="" class="sr-only">
+                                    <input type="radio" wire:model.live="theme_id" value="" class="sr-only">
                                     <span class="flex flex-1">
                                         <span class="flex flex-col">
                                             <span
@@ -257,7 +257,8 @@
                                 @foreach($availableThemes as $theme)
                                     <label
                                         class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none {{ $theme_id === $theme->id ? 'border-brand-500 ring-2 ring-brand-500' : 'border-gray-300' }}">
-                                        <input type="radio" wire:model="theme_id" value="{{ $theme->id }}" class="sr-only">
+                                        <input type="radio" wire:model.live="theme_id" value="{{ $theme->id }}"
+                                            class="sr-only">
                                         <span class="flex flex-1">
                                             <span class="flex flex-col">
                                                 <span

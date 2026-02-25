@@ -11,321 +11,321 @@ use App\Services\PdfGenerationService;
 
 class Show extends Component
 {
-    public Invoice $invoice;
-    public string $payment_amount = '';
-    public string $payment_method = 'bank_transfer';
-    public string $payment_date = '';
-    public string $payment_notes = '';
-    public float $total_expenses = 0;
-    public float $profit = 0;
-    public float $margin_percentage = 0;
-    public bool $showEmailModal = false;
-    public string $emailSubject = '';
-    public string $emailBody = '';
-    public bool $showPaidModal = false;
-    public string $paymentSource = '';
-    public string $paymentDescription = '';
+ public Invoice $invoice;
+ public string $payment_amount = '';
+ public string $payment_method = 'bank_transfer';
+ public string $payment_date = '';
+ public string $payment_notes = '';
+ public float $total_expenses = 0;
+ public float $profit = 0;
+ public float $margin_percentage = 0;
+ public bool $showEmailModal = false;
+ public string $emailSubject = '';
+ public string $emailBody = '';
+ public bool $showPaidModal = false;
+ public string $paymentSource = '';
+ public string $paymentDescription = '';
 
-    protected array $rules = [
-        'payment_amount' => 'required|numeric|min:0.01',
-        'payment_method' => 'required|in:bank_transfer,credit_card,cash,check,paypal,stripe',
-        'payment_date' => 'required|date',
-        'emailSubject' => 'nullable|string|max:255',
-        'emailBody' => 'nullable|string',
-    ];
+ protected array $rules = [
+ 'payment_amount' => 'required|numeric|min:0.01',
+ 'payment_method' => 'required|in:bank_transfer,credit_card,cash,check,paypal,stripe',
+ 'payment_date' => 'required|date',
+ 'emailSubject' => 'nullable|string|max:255',
+ 'emailBody' => 'nullable|string',
+ ];
 
-    public function mount(Invoice $invoice): void
-    {
-        $this->authorize('view', $invoice);
-        $this->invoice = $invoice->load(['items.product', 'payments', 'client', 'business', 'expenses']);
-        $this->payment_date = now()->toDateString();
-        $this->calculateProfitability();
-    }
+ public function mount(Invoice $invoice): void
+ {
+ $this->authorize('view', $invoice);
+ $this->invoice = $invoice->load(['items.product', 'payments', 'client', 'business', 'expenses']);
+ $this->payment_date = now()->toDateString();
+ $this->calculateProfitability();
+ }
 
-    public function calculateProfitability(): void
-    {
-        $this->total_expenses = (float) $this->invoice->expenses->sum('amount');
-        $this->profit = (float) $this->invoice->grand_total - $this->total_expenses;
-        $this->margin_percentage = $this->invoice->grand_total > 0
-            ? ($this->profit / (float) $this->invoice->grand_total) * 100
-            : 0;
-    }
+ public function calculateProfitability(): void
+ {
+ $this->total_expenses = (float) $this->invoice->expenses->sum('amount');
+ $this->profit = (float) $this->invoice->grand_total - $this->total_expenses;
+ $this->margin_percentage = $this->invoice->grand_total > 0
+ ? ($this->profit / (float) $this->invoice->grand_total) * 100
+ : 0;
+ }
 
-    public function markAsSent(): void
-    {
-        $this->invoice->update(['status' => Invoice::STATUS_SENT]);
-        $this->invoice->deductInventory();
-        session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' marked as sent.');
-    }
+ public function markAsSent(): void
+ {
+ $this->invoice->update(['status' => Invoice::STATUS_SENT]);
+ $this->invoice->deductInventory();
+ session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' marked as sent.');
+ }
 
-    public function openEmailModal(): void
-    {
-        if (!$this->invoice->client->email) {
-            session()->flash('error', 'Client does not have an email address.');
-            return;
-        }
+ public function openEmailModal(): void
+ {
+ if (!$this->invoice->client->email) {
+ session()->flash('error', 'Client does not have an email address.');
+ return;
+ }
 
-        $client = $this->invoice->client;
-        $business = $this->invoice->business;
+ $client = $this->invoice->client;
+ $business = $this->invoice->business;
 
-        $placeholders = [
-            '{invoice_number}' => $this->invoice->invoice_number,
-            '{client_name}' => $client->name,
-            '{business_name}' => $business->name,
-            '{amount_due}' => $this->invoice->currency_symbol . number_format($this->invoice->amount_due, 2),
-            '{due_date}' => $this->invoice->due_date->format('d.m.Y'),
-            '{public_link}' => \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $this->invoice->id]),
-        ];
+ $placeholders = [
+ '{invoice_number}' => $this->invoice->invoice_number,
+ '{client_name}' => $client->name,
+ '{business_name}' => $business->name,
+ '{amount_due}' => $this->invoice->currency_symbol . number_format($this->invoice->amount_due, 2),
+ '{due_date}' => $this->invoice->due_date->format('d.m.Y'),
+ '{public_link}' => \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $this->invoice->id]),
+ ];
 
-        $lang = $client->language ?? 'en';
+ $lang = $client->language ?? 'en';
 
-        // Dynamic Default Subject & Template based on client language
-        $defaultSubject = $this->getDefaultEmailSubject($lang);
-        $defaultTemplate = $this->getDefaultEmailTemplate($lang);
+ // Dynamic Default Subject & Template based on client language
+ $defaultSubject = $this->getDefaultEmailSubject($lang);
+ $defaultTemplate = $this->getDefaultEmailTemplate($lang);
 
-        $subjectTemplate = $client->email_subject ?: $defaultSubject;
-        $bodyTemplate = $client->email_template ?: $defaultTemplate;
+ $subjectTemplate = $client->email_subject ?: $defaultSubject;
+ $bodyTemplate = $client->email_template ?: $defaultTemplate;
 
-        $this->emailSubject = str_replace(array_keys($placeholders), array_values($placeholders), $subjectTemplate);
-        $this->emailBody = str_replace(array_keys($placeholders), array_values($placeholders), $bodyTemplate);
+ $this->emailSubject = str_replace(array_keys($placeholders), array_values($placeholders), $subjectTemplate);
+ $this->emailBody = str_replace(array_keys($placeholders), array_values($placeholders), $bodyTemplate);
 
-        $this->showEmailModal = true;
-    }
+ $this->showEmailModal = true;
+ }
 
-    public function closeEmailModal(): void
-    {
-        $this->showEmailModal = false;
-        $this->reset(['emailSubject', 'emailBody']);
-    }
+ public function closeEmailModal(): void
+ {
+ $this->showEmailModal = false;
+ $this->reset(['emailSubject', 'emailBody']);
+ }
 
-    public function sendEmail(PdfGenerationService $pdfService): void
-    {
-        if (!$this->invoice->client->email) {
-            session()->flash('error', 'Client does not have an email address.');
-            return;
-        }
+ public function sendEmail(PdfGenerationService $pdfService): void
+ {
+ if (!$this->invoice->client->email) {
+ session()->flash('error', 'Client does not have an email address.');
+ return;
+ }
 
-        $this->validate([
-            'emailSubject' => 'required|string|max:255',
-            'emailBody' => 'required|string',
-        ]);
+ $this->validate([
+ 'emailSubject' => 'required|string|max:255',
+ 'emailBody' => 'required|string',
+ ]);
 
-        $pdfContent = $pdfService->generate($this->invoice);
+ $pdfContent = $pdfService->generate($this->invoice);
 
-        \App\Services\MailConfigurationService::getMailer($this->invoice->business)
-            ->to($this->invoice->client->email)
-            ->send(new InvoiceMail($this->invoice, $pdfContent, $this->emailSubject, $this->emailBody));
+ \App\Services\MailConfigurationService::getMailer($this->invoice->business)
+ ->to($this->invoice->client->email)
+ ->send(new InvoiceMail($this->invoice, $pdfContent, $this->emailSubject, $this->emailBody));
 
-        if ($this->invoice->status === Invoice::STATUS_DRAFT) {
-            $this->invoice->update(['status' => Invoice::STATUS_SENT]);
-            $this->invoice->deductInventory();
-        }
+ if ($this->invoice->status === Invoice::STATUS_DRAFT) {
+ $this->invoice->update(['status' => Invoice::STATUS_SENT]);
+ $this->invoice->deductInventory();
+ }
 
-        $this->closeEmailModal();
-        session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' emailed successfully to ' . $this->invoice->client->email);
-    }
+ $this->closeEmailModal();
+ session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' emailed successfully to ' . $this->invoice->client->email);
+ }
 
-    public function convertToInvoice(): void
-    {
-        if (!$this->invoice->isEstimate()) {
-            return;
-        }
+ public function convertToInvoice(): void
+ {
+ if (!$this->invoice->isEstimate()) {
+ return;
+ }
 
-        $this->invoice->update([
-            'type' => Invoice::TYPE_INVOICE,
-            'status' => Invoice::STATUS_DRAFT,
-        ]);
+ $this->invoice->update([
+ 'type' => Invoice::TYPE_INVOICE,
+ 'status' => Invoice::STATUS_DRAFT,
+ ]);
 
-        session()->flash('message', 'Estimate converted to Invoice successfully.');
-    }
+ session()->flash('message', 'Estimate converted to Invoice successfully.');
+ }
 
-    public function openPaidModal(): void
-    {
-        $this->payment_date = now()->format('Y-m-d');
-        $this->paymentDescription = __('Payment for Invoice') . ' ' . $this->invoice->invoice_number;
-        $this->showPaidModal = true;
-    }
+ public function openPaidModal(): void
+ {
+ $this->payment_date = now()->format('Y-m-d');
+ $this->paymentDescription = __('Payment for Invoice') . ' ' . $this->invoice->invoice_number;
+ $this->showPaidModal = true;
+ }
 
-    public function closePaidModal(): void
-    {
-        $this->showPaidModal = false;
-        $this->reset(['paymentSource', 'paymentDescription']);
-    }
+ public function closePaidModal(): void
+ {
+ $this->showPaidModal = false;
+ $this->reset(['paymentSource', 'paymentDescription']);
+ }
 
-    public function markAsPaid(): void
-    {
-        $this->validate([
-            'payment_date' => 'required|date',
-            'paymentSource' => 'required|in:cash,bank',
-            'paymentDescription' => 'required|string|max:255',
-        ]);
+ public function markAsPaid(): void
+ {
+ $this->validate([
+ 'payment_date' => 'required|date',
+ 'paymentSource' => 'required|in:cash,bank',
+ 'paymentDescription' => 'required|string|max:255',
+ ]);
 
-        \Illuminate\Support\Facades\DB::transaction(function () {
-            // Update Invoice Status
-            $this->invoice->update([
-                'status' => Invoice::STATUS_PAID,
-                'amount_paid' => $this->invoice->grand_total,
-                'amount_due' => 0,
-            ]);
+ \Illuminate\Support\Facades\DB::transaction(function () {
+ // Update Invoice Status
+ $this->invoice->update([
+ 'status' => Invoice::STATUS_PAID,
+ 'amount_paid' => $this->invoice->grand_total,
+ 'amount_due' => 0,
+ ]);
 
-            // Create Payment History record
-            Payment::create([
-                'invoice_id' => $this->invoice->id,
-                'amount' => $this->invoice->grand_total,
-                'method' => $this->paymentSource === 'cash' ? 'cash' : 'bank_transfer',
-                'date' => $this->payment_date,
-                'notes' => $this->paymentDescription,
-            ]);
+ // Create Payment History record
+ Payment::create([
+ 'invoice_id' => $this->invoice->id,
+ 'amount' => $this->invoice->grand_total,
+ 'method' => $this->paymentSource === 'cash' ? 'cash' : 'bank_transfer',
+ 'date' => $this->payment_date,
+ 'notes' => $this->paymentDescription,
+ ]);
 
-            // Create Cash Book Entry
-            \App\Models\CashBookEntry::create([
-                'business_id' => $this->invoice->business_id,
-                'date' => $this->payment_date,
-                'document_date' => $this->invoice->invoice_date,
-                'amount' => $this->invoice->grand_total,
-                'type' => 'income',
-                'source' => $this->paymentSource,
-                'description' => $this->paymentDescription,
-                'partner_name' => $this->invoice->client->company_name ?? $this->invoice->client->name,
-                'reference_number' => $this->invoice->invoice_number,
-                'invoice_id' => $this->invoice->id,
-            ]);
+ // Create Cash Book Entry
+ \App\Models\CashBookEntry::create([
+ 'business_id' => $this->invoice->business_id,
+ 'date' => $this->payment_date,
+ 'document_date' => $this->invoice->invoice_date,
+ 'amount' => $this->invoice->grand_total,
+ 'type' => 'income',
+ 'source' => $this->paymentSource,
+ 'description' => $this->paymentDescription,
+ 'partner_name' => $this->invoice->client->company_name ?? $this->invoice->client->name,
+ 'reference_number' => $this->invoice->invoice_number,
+ 'invoice_id' => $this->invoice->id,
+ ]);
 
-            $this->invoice->deductInventory();
-        });
+ $this->invoice->deductInventory();
+ });
 
-        $this->closePaidModal();
-        session()->flash('message', __('Invoice marked as paid and Cash Book entry created.'));
-    }
+ $this->closePaidModal();
+ session()->flash('message', __('Invoice marked as paid and Cash Book entry created.'));
+ }
 
-    public function markAsOverdue(): void
-    {
-        $this->invoice->update(['status' => Invoice::STATUS_OVERDUE]);
-        session()->flash('message', 'Invoice marked as overdue.');
-    }
+ public function markAsOverdue(): void
+ {
+ $this->invoice->update(['status' => Invoice::STATUS_OVERDUE]);
+ session()->flash('message', 'Invoice marked as overdue.');
+ }
 
-    public function cancelInvoice(): void
-    {
-        $this->invoice->update(['status' => Invoice::STATUS_CANCELLED]);
-        session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' cancelled.');
-    }
+ public function cancelInvoice(): void
+ {
+ $this->invoice->update(['status' => Invoice::STATUS_CANCELLED]);
+ session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' cancelled.');
+ }
 
-    public function recordPayment(): void
-    {
-        $this->validate();
+ public function recordPayment(): void
+ {
+ $this->validate();
 
-        $amount = (float) $this->payment_amount;
+ $amount = (float) $this->payment_amount;
 
-        if ($amount > $this->invoice->amount_due) {
-            session()->flash('error', 'Payment amount cannot exceed due amount.');
-            return;
-        }
+ if ($amount > $this->invoice->amount_due) {
+ session()->flash('error', 'Payment amount cannot exceed due amount.');
+ return;
+ }
 
-        \Illuminate\Support\Facades\DB::transaction(function () use ($amount) {
-            Payment::create([
-                'invoice_id' => $this->invoice->id,
-                'amount' => $amount,
-                'method' => $this->payment_method,
-                'date' => $this->payment_date,
-                'notes' => $this->payment_notes,
-            ]);
+ \Illuminate\Support\Facades\DB::transaction(function () use ($amount) {
+ Payment::create([
+ 'invoice_id' => $this->invoice->id,
+ 'amount' => $amount,
+ 'method' => $this->payment_method,
+ 'date' => $this->payment_date,
+ 'notes' => $this->payment_notes,
+ ]);
 
-            // Create Cash Book Entry for partial payment
-            \App\Models\CashBookEntry::create([
-                'business_id' => $this->invoice->business_id,
-                'date' => $this->payment_date,
-                'document_date' => $this->invoice->invoice_date,
-                'amount' => $amount,
-                'type' => 'income',
-                'source' => in_array($this->payment_method, ['cash']) ? 'cash' : 'bank',
-                'description' => $this->payment_notes ?: __('Partial payment for') . ' ' . $this->invoice->invoice_number,
-                'partner_name' => $this->invoice->client->company_name ?? $this->invoice->client->name,
-                'reference_number' => $this->invoice->invoice_number,
-                'invoice_id' => $this->invoice->id,
-            ]);
+ // Create Cash Book Entry for partial payment
+ \App\Models\CashBookEntry::create([
+ 'business_id' => $this->invoice->business_id,
+ 'date' => $this->payment_date,
+ 'document_date' => $this->invoice->invoice_date,
+ 'amount' => $amount,
+ 'type' => 'income',
+ 'source' => in_array($this->payment_method, ['cash']) ? 'cash' : 'bank',
+ 'description' => $this->payment_notes ?: __('Partial payment for') . ' ' . $this->invoice->invoice_number,
+ 'partner_name' => $this->invoice->client->company_name ?? $this->invoice->client->name,
+ 'reference_number' => $this->invoice->invoice_number,
+ 'invoice_id' => $this->invoice->id,
+ ]);
 
-            $totalPaid = $this->invoice->payments->sum('amount') + $amount;
-            $this->invoice->update([
-                'amount_paid' => $totalPaid,
-                'amount_due' => $this->invoice->grand_total - $totalPaid,
-            ]);
+ $totalPaid = $this->invoice->payments->sum('amount') + $amount;
+ $this->invoice->update([
+ 'amount_paid' => $totalPaid,
+ 'amount_due' => $this->invoice->grand_total - $totalPaid,
+ ]);
 
-            if ($this->invoice->amount_due <= 0) {
-                $this->invoice->update(['status' => Invoice::STATUS_PAID]);
-                $this->invoice->deductInventory();
-            }
-        });
+ if ($this->invoice->amount_due <= 0) {
+ $this->invoice->update(['status' => Invoice::STATUS_PAID]);
+ $this->invoice->deductInventory();
+ }
+ });
 
-        $this->payment_amount = '';
-        $this->payment_notes = '';
-        $this->invoice->load('payments');
-        session()->flash('message', __('Payment recorded and Cash Book entry created.'));
-    }
+ $this->payment_amount = '';
+ $this->payment_notes = '';
+ $this->invoice->load('payments');
+ session()->flash('message', __('Payment recorded and Cash Book entry created.'));
+ }
 
-    public function deletePayment(int $paymentId): void
-    {
-        $payment = $this->invoice->payments()->findOrFail($paymentId);
-        $payment->delete();
+ public function deletePayment(int $paymentId): void
+ {
+ $payment = $this->invoice->payments()->findOrFail($paymentId);
+ $payment->delete();
 
-        $totalPaid = $this->invoice->payments->sum('amount');
-        $this->invoice->update([
-            'amount_paid' => $totalPaid,
-            'amount_due' => $this->invoice->grand_total - $totalPaid,
-        ]);
+ $totalPaid = $this->invoice->payments->sum('amount');
+ $this->invoice->update([
+ 'amount_paid' => $totalPaid,
+ 'amount_due' => $this->invoice->grand_total - $totalPaid,
+ ]);
 
-        if ($totalPaid < $this->invoice->grand_total) {
-            $this->invoice->update(['status' => Invoice::STATUS_SENT]);
-        }
+ if ($totalPaid < $this->invoice->grand_total) {
+ $this->invoice->update(['status' => Invoice::STATUS_SENT]);
+ }
 
-        $this->invoice->load('payments');
-        session()->flash('message', 'Payment deleted successfully.');
-    }
+ $this->invoice->load('payments');
+ session()->flash('message', 'Payment deleted successfully.');
+ }
 
-    private function getDefaultEmailSubject(string $lang): string
-    {
-        $subjects = [
-            'en' => 'Invoice {invoice_number} from {business_name}',
-            'de' => 'Ihre Rechnung {invoice_number} von {business_name}',
-            'fr' => 'Votre facture {invoice_number} de {business_name}',
-            'es' => 'Su factura {invoice_number} de {business_name}',
-            'ar' => 'فاتورة {invoice_number} من {business_name}',
-            'nl' => 'Uw factuur {invoice_number} van {business_name}',
-            'pl' => 'Twoja faktura {invoice_number} od {business_name}',
-            'it' => 'La tua fattura {invoice_number} da {business_name}',
-            'hi' => '{business_name} से इनवॉइस {invoice_number}',
-            'zh' => '来自 {business_name} 的发票 {invoice_number}',
-        ];
-        return $subjects[$lang] ?? $subjects['en'];
-    }
+ private function getDefaultEmailSubject(string $lang): string
+ {
+ $subjects = [
+ 'en' => 'Invoice {invoice_number} from {business_name}',
+ 'de' => 'Ihre Rechnung {invoice_number} von {business_name}',
+ 'fr' => 'Votre facture {invoice_number} de {business_name}',
+ 'es' => 'Su factura {invoice_number} de {business_name}',
+ 'ar' => 'فاتورة {invoice_number} من {business_name}',
+ 'nl' => 'Uw factuur {invoice_number} van {business_name}',
+ 'pl' => 'Twoja faktura {invoice_number} od {business_name}',
+ 'it' => 'La tua fattura {invoice_number} da {business_name}',
+ 'hi' => '{business_name} से इनवॉइस {invoice_number}',
+ 'zh' => '来自 {business_name} 的发票 {invoice_number}',
+ ];
+ return $subjects[$lang] ?? $subjects['en'];
+ }
 
-    private function getDefaultEmailTemplate(string $lang): string
-    {
-        $templates = [
-            'en' => "Hello {client_name},\n\nHere is your new invoice {invoice_number}.\n\nThe outstanding amount of {amount_due} is due by {due_date}.\n\nYou can view and download your invoice online here:\n{public_link}\n\nThank you for your business!\n\nBest regards,\n{business_name}",
+ private function getDefaultEmailTemplate(string $lang): string
+ {
+ $templates = [
+ 'en' => "Hello {client_name},\n\nHere is your new invoice {invoice_number}.\n\nThe outstanding amount of {amount_due} is due by {due_date}.\n\nYou can view and download your invoice online here:\n{public_link}\n\nThank you for your business!\n\nBest regards,\n{business_name}",
 
-            'de' => "Hallo {client_name},\n\nanbei erhalten Sie Ihre neue Rechnung {invoice_number}.\n\nDer offene Betrag in Höhe von {amount_due} ist bis zum {due_date} fällig.\n\nSie können die Rechnung auch online einsehen und herunterladen:\n{public_link}\n\nVielen Dank für Ihr Vertrauen!\n\nMit freundlichen Grüßen,\n{business_name}",
+ 'de' => "Hallo {client_name},\n\nanbei erhalten Sie Ihre neue Rechnung {invoice_number}.\n\nDer offene Betrag in Höhe von {amount_due} ist bis zum {due_date} fällig.\n\nSie können die Rechnung auch online einsehen und herunterladen:\n{public_link}\n\nVielen Dank für Ihr Vertrauen!\n\nMit freundlichen Grüßen,\n{business_name}",
 
-            'fr' => "Bonjour {client_name},\n\nVeuillez trouver ci-joint votre nouvelle facture {invoice_number}.\n\nLe montant de {amount_due} est dû pour le {due_date}.\n\nVous pouvez consulter et télécharger votre facture en ligne ici :\n{public_link}\n\nMerci pour votre confiance !\n\nCordialement,\n{business_name}",
+ 'fr' => "Bonjour {client_name},\n\nVeuillez trouver ci-joint votre nouvelle facture {invoice_number}.\n\nLe montant de {amount_due} est dû pour le {due_date}.\n\nVous pouvez consulter et télécharger votre facture en ligne ici :\n{public_link}\n\nMerci pour votre confiance !\n\nCordialement,\n{business_name}",
 
-            'es' => "Hola {client_name},\n\nAdjunto encontrará su nueva factura {invoice_number}.\n\nEl monto pendiente de {amount_due} vence el {due_date}.\n\nPuede ver y descargar su factura en línea aquí:\n{public_link}\n\n¡Gracias por hacer negocios con nosotros!\n\nAtentamente,\n{business_name}",
+ 'es' => "Hola {client_name},\n\nAdjunto encontrará su nueva factura {invoice_number}.\n\nEl monto pendiente de {amount_due} vence el {due_date}.\n\nPuede ver y descargar su factura en línea aquí:\n{public_link}\n\n¡Gracias por hacer negocios con nosotros!\n\nAtentamente,\n{business_name}",
 
-            'ar' => "مرحبًا {client_name}،\n\nإليك فاتورتك الجديدة {invoice_number}.\n\nالمبلغ المستحق {amount_due} مستحق الدفع بحلول {due_date}.\n\nيمكنك عرض وتنزيل فاتورتك عبر الإنترنت هنا:\n{public_link}\n\nشكرًا لتعاملك معنا!\n\nمع أطيب التحيات،\n{business_name}",
+ 'ar' => "مرحبًا {client_name}،\n\nإليك فاتورتك الجديدة {invoice_number}.\n\nالمبلغ المستحق {amount_due} مستحق الدفع بحلول {due_date}.\n\nيمكنك عرض وتنزيل فاتورتك عبر الإنترنت هنا:\n{public_link}\n\nشكرًا لتعاملك معنا!\n\nمع أطيب التحيات،\n{business_name}",
 
-            'nl' => "Hallo {client_name},\n\nHierbij ontvangt u uw nieuwe factuur {invoice_number}.\n\nHet openstaande bedrag van {amount_due} dient betaald te worden voor {due_date}.\n\nU kunt uw factuur hier online bekijken en downloaden:\n{public_link}\n\nBedankt voor uw vertrouwen!\n\nMet vriendelijke groet,\n{business_name}",
+ 'nl' => "Hallo {client_name},\n\nHierbij ontvangt u uw nieuwe factuur {invoice_number}.\n\nHet openstaande bedrag van {amount_due} dient betaald te worden voor {due_date}.\n\nU kunt uw factuur hier online bekijken en downloaden:\n{public_link}\n\nBedankt voor uw vertrouwen!\n\nMet vriendelijke groet,\n{business_name}",
 
-            'pl' => "Dzień dobry {client_name},\n\nW załączniku przesyłamy nową fakturę {invoice_number}.\n\nKwota do zapłaty w wysokości {amount_due} jest wymagalna do {due_date}.\n\nFakturę można również sprawdzić i pobrać online tutaj:\n{public_link}\n\nDziękujemy za współpracę!\n\nZ poważaniem,\n{business_name}",
+ 'pl' => "Dzień dobry {client_name},\n\nW załączniku przesyłamy nową fakturę {invoice_number}.\n\nKwota do zapłaty w wysokości {amount_due} jest wymagalna do {due_date}.\n\nFakturę można również sprawdzić i pobrać online tutaj:\n{public_link}\n\nDziękujemy za współpracę!\n\nZ poważaniem,\n{business_name}",
 
-            'it' => "Gentile {client_name},\n\nIn allegato trovate la vostra nuova fattura {invoice_number}.\n\nL'importo in sospeso di {amount_due} scade il {due_date}.\n\nPotete visualizzare e scaricare la fattura online qui:\n{public_link}\n\nGrazie per aver scelto i nostri servizi!\n\nCordiali saluti,\n{business_name}",
+ 'it' => "Gentile {client_name},\n\nIn allegato trovate la vostra nuova fattura {invoice_number}.\n\nL'importo in sospeso di {amount_due} scade il {due_date}.\n\nPotete visualizzare e scaricare la fattura online qui:\n{public_link}\n\nGrazie per aver scelto i nostri servizi!\n\nCordiali saluti,\n{business_name}",
 
-            'hi' => "नमस्ते {client_name},\n\nयहाँ आपका नया इनवॉइस {invoice_number} है।\n\n{amount_due} की बकाया राशि {due_date} तक देय है।\n\nआप यहाँ अपना इनवॉइस ऑनलाइन देख और डाउनलोड कर सकते हैं:\n{public_link}\n\nआपके व्यवसाय के लिए धन्यवाद!\n\nसादर,\n{business_name}",
+ 'hi' => "नमस्ते {client_name},\n\nयहाँ आपका नया इनवॉइस {invoice_number} है।\n\n{amount_due} की बकाया राशि {due_date} तक देय है।\n\nआप यहाँ अपना इनवॉइस ऑनलाइन देख और डाउनलोड कर सकते हैं:\n{public_link}\n\nआपके व्यवसाय के लिए धन्यवाद!\n\nसादर,\n{business_name}",
 
-            'zh' => "您好 {client_name}，\n\n这是您的新发票 {invoice_number}。\n\n未结金额 {amount_due} 需要在 {due_date} 之前支付。\n\n您可以在此处在线查看和下载您的发票：\n{public_link}\n\n感谢您对我们业务的支持！\n\n此致，\n{business_name}",
-        ];
-        return $templates[$lang] ?? $templates['en'];
-    }
+ 'zh' => "您好 {client_name}，\n\n这是您的新发票 {invoice_number}。\n\n未结金额 {amount_due} 需要在 {due_date} 之前支付。\n\n您可以在此处在线查看和下载您的发票：\n{public_link}\n\n感谢您对我们业务的支持！\n\n此致，\n{business_name}",
+ ];
+ return $templates[$lang] ?? $templates['en'];
+ }
 
-    public function render()
-    {
-        return view('livewire.invoices.show');
-    }
+ public function render()
+ {
+ return view('livewire.invoices.show');
+ }
 }

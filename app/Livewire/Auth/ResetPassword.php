@@ -9,51 +9,51 @@ use Livewire\Component;
 
 class ResetPassword extends Component
 {
-    public string $token = '';
-    public string $email = '';
-    public string $password = '';
-    public string $password_confirmation = '';
-    public string $status = '';
+ public string $token = '';
+ public string $email = '';
+ public string $password = '';
+ public string $password_confirmation = '';
+ public string $status = '';
 
-    public function mount(string $token)
-    {
-        $this->token = $token;
-        $this->email = request()->query('email', '');
-    }
+ public function mount(string $token)
+ {
+ $this->token = $token;
+ $this->email = request()->query('email', '');
+ }
 
-    #[\Livewire\Attributes\Layout('layouts.guest', ['title' => 'Reset Password'])]
-    public function render()
-    {
-        return view('livewire.auth.reset-password');
-    }
+ #[\Livewire\Attributes\Layout('layouts.guest', ['title' => 'Reset Password'])]
+ public function render()
+ {
+ return view('livewire.auth.reset-password');
+ }
 
-    public function resetPassword()
-    {
-        $this->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
-        ]);
+ public function resetPassword()
+ {
+ $this->validate([
+ 'token' => 'required',
+ 'email' => 'required|email',
+ 'password' => 'required|min:8|confirmed',
+ ]);
 
-        $status = Password::broker()->reset(
-            [
-                'email' => $this->email,
-                'password' => $this->password,
-                'password_confirmation' => $this->password_confirmation,
-                'token' => $this->token,
-            ],
-            function ($user, $password) {
-                $user->password = Hash::make($password);
-                $user->setRememberToken(Str::random(60));
-                $user->save();
-            }
-        );
+ $status = Password::broker()->reset(
+ [
+ 'email' => $this->email,
+ 'password' => $this->password,
+ 'password_confirmation' => $this->password_confirmation,
+ 'token' => $this->token,
+ ],
+ function ($user, $password) {
+ $user->password = Hash::make($password);
+ $user->setRememberToken(Str::random(60));
+ $user->save();
+ }
+ );
 
-        if ($status === Password::PASSWORD_RESET) {
-            $this->status = __($status);
-            return redirect()->route('login')->with('message', __($status));
-        } else {
-            $this->addError('email', __($status));
-        }
-    }
+ if ($status === Password::PASSWORD_RESET) {
+ $this->status = __($status);
+ return redirect()->route('login')->with('message', __($status));
+ } else {
+ $this->addError('email', __($status));
+ }
+ }
 }

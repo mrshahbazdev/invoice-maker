@@ -9,72 +9,72 @@ use App\Models\User;
 
 class TwoFactorChallenge extends Component
 {
-    public string $code = '';
-    public string $recovery_code = '';
-    public bool $recovery = false;
+ public string $code = '';
+ public string $recovery_code = '';
+ public bool $recovery = false;
 
-    public function mount()
-    {
-        if (!session()->has('login.id')) {
-            return redirect()->route('login');
-        }
-    }
+ public function mount()
+ {
+ if (!session()->has('login.id')) {
+ return redirect()->route('login');
+ }
+ }
 
-    public function toggleRecovery()
-    {
-        $this->recovery = !$this->recovery;
-        $this->code = '';
-        $this->recovery_code = '';
-    }
+ public function toggleRecovery()
+ {
+ $this->recovery = !$this->recovery;
+ $this->code = '';
+ $this->recovery_code = '';
+ }
 
-    public function verify()
-    {
-        $userId = session('login.id');
-        $user = User::find($userId);
+ public function verify()
+ {
+ $userId = session('login.id');
+ $user = User::find($userId);
 
-        if (!$user) {
-            return redirect()->route('login');
-        }
+ if (!$user) {
+ return redirect()->route('login');
+ }
 
-        if ($this->recovery) {
-            $this->validate(['recovery_code' => 'required|string']);
+ if ($this->recovery) {
+ $this->validate(['recovery_code' => 'required|string']);
 
-            $recoveryCodes = $user->two_factor_recovery_codes ?? [];
-            if (!in_array($this->recovery_code, $recoveryCodes)) {
-                $this->addError('recovery_code', __('The provided recovery code is invalid.'));
-                return;
-            }
+ $recoveryCodes = $user->two_factor_recovery_codes ?? [];
+ if (!in_array($this->recovery_code, $recoveryCodes)) {
+ $this->addError('recovery_code', __('The provided recovery code is invalid.'));
+ return;
+ }
 
-            // Remove used recovery code
-            $user->two_factor_recovery_codes = array_values(array_diff($recoveryCodes, [$this->recovery_code]));
-            $user->save();
+ // Remove used recovery code
+ $user->two_factor_recovery_codes = array_values(array_diff($recoveryCodes, [$this->recovery_code]));
+ $user->save();
 
-        } else {
-            $this->validate(['code' => 'required|string']);
+ } else {
+ $this->validate(['code' => 'required|string']);
 
-            $google2fa = new Google2FA();
-            $valid = $google2fa->verifyKey($user->two_factor_secret, $this->code);
+ $google2fa = new Google2FA();
+ $valid = $google2fa->verifyKey($user->two_factor_secret, $this->code);
 
-            if (!$valid) {
-                $this->addError('code', __('The provided two-factor authentication code is invalid.'));
-                return;
-            }
-        }
+ if (!$valid) {
+ $this->addError('code', __('The provided two-factor authentication code is invalid.'));
+ return;
+ }
+ }
 
-        $remember = session('login.remember', false);
-        Auth::login($user, $remember);
-        session()->forget(['login.id', 'login.remember']);
-        session()->regenerate();
+ $remember = session('login.remember', false);
+ Auth::login($user, $remember);
+ session()->forget(['login.id', 'login.remember']);
+ session()->regenerate();
 
-        if (Auth::user()->role === 'client') {
-            $this->redirect(route('client.dashboard'), navigate: true);
-        } else {
-            $this->redirect(route('dashboard'), navigate: true);
-        }
-    }
+ if (Auth::user()->role === 'client') {
+ $this->redirect(route('client.dashboard'), navigate: true);
+ } else {
+ $this->redirect(route('dashboard'), navigate: true);
+ }
+ }
 
-    public function render()
-    {
-        return view('livewire.auth.two-factor-challenge')->layout('layouts.guest');
-    }
+ public function render()
+ {
+ return view('livewire.auth.two-factor-challenge')->layout('layouts.guest');
+ }
 }
