@@ -88,11 +88,17 @@ class Show extends Component
     {
         $this->validate([
             'theme_id' => 'nullable|exists:themes,id',
+            'page_bg_color_id' => 'nullable|exists:themes,id',
+            'card_bg_color_id' => 'nullable|exists:themes,id',
+            'text_color_id' => 'nullable|exists:themes,id',
         ]);
 
         $business = Auth::user()->business;
         if ($business) {
             $business->theme_id = $this->theme_id;
+            $business->page_bg_color_id = $this->page_bg_color_id;
+            $business->card_bg_color_id = $this->card_bg_color_id;
+            $business->text_color_id = $this->text_color_id;
             $business->save();
         }
 
