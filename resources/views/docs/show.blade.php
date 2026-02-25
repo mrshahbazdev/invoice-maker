@@ -28,10 +28,14 @@
                             </h3>
                         </div>
                         <ul class="divide-y divide-gray-100 dark:divide-gray-700/50">
-                            @foreach($sidebarArticles as $item)
+                            @foreach($sidebarArticles as $index => $item)
                                 <li>
                                     <a href="{{ route('docs.show', ['lang' => $currentLang, 'slug' => $item['slug']]) }}"
-                                        class="block p-4 text-sm {{ $item['isActive'] ? 'font-bold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/10' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50' }}">
+                                        class="flex items-center p-4 text-sm {{ $item['isActive'] ? 'font-bold text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/10' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50' }}">
+                                        <span
+                                            class="mr-3 flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-xs font-semibold {{ $item['isActive'] ? 'bg-brand-200 text-brand-700 dark:bg-brand-800 dark:text-brand-200' : 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-400' }}">
+                                            {{ $index + 1 }}
+                                        </span>
                                         {{ $item['title'] }}
                                     </a>
                                 </li>

@@ -39,6 +39,10 @@
                     </div>
 
                     <div class="relative flex-grow">
+                        <div
+                            class="flex items-center mb-3 text-brand-600 dark:text-brand-400 font-bold text-xs tracking-widest uppercase">
+                            Step {{ $loop->iteration }}
+                        </div>
                         <h3
                             class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-4">
                             {{ $article['title'] }}

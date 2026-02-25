@@ -25,6 +25,23 @@ class DocumentationController
     ];
 
     /**
+     * Logical step-by-step ordering of the documentation guide.
+     */
+    protected $articleOrder = [
+        'getting-started',
+        'business-profile',
+        'team-management',
+        'products-inventory',
+        'client-management',
+        'estimates-quotes',
+        'invoicing-engine',
+        'expense-management',
+        'accounting-cashbook',
+        'client-portal-tickets',
+        'custom-templates',
+    ];
+
+    /**
      * Display a list of all documentation articles in the given language.
      * Uses English as a fallback if the language isn't present.
      */
@@ -71,6 +88,15 @@ class DocumentationController
                 ];
             }
         }
+
+        // Sort dynamically based on our guide array
+        usort($articles, function ($a, $b) {
+            $posA = array_search($a['slug'], $this->articleOrder);
+            $posB = array_search($b['slug'], $this->articleOrder);
+            $posA = $posA !== false ? $posA : 999;
+            $posB = $posB !== false ? $posB : 999;
+            return $posA <=> $posB;
+        });
 
         return view('docs.index', [
             'articles' => $articles,
@@ -140,6 +166,15 @@ class DocumentationController
                 }
             }
         }
+
+        // Sort dynamically based on our guide array
+        usort($sidebarArticles, function ($a, $b) {
+            $posA = array_search($a['slug'], $this->articleOrder);
+            $posB = array_search($b['slug'], $this->articleOrder);
+            $posA = $posA !== false ? $posA : 999;
+            $posB = $posB !== false ? $posB : 999;
+            return $posA <=> $posB;
+        });
 
         return view('docs.show', [
             'htmlContent' => $htmlContent,
