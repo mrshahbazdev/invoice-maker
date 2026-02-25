@@ -231,7 +231,17 @@
                                     ['name' => __('Midnight Dark'), 'brand' => '#6366f1', 'page' => '#030712', 'card' => '#111827', 'text' => '#f9fafb'],
                                     ['name' => __('Hacker Green'), 'brand' => '#10b981', 'page' => '#052e16', 'card' => '#064e3b', 'text' => '#dcfce7'],
                                     ['name' => __('Ocean Calm'), 'brand' => '#0ea5e9', 'page' => '#f0f9ff', 'card' => '#e0f2fe', 'text' => '#0c4a6e'],
-                                    ['name' => __('Elegant Sepia'), 'brand' => '#b45309', 'page' => '#fefce8', 'card' => '#ffffff', 'text' => '#451a03'],
+                                    ['name' => __('Elegant Sepia'), 'brand' => '#b45309', 'page' => '#fefce8', 'card' => '#fdf8e8', 'text' => '#451a03'],
+                                    ['name' => __('Ruby Sunset'), 'brand' => '#e11d48', 'page' => '#fff1f2', 'card' => '#ffe4e6', 'text' => '#881337'],
+                                    ['name' => __('Deep Purple'), 'brand' => '#9333ea', 'page' => '#f3e8ff', 'card' => '#faf5ff', 'text' => '#3b0764'],
+                                    ['name' => __('Cyber Neon'), 'brand' => '#f0abfc', 'page' => '#0f172a', 'card' => '#1e293b', 'text' => '#e2e8f0'],
+                                    ['name' => __('Desert Sand'), 'brand' => '#d97706', 'page' => '#fffbeb', 'card' => '#fef3c7', 'text' => '#78350f'],
+                                    ['name' => __('Mint Fresh'), 'brand' => '#14b8a6', 'page' => '#f0fdfa', 'card' => '#ccfbf1', 'text' => '#134e4a'],
+                                    ['name' => __('Slate Minimal'), 'brand' => '#475569', 'page' => '#f8fafc', 'card' => '#f1f5f9', 'text' => '#0f172a'],
+                                    ['name' => __('Rose Gold'), 'brand' => '#db2777', 'page' => '#fdf2f8', 'card' => '#fce7f3', 'text' => '#831843'],
+                                    ['name' => __('Arctic Ice'), 'brand' => '#06b6d4', 'page' => '#ecfeff', 'card' => '#cffafe', 'text' => '#164e63'],
+                                    ['name' => __('Vampire Red'), 'brand' => '#dc2626', 'page' => '#27272a', 'card' => '#18181b', 'text' => '#fecaca'],
+                                    ['name' => __('Coffee Shop'), 'brand' => '#84cc16', 'page' => '#f7fee7', 'card' => '#ecfccb', 'text' => '#3f6212'],
                                 ];
                             @endphp
                             @foreach($presets as $preset)
@@ -254,6 +264,39 @@
                                         class="text-[10px] text-gray-500 mt-2 font-medium">{{ __('Click to apply preset') }}</span>
                                 </button>
                             @endforeach
+                        </div>
+
+                        <!-- AI Theme Generator -->
+                        <div class="mt-8 bg-brand-50/50 p-4 sm:p-6 rounded-lg border border-brand-100 relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 opacity-5 pointer-events-none">
+                                <svg class="w-32 h-32 text-brand-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                            </div>
+                            
+                            <h4 class="text-sm font-bold text-txmain flex items-center gap-2 mb-2 relative z-10">
+                                <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                                {{ __('AI Theme Generator') }}
+                            </h4>
+                            <p class="text-xs text-gray-600 mb-4 relative z-10">{{ __('Describe the vibe or colors you want, and AI will build a custom theme for you in seconds.') }}</p>
+                            
+                            <div class="flex flex-col sm:flex-row gap-3 items-start relative z-10">
+                                <div class="flex-1 w-full">
+                                    <input type="text" wire:model="aiThemePrompt" placeholder="e.g. A futuristic neon cyberpunk theme with pinks and dark purple" class="block w-full border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm text-sm py-2 px-3 bg-white" />
+                                    @error('aiThemePrompt') <span class="text-red-500 text-xs mt-1 block font-medium">{{ $message }}</span> @enderror
+                                </div>
+                                <button type="button" wire:click="generateAiTheme" class="bg-brand-600 text-white px-5 py-2 rounded-md hover:bg-brand-700 text-sm font-bold transition-colors flex items-center shadow-md disabled:opacity-50 whitespace-nowrap" wire:loading.attr="disabled">
+                                    <span wire:loading.remove wire:target="generateAiTheme">{{ __('Generate Magic') }} 🪄</span>
+                                    <span wire:loading wire:target="generateAiTheme" class="flex items-center">
+                                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        {{ __('Generating...') }}
+                                    </span>
+                                </button>
+                            </div>
+                            @if (session()->has('theme_error'))
+                                <p class="text-sm font-bold text-red-600 mt-3 relative z-10 bg-red-50 p-2 rounded border border-red-100">{{ session('theme_error') }}</p>
+                            @endif
                         </div>
                     </div>
 

@@ -40,6 +40,9 @@ class Show extends Component
     public ?int $card_bg_color_id = null;
     public ?int $text_color_id = null;
 
+    // AI Theme Generator
+    public string $aiThemePrompt = '';
+
     public function mount()
     {
         $user = Auth::user();
@@ -123,6 +126,35 @@ class Show extends Component
         $business->save();
 
         session()->flash('theme_message', __('Theme combination applied successfully.'));
+    }
+
+    public function generateAiTheme()
+    {
+        $this->validate([
+            'aiThemePrompt' => 'required|string|max:200',
+        ]);
+
+        try {
+            $ai = new \App\Services\AiService();
+            $systemPrompt = "You are an expert UI/UX designer. The user wants a color theme based on this prompt: '{$this->aiThemePrompt}'. \nGenerate a beautiful, cohesive color palette. Return ONLY valid JSON with no backticks, no markdown, and no additional text. The JSON must contain these exact keys: 'brand' (primary interacting color), 'page' (main background color), 'card' (surface/box background color), 'text' (primary text color). Ensure great contrast between background and text for readability. Use standard hex codes starting with #.";
+
+            $response = $ai->generateText($systemPrompt);
+
+            $cleaned = str_replace(['```json', '```'], '', $response);
+            $cleaned = trim($cleaned);
+
+            $data = json_decode($cleaned, true);
+
+            if (is_array($data) && isset($data['brand'], $data['page'], $data['card'], $data['text'])) {
+                $this->applyPreset($data['brand'], $data['page'], $data['card'], $data['text']);
+                $this->aiThemePrompt = '';
+                session()->flash('theme_message', __('AI Theme combination generated and applied successfully!'));
+            } else {
+                throw new \Exception("AI returned invalid structure.");
+            }
+        } catch (\Exception $e) {
+            session()->flash('theme_error', __('Failed to generate AI theme: ') . $e->getMessage());
+        }
     }
 
     public function updatePassword()
