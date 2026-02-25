@@ -228,6 +228,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                             @php
                                 $presets = [
+                                    ['name' => __('System Default'), 'brand' => '#6366f1', 'page' => '#f3f4f6', 'card' => '#ffffff', 'text' => '#1f2937'],
                                     ['name' => __('Midnight Dark'), 'brand' => '#6366f1', 'page' => '#030712', 'card' => '#111827', 'text' => '#f9fafb'],
                                     ['name' => __('Hacker Green'), 'brand' => '#10b981', 'page' => '#052e16', 'card' => '#064e3b', 'text' => '#dcfce7'],
                                     ['name' => __('Ocean Calm'), 'brand' => '#0ea5e9', 'page' => '#f0f9ff', 'card' => '#e0f2fe', 'text' => '#0c4a6e'],

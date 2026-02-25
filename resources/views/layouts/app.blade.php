@@ -32,8 +32,7 @@
     @endif
 </head>
 
-<body class="bg-brand-600 text-txmain antialiased font-sans flex flex-col min-h-screen"
-    x-data="{ mobileMenuOpen: false }">
+<body class="bg-page text-txmain antialiased font-sans flex flex-col min-h-screen" x-data="{ mobileMenuOpen: false }">
 
     @if(session()->has('impersonated_by'))
         <div
@@ -64,7 +63,7 @@
         <div class="flex-1 flex flex-col @if(auth()->check()) lg:pl-64 @endif">
             @if(auth()->check())
                 <header
-                    class="bg-card/70 backdrop-blur-md border-b border-gray-200/50 px-4 sm:px-6 py-4 sticky top-0 z-40 transition-all duration-300">
+                    class="bg-card border-b border-gray-200/50 px-4 sm:px-6 py-4 sticky top-0 z-40 transition-all duration-300">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center min-w-0">
                             <!-- Mobile menu button -->
@@ -77,7 +76,7 @@
                                     </svg>
                                 </button>
                             @endif
-                            <h1 class="text-lg sm:text-2xl font-bold text-brand-600 truncate pr-2">
+                            <h1 class="text-lg sm:text-2xl font-bold text-txmain truncate pr-2">
                                 {{ $title ?? __('Dashboard') }}
                             </h1>
                         </div>
