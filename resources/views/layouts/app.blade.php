@@ -4,7 +4,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}</title>
+    <title>
+        @yield('title', $title ?? \App\Models\Setting::get('seo.meta_title', \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker'))))
+    </title>
+    @if(isset($metaDescription))
+        <meta name="description" content="{{ $metaDescription }}">
+    @else
+        <meta name="description"
+            content="{{ \App\Models\Setting::get('seo.meta_description', 'Invoice and Billing software') }}">
+    @endif
 
     @if($favicon = \App\Models\Setting::get('site.favicon'))
         <link rel="icon" href="{{ Storage::url($favicon) }}">
