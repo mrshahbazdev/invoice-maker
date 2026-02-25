@@ -47,6 +47,8 @@ class Business extends Model
         'text_color_id',
         'stripe_public_key',
         'stripe_secret_key',
+        'enable_automated_reminders',
+        'reminder_days_interval',
     ];
 
     protected $casts = [
