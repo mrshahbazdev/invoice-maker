@@ -1,44 +1,4 @@
-<?php
-
-namespace App\Livewire\Admin\Settings;
-
-use Livewire\Component;
-use App\Models\Setting;
-
-class Ai extends Component
-{
-    public $openai_api_key;
-    public $anthropic_api_key;
-    public $default_ai_provider;
-
-    public $invoice_description_prompt;
-    public $business_insights_prompt;
-
-    public function mount()
-    {
-        $this->openai_api_key = Setting::get('ai.openai_api_key');
-        $this->anthropic_api_key = Setting::get('ai.anthropic_api_key');
-        $this->default_ai_provider = Setting::get('ai.default_provider', 'openai');
-
-        $this->invoice_description_prompt = Setting::get('ai.invoice_description_prompt', 'Generate a professional, polite, and concise description for this invoice based on the following items:');
-        $this->business_insights_prompt = Setting::get('ai.business_insights_prompt', 'Analyze the following cash book entries and provide a brief summary of cash flow health, highlighting any potential areas for cost savings.');
-    }
-
-    public function save()
-    {
-        Setting::set('ai.openai_api_key', $this->openai_api_key);
-        Setting::set('ai.anthropic_api_key', $this->anthropic_api_key);
-        Setting::set('ai.default_provider', $this->default_ai_provider);
-
-        Setting::set('ai.invoice_description_prompt', $this->invoice_description_prompt);
-        Setting::set('ai.business_insights_prompt', $this->business_insights_prompt);
-
-        session()->flash('message', 'AI configuration has been successfully updated.');
-    }
-
-    public function render()
-    {
-        return view('livewire.admin.settings.ai')
-            ->layout('layouts.admin', ['title' => 'AI Configuration']);
-    }
+<?php namespace App\Livewire\Admin\Settings; use Livewire\Component;
+use App\Models\Setting; class Ai extends Component
+{ public $openai_api_key; public $anthropic_api_key; public $default_ai_provider; public $invoice_description_prompt; public $business_insights_prompt; public function mount() { $this->openai_api_key = Setting::get('ai.openai_api_key'); $this->anthropic_api_key = Setting::get('ai.anthropic_api_key'); $this->default_ai_provider = Setting::get('ai.default_provider', 'openai'); $this->invoice_description_prompt = Setting::get('ai.invoice_description_prompt', 'Generate a professional, polite, and concise description for this invoice based on the following items:'); $this->business_insights_prompt = Setting::get('ai.business_insights_prompt', 'Analyze the following cash book entries and provide a brief summary of cash flow health, highlighting any potential areas for cost savings.'); } public function save() { Setting::set('ai.openai_api_key', $this->openai_api_key); Setting::set('ai.anthropic_api_key', $this->anthropic_api_key); Setting::set('ai.default_provider', $this->default_ai_provider); Setting::set('ai.invoice_description_prompt', $this->invoice_description_prompt); Setting::set('ai.business_insights_prompt', $this->business_insights_prompt); session()->flash('message', 'AI configuration has been successfully updated.'); } public function render() { return view('livewire.admin.settings.ai') ->layout('layouts.admin', ['title' => 'AI Configuration']); }
 }
