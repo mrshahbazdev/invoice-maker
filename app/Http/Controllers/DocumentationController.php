@@ -51,10 +51,13 @@ class DocumentationController
             abort(404);
         }
 
+        app()->setLocale($lang);
+
         $docsPath = resource_path("docs/{$lang}");
         if (!File::exists($docsPath)) {
             // Fallback to English if the translation folder doesn't exist yet
             $lang = 'en';
+            app()->setLocale($lang);
             $docsPath = resource_path("docs/en");
         }
 
@@ -114,6 +117,8 @@ class DocumentationController
             abort(404);
         }
 
+        app()->setLocale($lang);
+
         $filePath = resource_path("docs/{$lang}/{$slug}.md");
 
         if (!File::exists($filePath)) {
@@ -122,6 +127,7 @@ class DocumentationController
             if (File::exists($fallbackPath)) {
                 $filePath = $fallbackPath;
                 $lang = 'en'; // Indicate we are showing the fallback
+                app()->setLocale($lang);
             } else {
                 abort(404);
             }
