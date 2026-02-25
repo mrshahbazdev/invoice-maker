@@ -126,7 +126,7 @@
                             class="h-10 w-auto group-hover:scale-105 transition-transform">
                     @else
                         <div
-                            class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            class="w-10 h-10 bg-gradient-to-tr from-blue-600 to-brand-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -134,7 +134,7 @@
                             </svg>
                         </div>
                         <span
-                            class="ml-3 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                            class="ml-3 text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-brand-600">
                             {{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}
                         </span>
                     @endif
@@ -189,7 +189,7 @@
                 <div class="flex items-center space-x-4 ml-4 pl-4 border-l border-gray-200">
                     @auth
                         <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
-                            class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-200 transition-all transform hover:-translate-y-0.5">
+                            class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-brand-600 rounded-full hover:from-blue-700 hover:to-brand-700 shadow-lg shadow-blue-200 transition-all transform hover:-translate-y-0.5">
                             {{ __('Go to Dashboard') }}
                         </a>
                     @else
@@ -243,7 +243,7 @@
                         <img src="{{ Storage::url($logo) }}" alt="Logo" class="h-8 w-auto">
                     @else
                         <span
-                            class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+                            class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-brand-600">
                             {{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}
                         </span>
                     @endif
@@ -265,7 +265,7 @@
                 <div class="pt-6 border-t border-gray-100 space-y-4">
                     @auth
                         <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
-                            class="block w-full text-center px-6 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl">
+                            class="block w-full text-center px-6 py-4 text-lg font-bold text-white bg-gradient-to-r from-blue-600 to-brand-600 rounded-2xl shadow-xl">
                             {{ __('Go to Dashboard') }}
                         </a>
                     @else

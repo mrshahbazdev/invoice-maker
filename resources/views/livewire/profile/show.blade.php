@@ -24,7 +24,7 @@
                         <div>
                             <label class="block font-medium text-sm text-gray-700" for="name">{{ __('Name') }}</label>
                             <input wire:model="name" id="name" type="text"
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full"
                                 required autocomplete="name" />
                             @error('name') <span class="text-sm text-red-600 mt-2">{{ $message }}</span> @enderror
                         </div>
@@ -39,7 +39,7 @@
 
                         <div class="flex items-center gap-4">
                             <button type="submit"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 {{ __('Save') }}
                             </button>
 
@@ -68,7 +68,7 @@
                             <label class="block font-medium text-sm text-gray-700"
                                 for="current_password">{{ __('Current Password') }}</label>
                             <input wire:model="current_password" id="current_password" type="password"
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full"
                                 autocomplete="current-password" />
                             @error('current_password') <span class="text-sm text-red-600 mt-2">{{ $message }}</span>
                             @enderror
@@ -78,7 +78,7 @@
                             <label class="block font-medium text-sm text-gray-700"
                                 for="password">{{ __('New Password') }}</label>
                             <input wire:model="password" id="password" type="password"
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full"
                                 autocomplete="new-password" />
                             @error('password') <span class="text-sm text-red-600 mt-2">{{ $message }}</span> @enderror
                         </div>
@@ -87,7 +87,7 @@
                             <label class="block font-medium text-sm text-gray-700"
                                 for="password_confirmation">{{ __('Confirm Password') }}</label>
                             <input wire:model="password_confirmation" id="password_confirmation" type="password"
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full"
                                 autocomplete="new-password" />
                             @error('password_confirmation') <span
                             class="text-sm text-red-600 mt-2">{{ $message }}</span> @enderror
@@ -95,7 +95,7 @@
 
                         <div class="flex items-center gap-4">
                             <button type="submit"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 {{ __('Save') }}
                             </button>
 
@@ -131,7 +131,7 @@
                                 {{ __('You have not enabled two-factor authentication.') }}
                             </h3>
                             <button wire:click="enableTwoFactorAuthentication"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 {{ __('Enable') }}
                             </button>
                         @elseif($showingQrCode)
@@ -153,18 +153,18 @@
                                 <label class="block font-medium text-sm text-gray-700"
                                     for="setupCode">{{ __('Code') }}</label>
                                 <input wire:model="setupCode" id="setupCode" type="text"
-                                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
+                                    class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full"
                                     autofocus />
                                 @error('setupCode') <span class="text-sm text-red-600 mt-2">{{ $message }}</span> @enderror
                             </div>
 
                             <div class="mt-4 flex gap-4">
                                 <button wire:click="confirmTwoFactorAuthentication"
-                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                     {{ __('Confirm') }}
                                 </button>
                                 <button wire:click="disableTwoFactorAuthentication"
-                                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                    class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                     {{ __('Cancel') }}
                                 </button>
                             </div>
@@ -189,13 +189,13 @@
                             <div class="mt-5 flex gap-3">
                                 @if(!$showingRecoveryCodes)
                                     <button wire:click="showRecoveryCodes"
-                                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                                         {{ __('Show Recovery Codes') }}
                                     </button>
                                 @endif
                                 @if($showingRecoveryCodes)
                                     <button wire:click="regenerateRecoveryCodes"
-                                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
+                                        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150">
                                         {{ __('Regenerate Recovery Codes') }}
                                     </button>
                                 @endif
@@ -208,6 +208,91 @@
                             </div>
                         @endif
                     </div>
+                </section>
+            </div>
+
+            <!-- Theme Preferences Section -->
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <section class="max-w-xl">
+                    <header>
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('Theme Preferences') }}
+                        </h2>
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ __('Select a custom color palette for your account. This will change the primary color scheme of your dashboard.') }}
+                        </p>
+                    </header>
+
+                    <form wire:submit="updateThemeSettings" class="mt-6 space-y-6">
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700 mb-2">
+                                {{ __('Color Palette') }}
+                            </label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                <!-- Default (Null) Option -->
+                                <label
+                                    class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none {{ is_null($theme_id) ? 'border-brand-500 ring-2 ring-brand-500' : 'border-gray-300' }}">
+                                    <input type="radio" wire:model="theme_id" value="" class="sr-only">
+                                    <span class="flex flex-1">
+                                        <span class="flex flex-col">
+                                            <span
+                                                class="block text-sm font-medium text-gray-900">{{ __('System Default') }}</span>
+                                            <span class="mt-2 flex items-center space-x-2">
+                                                <span class="w-6 h-6 rounded-full border border-gray-200"
+                                                    style="background-color: #6366f1;"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                    @if(is_null($theme_id))
+                                        <svg class="h-5 w-5 text-brand-600 absolute right-4 top-4" viewBox="0 0 20 20"
+                                            fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    @endif
+                                </label>
+
+                                <!-- Available Themes -->
+                                @foreach($availableThemes as $theme)
+                                    <label
+                                        class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none {{ $theme_id === $theme->id ? 'border-brand-500 ring-2 ring-brand-500' : 'border-gray-300' }}">
+                                        <input type="radio" wire:model="theme_id" value="{{ $theme->id }}" class="sr-only">
+                                        <span class="flex flex-1">
+                                            <span class="flex flex-col">
+                                                <span
+                                                    class="block text-sm font-medium text-gray-900">{{ $theme->name }}</span>
+                                                <span class="mt-2 flex items-center space-x-2">
+                                                    <span class="w-6 h-6 rounded-full border border-gray-200"
+                                                        style="background-color: {{ $theme->primary_color }};"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        @if($theme_id === $theme->id)
+                                            <svg class="h-5 w-5 text-brand-600 absolute right-4 top-4" viewBox="0 0 20 20"
+                                                fill="currentColor" aria-hidden="true">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        @endif
+                                    </label>
+                                @endforeach
+                            </div>
+                            @error('theme_id') <span class="text-sm text-red-600 mt-2">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <button type="submit"
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                {{ __('Save Theme') }}
+                            </button>
+
+                            @if (session()->has('theme_message'))
+                                <p class="text-sm text-gray-600">{{ session('theme_message') }}</p>
+                            @endif
+                        </div>
+                    </form>
                 </section>
             </div>
 
@@ -229,7 +314,7 @@
                                 {{ __('Default AI Provider') }}
                             </label>
                             <select wire:model="default_ai_provider" id="default_ai_provider"
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full">
                                 <option value="openai">{{ __('OpenAI (ChatGPT)') }}</option>
                                 <option value="anthropic">{{ __('Anthropic (Claude)') }}</option>
                             </select>
@@ -242,7 +327,7 @@
                                 {{ __('OpenAI API Key') }}
                             </label>
                             <input wire:model="openai_api_key" id="openai_api_key" type="password" placeholder="sk-..."
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" />
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full" />
                             @error('openai_api_key') <span class="text-sm text-red-600 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
@@ -253,14 +338,14 @@
                             </label>
                             <input wire:model="anthropic_api_key" id="anthropic_api_key" type="password"
                                 placeholder="sk-ant-..."
-                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" />
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full" />
                             @error('anthropic_api_key') <span class="text-sm text-red-600 mt-2">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="flex items-center gap-4">
                             <button type="submit"
-                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                 {{ __('Save') }}
                             </button>
 

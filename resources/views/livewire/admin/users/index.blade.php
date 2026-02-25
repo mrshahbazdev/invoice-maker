@@ -9,7 +9,7 @@
                 </svg>
             </div>
             <input wire:model.live.debounce.300ms="search" type="text"
-                class="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-lg leading-5 bg-gray-900 text-gray-300 placeholder-gray-500 focus:outline-none focus:bg-gray-800 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
+                class="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-lg leading-5 bg-gray-900 text-gray-300 placeholder-gray-500 focus:outline-none focus:bg-gray-800 focus:ring-1 focus:ring-brand-500 focus:border-brand-500 sm:text-sm transition duration-150 ease-in-out"
                 placeholder="Search users by name or email...">
         </div>
     </div>
@@ -48,7 +48,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div
-                                        class="h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold uppercase shadow-inner">
+                                        class="h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-bold uppercase shadow-inner">
                                         {{ substr($user->name, 0, 1) }}
                                     </div>
                                     <div class="ml-4">
@@ -88,7 +88,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                                 @if(!$user->is_super_admin)
                                     <button wire:click="impersonate({{ $user->id }})"
-                                        class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                                        class="text-brand-400 hover:text-brand-300 transition-colors">
                                         Login As
                                     </button>
 

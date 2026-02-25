@@ -24,7 +24,7 @@
                 <img src="{{ Storage::url($logo) }}" alt="Logo" class="max-h-12 max-w-[80%] object-contain">
             @else
                 <span
-                    class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 tracking-tight">{{ \App\Models\Setting::get('site.name', config('app.name')) }}</span>
+                    class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-brand-600 tracking-tight">{{ \App\Models\Setting::get('site.name', config('app.name')) }}</span>
             @endif
         </div>
 
@@ -189,14 +189,14 @@
                         {{ auth()->user()->business->currency ?? 'USD' }}
                     </p>
                     <span
-                        class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-100/80 rounded-full border border-indigo-200">
+                        class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-700 bg-brand-100/80 rounded-full border border-brand-200">
                         {{ auth()->user()->business->plan ?? 'FREE' }}
                     </span>
                 </div>
                 @if((auth()->user()->business->plan ?? 'free') === 'free')
                     <div class="mt-3">
                         <button
-                            class="w-full py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
+                            class="w-full py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-blue-600 to-brand-600 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5">
                             {{ __('Upgrade to PRO') }} 🚀
                         </button>
                     </div>

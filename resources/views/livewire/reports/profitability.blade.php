@@ -146,22 +146,22 @@
         </div>
 
         <!-- Top Products -->
-        <div class="bg-indigo-50/50 rounded-2xl p-5 border border-indigo-100/50">
+        <div class="bg-brand-50/50 rounded-2xl p-5 border border-brand-100/50">
             <div class="flex items-center justify-between mb-4">
-                <h4 class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest">
+                <h4 class="text-[10px] font-bold text-brand-600 uppercase tracking-widest">
                     {{ __('Top Profit Drivers: Products') }}
                 </h4>
             </div>
             <div class="space-y-2">
                 @forelse($topProducts as $product)
                     <div
-                        class="bg-white px-4 py-2.5 rounded-xl flex items-center justify-between shadow-sm border border-indigo-50/50">
+                        class="bg-white px-4 py-2.5 rounded-xl flex items-center justify-between shadow-sm border border-brand-50/50">
                         <div class="flex items-center gap-3">
                             <span
-                                class="w-5 h-5 rounded bg-indigo-600 text-white text-[9px] flex items-center justify-center font-bold">{{ $loop->iteration }}</span>
+                                class="w-5 h-5 rounded bg-brand-600 text-white text-[9px] flex items-center justify-center font-bold">{{ $loop->iteration }}</span>
                             <span class="text-sm font-semibold text-gray-700">{{ $product['name'] }}</span>
                         </div>
-                        <span class="text-sm font-bold text-indigo-600">+
+                        <span class="text-sm font-bold text-brand-600">+
                             {{ number_format($product['difference'], 2, '.', ',') }} €</span>
                     </div>
                 @empty
@@ -266,7 +266,7 @@
                             <tr class="hover:bg-gray-50/50 transition-colors group">
                                 <td class="px-6 py-4">
                                     <span
-                                        class="text-sm font-bold text-gray-800 group-hover:text-indigo-600 transition-colors uppercase">{{ $product['name'] }}</span>
+                                        class="text-sm font-bold text-gray-800 group-hover:text-brand-600 transition-colors uppercase">{{ $product['name'] }}</span>
                                     <div class="text-[10px] text-gray-400 font-medium uppercase mt-0.5">
                                         {{ $product['sold'] }} {{ __('sold') }}</div>
                                 </td>

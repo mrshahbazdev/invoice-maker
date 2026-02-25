@@ -6,7 +6,7 @@
                 class="absolute -top-24 -left-24 w-96 h-96 bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob">
             </div>
             <div
-                class="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000">
+                class="absolute -bottom-24 -right-24 w-96 h-96 bg-brand-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000">
             </div>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -142,7 +142,7 @@
         <div
             class="mt-24 relative rounded-3xl overflow-hidden bg-gray-900 py-16 px-6 sm:px-12 lg:px-20 text-center shadow-2xl">
             <div class="absolute inset-0 z-0">
-                <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 to-gray-900 opacity-90"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-brand-900 to-gray-900 opacity-90"></div>
                 <div
                     class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-blue-500 mix-blend-multiply opacity-20 filter blur-3xl">
                 </div>

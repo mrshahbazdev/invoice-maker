@@ -28,7 +28,7 @@
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
                         <div
-                            class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-lg mr-3 shadow-md shadow-indigo-600/20">
+                            class="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white font-bold text-lg mr-3 shadow-md shadow-brand-600/20">
                             {{ substr(auth()->user()->name, 0, 1) }}
                         </div>
                         <div>
@@ -42,7 +42,7 @@
                 <!-- Right side -->
                 <div class="flex items-center space-x-3 sm:space-x-6">
                     <a href="{{ route('client.dashboard') }}"
-                        class="text-xs sm:text-sm font-medium {{ request()->routeIs('client.dashboard') ? 'text-indigo-600' : 'text-gray-500 hover:text-gray-900' }} transition-colors duration-150 flex items-center">
+                        class="text-xs sm:text-sm font-medium {{ request()->routeIs('client.dashboard') ? 'text-brand-600' : 'text-gray-500 hover:text-gray-900' }} transition-colors duration-150 flex items-center">
                         <svg class="w-4 h-4 mr-1 sm:mr-1.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -51,7 +51,7 @@
                         <span class="hidden sm:inline">Dashboard</span>
                     </a>
                     <a href="{{ route('client.settings') }}"
-                        class="text-xs sm:text-sm font-medium {{ request()->routeIs('client.settings') ? 'text-indigo-600' : 'text-gray-500 hover:text-gray-900' }} transition-colors duration-150 flex items-center">
+                        class="text-xs sm:text-sm font-medium {{ request()->routeIs('client.settings') ? 'text-brand-600' : 'text-gray-500 hover:text-gray-900' }} transition-colors duration-150 flex items-center">
                         <svg class="w-4 h-4 mr-1 sm:mr-1.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"

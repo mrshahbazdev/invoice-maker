@@ -41,6 +41,7 @@ class Business extends Model
         'smtp_from_name',
         'iban',
         'bic',
+        'theme_id',
     ];
 
     protected $casts = [
@@ -189,6 +190,11 @@ class Business extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function theme()
+    {
+        return $this->belongsTo(Theme::class);
     }
 
     public function users()

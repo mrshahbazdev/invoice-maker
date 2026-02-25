@@ -9,7 +9,7 @@
                 </svg>
             </div>
             <input wire:model.live.debounce.300ms="search" type="text"
-                class="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-lg leading-5 bg-gray-900 text-gray-300 placeholder-gray-500 focus:outline-none focus:bg-gray-800 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
+                class="block w-full pl-10 pr-3 py-2 border border-gray-700 rounded-lg leading-5 bg-gray-900 text-gray-300 placeholder-gray-500 focus:outline-none focus:bg-gray-800 focus:ring-1 focus:ring-brand-500 focus:border-brand-500 sm:text-sm transition duration-150 ease-in-out"
                 placeholder="Search businesses by name or email...">
         </div>
     </div>
@@ -100,7 +100,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
                                 <select wire:change="setPlan({{ $business->id }}, $event.target.value)"
-                                    class="bg-gray-900 text-gray-300 text-xs rounded border border-gray-700 focus:ring-indigo-500 focus:border-indigo-500 px-2 py-1">
+                                    class="bg-gray-900 text-gray-300 text-xs rounded border border-gray-700 focus:ring-brand-500 focus:border-brand-500 px-2 py-1">
                                     <option value="free" @if(strtolower($business->plan) === 'free' || !$business->plan)
                                     selected @endif>Free Plan</option>
                                     <option value="pro" @if(strtolower($business->plan) === 'pro') selected @endif>Pro Plan

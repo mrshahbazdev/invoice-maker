@@ -34,6 +34,9 @@ class Show extends Component
     public ?string $anthropic_api_key = '';
     public string $default_ai_provider = 'openai';
 
+    // Theme Configuration
+    public ?int $theme_id = null;
+
     public function mount()
     {
         $user = Auth::user();
@@ -42,6 +45,7 @@ class Show extends Component
         $this->openai_api_key = $user->openai_api_key;
         $this->anthropic_api_key = $user->anthropic_api_key;
         $this->default_ai_provider = $user->default_ai_provider ?? 'openai';
+        $this->theme_id = $user->business->theme_id ?? null;
     }
 
     public function updateProfileInformation()
@@ -72,6 +76,21 @@ class Show extends Component
         $user->save();
 
         session()->flash('ai_message', __('AI Configuration updated successfully.'));
+    }
+
+    public function updateThemeSettings()
+    {
+        $this->validate([
+            'theme_id' => 'nullable|exists:themes,id',
+        ]);
+
+        $business = Auth::user()->business;
+        if ($business) {
+            $business->theme_id = $this->theme_id;
+            $business->save();
+        }
+
+        session()->flash('theme_message', __('Theme preference updated successfully.'));
     }
 
     public function updatePassword()
@@ -182,6 +201,8 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.profile.show');
+        return view('livewire.profile.show', [
+            'availableThemes' => \App\Models\Theme::where('is_active', true)->orderBy('name')->get()
+        ]);
     }
 }

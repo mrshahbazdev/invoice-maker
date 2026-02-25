@@ -3,7 +3,7 @@
     <section class="mesh-gradient relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
         <!-- Floating decorative elements -->
         <div class="absolute top-1/4 -left-20 w-64 h-64 bg-blue-400/20 blur-[100px] rounded-full animate-float"></div>
-        <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-indigo-400/20 blur-[120px] rounded-full animate-float"
+        <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-brand-400/20 blur-[120px] rounded-full animate-float"
             style="animation-delay: 2s"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -20,7 +20,7 @@
                     </div>
                     <h1 class="text-6xl lg:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-gray-900">
                         {{ __('Invoicing') }}<br />
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-brand-600">
                             {{ __('Perfected.') }}
                         </span>
                     </h1>
@@ -29,7 +29,7 @@
                     </p>
                     <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
                         <a href="{{ route('register') }}"
-                            class="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-2xl shadow-2xl shadow-blue-500/20 hover:scale-105 transition-all text-center">
+                            class="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-blue-600 to-brand-600 text-white font-black rounded-2xl shadow-2xl shadow-blue-500/20 hover:scale-105 transition-all text-center">
                             {{ __('Start Free Trial') }}
                         </a>
                         <a href="#features"
@@ -42,7 +42,7 @@
                 <div class="lg:w-1/2 reveal">
                     <div class="relative group">
                         <div
-                            class="absolute -inset-10 bg-gradient-to-tr from-blue-400/20 to-indigo-400/20 blur-[80px] opacity-70 group-hover:opacity-100 transition-opacity">
+                            class="absolute -inset-10 bg-gradient-to-tr from-blue-400/20 to-brand-400/20 blur-[80px] opacity-70 group-hover:opacity-100 transition-opacity">
                         </div>
                         <img src="{{ asset('images/landing_hero_v2.png') }}" alt="{{ __('InvoiceMaker V2 Dashboard') }}"
                             class="w-full h-auto drop-shadow-2xl animate-float relative z-10 rounded-3xl">
@@ -165,7 +165,7 @@
                         </div>
                         <div class="flex items-start space-x-4">
                             <div
-                                class="w-10 h-10 bg-indigo-600/20 text-indigo-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                                class="w-10 h-10 bg-brand-600/20 text-brand-500 rounded-xl flex items-center justify-center flex-shrink-0">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -258,7 +258,7 @@
                 <div
                     class="reveal bg-white p-12 rounded-[3rem] border-2 border-blue-600 shadow-[0_40px_100px_-20px_rgba(37,99,235,0.2)] scale-110 z-10 relative flex flex-col items-center group">
                     <div
-                        class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-black px-6 py-2 rounded-full uppercase tracking-widest shadow-xl">
+                        class="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-brand-600 text-white text-[10px] font-black px-6 py-2 rounded-full uppercase tracking-widest shadow-xl">
                         {{ __('Most Popular') }}
                     </div>
                     <h3 class="text-xl font-bold mb-2 text-blue-600 uppercase tracking-widest text-xs">
@@ -291,7 +291,7 @@
                             </svg> {{ __('Priority Support') }}</li>
                     </ul>
                     <a href="{{ route('register') }}"
-                        class="w-full py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-2xl hover:scale-105 transition-all shadow-2xl shadow-blue-500/40 text-center">{{ __('Get Started Now') }}</a>
+                        class="w-full py-5 bg-gradient-to-r from-blue-600 to-brand-600 text-white font-black rounded-2xl hover:scale-105 transition-all shadow-2xl shadow-blue-500/40 text-center">{{ __('Get Started Now') }}</a>
                 </div>
                 <!-- Enterprise Plan -->
                 <div
@@ -304,17 +304,17 @@
                         <span class="text-gray-400 ml-2 font-bold">/{{ __('mo') }}</span>
                     </div>
                     <ul class="space-y-4 mb-12 text-gray-500 text-sm w-full font-medium">
-                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none"
+                        <li class="flex items-center"><svg class="w-5 h-5 text-brand-500 mr-3" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
                                     d="M5 13l4 4L19 7"></path>
                             </svg> {{ __('Advanced Analytics') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none"
+                        <li class="flex items-center"><svg class="w-5 h-5 text-brand-500 mr-3" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
                                     d="M5 13l4 4L19 7"></path>
                             </svg> {{ __('Dedicated Manager') }}</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-indigo-500 mr-3" fill="none"
+                        <li class="flex items-center"><svg class="w-5 h-5 text-brand-500 mr-3" fill="none"
                                 stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
                                     d="M5 13l4 4L19 7"></path>
@@ -329,7 +329,7 @@
 
     <!-- Final CTA -->
     <section class="py-32 bg-gray-950 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-indigo-600/20 opacity-30"></div>
+        <div class="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-brand-600/20 opacity-30"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
             <h2 class="text-5xl lg:text-7xl text-white font-black mb-10 tracking-tighter leading-none">
                 {{ __('Ready to simplify your') }}<br /><span class="text-blue-500">{{ __('financial empire?') }}</span>

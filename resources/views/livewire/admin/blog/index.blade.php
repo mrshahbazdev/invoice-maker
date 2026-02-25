@@ -10,7 +10,7 @@
                 Manage Categories
             </a>
             <a href="{{ route('admin.blog.create') }}"
-                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2">
+                class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-lg shadow-brand-500/20 transition-all flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
@@ -80,7 +80,7 @@
                             <td class="py-4 px-6 text-right">
                                 <div class="flex items-center justify-end space-x-3">
                                     <a href="{{ route('admin.blog.edit', $post) }}"
-                                        class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                                        class="text-brand-400 hover:text-brand-300 transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
@@ -111,7 +111,7 @@
                                 <p class="text-gray-400 font-medium">No posts published yet.</p>
                                 <p class="text-gray-500 text-sm mt-1">Get started by creating a new blog post.</p>
                                 <a href="{{ route('admin.blog.create') }}"
-                                    class="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                                    class="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-600 hover:bg-brand-700">
                                     Write Post
                                 </a>
                             </td>

@@ -7,7 +7,7 @@
                     <p class="text-sm font-medium text-gray-400 mb-1">Total Users</p>
                     <h3 class="text-3xl font-bold text-white">{{ number_format($totalUsers) }}</h3>
                 </div>
-                <div class="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl">
+                <div class="p-3 bg-brand-500/20 text-brand-400 rounded-xl">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div
-                class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-indigo-500/10 to-transparent rounded-full blur-2xl z-0">
+                class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-brand-500/10 to-transparent rounded-full blur-2xl z-0">
             </div>
         </div>
 
@@ -88,7 +88,7 @@
                 <div class="p-4 flex items-center justify-between hover:bg-gray-700/20 transition-colors">
                     <div class="flex items-center">
                         <div
-                            class="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold uppercase shadow-inner">
+                            class="h-10 w-10 rounded-full bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-white font-bold uppercase shadow-inner">
                             {{ substr($user->name, 0, 1) }}
                         </div>
                         <div class="ml-4">

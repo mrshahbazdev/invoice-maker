@@ -53,7 +53,7 @@
 
             <!-- Balance Card -->
             <div
-                class="px-6 py-5 flex items-center group bg-gradient-to-br from-blue-600 to-indigo-700 relative overflow-hidden">
+                class="px-6 py-5 flex items-center group bg-gradient-to-br from-blue-600 to-brand-700 relative overflow-hidden">
                 <div class="absolute top-0 right-0 p-4 opacity-10">
                     <svg class="w-16 h-16" fill="white" viewBox="0 0 24 24">
                         <path
@@ -80,7 +80,7 @@
 
         <div class="flex flex-wrap items-center justify-end gap-3">
             <button wire:click="generateInsights" wire:loading.attr="disabled"
-                class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-indigo-600 border border-transparent rounded-xl shadow-lg shadow-indigo-600/30 text-sm font-bold text-white hover:bg-indigo-700 transition-all group disabled:opacity-50">
+                class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-brand-600 border border-transparent rounded-xl shadow-lg shadow-brand-600/30 text-sm font-bold text-white hover:bg-brand-700 transition-all group disabled:opacity-50">
                 <svg wire:loading wire:target="generateInsights" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
                     fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -116,7 +116,7 @@
 
     @if($aiInsights)
         <div
-            class="mb-8 p-6 bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-100 rounded-2xl shadow-sm relative overflow-hidden">
+            class="mb-8 p-6 bg-gradient-to-br from-brand-50 to-blue-50 border border-brand-100 rounded-2xl shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 p-4 opacity-5">
                 <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -124,10 +124,10 @@
             </div>
             <div class="relative z-10">
                 <div class="flex justify-between items-start mb-4">
-                    <h3 class="text-xl font-bold text-indigo-900 flex items-center">
+                    <h3 class="text-xl font-bold text-brand-900 flex items-center">
                         <span class="mr-2">✨</span> {{ __('AI Cash Flow Insights') }}
                     </h3>
-                    <button wire:click="$set('aiInsights', null)" class="text-indigo-400 hover:text-indigo-600 transition">
+                    <button wire:click="$set('aiInsights', null)" class="text-brand-400 hover:text-brand-600 transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                             </path>

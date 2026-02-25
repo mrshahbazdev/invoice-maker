@@ -22,7 +22,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('Site Name') }}</label>
                     <input type="text" wire:model="site_name"
-                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl focus:ring-indigo-500 focus:border-indigo-500 block px-4 py-3"
+                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl focus:ring-brand-500 focus:border-brand-500 block px-4 py-3"
                         placeholder="Invoice Maker">
                     @error('site_name') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
                 </div>
@@ -91,7 +91,7 @@
 
             <div class="flex justify-end pt-4 border-t border-gray-700/50">
                 <button type="submit" wire:loading.attr="disabled"
-                    class="inline-flex items-center px-6 py-3 bg-indigo-600 border border-transparent rounded-xl font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-gray-900 disabled:opacity-50 transition-colors shadow-lg shadow-indigo-500/20">
+                    class="inline-flex items-center px-6 py-3 bg-brand-600 border border-transparent rounded-xl font-semibold text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 focus:ring-offset-gray-900 disabled:opacity-50 transition-colors shadow-lg shadow-brand-500/20">
                     <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">

@@ -13501,3 +13501,39 @@ Did you mean one of these?
 #3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/artisan(12): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
 #4 {main}
 "} 
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:50:10] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 03:51:19] local.ERROR: AI Translation Error: OpenAI API key is not configured.  

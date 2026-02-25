@@ -49,16 +49,16 @@
                             $isBase = $code === 'en';
                         @endphp
                         <div
-                            class="flex items-center justify-between p-4 {{ $isEnabled ? 'bg-indigo-900/20 border-indigo-500/30' : 'bg-gray-900 border-gray-700' }} border rounded-xl transition-all">
+                            class="flex items-center justify-between p-4 {{ $isEnabled ? 'bg-brand-900/20 border-brand-500/30' : 'bg-gray-900 border-gray-700' }} border rounded-xl transition-all">
                             <div class="flex flex-col">
                                 <span
-                                    class="font-bold {{ $isEnabled ? 'text-indigo-400' : 'text-gray-300' }}">{{ $name }}</span>
+                                    class="font-bold {{ $isEnabled ? 'text-brand-400' : 'text-gray-300' }}">{{ $name }}</span>
                                 <span class="text-xs text-gray-500 uppercase font-mono">{{ $code }}</span>
                             </div>
                             <div class="flex items-center space-x-3">
                                 @if($isEnabled && !$isBase)
                                     <button wire:click="editTranslations('{{ $code }}')"
-                                        class="{{ $editingLocale === $code ? 'text-indigo-400' : 'text-gray-400 hover:text-white' }} transition-colors"
+                                        class="{{ $editingLocale === $code ? 'text-brand-400' : 'text-gray-400 hover:text-white' }} transition-colors"
                                         title="Edit Translations">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -74,7 +74,7 @@
                                     <input type="checkbox" wire:click="toggleLanguage('{{ $code }}', '{{ $name }}')"
                                         class="sr-only peer" {{ $isEnabled ? 'checked' : '' }} {{ $isBase ? 'disabled' : '' }}>
                                     <div
-                                        class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-500">
+                                        class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-500">
                                     </div>
                                 </label>
                             </div>
@@ -93,7 +93,7 @@
                         <div>
                             <h3 class="text-xl font-bold text-white flex items-center">
                                 Translating to <span
-                                    class="ml-2 px-2 py-1 bg-indigo-500/20 text-indigo-400 rounded-md text-sm border border-indigo-500/30">{{ $this->availableLocales[$editingLocale] }}
+                                    class="ml-2 px-2 py-1 bg-brand-500/20 text-brand-400 rounded-md text-sm border border-brand-500/30">{{ $this->availableLocales[$editingLocale] }}
                                     ({{ strtoupper($editingLocale) }})</span>
                             </h3>
                             <p class="text-sm text-gray-400 mt-1">Translate the base English strings into
@@ -122,7 +122,7 @@
                                 </span>
                             </button>
                             <button wire:click="saveTranslations"
-                                class="w-full sm:w-auto px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2">
+                                class="w-full sm:w-auto px-5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-lg shadow-brand-500/20 transition-all flex items-center justify-center gap-2">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
@@ -142,7 +142,7 @@
                                 </svg>
                             </div>
                             <input wire:model.live.debounce.300ms="search" type="text"
-                                class="block w-full pl-10 bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2.5"
+                                class="block w-full pl-10 bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2.5"
                                 placeholder="Search original strings...">
                         </div>
                     </div>
@@ -158,9 +158,9 @@
                                 <div class="bg-gray-900 border border-gray-700 rounded-xl p-4">
                                     <div class="mb-2 text-sm text-gray-400 font-mono">{{ $key }}</div>
                                     <div class="relative">
-                                        <div class="absolute inset-y-0 left-0 w-1 bg-indigo-500 rounded-l-md"></div>
+                                        <div class="absolute inset-y-0 left-0 w-1 bg-brand-500 rounded-l-md"></div>
                                         <textarea wire:model.defer="translations.{{ $key }}" rows="2"
-                                            class="w-full bg-gray-800 border {{ empty($translations[$key]) ? 'border-red-500/30 focus:border-red-500' : 'border-gray-600 focus:border-indigo-500' }} text-white rounded-md pl-4 pr-3 py-2 text-sm focus:ring-1 focus:ring-indigo-500"
+                                            class="w-full bg-gray-800 border {{ empty($translations[$key]) ? 'border-red-500/30 focus:border-red-500' : 'border-gray-600 focus:border-brand-500' }} text-white rounded-md pl-4 pr-3 py-2 text-sm focus:ring-1 focus:ring-brand-500"
                                             placeholder="Translate this text..."></textarea>
                                     </div>
                                     @if(empty($translations[$key]))
@@ -211,7 +211,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-400 mb-1">Language Code</label>
                                     <input type="text" wire:model.defer="newLanguageCode"
-                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 font-mono uppercase"
+                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500 font-mono uppercase"
                                         placeholder="e.g. KO, HI, UR, etc." required>
                                     <p class="text-xs text-gray-500 mt-1">Short ISO code for the language.</p>
                                     @error('newLanguageCode') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
@@ -220,7 +220,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-400 mb-1">Language Name</label>
                                     <input type="text" wire:model.defer="newLanguageName"
-                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
                                         placeholder="e.g. Korean, Hindi, Urdu" required>
                                     @error('newLanguageName') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
                                     @enderror
@@ -229,7 +229,7 @@
                         </div>
                         <div class="bg-gray-800 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse border-t border-gray-700">
                             <button type="submit"
-                                class="w-full inline-flex justify-center rounded-xl shadow-sm px-4 py-2 bg-indigo-600 font-bold text-white hover:bg-indigo-700 focus:outline-none sm:ml-3 sm:w-auto transition-colors">
+                                class="w-full inline-flex justify-center rounded-xl shadow-sm px-4 py-2 bg-brand-600 font-bold text-white hover:bg-brand-700 focus:outline-none sm:ml-3 sm:w-auto transition-colors">
                                 Add Language
                             </button>
                             <button type="button" wire:click="$set('isAddingLanguage', false)"

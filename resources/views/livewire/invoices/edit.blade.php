@@ -55,9 +55,9 @@
             <div class="flex items-center justify-between mb-1">
                 <label class="block text-sm font-medium text-gray-700">{{ __('Notes') }}</label>
                 <button type="button" wire:click="generateNotesWithAi"
-                    class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center transition bg-indigo-50 px-2 py-1 rounded-md border border-indigo-100">
+                    class="text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center transition bg-brand-50 px-2 py-1 rounded-md border border-brand-100">
                     <svg wire:loading wire:target="generateNotesWithAi"
-                        class="animate-spin -ml-1 mr-1 h-3 w-3 text-indigo-600" fill="none" viewBox="0 0 24 24">
+                        class="animate-spin -ml-1 mr-1 h-3 w-3 text-brand-600" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
                         </circle>
                         <path class="opacity-75" fill="currentColor"

@@ -12,10 +12,16 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+
+    @if(auth()->check() && auth()->user()->business && auth()->user()->business->theme)
+        <style>
+            {!! \App\Services\ThemeGenerator::generateCssVariables(auth()->user()->business->theme->primary_color) !!}
+        </style>
+    @endif
 </head>
 
 <body
-    class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen"
+    class="bg-gradient-to-br from-blue-50 via-white to-brand-50 text-gray-800 antialiased font-sans flex flex-col min-h-screen"
     x-data="{ mobileMenuOpen: false }">
 
     @if(session()->has('impersonated_by'))
@@ -61,7 +67,7 @@
                                 </button>
                             @endif
                             <h1
-                                class="text-lg sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 truncate pr-2">
+                                class="text-lg sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-brand-600 truncate pr-2">
                                 {{ $title ?? __('Dashboard') }}
                             </h1>
                         </div>
@@ -115,7 +121,7 @@
 
                             @if(auth()->user() && auth()->user()->is_super_admin)
                                 <a href="{{ route('admin.dashboard') }}"
-                                    class="flex items-center text-xs sm:text-sm text-indigo-600 hover:text-indigo-800 focus:outline-none transition-colors px-2 py-1.5 rounded-md hover:bg-indigo-50 font-bold border border-indigo-200 mr-2 sm:mr-0">
+                                    class="flex items-center text-xs sm:text-sm text-brand-600 hover:text-brand-800 focus:outline-none transition-colors px-2 py-1.5 rounded-md hover:bg-brand-50 font-bold border border-brand-200 mr-2 sm:mr-0">
                                     <svg class="w-4 h-4 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M13 10V3L4 14h7v7l9-11h-7z"></path>

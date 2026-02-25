@@ -4,7 +4,7 @@
             <div>
                 <div class="flex items-center text-sm text-gray-500 mb-2">
                     <a href="{{ route('client.tickets.index') }}"
-                        class="hover:text-indigo-600 transition-colors">Support Tickets</a>
+                        class="hover:text-brand-600 transition-colors">Support Tickets</a>
                     <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
@@ -30,7 +30,7 @@
                             <label for="subject" class="block text-sm font-medium text-gray-700">Subject <span
                                     class="text-red-500">*</span></label>
                             <input type="text" wire:model.defer="subject" id="subject"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm"
                                 placeholder="Brief summary of your issue">
                             @error('subject') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
                             @enderror
@@ -42,7 +42,7 @@
                                 <label for="category" class="block text-sm font-medium text-gray-700">Category <span
                                         class="text-red-500">*</span></label>
                                 <select wire:model.defer="category" id="category"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm">
                                     <option value="general">General Inquiry</option>
                                     <option value="technical">Technical Support</option>
                                     <option value="billing">Billing Issue</option>
@@ -56,7 +56,7 @@
                                 <label for="priority" class="block text-sm font-medium text-gray-700">Priority <span
                                         class="text-red-500">*</span></label>
                                 <select wire:model.defer="priority" id="priority"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm">
                                     <option value="low">Low</option>
                                     <option value="medium">Medium</option>
                                     <option value="high">High</option>
@@ -72,7 +72,7 @@
                             <label for="message" class="block text-sm font-medium text-gray-700">Message <span
                                     class="text-red-500">*</span></label>
                             <textarea wire:model.defer="message" id="message" rows="8"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm"
                                 placeholder="Please describe your issue in detail..."></textarea>
                             @error('message') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
                             @enderror
@@ -97,7 +97,7 @@
                                     </svg>
                                     <div class="flex text-sm text-gray-600 justify-center">
                                         <label for="file-upload"
-                                            class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                            class="relative cursor-pointer bg-white rounded-md font-medium text-brand-600 hover:text-brand-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-brand-500">
                                             <span>Upload a file</span>
                                             <input id="file-upload" wire:model="attachment" type="file" class="sr-only">
                                         </label>
@@ -108,8 +108,8 @@
                                     </p>
                                 </div>
                                 <div x-show="isUploading"
-                                    class="absolute inset-x-0 bottom-0 bg-indigo-100 rounded-b-md h-1">
-                                    <div class="bg-indigo-600 h-1 rounded-bl-md" x-bind:style="`width: ${progress}%`">
+                                    class="absolute inset-x-0 bottom-0 bg-brand-100 rounded-b-md h-1">
+                                    <div class="bg-brand-600 h-1 rounded-bl-md" x-bind:style="`width: ${progress}%`">
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                             <a href="{{ route('client.tickets.index') }}"
                                 class="text-gray-600 hover:text-gray-900 font-medium text-sm transition-colors">Cancel</a>
                             <button type="submit"
-                                class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-6 text-sm font-bold text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors">
+                                class="inline-flex justify-center rounded-md border border-transparent bg-brand-600 py-2 px-6 text-sm font-bold text-white shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors">
                                 Submit Ticket
                             </button>
                         </div>

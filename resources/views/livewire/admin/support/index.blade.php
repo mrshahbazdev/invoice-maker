@@ -54,7 +54,7 @@
                                 </svg>
                             </div>
                             <input wire:model.live.debounce.300ms="search" type="text"
-                                class="block w-full pl-10 bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2"
+                                class="block w-full pl-10 bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2"
                                 placeholder="Search ID, subject, email...">
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         <label
                             class="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Status</label>
                         <select wire:model.live="status"
-                            class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2">
+                            class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
                             <option value="">All Statuses</option>
                             <option value="open">Open</option>
                             <option value="in_progress">In Progress</option>
@@ -74,7 +74,7 @@
                         <label
                             class="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Priority</label>
                         <select wire:model.live="priority"
-                            class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2">
+                            class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
                             <option value="">All Priorities</option>
                             <option value="low">Low</option>
                             <option value="medium">Medium</option>
@@ -86,7 +86,7 @@
                         <label
                             class="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-1">Category</label>
                         <select wire:model.live="category"
-                            class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2">
+                            class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
                             <option value="">All Categories</option>
                             <option value="general">General</option>
                             <option value="technical">Technical</option>
@@ -99,7 +99,7 @@
             <div class="overflow-x-auto relative">
                 <div wire:loading.delay wire:target="search, status, priority, category"
                     class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-                    <svg class="animate-spin h-10 w-10 text-indigo-500 mb-2" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="animate-spin h-10 w-10 text-brand-500 mb-2" xmlns="http://www.w3.org/2000/svg"
                         fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
                         </circle>
@@ -107,7 +107,7 @@
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                         </path>
                     </svg>
-                    <span class="text-indigo-400 font-medium">Filtering Tickets...</span>
+                    <span class="text-brand-400 font-medium">Filtering Tickets...</span>
                 </div>
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -131,7 +131,7 @@
                                 <td class="py-4 px-6 align-top">
                                     <div class="flex flex-col">
                                         <a href="{{ route('admin.support.show', $ticket) }}"
-                                            class="font-bold text-white hover:text-indigo-400 transition-colors truncate max-w-[250px] inline-block"
+                                            class="font-bold text-white hover:text-brand-400 transition-colors truncate max-w-[250px] inline-block"
                                             title="{{ $ticket->subject }}">
                                             #{{ $ticket->id }} - {{ $ticket->subject }}
                                         </a>
@@ -150,7 +150,7 @@
                                             <span
                                                 class="text-xs text-gray-500 truncate max-w-[200px]">{{ $ticket->user->email }}</span>
                                             @if($ticket->user->business)
-                                                <span class="text-xs text-indigo-400 mt-1 truncate max-w-[200px]"
+                                                <span class="text-xs text-brand-400 mt-1 truncate max-w-[200px]"
                                                     title="{{ $ticket->user->business->name }}">
                                                     <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor"
                                                         viewBox="0 0 24 24">
@@ -201,7 +201,7 @@
                                 <td class="py-4 px-6 align-top text-right">
                                     <div class="flex justify-end gap-2">
                                         <a href="{{ route('admin.support.show', $ticket) }}"
-                                            class="p-2 text-indigo-400 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-lg transition-colors"
+                                            class="p-2 text-brand-400 bg-brand-500/10 hover:bg-brand-500/20 rounded-lg transition-colors"
                                             title="Manage Ticket">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -5,7 +5,7 @@
             <p class="text-gray-400 mt-1">Manage pricing tiers, limits, and features.</p>
         </div>
         <button wire:click="createPlan"
-            class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2">
+            class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-lg shadow-brand-500/20 transition-all flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
@@ -46,17 +46,17 @@
                     <div class="flex items-center justify-between text-sm">
                         <span class="text-gray-400">Invoices</span>
                         <span
-                            class="font-bold {{ $plan->max_invoices === null ? 'text-indigo-400' : 'text-white' }}">{{ $plan->max_invoices === null ? 'Unlimited' : $plan->max_invoices }}</span>
+                            class="font-bold {{ $plan->max_invoices === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_invoices === null ? 'Unlimited' : $plan->max_invoices }}</span>
                     </div>
                     <div class="flex items-center justify-between text-sm">
                         <span class="text-gray-400">Clients</span>
                         <span
-                            class="font-bold {{ $plan->max_clients === null ? 'text-indigo-400' : 'text-white' }}">{{ $plan->max_clients === null ? 'Unlimited' : $plan->max_clients }}</span>
+                            class="font-bold {{ $plan->max_clients === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_clients === null ? 'Unlimited' : $plan->max_clients }}</span>
                     </div>
                     <div class="flex items-center justify-between text-sm">
                         <span class="text-gray-400">Products</span>
                         <span
-                            class="font-bold {{ $plan->max_products === null ? 'text-indigo-400' : 'text-white' }}">{{ $plan->max_products === null ? 'Unlimited' : $plan->max_products }}</span>
+                            class="font-bold {{ $plan->max_products === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_products === null ? 'Unlimited' : $plan->max_products }}</span>
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-400 mb-1">Plan Name</label>
                                             <input type="text" wire:model="name"
-                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
                                                 required>
                                             @error('name') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
                                             @enderror
@@ -101,7 +101,7 @@
                                             <label class="block text-sm font-medium text-gray-400 mb-1">Slug
                                                 (Identifier)</label>
                                             <input type="text" wire:model="slug"
-                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 font-mono text-sm"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500 font-mono text-sm"
                                                 required>
                                             @error('slug') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
                                             @enderror
@@ -116,7 +116,7 @@
                                                     <span class="text-gray-500 sm:text-sm">$</span>
                                                 </div>
                                                 <input type="number" step="0.01" wire:model="price_monthly"
-                                                    class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-7 pr-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                                    class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-7 pr-4 py-2 focus:ring-brand-500 focus:border-brand-500"
                                                     required>
                                             </div>
                                             @error('price_monthly') <span
@@ -130,7 +130,7 @@
                                                     <span class="text-gray-500 sm:text-sm">$</span>
                                                 </div>
                                                 <input type="number" step="0.01" wire:model="price_yearly"
-                                                    class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-7 pr-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                                    class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-7 pr-4 py-2 focus:ring-brand-500 focus:border-brand-500"
                                                     required>
                                             </div>
                                             @error('price_yearly') <span
@@ -144,7 +144,7 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-400 mb-1">Max Invoices</label>
                                             <input type="number" wire:model="max_invoices"
-                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
                                                 placeholder="Unlimited">
                                             @error('max_invoices') <span
                                             class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
@@ -152,7 +152,7 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-400 mb-1">Max Clients</label>
                                             <input type="number" wire:model="max_clients"
-                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
                                                 placeholder="Unlimited">
                                             @error('max_clients') <span
                                             class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
@@ -160,14 +160,14 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-400 mb-1">Max Products</label>
                                             <input type="number" wire:model="max_products"
-                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
                                                 placeholder="Unlimited">
                                             @error('max_products') <span
                                             class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="flex items-center mt-6">
                                             <input type="checkbox" wire:model="is_active" id="is_active"
-                                                class="h-5 w-5 rounded border-gray-600 bg-gray-800 text-indigo-600 focus:ring-indigo-500 focus:ring-offset-gray-900">
+                                                class="h-5 w-5 rounded border-gray-600 bg-gray-800 text-brand-600 focus:ring-brand-500 focus:ring-offset-gray-900">
                                             <label for="is_active" class="ml-2 block text-sm font-medium text-white">Active
                                                 (Visible to users)</label>
                                         </div>
@@ -178,7 +178,7 @@
                         <div
                             class="bg-gray-800 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-2xl border-t border-gray-700">
                             <button type="submit"
-                                class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-colors">
+                                class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-brand-600 text-base font-medium text-white hover:bg-brand-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-colors">
                                 Save Plan
                             </button>
                             <button type="button" wire:click="cancelEdit"

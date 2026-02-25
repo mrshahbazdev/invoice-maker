@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', \App\Models\Setting::get('seo.meta_title', \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')))) -
+    <title>
+        @yield('title', \App\Models\Setting::get('seo.meta_title', \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker'))))
+        -
         @yield('subtitle', 'Access')</title>
 
     @if($favicon = \App\Models\Setting::get('site.favicon'))
@@ -28,6 +30,16 @@
     {!! \App\Models\Setting::get('seo.custom_header_scripts') !!}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+
+    @if(isset($business) && $business->theme)
+        <style>
+            {!! \App\Services\ThemeGenerator::generateCssVariables($business->theme->primary_color) !!}
+        </style>
+    @elseif(auth()->check() && auth()->user()->business && auth()->user()->business->theme)
+        <style>
+            {!! \App\Services\ThemeGenerator::generateCssVariables(auth()->user()->business->theme->primary_color) !!}
+        </style>
+    @endif
 </head>
 
 <body class="bg-gray-50 flex items-center justify-center min-h-screen">

@@ -2,14 +2,14 @@
     <div class="flex justify-between items-center mb-8">
         <div>
             <div class="flex items-center space-x-2">
-                <a href="{{ route('admin.blog.index') }}" class="text-indigo-400 hover:text-indigo-300">Blog</a>
+                <a href="{{ route('admin.blog.index') }}" class="text-brand-400 hover:text-brand-300">Blog</a>
                 <span class="text-gray-500">/</span>
                 <h2 class="text-2xl font-bold font-heading text-white">Categories</h2>
             </div>
             <p class="text-gray-400 mt-1">Manage topics and sections for your blog.</p>
         </div>
         <button wire:click="createCategory"
-            class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all flex items-center gap-2">
+            class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-lg shadow-brand-500/20 transition-all flex items-center gap-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
             </svg>
@@ -65,14 +65,14 @@
                             </td>
                             <td class="py-4 px-6 text-center">
                                 <span
-                                    class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none {{ $category->posts_count > 0 ? 'text-indigo-400 bg-indigo-400/10' : 'text-gray-500 bg-gray-700' }} rounded-full">
+                                    class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none {{ $category->posts_count > 0 ? 'text-brand-400 bg-brand-400/10' : 'text-gray-500 bg-gray-700' }} rounded-full">
                                     {{ $category->posts_count }}
                                 </span>
                             </td>
                             <td class="py-4 px-6 text-right">
                                 <div class="flex items-center justify-end space-x-3">
                                     <button wire:click="editCategory({{ $category->id }})"
-                                        class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                                        class="text-brand-400 hover:text-brand-300 transition-colors">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
@@ -126,7 +126,7 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-400 mb-1">Name</label>
                                     <input type="text" wire:model.live.debounce.500ms="name"
-                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500"
+                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
                                         required>
                                     @error('name') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
                                 </div>
@@ -134,7 +134,7 @@
                                     <label class="block text-sm font-medium text-gray-400 mb-1">Slug (URL
                                         identifier)</label>
                                     <input type="text" wire:model="slug"
-                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 font-mono text-sm"
+                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500 font-mono text-sm"
                                         required>
                                     @error('slug') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
                                 </div>
@@ -142,7 +142,7 @@
                                     <label class="block text-sm font-medium text-gray-400 mb-1">Description
                                         (Optional)</label>
                                     <textarea wire:model="description" rows="3"
-                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"></textarea>
+                                        class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500 text-sm"></textarea>
                                     @error('description') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -151,7 +151,7 @@
                         <div
                             class="bg-gray-800 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-2xl border-t border-gray-700">
                             <button type="submit"
-                                class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-colors">
+                                class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-brand-600 text-base font-medium text-white hover:bg-brand-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-colors">
                                 Save Category
                             </button>
                             <button type="button" wire:click="cancelEdit"

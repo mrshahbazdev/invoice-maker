@@ -171,9 +171,9 @@
                                     @endif
                                 </div>
                                 <button type="button" wire:click="scanReceipt" wire:loading.attr="disabled"
-                                    class="mt-2 text-xs font-semibold text-indigo-600 hover:text-indigo-800 flex items-center justify-center w-full bg-indigo-50 py-2 rounded-md border border-indigo-100 transition disabled:opacity-50">
+                                    class="mt-2 text-xs font-semibold text-brand-600 hover:text-brand-800 flex items-center justify-center w-full bg-brand-50 py-2 rounded-md border border-brand-100 transition disabled:opacity-50">
                                     <svg wire:loading wire:target="scanReceipt"
-                                        class="animate-spin -ml-1 mr-1 h-3 w-3 text-indigo-600" fill="none"
+                                        class="animate-spin -ml-1 mr-1 h-3 w-3 text-brand-600" fill="none"
                                         viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                                             stroke-width="4"></circle>

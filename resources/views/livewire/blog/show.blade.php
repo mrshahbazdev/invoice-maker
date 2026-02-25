@@ -53,7 +53,7 @@
                     class="absolute -top-24 -left-24 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply opacity-50 filter blur-3xl">
                 </div>
                 <div
-                    class="absolute -bottom-24 -right-24 w-64 h-64 bg-indigo-100 rounded-full mix-blend-multiply opacity-50 filter blur-3xl">
+                    class="absolute -bottom-24 -right-24 w-64 h-64 bg-brand-100 rounded-full mix-blend-multiply opacity-50 filter blur-3xl">
                 </div>
             </div>
 

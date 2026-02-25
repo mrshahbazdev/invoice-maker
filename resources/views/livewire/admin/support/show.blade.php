@@ -7,7 +7,7 @@
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
             <div>
                 <div class="flex items-center text-sm text-gray-500 mb-2">
-                    <a href="{{ route('admin.support.index') }}" class="hover:text-indigo-400 transition-colors">Support Tickets</a>
+                    <a href="{{ route('admin.support.index') }}" class="hover:text-brand-400 transition-colors">Support Tickets</a>
                     <svg class="w-4 h-4 mx-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     <span class="text-gray-400">#{{ $ticket->id }}</span>
                 </div>
@@ -23,12 +23,12 @@
             
              <div class="mt-4 sm:mt-0 flex gap-2">
                 @if($ticket->user->business)
-                    <a href="{{ route('admin.businesses.index', ['search' => $ticket->user->business->name]) }}" class="inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-indigo-400 hover:bg-gray-700 transition-colors" title="View Business">
+                    <a href="{{ route('admin.businesses.index', ['search' => $ticket->user->business->name]) }}" class="inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-brand-400 hover:bg-gray-700 transition-colors" title="View Business">
                          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                          {{ $ticket->user->business->name }}
                     </a>
                 @endif
-                <a href="{{ route('admin.users.index', ['search' => $ticket->user->email]) }}" class="inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-indigo-400 hover:bg-gray-700 transition-colors" title="View User">
+                <a href="{{ route('admin.users.index', ['search' => $ticket->user->email]) }}" class="inline-flex items-center justify-center px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm text-brand-400 hover:bg-gray-700 transition-colors" title="View User">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     User Profile
                 </a>
@@ -49,12 +49,12 @@
                  <!-- Replies Thread -->
                 <div class="space-y-6">
                     @foreach($replies as $reply)
-                        <div class="bg-gray-800 overflow-hidden shadow-sm rounded-2xl border {{ $reply->user->is_super_admin ? 'border-indigo-500/30 ring-1 ring-indigo-500/20' : 'border-gray-700' }}">
+                        <div class="bg-gray-800 overflow-hidden shadow-sm rounded-2xl border {{ $reply->user->is_super_admin ? 'border-brand-500/30 ring-1 ring-brand-500/20' : 'border-gray-700' }}">
                             <div class="p-6">
                                 <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-700/50">
                                     <div class="flex items-center gap-3">
                                          @if($reply->user->is_super_admin)
-                                            <div class="h-10 w-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-lg border border-indigo-500/30">
+                                            <div class="h-10 w-10 rounded-full bg-brand-500/20 flex items-center justify-center text-brand-400 font-bold text-lg border border-brand-500/30">
                                                 {{ substr($reply->user->name, 0, 1) }}
                                             </div>
                                          @else
@@ -66,7 +66,7 @@
                                             <div class="font-bold text-white flex items-center gap-2">
                                                 {{ $reply->user->name }}
                                                 @if($reply->user->is_super_admin)
-                                                    <span class="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-400 text-xs font-medium border border-indigo-500/30">Staff</span>
+                                                    <span class="px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-400 text-xs font-medium border border-brand-500/30">Staff</span>
                                                 @endif
                                             </div>
                                             <div class="text-xs text-gray-400" title="{{ $reply->created_at }}">
@@ -96,14 +96,14 @@
 
                 <!-- Reply Form -->
                 <div class="bg-gray-800 overflow-hidden shadow-sm rounded-2xl border border-gray-700 mt-8 relative">
-                    <div class="absolute inset-y-0 left-0 w-1 bg-indigo-500 rounded-l-2xl"></div>
+                    <div class="absolute inset-y-0 left-0 w-1 bg-brand-500 rounded-l-2xl"></div>
                     <div class="p-6">
                         <h3 class="text-lg font-medium text-white mb-4">Post a Reply</h3>
                         
                         <form wire:submit.prevent="reply" class="space-y-4">
                             
                             <div>
-                                <textarea wire:model.defer="message" rows="5" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pl-4 pr-3 py-3 custom-scrollbar" placeholder="Type your response to the client..."></textarea>
+                                <textarea wire:model.defer="message" rows="5" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm pl-4 pr-3 py-3 custom-scrollbar" placeholder="Type your response to the client..."></textarea>
                                 @error('message') <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span> @enderror
                             </div>
 
@@ -118,7 +118,7 @@
                                             <input type="file" wire:model="attachment" class="sr-only" x-on:change="fileName = $event.target.files[0].name">
                                         </label>
                                         <span class="ml-3 text-sm text-gray-400" x-text="fileName"></span>
-                                        <div wire:loading wire:target="attachment" class="ml-3 text-sm text-indigo-400">
+                                        <div wire:loading wire:target="attachment" class="ml-3 text-sm text-brand-400">
                                             Uploading...
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
                                     @error('attachment') <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span> @enderror
                                 </div>
 
-                                <button type="submit" class="w-full sm:w-auto inline-flex justify-center items-center rounded-xl border border-transparent bg-indigo-600 py-2.5 px-6 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 hover:bg-indigo-700 transition-colors disabled:opacity-50" wire:loading.attr="disabled">
+                                <button type="submit" class="w-full sm:w-auto inline-flex justify-center items-center rounded-xl border border-transparent bg-brand-600 py-2.5 px-6 text-sm font-bold text-white shadow-lg shadow-brand-500/20 hover:bg-brand-700 transition-colors disabled:opacity-50" wire:loading.attr="disabled">
                                     <svg wire:loading wire:target="reply" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -151,7 +151,7 @@
                     <form wire:submit.prevent="updateTicketDetails" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-1">Status</label>
-                            <select wire:model.defer="status" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2">
+                            <select wire:model.defer="status" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
                                 <option value="open">Open</option>
                                 <option value="in_progress">In Progress</option>
                                 <option value="resolved">Resolved</option>
@@ -161,7 +161,7 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-1">Priority</label>
-                            <select wire:model.defer="priority" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2">
+                            <select wire:model.defer="priority" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
                                 <option value="low">Low</option>
                                 <option value="medium">Medium</option>
                                 <option value="high">High</option>
@@ -171,7 +171,7 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-400 mb-1">Category</label>
-                            <select wire:model.defer="category" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2">
+                            <select wire:model.defer="category" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
                                 <option value="general">General</option>
                                 <option value="technical">Technical</option>
                                 <option value="billing">Billing</option>
