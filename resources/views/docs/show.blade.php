@@ -2,6 +2,14 @@
 @section('title', $title)
 @section('metaDescription', $description)
 
+@section('seo_tags')
+    <link rel="canonical" href="{{ route('docs.show', ['lang' => $currentLang, 'slug' => $slug]) }}" />
+    @foreach($supportedLanguages as $code => $name)
+        <link rel="alternate" hreflang="{{ $code }}" href="{{ route('docs.show', ['lang' => $code, 'slug' => $slug]) }}" />
+    @endforeach
+    <link rel="alternate" hreflang="x-default" href="{{ route('docs.show', ['lang' => 'en', 'slug' => $slug]) }}" />
+@endsection
+
 <div class="py-12 bg-gray-50 dark:bg-gray-900 min-h-screen">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex flex-col lg:flex-row gap-8">

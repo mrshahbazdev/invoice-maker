@@ -9,7 +9,18 @@
     </title>
     @if(isset($metaDescription))
         <meta name="description" content="{{ $metaDescription }}">
+        <meta property="og:description" content="{{ $metaDescription }}">
     @endif
+
+    <meta property="og:type" content="website">
+    <meta property="og:title"
+        content="@yield('title', $title ?? \App\Models\Setting::get('seo.meta_title', \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker'))))">
+    @if(\App\Models\Setting::get('seo.og_image'))
+        <meta property="og:image" content="{{ url(Storage::url(\App\Models\Setting::get('seo.og_image'))) }}">
+    @endif
+    <meta name="twitter:card" content="summary_large_image">
+
+    @yield('seo_tags')
 
     @if($favicon = \App\Models\Setting::get('site.favicon'))
         <link rel="icon" href="{{ Storage::url($favicon) }}">

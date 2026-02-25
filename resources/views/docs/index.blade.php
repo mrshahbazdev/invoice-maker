@@ -3,6 +3,14 @@
 <x-slot:metaDescription>Complete user guides, tutorials, and documentation for the
     {{ config('app.name', 'Invoice Maker') }} platform.</x-slot:metaDescription>
 
+@section('seo_tags')
+    <link rel="canonical" href="{{ route('docs.index', ['lang' => $currentLang]) }}" />
+    @foreach($supportedLanguages as $code => $name)
+        <link rel="alternate" hreflang="{{ $code }}" href="{{ route('docs.index', ['lang' => $code]) }}" />
+    @endforeach
+    <link rel="alternate" hreflang="x-default" href="{{ route('docs.index', ['lang' => 'en']) }}" />
+@endsection
+
 <div class="py-12 lg:py-20 bg-gray-50 dark:bg-gray-900 min-h-screen">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
