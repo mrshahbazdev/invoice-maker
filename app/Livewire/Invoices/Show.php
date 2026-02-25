@@ -22,6 +22,9 @@ class Show extends Component
     public bool $showEmailModal = false;
     public string $emailSubject = '';
     public string $emailBody = '';
+    public bool $showPaidModal = false;
+    public string $paymentSource = '';
+    public string $paymentDescription = '';
 
     protected array $rules = [
         'payment_amount' => 'required|numeric|min:0.01',
