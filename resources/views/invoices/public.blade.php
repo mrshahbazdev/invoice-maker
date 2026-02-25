@@ -82,7 +82,7 @@
                         </svg>
                         {{ __('Save to My Account') }}
                     </a>
-                    @if(!$invoice->isEstimate() && $invoice->status !== 'paid' && !empty($invoice->business->stripe_public_key) && !empty($invoice->business->stripe_secret_key))
+                    @if(!$invoice->isEstimate() && $invoice->status !== 'paid' && !empty($invoice->uuid) && !empty($invoice->business->stripe_public_key) && !empty($invoice->business->stripe_secret_key))
                         <a href="{{ route('payment.checkout', ['invoice' => $invoice->uuid]) }}"
                             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
