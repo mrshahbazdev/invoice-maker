@@ -1,30 +1,60 @@
-# The Invoicing Engine
+# The Invoicing Engine: A Complete Guide
 
-The core of your business. Create stunning, professional invoices in seconds.
+The core logic of this platform revolves around a highly advanced, automated Invoicing Engine designed to help you generate professional billing completely seamlessly. This guide covers the complete feature set available within the Invoice generation flow.
 
-## Creating Invoices
-Navigate to the **Invoices** tab and click **Create**. Select a client, add products or services from your inventory, and apply custom taxes or discounts. The system handles all the math instantly.
+---
 
-## Automated Recurring Invoices
-Automate your entire billing lifecycle directly within the app!
-- The "Make Recurring Invoice" toggle is available when creating or editing an invoice.
-- Select the billing interval (Weekly, Monthly, Quarterly, Yearly) and set the exact date for the first run.
-- The system automatically replicates the invoice, generates a fresh PDF, and dispatches it to the client with a "Pay Now" link embedded.
+## 1. Initiating a New Invoice
+Creating an invoice is straightforward. Navigate to your **Invoices** module and click **Create New Invoice**. 
+This launches the interactive, drag-and-drop document builder.
 
-## Online Payments (Stripe)
-Allow your clients to pay invoices via Credit Card, Apple Pay, and Google Pay through the public invoice link!
-- Configure your Stripe API keys securely in your User Profile settings.
-- The Public Invoice Viewer automatically displays a bold "Pay with Card" button for unpaid invoices.
-- Upon successful payment, the system automatically marks the invoice as Paid and generates an Income entry into your Cash Book.
+### Invoice Metadata
+Before adding line items, you'll set up the core metadata that defines the document:
+- **Invoice Number:** By default, the system auto-increments your invoice numbers (e.g., INV-0001 becoming INV-0002). However, you can manually override the prefix and numbering scheme in your global settings if you utilize a custom format.
+- **Issue Date:** The date the document is officially generated. Defaults to today.
+- **Due Date / Payment Terms:** Define when you expect to receive the money. You can select exact dates or use dynamic terms like "Net 15", "Net 30", or "Due on Receipt." The system will automatically calculate the exact due date based on the issue date.
+- **Client Selection:** Select an existing client from your CRM or quickly define a new one inline without leaving the builder.
 
-## PDF Generation & Public Links
-Download a pixel-perfect PDF version of the invoice instantly, or share a secure web link with your client. They can view the invoice online, download it, and even leave comments directly on the document.
+---
 
-## Estimates & Quotes
-Send proposals before finalizing a sale using the **Estimates** tab.
-- Estimates share a similar creation flow to Invoices.
-- Once a client approves the estimate via their public link, you can convert it directly into an active Invoice with one single click.
+## 2. Managing Line Items
+The line item section is where you construct the actual bill. 
 
-## Custom Invoice Templates
-Make your invoices look exactly how you want.
-Navigate to the **Templates** tab to use the drag-and-drop Template Builder. Construct new invoice layouts, switching between minimalist designs, standard structures, or dynamic modern layouts.
+### Adding Products and Services
+You can add line items in two distinct ways:
+1. **Manual Entry:** Type completely custom descriptions, arbitrary prices, and specific quantities directly into an empty row. This is perfect for custom project work or unique service fees.
+2. **From Inventory:** Click the "Add Product" dropdown to select pre-saved items from your Products/Services catalog. The system will instantly inject the predefined description, unit price, and default tax rates for that item, saving you immense time.
+
+### Real-Time Math and Taxes
+The entire table is mathematically integrated.
+- As you adjust quantities or unit prices, the row totals update instantly.
+- **Line Item Taxes:** You can assign multiple tax rates (e.g., a regional VAT and a secondary Sales Tax) to a single line item. The system calculates these taxes dynamically and individually for every row.
+- **Drag and Drop Reordering:** Grab the handle on the left side of any row to reorder how the items appear on the final PDF. The math continues to calculate perfectly regardless of ordering.
+
+---
+
+## 3. Discounts and Global Modifiers
+Sometimes you need to adjust the grand total beyond the individual line items.
+
+- **Global Discounts:** At the bottom of the invoice builder, you can inject a global discount. You can choose whether this discount is a literal fixed amount (e.g., "$50 off") or a percentage of the subtotal (e.g., "10% off"). The grand total updates dynamically to reflect the savings.
+- **Notes and Terms:** Add a personalized message to the client (such as "Thank you for your business!") and define strict Legal Terms and Conditions (such as "Late payments incur a 5% penalty").
+
+---
+
+## 4. Sending and Delivery
+Once your invoice is finalized, it's time to get paid.
+
+### Automated Email Dispatching
+Clicking "Send Invoice" opens the Email Launcher.
+- The system automatically loads the primary email address assigned to your Client.
+- You can heavily customize the Subject Line and the HTML body of the email. If you have defined a specific template for this client in the CRM, it will be pre-loaded.
+- The platform attaches a highly compressed, beautifully generated PDF of the document directly to the outgoing email.
+
+### Client Portal "Magic Link"
+Crucially, the email also contains a "Magic Link". When your client clicks this link, they are taken directly to their secure, passwordless Client Portal where they can view the invoice dynamically.
+
+### Status Tracking
+Once an invoice is sent, the system begins tracking its status automatically:
+- You will see exactly when the client opens the email and views the document online (Status changes from Sent to Viewed).
+- If the Due Date passes, the system flags the invoice with a stark red **Overdue** badge.
+- When payments are logged (either manually or via Stripe), the balance updates. If partially paid, it moves to "Partial". If fully settled, it is archived as "Paid."

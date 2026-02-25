@@ -1,21 +1,40 @@
-# Business Profile & Customization
+# Core Business Settings & Branding
 
-Customize how your business appears to your clients and manage your core configuration settings under **Settings > Business Profile**.
+Before creating your first invoice, configuring your Core Business Profile properly is absolutely essential. This profile heavily dictates the legal presentation of your documents and how clients visually perceive your brand.
 
-## Company Details
-Set your company name, logo, address, and contact information. This information is automatically populated onto your invoices and estimates, ensuring your documents always look professional.
+Navigate to **Settings > Business Settings** to access the master configuration terminal.
 
-## Brand Colors and Theming
-Choose a custom brand color that reflects your company's identity. This color will be dynamically injected into all public links, your client portal, and the PDF invoices you send out. You can also customize your workspace theme, including page backgrounds and card colors, to create a personalized working environment.
+---
 
-## B2B Network Sync (Auto-Expenses)
-Opt-in to the "Accept Network Invoices" feature in your profile. If enabled, whenever another business on the platform sends you an invoice, it will automatically appear in your Expenses tab without any manual entry! This powerful feature completely eliminates double-data entry when doing business with other platform users.
+## 1. Legal Presentation & Compliance
+Invoicing isn’t just asking for money; it’s a legal transaction that must strictly adhere to taxation regulations in your jurisdiction.
 
-## Payment Terms
-Define default payment terms (e.g., Net 15, Net 30) for your invoices. These default terms will automatically apply to any new invoice you create, saving you time.
+### Business Information
+Ensure these fields are filled out perfectly, as they appear permanently on every generated PDF document:
+- **Corporate Name:** The full, registered legal name of your entity (e.g., "Acme Corp LLC").
+- **Registered Address:** The physical location of corporate headquarters.
+- **Tax Identification Number (TIN/VAT):** This is one of the most critical fields on the platform. Depending on your country (e.g., the United States requires an EIN, European countries require a VAT Number), you must input your taxation ID here. Once saved, this ID string is automatically injected into the legal header of every invoice you create, ensuring maximum legal compliance seamlessly.
 
-## Automated Payment Reminders
-Tired of chasing clients down for money? The platform now does it for you. 
-- You can toggle the Automated Payment Reminders feature entirely ON or OFF.
-- You can configure the exact interval for reminders (default: every 7 days).
-- The system will automatically email a professional reminder, complete with a "Pay Now" link, to clients with overdue unpaid invoices.
+---
+
+## 2. Advanced Global Theming & Visuals
+The platform allows you to completely reskin not only your outgoing documents, but the entire software interface itself to match your established brand identity.
+
+### Uploading Visual Assets
+- **Corporate Logo:** Upload a high-resolution PNG or JPEG. The system will automatically resize and position this logo on both your outgoing Invoices and inside the Customer Portal.
+- **Favicon:** Upload a small `.ico` or `.png` file. This icon will appear in the web browser tab when your clients log into their personalized portal, ensuring a totally white-labeled experience.
+
+### Algorithmic SaaS Theming
+If you are operating as an Administrator, you can navigate to the unique **Theme** tab.
+- Here, you input your company’s core Primary Hexadecimal Color (e.g., `#FF5733`).
+- **The AI Color Engine:** The moment you save this color, our AI deeply analyzes it. It then dynamically generates an entire 15-shade harmonious color palette (perfectly contrasting lights and darks) and applies it across the entire SaaS interface. Your sidebar, buttons, progress bars, and alerts all instantly transform to match your brand implicitly.
+
+---
+
+## 3. Integrating Stripe for Immediate Output
+Getting paid rapidly is the ultimate goal of the platform. Integrating your banking infrastructure takes thirty seconds.
+
+- Navigate to the **Payments** tab within your global settings.
+- Click **"Connect with Stripe."** 
+- You will be securely routed to Stripe's onboarding portal. If you already have a Stripe account, login is instant. If you do not, you can create one in three minutes.
+- **The Magic Link:** Once interconnected, every invoice you generate from this point forward will programmatically sprout a massive "Pay Now" button inside the Client Portal. Your clients click the button, type in their credit card on a highly secure modal, and the money drops straight into your corporate bank account. Furthermore, the platform automatically flags your internal invoice as "Paid" without manual data entry.

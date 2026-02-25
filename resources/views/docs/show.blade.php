@@ -62,7 +62,7 @@
                     @endif
 
                     <div
-                        class="p-8 sm:p-12 prose prose-brand dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-a:text-brand-600 prose-img:rounded-xl prose-img:shadow-sm">
+                        class="p-8 sm:p-12 prose prose-brand dark:prose-invert max-w-none prose-headings:font-bold prose-h1:text-3xl prose-h2:text-2xl prose-a:text-brand-600 prose-img:rounded-xl prose-img:shadow-sm prose-p:text-gray-800 dark:prose-p:text-gray-100 prose-li:text-gray-800 dark:prose-li:text-gray-100 prose-strong:text-gray-900 dark:prose-strong:text-white prose-headings:text-gray-900 dark:prose-headings:text-white">
                         {!! $htmlContent !!}
                     </div>
                 </div>

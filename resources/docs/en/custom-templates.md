@@ -1,23 +1,45 @@
-# Custom Invoice Templates
+# Master Template Designer: A Complete Guide
 
-Set your brand apart by designing unique invoice layouts that look exactly how you want.
+Setting your brand apart technically and visually is vital when sending high-value invoices. The **Templates** module empowers you to dynamically customize the structural layout, color palette, and typography of your documents via a robust Drag-and-Drop builder instead of relying on a single, boring default structure.
 
-## The Template Builder
-Navigate to the **Templates** tab to access the visual drag-and-drop Template Builder. This provides a complete WYSIWYG (What You See Is What You Get) experience for assembling your documents.
+---
 
-## Pre-Built Layout Styles
-Switch seamlessly between multiple underlying document structures:
-- **Standard Template:** The classic, proven layout optimized for standard business operations.
-- **Minimalist Template:** A clean, stripped-down layout focusing heavily on typography and empty space.
-- **Modern Dynamic Layout:** A colorful, boxed structure that dynamically highlights key totals and payment terms based on your primary Brand Color.
+## 1. Accessing the Global Builder
+Navigate to the **Templates** tab in your dashboard's main navigation menu. Consider this area your visual laboratory. 
 
-## Creating Your Palette
-Inside the Template Builder, you don't just pick a layout. You can also override your default business colors for specific templates.
-- Define a primary accent color specifically for this layout.
-- Adjust font families (from Serif to Sans-Serif).
-- Save your finished layout with a specific name (e.g., "Holiday Sales Invoice").
+Here, you can build multiple different layouts for multiple different occasions (e.g., a formal black-and-white invoice for corporate clients, and a vibrant, colorful invoice for creative projects).
 
-## Applying Templates to Invoices
-When you create a new Invoice, you have total control over the design.
-- By default, the system will apply your newest Template layout.
-- However, during the creation phase, you can open the **Template** dropdown and select any of your saved layouts. This allows you to utilize vastly different designs for different clients, product lines, or seasons without changing your master global settings.
+---
+
+## 2. Choosing an Underlying Structure
+Before customizing colors, you must select the structural wireframe of the document. We provide a suite of highly-optimized layouts:
+
+- **The Standard Professional Layout:** The classic, proven structure designed for Maximum Legibility. It features your logo prominently at the top left, with clear, boxed data grids separating Metadata from Line Items. Ideal for large-scale enterprise billing.
+- **The Minimalist Design:** A drastically stripped-down layout focusing heavily on typography and negative (white) space. It removes harsh borders and tables in favor of flowing, organic text structures. Ideal for design agencies or creative freelancers.
+- **The Modern Dynamic Theme:** A heavily colorized layout that injects your primary brand color deeply into headers, footers, and total-calculation blocks. The most visually striking of the options, it guarantees your invoice will not be ignored.
+
+---
+
+## 3. Granular Design Customization
+Once you have selected a structural skeleton, you can start applying your global brand identity dynamically.
+
+### Color Palette Manipulation
+Most invoicing software allows you to upload a logo and nothing else. We give you control over the actual hexadecimal (#HEX) color logic of the document.
+- **Primary Brand Color:** Select a specific accent color. This color is algorithmically applied to important visual elements such as the "Total Due" box, table headers, and primary checkout buttons within the web viewer.
+- **Secondary Tone:** Depending on the layout, secondary elements will inherit slight variations of your primary color to create depth automatically.
+
+### Typography and Font Selecting
+The font you use says as much about your brand as the words themselves.
+- The Template Builder allows you to switch between massive typography families, including classic formal **Serif** fonts (for lawyers or financial firms), modern clean **Sans-Serif** fonts (for tech and software businesses), or **Monospaced** fonts (for developers and creative coders).
+- The entire document instantly updates to reflect your typographical choice without requiring you to manually scale font sizes.
+
+---
+
+## 4. Applying Templates in Real-Time
+The magic of the Template Builder is how you use the templates once they are saved.
+
+### Per-Document Targeting
+When you generate a brand new Invoice or Estimate in the Document Builder form, you are not strictly bound to your default layout.
+- During the creation phase, locate the **Template** dropdown menu.
+- You can dynamically select any of the customized layouts you've saved in your visual laboratory.
+- This allows you to deploy completely different visual identities depending on what department you are billing for, or which subsidiary brand you are operating under for that specific client, all without ever leaving or altering your master business settings.
