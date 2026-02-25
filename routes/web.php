@@ -31,8 +31,10 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PublicInvoiceController;
 use App\Http\Controllers\ClientPortalController;
 use App\Http\Controllers\CashBookExportController;
+use App\Http\Controllers\DocumentationController;
 use App\Livewire\Accounting\Categories\Index as CategoriesIndex;
 use App\Livewire\Accounting\CashBook\Index as CashBookIndex;
+use App\Livewire\Accounting\Reconciliation;
 
 // Public Invoice View
 Route::get('/v/{invoice}', [PublicInvoiceController::class, 'show'])->name('invoices.public.show');
@@ -55,6 +57,12 @@ Route::get('/', function () {
 // Public Blog Routes
 Route::get('/blog', \App\Livewire\Blog\Index::class)->name('public.blog.index');
 Route::get('/blog/{slug}', \App\Livewire\Blog\Show::class)->name('public.blog.show');
+
+// Public Documentation Routes (SEO logic included)
+// We default to /docs leading to /docs/en
+Route::redirect('/docs', '/docs/en');
+Route::get('/docs/{lang}', [DocumentationController::class, 'index'])->name('docs.index');
+Route::get('/docs/{lang}/{slug}', [DocumentationController::class, 'show'])->name('docs.show');
 
 Route::middleware(['auth', 'business.member'])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
@@ -110,6 +118,7 @@ Route::middleware(['auth', 'business.member'])->group(function () {
         Route::get('/export/pdf', [CashBookExportController::class, 'exportPdf'])->name('accounting.cash-book.export.pdf');
         Route::get('/categories', CategoriesIndex::class)->name('expenses.categories');
         Route::get('/cash-book', CashBookIndex::class)->name('accounting.cash-book');
+        Route::get('/reconciliation', Reconciliation::class)->name('accounting.reconciliation');
         Route::get('/profitability', \App\Livewire\Reports\Profitability::class)->name('reports.profitability');
         Route::get('/profitability/export', [App\Http\Controllers\ProfitabilityExportController::class, 'exportExcel'])->name('reports.profitability.export');
         Route::get('/{expense}', ExpensesShow::class)->name('expenses.show');

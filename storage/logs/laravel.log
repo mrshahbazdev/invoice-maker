@@ -13714,3 +13714,382 @@ Rgo=
 #10 {main}
 "} 
 [2026-02-25 06:25:48] local.INFO: Successfully synced Invoice #60 to Business #3 Expenses.  
+[2026-02-25 07:12:07] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category (Connection: sqlite, SQL: insert into "expenses" ("business_id", "category_id", "amount", "date", "description", "reference_number", "updated_at", "created_at") values (4, 1, 45.5, 2026-02-25 07:12:06, Monthly Bank Maintenance Fee, FEE-999, 2026-02-25 07:12:06, 2026-02-25 07:12:06)) {"userId":5,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category (Connection: sqlite, SQL: insert into \"expenses\" (\"business_id\", \"category_id\", \"amount\", \"date\", \"description\", \"reference_number\", \"updated_at\", \"created_at\") values (4, 1, 45.5, 2026-02-25 07:12:06, Monthly Bank Maintenance Fee, FEE-999, 2026-02-25 07:12:06, 2026-02-25 07:12:06)) at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('insert into \"ex...', Array, Object(Closure))
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(560): Illuminate/Database/Connection->run('insert into \"ex...', Array, Object(Closure))
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(524): Illuminate/Database/Connection->statement('insert into \"ex...', Array)
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate/Database/Connection->insert('insert into \"ex...', Array)
+#4 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3766): Illuminate/Database/Query/Processors/Processor->processInsertGetId(Object(Illuminate/Database/Query/Builder), 'insert into \"ex...', Array, 'id')
+#5 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2120): Illuminate/Database/Query/Builder->insertGetId(Array, 'id')
+#6 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1359): Illuminate/Database/Eloquent/Builder->__call('insertGetId', Array)
+#7 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1324): Illuminate/Database/Eloquent/Model->insertAndSetId(Object(Illuminate/Database/Eloquent/Builder), Array)
+#8 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1163): Illuminate/Database/Eloquent/Model->performInsert(Object(Illuminate/Database/Eloquent/Builder))
+#9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1128): Illuminate/Database/Eloquent/Model->save()
+#10 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/helpers.php(399): Illuminate/Database/Eloquent/Builder->Illuminate/Database/Eloquent/{closure}(Object(App/Models/Expense))
+#11 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1127): tap(Object(App/Models/Expense), Object(Closure))
+#12 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(23): Illuminate/Database/Eloquent/Builder->create(Array)
+#13 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2372): Illuminate/Database/Eloquent/Model->forwardCallTo(Object(Illuminate/Database/Eloquent/Builder), 'create', Array)
+#14 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2384): Illuminate/Database/Eloquent/Model->__call('create', Array)
+#15 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(67): Illuminate/Database/Eloquent/Model::__callStatic('create', Array)
+#16 {main}
+
+[previous exception] [object] (PDOException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php:571)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(571): PDOStatement->execute()
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(812): Illuminate/Database/Connection->Illuminate/Database/{closure}('insert into \"ex...', Array)
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('insert into \"ex...', Array, Object(Closure))
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(560): Illuminate/Database/Connection->run('insert into \"ex...', Array, Object(Closure))
+#4 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(524): Illuminate/Database/Connection->statement('insert into \"ex...', Array)
+#5 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate/Database/Connection->insert('insert into \"ex...', Array)
+#6 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3766): Illuminate/Database/Query/Processors/Processor->processInsertGetId(Object(Illuminate/Database/Query/Builder), 'insert into \"ex...', Array, 'id')
+#7 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2120): Illuminate/Database/Query/Builder->insertGetId(Array, 'id')
+#8 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1359): Illuminate/Database/Eloquent/Builder->__call('insertGetId', Array)
+#9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1324): Illuminate/Database/Eloquent/Model->insertAndSetId(Object(Illuminate/Database/Eloquent/Builder), Array)
+#10 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1163): Illuminate/Database/Eloquent/Model->performInsert(Object(Illuminate/Database/Eloquent/Builder))
+#11 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1128): Illuminate/Database/Eloquent/Model->save()
+#12 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/helpers.php(399): Illuminate/Database/Eloquent/Builder->Illuminate/Database/Eloquent/{closure}(Object(App/Models/Expense))
+#13 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1127): tap(Object(App/Models/Expense), Object(Closure))
+#14 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(23): Illuminate/Database/Eloquent/Builder->create(Array)
+#15 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2372): Illuminate/Database/Eloquent/Model->forwardCallTo(Object(Illuminate/Database/Eloquent/Builder), 'create', Array)
+#16 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2384): Illuminate/Database/Eloquent/Model->__call('create', Array)
+#17 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(67): Illuminate/Database/Eloquent/Model::__callStatic('create', Array)
+#18 {main}
+"} 
+[2026-02-25 07:12:59] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category (Connection: sqlite, SQL: insert into "expenses" ("business_id", "category_id", "amount", "date", "description", "reference_number", "updated_at", "created_at") values (5, 2, 45.5, 2026-02-25 07:12:59, Monthly Bank Maintenance Fee, FEE-999, 2026-02-25 07:12:59, 2026-02-25 07:12:59)) {"userId":6,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category (Connection: sqlite, SQL: insert into \"expenses\" (\"business_id\", \"category_id\", \"amount\", \"date\", \"description\", \"reference_number\", \"updated_at\", \"created_at\") values (5, 2, 45.5, 2026-02-25 07:12:59, Monthly Bank Maintenance Fee, FEE-999, 2026-02-25 07:12:59, 2026-02-25 07:12:59)) at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('insert into \"ex...', Array, Object(Closure))
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(560): Illuminate/Database/Connection->run('insert into \"ex...', Array, Object(Closure))
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(524): Illuminate/Database/Connection->statement('insert into \"ex...', Array)
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate/Database/Connection->insert('insert into \"ex...', Array)
+#4 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3766): Illuminate/Database/Query/Processors/Processor->processInsertGetId(Object(Illuminate/Database/Query/Builder), 'insert into \"ex...', Array, 'id')
+#5 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2120): Illuminate/Database/Query/Builder->insertGetId(Array, 'id')
+#6 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1359): Illuminate/Database/Eloquent/Builder->__call('insertGetId', Array)
+#7 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1324): Illuminate/Database/Eloquent/Model->insertAndSetId(Object(Illuminate/Database/Eloquent/Builder), Array)
+#8 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1163): Illuminate/Database/Eloquent/Model->performInsert(Object(Illuminate/Database/Eloquent/Builder))
+#9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1128): Illuminate/Database/Eloquent/Model->save()
+#10 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/helpers.php(399): Illuminate/Database/Eloquent/Builder->Illuminate/Database/Eloquent/{closure}(Object(App/Models/Expense))
+#11 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1127): tap(Object(App/Models/Expense), Object(Closure))
+#12 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(23): Illuminate/Database/Eloquent/Builder->create(Array)
+#13 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2372): Illuminate/Database/Eloquent/Model->forwardCallTo(Object(Illuminate/Database/Eloquent/Builder), 'create', Array)
+#14 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2384): Illuminate/Database/Eloquent/Model->__call('create', Array)
+#15 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(67): Illuminate/Database/Eloquent/Model::__callStatic('create', Array)
+#16 {main}
+
+[previous exception] [object] (PDOException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php:571)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(571): PDOStatement->execute()
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(812): Illuminate/Database/Connection->Illuminate/Database/{closure}('insert into \"ex...', Array)
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('insert into \"ex...', Array, Object(Closure))
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(560): Illuminate/Database/Connection->run('insert into \"ex...', Array, Object(Closure))
+#4 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(524): Illuminate/Database/Connection->statement('insert into \"ex...', Array)
+#5 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate/Database/Connection->insert('insert into \"ex...', Array)
+#6 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3766): Illuminate/Database/Query/Processors/Processor->processInsertGetId(Object(Illuminate/Database/Query/Builder), 'insert into \"ex...', Array, 'id')
+#7 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2120): Illuminate/Database/Query/Builder->insertGetId(Array, 'id')
+#8 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1359): Illuminate/Database/Eloquent/Builder->__call('insertGetId', Array)
+#9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1324): Illuminate/Database/Eloquent/Model->insertAndSetId(Object(Illuminate/Database/Eloquent/Builder), Array)
+#10 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1163): Illuminate/Database/Eloquent/Model->performInsert(Object(Illuminate/Database/Eloquent/Builder))
+#11 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1128): Illuminate/Database/Eloquent/Model->save()
+#12 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/helpers.php(399): Illuminate/Database/Eloquent/Builder->Illuminate/Database/Eloquent/{closure}(Object(App/Models/Expense))
+#13 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1127): tap(Object(App/Models/Expense), Object(Closure))
+#14 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(23): Illuminate/Database/Eloquent/Builder->create(Array)
+#15 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2372): Illuminate/Database/Eloquent/Model->forwardCallTo(Object(Illuminate/Database/Eloquent/Builder), 'create', Array)
+#16 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2384): Illuminate/Database/Eloquent/Model->__call('create', Array)
+#17 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(67): Illuminate/Database/Eloquent/Model::__callStatic('create', Array)
+#18 {main}
+"} 
+[2026-02-25 07:13:34] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category (Connection: sqlite, SQL: insert into "expenses" ("business_id", "category_id", "amount", "date", "description", "reference_number", "updated_at", "created_at") values (6, 3, 45.5, 2026-02-25 07:13:34, Monthly Bank Maintenance Fee, FEE-999, 2026-02-25 07:13:34, 2026-02-25 07:13:34)) {"userId":7,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category (Connection: sqlite, SQL: insert into \"expenses\" (\"business_id\", \"category_id\", \"amount\", \"date\", \"description\", \"reference_number\", \"updated_at\", \"created_at\") values (6, 3, 45.5, 2026-02-25 07:13:34, Monthly Bank Maintenance Fee, FEE-999, 2026-02-25 07:13:34, 2026-02-25 07:13:34)) at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('insert into \"ex...', Array, Object(Closure))
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(560): Illuminate/Database/Connection->run('insert into \"ex...', Array, Object(Closure))
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(524): Illuminate/Database/Connection->statement('insert into \"ex...', Array)
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate/Database/Connection->insert('insert into \"ex...', Array)
+#4 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3766): Illuminate/Database/Query/Processors/Processor->processInsertGetId(Object(Illuminate/Database/Query/Builder), 'insert into \"ex...', Array, 'id')
+#5 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2120): Illuminate/Database/Query/Builder->insertGetId(Array, 'id')
+#6 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1359): Illuminate/Database/Eloquent/Builder->__call('insertGetId', Array)
+#7 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1324): Illuminate/Database/Eloquent/Model->insertAndSetId(Object(Illuminate/Database/Eloquent/Builder), Array)
+#8 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1163): Illuminate/Database/Eloquent/Model->performInsert(Object(Illuminate/Database/Eloquent/Builder))
+#9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1128): Illuminate/Database/Eloquent/Model->save()
+#10 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/helpers.php(399): Illuminate/Database/Eloquent/Builder->Illuminate/Database/Eloquent/{closure}(Object(App/Models/Expense))
+#11 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1127): tap(Object(App/Models/Expense), Object(Closure))
+#12 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(23): Illuminate/Database/Eloquent/Builder->create(Array)
+#13 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2372): Illuminate/Database/Eloquent/Model->forwardCallTo(Object(Illuminate/Database/Eloquent/Builder), 'create', Array)
+#14 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2384): Illuminate/Database/Eloquent/Model->__call('create', Array)
+#15 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(67): Illuminate/Database/Eloquent/Model::__callStatic('create', Array)
+#16 {main}
+
+[previous exception] [object] (PDOException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php:571)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(571): PDOStatement->execute()
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(812): Illuminate/Database/Connection->Illuminate/Database/{closure}('insert into \"ex...', Array)
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('insert into \"ex...', Array, Object(Closure))
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(560): Illuminate/Database/Connection->run('insert into \"ex...', Array, Object(Closure))
+#4 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(524): Illuminate/Database/Connection->statement('insert into \"ex...', Array)
+#5 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate/Database/Connection->insert('insert into \"ex...', Array)
+#6 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3766): Illuminate/Database/Query/Processors/Processor->processInsertGetId(Object(Illuminate/Database/Query/Builder), 'insert into \"ex...', Array, 'id')
+#7 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2120): Illuminate/Database/Query/Builder->insertGetId(Array, 'id')
+#8 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1359): Illuminate/Database/Eloquent/Builder->__call('insertGetId', Array)
+#9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1324): Illuminate/Database/Eloquent/Model->insertAndSetId(Object(Illuminate/Database/Eloquent/Builder), Array)
+#10 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1163): Illuminate/Database/Eloquent/Model->performInsert(Object(Illuminate/Database/Eloquent/Builder))
+#11 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1128): Illuminate/Database/Eloquent/Model->save()
+#12 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/helpers.php(399): Illuminate/Database/Eloquent/Builder->Illuminate/Database/Eloquent/{closure}(Object(App/Models/Expense))
+#13 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1127): tap(Object(App/Models/Expense), Object(Closure))
+#14 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(23): Illuminate/Database/Eloquent/Builder->create(Array)
+#15 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2372): Illuminate/Database/Eloquent/Model->forwardCallTo(Object(Illuminate/Database/Eloquent/Builder), 'create', Array)
+#16 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2384): Illuminate/Database/Eloquent/Model->__call('create', Array)
+#17 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(67): Illuminate/Database/Eloquent/Model::__callStatic('create', Array)
+#18 {main}
+"} 
+[2026-02-25 07:14:17] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category (Connection: sqlite, SQL: insert into "expenses" ("business_id", "category_id", "amount", "date", "description", "reference_number", "updated_at", "created_at") values (7, 4, 45.5, 2026-02-25 07:14:17, Monthly Bank Maintenance Fee, FEE-999, 2026-02-25 07:14:17, 2026-02-25 07:14:17)) {"userId":8,"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category (Connection: sqlite, SQL: insert into \"expenses\" (\"business_id\", \"category_id\", \"amount\", \"date\", \"description\", \"reference_number\", \"updated_at\", \"created_at\") values (7, 4, 45.5, 2026-02-25 07:14:17, Monthly Bank Maintenance Fee, FEE-999, 2026-02-25 07:14:17, 2026-02-25 07:14:17)) at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php:825)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('insert into \"ex...', Array, Object(Closure))
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(560): Illuminate/Database/Connection->run('insert into \"ex...', Array, Object(Closure))
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(524): Illuminate/Database/Connection->statement('insert into \"ex...', Array)
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate/Database/Connection->insert('insert into \"ex...', Array)
+#4 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3766): Illuminate/Database/Query/Processors/Processor->processInsertGetId(Object(Illuminate/Database/Query/Builder), 'insert into \"ex...', Array, 'id')
+#5 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2120): Illuminate/Database/Query/Builder->insertGetId(Array, 'id')
+#6 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1359): Illuminate/Database/Eloquent/Builder->__call('insertGetId', Array)
+#7 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1324): Illuminate/Database/Eloquent/Model->insertAndSetId(Object(Illuminate/Database/Eloquent/Builder), Array)
+#8 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1163): Illuminate/Database/Eloquent/Model->performInsert(Object(Illuminate/Database/Eloquent/Builder))
+#9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1128): Illuminate/Database/Eloquent/Model->save()
+#10 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/helpers.php(399): Illuminate/Database/Eloquent/Builder->Illuminate/Database/Eloquent/{closure}(Object(App/Models/Expense))
+#11 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1127): tap(Object(App/Models/Expense), Object(Closure))
+#12 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(23): Illuminate/Database/Eloquent/Builder->create(Array)
+#13 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2372): Illuminate/Database/Eloquent/Model->forwardCallTo(Object(Illuminate/Database/Eloquent/Builder), 'create', Array)
+#14 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2384): Illuminate/Database/Eloquent/Model->__call('create', Array)
+#15 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(67): Illuminate/Database/Eloquent/Model::__callStatic('create', Array)
+#16 {main}
+
+[previous exception] [object] (PDOException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: expenses.category at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php:571)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(571): PDOStatement->execute()
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(812): Illuminate/Database/Connection->Illuminate/Database/{closure}('insert into \"ex...', Array)
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(779): Illuminate/Database/Connection->runQueryCallback('insert into \"ex...', Array, Object(Closure))
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(560): Illuminate/Database/Connection->run('insert into \"ex...', Array, Object(Closure))
+#4 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Connection.php(524): Illuminate/Database/Connection->statement('insert into \"ex...', Array)
+#5 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate/Database/Connection->insert('insert into \"ex...', Array)
+#6 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3766): Illuminate/Database/Query/Processors/Processor->processInsertGetId(Object(Illuminate/Database/Query/Builder), 'insert into \"ex...', Array, 'id')
+#7 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(2120): Illuminate/Database/Query/Builder->insertGetId(Array, 'id')
+#8 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1359): Illuminate/Database/Eloquent/Builder->__call('insertGetId', Array)
+#9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1324): Illuminate/Database/Eloquent/Model->insertAndSetId(Object(Illuminate/Database/Eloquent/Builder), Array)
+#10 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1163): Illuminate/Database/Eloquent/Model->performInsert(Object(Illuminate/Database/Eloquent/Builder))
+#11 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1128): Illuminate/Database/Eloquent/Model->save()
+#12 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/helpers.php(399): Illuminate/Database/Eloquent/Builder->Illuminate/Database/Eloquent/{closure}(Object(App/Models/Expense))
+#13 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1127): tap(Object(App/Models/Expense), Object(Closure))
+#14 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php(23): Illuminate/Database/Eloquent/Builder->create(Array)
+#15 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2372): Illuminate/Database/Eloquent/Model->forwardCallTo(Object(Illuminate/Database/Eloquent/Builder), 'create', Array)
+#16 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(2384): Illuminate/Database/Eloquent/Model->__call('create', Array)
+#17 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(67): Illuminate/Database/Eloquent/Model::__callStatic('create', Array)
+#18 {main}
+"} 
+[2026-02-25 07:16:17] local.ERROR: file_put_contents(C:\Users\user\Downloads\menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with\cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e\storage\app/test_statement.csv): Failed to open stream: No such file or directory {"userId":9,"exception":"[object] (ErrorException(code: 0): file_put_contents(C:\\Users\\user\\Downloads\\menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with\\cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e\\storage\\app/test_statement.csv): Failed to open stream: No such file or directory at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php:84)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate/Foundation/Bootstrap/HandleExceptions->handleError(2, 'file_put_conten...', 'C://Users//user//D...', 84)
+#1 [internal function]: Illuminate/Foundation/Bootstrap/HandleExceptions->Illuminate/Foundation/Bootstrap/{closure}(2, 'file_put_conten...', 'C://Users//user//D...', 84)
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_csv.php(84): file_put_contents('C://Users//user//D...', 'Datum,Verwendun...')
+#3 {main}
+"} 
+[2026-02-25 07:34:21] local.ERROR: Command "tinker" is not defined. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"tinker\" is not defined. at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php:759)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php(298): Symfony/Component/Console/Application->find('tinker')
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php(195): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/artisan(12): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#4 {main}
+"} 
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:43:14] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:44:06] local.ERROR: Command "tinker" is not defined. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"tinker\" is not defined. at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php:759)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php(298): Symfony/Component/Console/Application->find('tinker')
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php(195): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/artisan(12): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#4 {main}
+"} 
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:04] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:45:48] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:38] local.ERROR: Command "tinker" is not defined. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"tinker\" is not defined. at C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php:759)
+[stacktrace]
+#0 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php(298): Symfony/Component/Console/Application->find('tinker')
+#1 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/symfony/console/Application.php(195): Symfony/Component/Console/Application->doRun(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#2 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(198): Symfony/Component/Console/Application->run(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#3 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/artisan(12): Illuminate/Foundation/Console/Kernel->handle(Object(Symfony/Component/Console/Input/ArgvInput), Object(Symfony/Component/Console/Output/ConsoleOutput))
+#4 {main}
+"} 
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  
+[2026-02-25 07:46:57] local.ERROR: AI Service Error: OpenAI API key is not configured.  

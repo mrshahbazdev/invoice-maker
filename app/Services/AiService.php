@@ -27,11 +27,11 @@ class AiService
 
         $this->openaiKey = ($user && $user->openai_api_key)
             ? $user->openai_api_key
-            : Setting::get('ai.openai_api_key');
+            : (Setting::get('ai.openai_api_key') ?: env('OPENAI_API_KEY'));
 
         $this->anthropicKey = ($user && $user->anthropic_api_key)
             ? $user->anthropic_api_key
-            : Setting::get('ai.anthropic_api_key');
+            : (Setting::get('ai.anthropic_api_key') ?: env('ANTHROPIC_API_KEY'));
     }
 
     public function generateText(string $prompt, ?string $imagePath = null): string
