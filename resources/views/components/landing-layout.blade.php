@@ -259,6 +259,8 @@
                     class="block text-lg font-medium text-txmain">{{ __('Features') }}</a>
                 <a href="/#how-it-works" @click="mobileMenuOpen = false"
                     class="block text-lg font-medium text-txmain">{{ __('How it Works') }}</a>
+                <a href="{{ route('docs.index', ['lang' => app()->getLocale()]) }}" @click="mobileMenuOpen = false"
+                    class="block text-lg font-medium text-txmain">{{ __('Help Center') }}</a>
                 <a href="{{ route('public.blog.index') }}" @click="mobileMenuOpen = false"
                     class="block text-lg font-medium text-txmain">{{ __('Blog') }}</a>
                 <div class="pt-6 border-t border-gray-100 space-y-4">
