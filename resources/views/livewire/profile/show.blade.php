@@ -211,6 +211,51 @@
                 </section>
             </div>
 
+            <!-- Payment Settings Section -->
+            <div class="p-4 sm:p-8 bg-card shadow sm:rounded-lg">
+                <section class="max-w-xl">
+                    <header>
+                        <h2 class="text-lg font-medium text-txmain">
+                            {{ __('Payment Integration (Stripe)') }}
+                        </h2>
+                        <p class="mt-1 text-sm text-txmain">
+                            {{ __('Connect your Stripe account to allow clients to pay invoices directly via Credit Card or Apple/Google Pay. Enter your standard API keys below.') }}
+                        </p>
+                    </header>
+
+                    <form wire:submit="updatePaymentSettings" class="mt-6 space-y-6">
+                        <div>
+                            <label for="stripe_public_key" class="block font-medium text-sm text-txmain">{{ __('Stripe Publishable Key') }}</label>
+                            <input wire:model="stripe_public_key" id="stripe_public_key" type="text"
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full bg-page font-mono text-sm"
+                                placeholder="pk_live_..." />
+                            @error('stripe_public_key') <span class="text-sm text-red-600 mt-2">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div>
+                            <label for="stripe_secret_key" class="block font-medium text-sm text-txmain">{{ __('Stripe Secret Key') }}</label>
+                            <input wire:model="stripe_secret_key" id="stripe_secret_key" type="password"
+                                class="border-gray-300 focus:border-brand-500 focus:ring-brand-500 rounded-md shadow-sm mt-1 block w-full bg-page font-mono text-sm"
+                                placeholder="sk_live_..." />
+                            @error('stripe_secret_key') <span class="text-sm text-red-600 mt-2">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <button type="submit"
+                                class="inline-flex items-center px-4 py-2 bg-brand-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-brand-700 focus:bg-brand-700 active:bg-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                {{ __('Save Payment Settings') }}
+                            </button>
+
+                            @if (session()->has('payment_message'))
+                                <p class="text-sm text-green-600">
+                                    {{ session('payment_message') }}
+                                </p>
+                            @endif
+                        </div>
+                    </form>
+                </section>
+            </div>
+
             <!-- Theme Preferences Section -->
             <div class="p-4 sm:p-8 bg-card shadow sm:rounded-lg">
                 <section class="max-w-xl">

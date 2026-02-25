@@ -45,6 +45,8 @@ class Business extends Model
         'page_bg_color_id',
         'card_bg_color_id',
         'text_color_id',
+        'stripe_public_key',
+        'stripe_secret_key',
     ];
 
     protected $casts = [

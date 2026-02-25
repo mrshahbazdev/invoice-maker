@@ -165,4 +165,7 @@ Route::middleware(['auth', 'is_super_admin'])->prefix('admin')->name('admin.')->
     });
 });
 
+Route::get('/pay/{invoice:uuid}', [\App\Http\Controllers\PaymentController::class, 'checkout'])->name('payment.checkout');
+Route::get('/pay/{invoice:uuid}/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
+
 Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');

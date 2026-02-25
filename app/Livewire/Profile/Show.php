@@ -40,6 +40,10 @@ class Show extends Component
     public ?int $card_bg_color_id = null;
     public ?int $text_color_id = null;
 
+    // Payment Settings
+    public ?string $stripe_public_key = '';
+    public ?string $stripe_secret_key = '';
+
     // AI Theme Generator
     public string $aiThemePrompt = '';
 
@@ -55,6 +59,8 @@ class Show extends Component
         $this->page_bg_color_id = $user->business->page_bg_color_id ?? null;
         $this->card_bg_color_id = $user->business->card_bg_color_id ?? null;
         $this->text_color_id = $user->business->text_color_id ?? null;
+        $this->stripe_public_key = $user->business->stripe_public_key ?? '';
+        $this->stripe_secret_key = $user->business->stripe_secret_key ?? '';
     }
 
     public function updateProfileInformation()
@@ -155,6 +161,23 @@ class Show extends Component
         } catch (\Exception $e) {
             session()->flash('theme_error', __('Failed to generate AI theme: ') . $e->getMessage());
         }
+    }
+
+    public function updatePaymentSettings()
+    {
+        $this->validate([
+            'stripe_public_key' => 'nullable|string',
+            'stripe_secret_key' => 'nullable|string',
+        ]);
+
+        $business = Auth::user()->business;
+        if ($business) {
+            $business->stripe_public_key = $this->stripe_public_key;
+            $business->stripe_secret_key = $this->stripe_secret_key;
+            $business->save();
+        }
+
+        session()->flash('payment_message', __('Payment Settings updated successfully.'));
     }
 
     public function updatePassword()
