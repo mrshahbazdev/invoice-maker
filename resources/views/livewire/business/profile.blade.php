@@ -217,7 +217,8 @@
                                 <h4 class="text-sm font-semibold text-txmain">{{ __('Enable Automated Reminders') }}
                                 </h4>
                                 <p class="text-xs text-gray-500">
-                                    {{ __('Automatically email clients when their invoices become overdue') }}</p>
+                                    {{ __('Automatically email clients when their invoices become overdue') }}
+                                </p>
                             </div>
                             <button type="button"
                                 wire:click="$set('enable_automated_reminders', {{ !$enable_automated_reminders ? 'true' : 'false' }})"
@@ -239,6 +240,29 @@
                             @enderror
                         </div>
                     @endif
+                </div>
+            </div>
+
+            <div class="mb-8 border-t border-gray-200 pt-8">
+                <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('B2B Network Sync') }}</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h4 class="text-sm font-semibold text-txmain">{{ __('Accept Network Invoices') }}
+                                </h4>
+                                <p class="text-xs text-gray-500">
+                                    {{ __('Automatically record incoming platform invoices directly into your Expenses.') }}
+                                </p>
+                            </div>
+                            <button type="button"
+                                wire:click="$set('accept_network_invoices', {{ !$accept_network_invoices ? 'true' : 'false' }})"
+                                class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-2 {{ $accept_network_invoices ? 'bg-brand-600' : 'bg-gray-200' }}">
+                                <span
+                                    class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-card shadow ring-0 transition duration-200 ease-in-out {{ $accept_network_invoices ? 'translate-x-5' : 'translate-x-0' }}"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -46,6 +46,7 @@ class Profile extends Component
     public bool $stripe_onboarding_complete = false;
     public bool $enable_automated_reminders = true;
     public int $reminder_days_interval = 7;
+    public bool $accept_network_invoices = false;
 
     protected function rules(): array
     {
@@ -78,6 +79,7 @@ class Profile extends Component
             'logo' => 'nullable|image|max:2048',
             'enable_automated_reminders' => 'boolean',
             'reminder_days_interval' => 'required_if:enable_automated_reminders,true|integer|min:1|max:365',
+            'accept_network_invoices' => 'boolean',
         ];
     }
 
@@ -113,6 +115,7 @@ class Profile extends Component
             $this->stripe_onboarding_complete = $this->business->stripe_onboarding_complete;
             $this->enable_automated_reminders = $this->business->enable_automated_reminders ?? true;
             $this->reminder_days_interval = $this->business->reminder_days_interval ?? 7;
+            $this->accept_network_invoices = $this->business->accept_network_invoices ?? false;
         } else {
             // Defaults for new business
             $this->name = Auth::user()->name;
@@ -153,6 +156,9 @@ class Profile extends Component
             'smtp_encryption' => $this->smtp_encryption,
             'smtp_from_address' => $this->smtp_from_address,
             'smtp_from_name' => $this->smtp_from_name,
+            'enable_automated_reminders' => $this->enable_automated_reminders,
+            'reminder_days_interval' => $this->reminder_days_interval,
+            'accept_network_invoices' => $this->accept_network_invoices,
         ];
 
         if ($this->logo) {

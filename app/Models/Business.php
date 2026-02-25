@@ -49,9 +49,12 @@ class Business extends Model
         'stripe_secret_key',
         'enable_automated_reminders',
         'reminder_days_interval',
+        'accept_network_invoices',
     ];
 
     protected $casts = [
+        'enable_automated_reminders' => 'boolean',
+        'accept_network_invoices' => 'boolean',
     ];
 
     protected static function booted()

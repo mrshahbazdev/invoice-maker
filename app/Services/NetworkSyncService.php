@@ -33,6 +33,11 @@ class NetworkSyncService
                 return false;
             }
 
+            // 4. Ensure the receiving business has opted-in to accept network invoices
+            if (!$receiverBusiness->accept_network_invoices) {
+                return false;
+            }
+
             // 4. Upsert an Expense record in the receiver's business
             Expense::updateOrCreate(
                 [
