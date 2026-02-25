@@ -81,6 +81,18 @@
                     {{ __('Invoices') }}
                 </a>
 
+                @if(auth()->user()->clients()->exists())
+                    <a href="{{ route('client.dashboard') }}"
+                        class="flex items-center px-4 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('client.dashboard') ? 'bg-brand-50 text-brand-700' : 'text-txmain hover:bg-page' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z">
+                            </path>
+                        </svg>
+                        {{ __('My Purchases') }}
+                    </a>
+                @endif
+
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('settings.team') }}" wire:navigate
                         class="flex items-center px-4 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('settings.team') ? 'bg-brand-50 text-brand-700' : 'text-txmain hover:bg-page' }}">

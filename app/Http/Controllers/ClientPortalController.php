@@ -17,9 +17,22 @@ class ClientPortalController
             abort(404);
         }
 
-        // If client already has a user account, redirect to login
-        if ($invoice->client->user_id) {
-            return redirect()->route('login')->with('status', 'Please login to view your invoices.');
+        $existingUser = \App\Models\User::where('email', $invoice->client->email)->first();
+
+        // If client already has a user account linked, or an account with this email exists
+        if ($invoice->client->user_id || $existingUser) {
+
+            // Link it if it's not already linked
+            if ($existingUser && !$invoice->client->user_id) {
+                $invoice->client->update(['user_id' => $existingUser->id]);
+            }
+
+            // If they are already logged in as that user, take them to the client dashboard directly
+            if (auth()->check() && auth()->user()->id === $existingUser->id) {
+                return redirect()->route('client.dashboard')->with('success', 'Invoice has been saved to your account!');
+            }
+
+            return redirect()->route('login')->with('success', 'Your email is already registered. We have linked this invoice to your account. Please log in to view it.');
         }
 
         return view('client-portal.register', compact('invoice'));
@@ -27,9 +40,18 @@ class ClientPortalController
 
     public function register(Request $request, Invoice $invoice)
     {
-        // Ensure the invoice belongs to a client without an account
-        if (!$invoice->client || $invoice->client->user_id) {
+        if (!$invoice->client) {
             abort(403, 'Invalid registration link.');
+        }
+
+        $existingUser = \App\Models\User::where('email', $invoice->client->email)->first();
+
+        // If client already has a user account linked, or an account with this email exists
+        if ($invoice->client->user_id || $existingUser) {
+            if ($existingUser && !$invoice->client->user_id) {
+                $invoice->client->update(['user_id' => $existingUser->id]);
+            }
+            return redirect()->route('login')->with('success', 'Your email is already registered. We have linked this invoice to your account. Please log in to view it.');
         }
 
         $request->validate([
@@ -57,9 +79,12 @@ class ClientPortalController
     {
         $user = auth()->user();
 
-        // Ensure only clients access this
-        if ($user->role !== 'client') {
-            return redirect()->route('dashboard'); // Redirect business owners to their app dashboard
+        // Allow both 'client' role and other roles (like business owners) to access this dashboard, 
+        // as a business owner on the platform might be a client of another business on the platform.
+        $clientIds = $user->clients()->pluck('id');
+
+        if ($clientIds->isEmpty() && $user->role !== 'client') {
+            return redirect()->route('dashboard'); // Redirect business owners back to their main app if they have no purchases
         }
 
         // Fetch all invoices associated with this client's user_id
