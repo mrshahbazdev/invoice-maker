@@ -2,14 +2,14 @@
 
 <div>
  <div class="mb-8">
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Invoice Templates') }}</h2>
- <p class="text-gray-600">{{ __('Customize your invoice templates') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Invoice Templates') }}</h2>
+ <p class="text-txmain">{{ __('Customize your invoice templates') }}</p>
  </div>
 
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
  @forelse($templates as $template)
  <div
- class="bg-white rounded-lg shadow overflow-hidden {{ $template->is_default ? 'ring-2 ring-brand-500' : '' }}">
+ class="bg-card rounded-lg shadow overflow-hidden {{ $template->is_default ? 'ring-2 ring-brand-500' : '' }}">
  <div class="h-32 flex items-center justify-center" style="background: {{ $template->primary_color }}20;">
  <div class="text-center">
  <div class="text-3xl mb-2">📄</div>
@@ -22,7 +22,7 @@
  </div>
  </div>
  <div class="p-4">
- <div class="text-sm text-gray-600 mb-4">
+ <div class="text-sm text-txmain mb-4">
  <p>{{ __('Color') }}: <span class="inline-block w-4 h-4 rounded"
  style="background: {{ $template->primary_color }};"></span> {{ $template->primary_color }}
  </p>

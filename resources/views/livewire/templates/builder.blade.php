@@ -2,24 +2,24 @@
 
 <div>
  <div class="mb-8">
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Edit Template') }}</h2>
- <p class="text-gray-600">{{ __('Customize invoice appearance') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Edit Template') }}</h2>
+ <p class="text-txmain">{{ __('Customize invoice appearance') }}</p>
  </div>
 
  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
- <div class="bg-white rounded-lg shadow p-6">
- <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Template Settings') }}</h3>
+ <div class="bg-card rounded-lg shadow p-6">
+ <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Template Settings') }}</h3>
 
  <form wire:submit="save">
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Template Name') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Template Name') }}</label>
  <input type="text" wire:model.live.debounce.300ms="name"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Primary Color') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Primary Color') }}</label>
  <div class="flex gap-2">
  <input type="color" wire:model.live="primary_color"
  class="w-12 h-10 border border-gray-300 rounded cursor-pointer">
@@ -31,7 +31,7 @@
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Font Family') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Font Family') }}</label>
  <select wire:model.live="font_family"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="sans">{{ __('Sans Serif (Helvetica, Arial)') }}</option>
@@ -42,7 +42,7 @@
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Logo Position') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Logo Position') }}</label>
  <select wire:model.live="logo_position"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="left">{{ __('Left') }}</option>
@@ -53,7 +53,7 @@
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Header Style') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Header Style') }}</label>
  <select wire:model.live="header_style"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="default">{{ __('Default') }}</option>
@@ -64,28 +64,28 @@
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('Display Options') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-2">{{ __('Display Options') }}</label>
  <div class="flex items-center gap-6">
  <label class="flex items-center">
  <input type="checkbox" wire:model.live="show_tax"
  class="rounded border-gray-300 text-brand-600 shadow-sm focus:border-brand-300 focus:ring focus:ring-brand-200 focus:ring-opacity-50">
- <span class="ml-2 text-sm text-gray-600">{{ __('Show Tax Column') }}</span>
+ <span class="ml-2 text-sm text-txmain">{{ __('Show Tax Column') }}</span>
  </label>
  <label class="flex items-center">
  <input type="checkbox" wire:model.live="show_discount"
  class="rounded border-gray-300 text-brand-600 shadow-sm focus:border-brand-300 focus:ring focus:ring-brand-200 focus:ring-opacity-50">
- <span class="ml-2 text-sm text-gray-600">{{ __('Show Discount') }}</span>
+ <span class="ml-2 text-sm text-txmain">{{ __('Show Discount') }}</span>
  </label>
  <label class="flex items-center">
  <input type="checkbox" wire:model.live="enable_qr"
  class="rounded border-gray-300 text-brand-600 shadow-sm focus:border-brand-300 focus:ring focus:ring-brand-200 focus:ring-opacity-50">
- <span class="ml-2 text-sm text-gray-600">{{ __('Enable QR Code') }}</span>
+ <span class="ml-2 text-sm text-txmain">{{ __('Enable QR Code') }}</span>
  </label>
  </div>
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Payment Terms') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Payment Terms') }}</label>
  <textarea wire:model.live.debounce.500ms="payment_terms" rows="2"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('e.g. Net 30, Due on Receipt...') }}"></textarea>
@@ -93,7 +93,7 @@
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Footer Message') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Footer Message') }}</label>
  <textarea wire:model.live.debounce.500ms="footer_message" rows="2"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('Thank you for your business!') }}"></textarea>
@@ -101,7 +101,7 @@
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Signature Upload') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Signature Upload') }}</label>
  @if($signature_path)
  <div class="mb-4">
  <img src="{{ asset('storage/' . $signature_path) }}" alt="Signature"
@@ -122,48 +122,48 @@
  </form>
  </div>
 
- <div class="bg-white rounded-lg shadow p-6">
- <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Preview') }}</h3>
- <div class="border rounded-lg p-4 font-{{ $font_family }} {{ $header_style === 'bold' ? 'bg-gray-50' : '' }}"
+ <div class="bg-card rounded-lg shadow p-6">
+ <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Preview') }}</h3>
+ <div class="border rounded-lg p-4 font-{{ $font_family }} {{ $header_style === 'bold' ? 'bg-page' : '' }}"
  style="border-color: {{ $primary_color }};">
  <div
  class="flex justify-between items-start mb-6 {{ $logo_position === 'right' ? 'flex-row-reverse text-right' : ($logo_position === 'center' ? 'flex-col items-center text-center' : '') }}">
  <div>
  <div class="text-2xl font-bold mb-2" style="color: {{ $primary_color }};">
  {{ __('Your Business') }}</div>
- <p class="text-sm text-gray-600">business@example.com</p>
- <p class="text-sm text-gray-600">+1 (555) 123-4567</p>
+ <p class="text-sm text-txmain">business@example.com</p>
+ <p class="text-sm text-txmain">+1 (555) 123-4567</p>
  </div>
  <div class="text-right">
- <div class="text-xl font-bold text-gray-900">{{ __('INVOICE') }}</div>
- <p class="text-sm text-gray-600">INV-2024-0001</p>
- <p class="text-sm text-gray-600">Jan 15, 2024</p>
+ <div class="text-xl font-bold text-txmain">{{ __('INVOICE') }}</div>
+ <p class="text-sm text-txmain">INV-2024-0001</p>
+ <p class="text-sm text-txmain">Jan 15, 2024</p>
  </div>
  </div>
 
  <div class="grid grid-cols-2 gap-4 mb-6">
  <div>
  <p class="text-xs font-bold text-gray-500 uppercase">{{ __('Bill To') }}</p>
- <p class="font-medium text-gray-900">John Doe</p>
- <p class="text-sm text-gray-600">Acme Corporation</p>
- <p class="text-sm text-gray-600">john@example.com</p>
+ <p class="font-medium text-txmain">John Doe</p>
+ <p class="text-sm text-txmain">Acme Corporation</p>
+ <p class="text-sm text-txmain">john@example.com</p>
  </div>
  <div>
  <p class="text-xs font-bold text-gray-500 uppercase">{{ __('Ship To') }}</p>
- <p class="font-medium text-gray-900">Acme Corporation</p>
- <p class="text-sm text-gray-600">123 Business Street</p>
- <p class="text-sm text-gray-600">San Francisco, CA 94102</p>
+ <p class="font-medium text-txmain">Acme Corporation</p>
+ <p class="text-sm text-txmain">123 Business Street</p>
+ <p class="text-sm text-txmain">San Francisco, CA 94102</p>
  </div>
  </div>
 
  <table class="w-full text-sm mb-4">
  <thead>
  <tr class="border-b-2" style="border-color: {{ $primary_color }};">
- <th class="text-left py-2 font-bold text-gray-600 uppercase text-xs">{{ __('Description') }}
+ <th class="text-left py-2 font-bold text-txmain uppercase text-xs">{{ __('Description') }}
  </th>
- <th class="text-right py-2 font-bold text-gray-600 uppercase text-xs">{{ __('Qty') }}</th>
- <th class="text-right py-2 font-bold text-gray-600 uppercase text-xs">{{ __('Price') }}</th>
- <th class="text-right py-2 font-bold text-gray-600 uppercase text-xs">{{ __('Total') }}</th>
+ <th class="text-right py-2 font-bold text-txmain uppercase text-xs">{{ __('Qty') }}</th>
+ <th class="text-right py-2 font-bold text-txmain uppercase text-xs">{{ __('Price') }}</th>
+ <th class="text-right py-2 font-bold text-txmain uppercase text-xs">{{ __('Total') }}</th>
  </tr>
  </thead>
  <tbody>
@@ -185,11 +185,11 @@
  <div class="flex justify-end">
  <div class="w-48">
  <div class="flex justify-between py-1 text-sm">
- <span class="text-gray-600">{{ __('Subtotal') }}:</span>
+ <span class="text-txmain">{{ __('Subtotal') }}:</span>
  <span>$3,100.00</span>
  </div>
  <div class="flex justify-between py-1 text-sm">
- <span class="text-gray-600">{{ __('Tax') }}:</span>
+ <span class="text-txmain">{{ __('Tax') }}:</span>
  <span>$0.00</span>
  </div>
  <div class="flex justify-between py-2 border-t font-bold"
@@ -204,7 +204,7 @@
  @if($payment_terms)
  <div class="mb-4">
  <p class="text-xs font-bold text-gray-500 uppercase">{{ __('Payment Terms') }}</p>
- <p class="text-xs text-gray-600 mt-1 whitespace-pre-line">{{ $payment_terms }}</p>
+ <p class="text-xs text-txmain mt-1 whitespace-pre-line">{{ $payment_terms }}</p>
  </div>
  @endif
  @if($signature_path)
@@ -216,7 +216,7 @@
  </div>
  <div>
  @if($enable_qr)
- <div class="border p-2 bg-gray-100 flex items-center justify-center w-24 h-24 rounded">
+ <div class="border p-2 bg-page flex items-center justify-center w-24 h-24 rounded">
  {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(80)->generate('https://example.com/invoice/preview') !!}
  </div>
  @endif

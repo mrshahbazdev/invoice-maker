@@ -3,12 +3,12 @@
 <div>
  <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
  <div>
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Invoices') }}</h2>
- <p class="text-gray-600">{{ __('Manage your invoices') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Invoices') }}</h2>
+ <p class="text-txmain">{{ __('Manage your invoices') }}</p>
  </div>
  <div class="flex gap-2">
  <a href="{{ route('invoices.create', ['quick' => 1]) }}"
- class="bg-white text-gray-700 py-2 px-4 rounded-lg border border-gray-300 shadow-sm hover:bg-gray-50 transition duration-200 text-center font-medium">
+ class="bg-card text-txmain py-2 px-4 rounded-lg border border-gray-300 shadow-sm hover:bg-page transition duration-200 text-center font-medium">
  ⚡ {{ __('Quick Invoice') }}
  </a>
  <a href="{{ route('invoices.create') }}"
@@ -18,7 +18,7 @@
  </div>
  </div>
 
- <div class="bg-white rounded-lg shadow">
+ <div class="bg-card rounded-lg shadow">
  <div class="p-4 border-b flex flex-col md:flex-row gap-4">
  <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search invoices...') }}"
  class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
@@ -36,31 +36,31 @@
  <div class="overflow-x-auto">
  <table class="w-full">
  <thead>
- <tr class="border-b bg-gray-50">
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700 cursor-pointer"
+ <tr class="border-b bg-page">
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
  wire:click="sortBy('invoice_number')">
  {{ __('Invoice') }}
  @if($sortBy === 'invoice_number')
  <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
  @endif
  </th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Client') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700 cursor-pointer"
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Client') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
  wire:click="sortBy('invoice_date')">
  {{ __('Date') }}
  @if($sortBy === 'invoice_date')
  <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
  @endif
  </th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Due Date') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Amount') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Status') }}</th>
- <th class="text-right py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Actions') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Due Date') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Amount') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Status') }}</th>
+ <th class="text-right py-3 px-4 text-sm font-semibold text-txmain">{{ __('Actions') }}</th>
  </tr>
  </thead>
  <tbody>
  @forelse($invoices as $invoice)
- <tr class="border-b hover:bg-gray-50">
+ <tr class="border-b hover:bg-page">
  <td class="py-3 px-4">
  <div class="flex items-center gap-2">
  <a href="{{ route('invoices.show', $invoice) }}"
@@ -81,10 +81,10 @@
  @endif
  </div>
  </td>
- <td class="py-3 px-4 text-gray-600">{{ $invoice->client->name }}</td>
- <td class="py-3 px-4 text-gray-600">{{ $invoice->invoice_date->format('M d, Y') }}</td>
- <td class="py-3 px-4 text-gray-600">{{ $invoice->due_date->format('M d, Y') }}</td>
- <td class="py-3 px-4 text-gray-900 font-medium">
+ <td class="py-3 px-4 text-txmain">{{ $invoice->client->name }}</td>
+ <td class="py-3 px-4 text-txmain">{{ $invoice->invoice_date->format('M d, Y') }}</td>
+ <td class="py-3 px-4 text-txmain">{{ $invoice->due_date->format('M d, Y') }}</td>
+ <td class="py-3 px-4 text-txmain font-medium">
  {{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}
  </td>
  <td class="py-3 px-4">
@@ -125,7 +125,7 @@
 
  @if($invoices->hasPages())
  <div class="p-4 border-t flex justify-between items-center">
- <span class="text-sm text-gray-600">
+ <span class="text-sm text-txmain">
  {{ __('Showing') }} {{ $invoices->firstItem() }} {{ __('to') }} {{ $invoices->lastItem() }}
  {{ __('of') }} {{ $invoices->total() }} {{ __('results') }}
  </span>
@@ -137,10 +137,10 @@
  <!-- Mark as Paid Modal -->
  @if($showPaidModal)
  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
- <div class="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
- <div class="p-6 border-b flex justify-between items-center bg-gray-50">
- <h3 class="text-xl font-bold text-gray-900">{{ __('Mark as Paid') }}</h3>
- <button wire:click="closePaidModal()" class="text-gray-400 hover:text-gray-600">
+ <div class="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+ <div class="p-6 border-b flex justify-between items-center bg-page">
+ <h3 class="text-xl font-bold text-txmain">{{ __('Mark as Paid') }}</h3>
+ <button wire:click="closePaidModal()" class="text-gray-400 hover:text-txmain">
  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M6 18L18 6M6 6l12 12" />
@@ -150,13 +150,13 @@
  <form wire:submit="markAsPaid">
  <div class="p-6 space-y-4">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Payment Date') }} *</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Payment Date') }} *</label>
  <input type="date" wire:model="paymentDate"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
  @error('paymentDate') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Source') }} *</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Source') }} *</label>
  <select wire:model="paymentSource"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
  <option value="bank">{{ __('Bank') }}</option>
@@ -165,15 +165,15 @@
  @error('paymentSource') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }} *</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Description') }} *</label>
  <input type="text" wire:model="paymentDescription"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
  @error('paymentDescription') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  </div>
- <div class="p-6 bg-gray-50 border-t flex justify-end gap-3">
+ <div class="p-6 bg-page border-t flex justify-end gap-3">
  <button type="button" wire:click="closePaidModal()"
- class="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium">
+ class="px-4 py-2 text-txmain hover:text-txmain font-medium">
  {{ __('Cancel') }}
  </button>
  <button type="submit"

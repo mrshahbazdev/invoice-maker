@@ -7,7 +7,7 @@
  <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
  <span>#{{ $ticket->id }}</span>
  </div>
- <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+ <h2 class="font-semibold text-2xl text-txmain leading-tight">
  {{ $ticket->subject }}
  </h2>
  <div class="flex items-center gap-3 mt-2">
@@ -16,17 +16,17 @@
  'open' => 'bg-green-100 text-green-800',
  'in_progress' => 'bg-yellow-100 text-yellow-800',
  'resolved' => 'bg-brand-100 text-brand-800',
- 'closed' => 'bg-gray-100 text-gray-800',
+ 'closed' => 'bg-page text-txmain',
  ];
- $statusColor = $statusColors[$ticket->status] ?? 'bg-gray-100 text-gray-800';
+ $statusColor = $statusColors[$ticket->status] ?? 'bg-page text-txmain';
 
  $priorityColors = [
- 'low' => 'text-gray-600',
+ 'low' => 'text-txmain',
  'medium' => 'text-brand-600',
  'high' => 'text-orange-600 font-bold',
  'urgent' => 'text-red-600 font-bold',
  ];
- $priorityColor = $priorityColors[$ticket->priority] ?? 'text-gray-600';
+ $priorityColor = $priorityColors[$ticket->priority] ?? 'text-txmain';
  @endphp
  <span class="px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusColor }}">
  {{ str_replace('_', ' ', ucfirst($ticket->status)) }}
@@ -68,7 +68,7 @@
  <!-- Replies Thread -->
  <div class="space-y-6">
  @foreach($replies as $reply)
- <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border {{ $reply->user->is_super_admin ? 'border-brand-200' : 'border-gray-200' }}">
+ <div class="bg-card overflow-hidden shadow-sm sm:rounded-lg border {{ $reply->user->is_super_admin ? 'border-brand-200' : 'border-gray-200' }}">
  <div class="p-6">
  <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
  <div class="flex items-center gap-3">
@@ -76,7 +76,7 @@
  {{ substr($reply->user->name, 0, 1) }}
  </div>
  <div>
- <div class="font-bold text-gray-900 flex items-center gap-2">
+ <div class="font-bold text-txmain flex items-center gap-2">
  {{ $reply->user->name }}
  @if($reply->user->is_super_admin)
  <span class="px-2 py-0.5 rounded-full bg-brand-100 text-brand-800 text-xs font-medium">Support Team</span>
@@ -89,12 +89,12 @@
  </div>
  </div>
  
- <div class="prose max-w-none text-gray-800 text-sm whitespace-pre-wrap">{{ $reply->message }}</div>
+ <div class="prose max-w-none text-txmain text-sm whitespace-pre-wrap">{{ $reply->message }}</div>
  
  @if($reply->attachment_path)
  <div class="mt-4 pt-4 border-t border-gray-100">
  <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Attachment</h4>
- <a href="{{ Storage::url($reply->attachment_path) }}" target="_blank" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-colors">
+ <a href="{{ Storage::url($reply->attachment_path) }}" target="_blank" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-txmain bg-page hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-colors">
  <svg class="h-4 w-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
  </svg>
@@ -108,9 +108,9 @@
  </div>
 
  <!-- Reply Form -->
- <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
- <div class="p-6 bg-gray-50 border-t border-gray-200">
- <h3 class="text-lg font-medium text-gray-900 mb-4">Post a Reply</h3>
+ <div class="bg-card overflow-hidden shadow-sm sm:rounded-lg">
+ <div class="p-6 bg-page border-t border-gray-200">
+ <h3 class="text-lg font-medium text-txmain mb-4">Post a Reply</h3>
  
  <form wire:submit.prevent="reply" class="space-y-4">
  
@@ -121,7 +121,7 @@
 
  <div>
  <div class="flex items-center" x-data="{ fileName: '' }">
- <label class="cursor-pointer bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+ <label class="cursor-pointer bg-card py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-txmain hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
  <span class="flex items-center">
  <svg class="h-4 w-4 mr-1.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" /></svg>
  Attach File

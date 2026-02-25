@@ -31,19 +31,33 @@
  @vite(['resources/css/app.css', 'resources/js/app.js'])
  @livewireStyles
 
- @if(isset($business) && $business->theme)
+ @if(isset($business))
  <style>
+ @if($business->theme)
  {!! \App\Services\ThemeGenerator::generateCssVariables($business->theme->primary_color) !!}
+ @endif
+ :root {
+    --color-page-bg: {{ optional($business->pageBgColor)->primary_color ?? '#f3f4f6' }};
+    --color-card-bg: {{ optional($business->cardBgColor)->primary_color ?? '#ffffff' }};
+    --color-text-main: {{ optional($business->textColor)->primary_color ?? '#1f2937' }};
+ }
  </style>
- @elseif(auth()->check() && auth()->user()->business && auth()->user()->business->theme)
+ @elseif(auth()->check() && auth()->user()->business)
  <style>
+ @if(auth()->user()->business->theme)
  {!! \App\Services\ThemeGenerator::generateCssVariables(auth()->user()->business->theme->primary_color) !!}
+ @endif
+ :root {
+    --color-page-bg: {{ optional(auth()->user()->business->pageBgColor)->primary_color ?? '#f3f4f6' }};
+    --color-card-bg: {{ optional(auth()->user()->business->cardBgColor)->primary_color ?? '#ffffff' }};
+    --color-text-main: {{ optional(auth()->user()->business->textColor)->primary_color ?? '#1f2937' }};
+ }
  </style>
  @endif
 </head>
 
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
- <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+<body class="bg-page flex items-center justify-center min-h-screen">
+ <div class="bg-card p-8 rounded-lg shadow-md w-full max-w-md">
  @if(session('message'))
  <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
  {{ session('message') }}

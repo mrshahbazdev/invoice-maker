@@ -1,7 +1,7 @@
 <div>
  <div class="text-center mb-8">
- <h1 class="text-2xl font-bold text-gray-900">{{ __('Two-Factor Authentication') }}</h1>
- <p class="text-gray-600 mt-2">
+ <h1 class="text-2xl font-bold text-txmain">{{ __('Two-Factor Authentication') }}</h1>
+ <p class="text-txmain mt-2">
  @if($recovery)
  {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
  @else
@@ -13,7 +13,7 @@
  <form wire:submit="verify">
  @if($recovery)
  <div class="mb-4">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Recovery Code') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Recovery Code') }}</label>
  <input type="text" wire:model="recovery_code"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('Emergency recovery code') }}">
@@ -21,7 +21,7 @@
  </div>
  @else
  <div class="mb-4">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Authentication Code') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Authentication Code') }}</label>
  <input type="text" wire:model="code" inputmode="numeric" pattern="[0-9]*"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent text-center tracking-widest text-lg"
  placeholder="XXXXXX">
@@ -31,7 +31,7 @@
 
  <div class="mb-6 flex justify-end">
  <button type="button" wire:click="toggleRecovery"
- class="text-sm text-gray-600 hover:text-gray-900 underline">
+ class="text-sm text-txmain hover:text-txmain underline">
  @if($recovery)
  {{ __('Use an authentication code') }}
  @else

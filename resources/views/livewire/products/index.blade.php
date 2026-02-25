@@ -3,8 +3,8 @@
 <div>
  <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
  <div>
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Products') }}</h2>
- <p class="text-gray-600">{{ __('Manage your product library') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Products') }}</h2>
+ <p class="text-txmain">{{ __('Manage your product library') }}</p>
  </div>
  <a href="{{ route('products.create') }}"
  class="bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 transition duration-200 text-center">
@@ -12,7 +12,7 @@
  </a>
  </div>
 
- <div class="bg-white rounded-lg shadow">
+ <div class="bg-card rounded-lg shadow">
  <div class="p-4 border-b">
  <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search products...') }}"
  class="w-full md:w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
@@ -21,32 +21,32 @@
  <div class="overflow-x-auto">
  <table class="w-full">
  <thead>
- <tr class="border-b bg-gray-50">
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700 cursor-pointer"
+ <tr class="border-b bg-page">
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
  wire:click="sortBy('name')">
  {{ __('Name') }}
  @if($sortBy === 'name')
  <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
  @endif
  </th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Description') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Price') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Unit') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Tax') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Inventory') }}</th>
- <th class="text-right py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Actions') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Description') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Price') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Unit') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Tax') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Inventory') }}</th>
+ <th class="text-right py-3 px-4 text-sm font-semibold text-txmain">{{ __('Actions') }}</th>
  </tr>
  </thead>
  <tbody>
  @forelse($products as $product)
- <tr class="border-b hover:bg-gray-50">
- <td class="py-3 px-4 font-medium text-gray-900">{{ $product->name }}</td>
- <td class="py-3 px-4 text-gray-600">{{ Str::limit($product->description, 50) ?? '-' }}</td>
- <td class="py-3 px-4 text-gray-900">
+ <tr class="border-b hover:bg-page">
+ <td class="py-3 px-4 font-medium text-txmain">{{ $product->name }}</td>
+ <td class="py-3 px-4 text-txmain">{{ Str::limit($product->description, 50) ?? '-' }}</td>
+ <td class="py-3 px-4 text-txmain">
  {{ auth()->user()->business->currency_symbol }}{{ number_format($product->price, 2) }}
  </td>
- <td class="py-3 px-4 text-gray-600">{{ $product->unit }}</td>
- <td class="py-3 px-4 text-gray-600">{{ $product->tax_rate }}%</td>
+ <td class="py-3 px-4 text-txmain">{{ $product->unit }}</td>
+ <td class="py-3 px-4 text-txmain">{{ $product->tax_rate }}%</td>
  <td class="py-3 px-4">
  @if($product->manage_stock)
  <span
@@ -81,7 +81,7 @@
 
  @if($products->hasPages())
  <div class="p-4 border-t flex justify-between items-center">
- <span class="text-sm text-gray-600">
+ <span class="text-sm text-txmain">
  {{ __('Showing') }} {{ $products->firstItem() }} {{ __('to') }} {{ $products->lastItem() }}
  {{ __('of') }} {{ $products->total() }} {{ __('results') }}
  </span>

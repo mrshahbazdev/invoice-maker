@@ -27,43 +27,43 @@
  </svg>
  </div>
 
- <h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+ <h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-txmain">
  Save Your Invoice
  </h2>
- <p class="mt-2 text-center text-sm text-gray-600">
+ <p class="mt-2 text-center text-sm text-txmain">
  Create a secure account to save Invoice <span
- class="font-semibold text-gray-900">#{{ $invoice->invoice_number }}</span> and access payment history.
+ class="font-semibold text-txmain">#{{ $invoice->invoice_number }}</span> and access payment history.
  </p>
  </div>
 
  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
- <div class="bg-white px-6 py-10 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl sm:px-12">
+ <div class="bg-card px-6 py-10 shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl sm:px-12">
 
  <form method="POST" action="{{ request()->fullUrl() }}" class="space-y-6">
  @csrf
 
  <div>
- <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+ <label for="name" class="block text-sm font-medium leading-6 text-txmain">Name</label>
  <div class="mt-2">
  <input id="name" name="name" type="text" value="{{ $invoice->client->name }}" readonly
- class="block w-full rounded-md border-0 py-1.5 text-gray-500 bg-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6 cursor-not-allowed">
+ class="block w-full rounded-md border-0 py-1.5 text-gray-500 bg-page shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6 cursor-not-allowed">
  </div>
  </div>
 
  <div>
- <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+ <label for="email" class="block text-sm font-medium leading-6 text-txmain">Email address</label>
  <div class="mt-2">
  <input id="email" name="email" type="email" value="{{ $invoice->client->email }}" readonly
- class="block w-full rounded-md border-0 py-1.5 text-gray-500 bg-gray-50 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6 cursor-not-allowed">
+ class="block w-full rounded-md border-0 py-1.5 text-gray-500 bg-page shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6 cursor-not-allowed">
  </div>
  </div>
 
  <div>
- <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Create
+ <label for="password" class="block text-sm font-medium leading-6 text-txmain">Create
  Password</label>
  <div class="mt-2">
  <input id="password" name="password" type="password" required
- class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6">
+ class="block w-full rounded-md border-0 py-1.5 text-txmain shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6">
  </div>
  @error('password')
  <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -71,11 +71,11 @@
  </div>
 
  <div>
- <label for="password_confirmation" class="block text-sm font-medium leading-6 text-gray-900">Confirm
+ <label for="password_confirmation" class="block text-sm font-medium leading-6 text-txmain">Confirm
  Password</label>
  <div class="mt-2">
  <input id="password_confirmation" name="password_confirmation" type="password" required
- class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6">
+ class="block w-full rounded-md border-0 py-1.5 text-txmain shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6">
  </div>
  </div>
 

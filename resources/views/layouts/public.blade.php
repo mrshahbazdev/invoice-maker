@@ -34,9 +34,9 @@
  @livewireStyles
 </head>
 
-<body class="bg-white text-gray-900 antialiased font-sans flex flex-col min-h-screen">
+<body class="bg-card text-txmain antialiased font-sans flex flex-col min-h-screen">
  <!-- Navbar -->
- <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+ <nav class="bg-card/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div class="flex justify-between h-20">
  <div class="flex items-center">
@@ -51,9 +51,9 @@
  </div>
  <div class="flex items-center space-x-4">
  <a href="{{ route('public.blog.index') }}"
- class="text-gray-600 hover:text-gray-900 font-semibold text-sm transition-colors hidden sm:block">Blog</a>
+ class="text-txmain hover:text-txmain font-semibold text-sm transition-colors hidden sm:block">Blog</a>
  <a href="{{ route('login') }}"
- class="text-gray-600 hover:text-gray-900 font-semibold text-sm transition-colors">Sign In</a>
+ class="text-txmain hover:text-txmain font-semibold text-sm transition-colors">Sign In</a>
  <a href="{{ route('register') }}"
  class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm">Get
  Started</a>
@@ -67,7 +67,7 @@
  </main>
 
  <!-- Footer -->
- <footer class="bg-white border-t border-gray-100 mt-auto">
+ <footer class="bg-card border-t border-gray-100 mt-auto">
  <div
  class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
  <div class="flex justify-center space-x-6 md:order-2 mb-4 md:mb-0">

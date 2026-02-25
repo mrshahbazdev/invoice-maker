@@ -8,7 +8,7 @@
  <div>
  <div class="flex items-center text-sm text-gray-500 mb-2">
  <a href="{{ route('admin.support.index') }}" class="hover:text-brand-400 transition-colors">Support Tickets</a>
- <svg class="w-4 h-4 mx-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+ <svg class="w-4 h-4 mx-2 text-txmain" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
  <span class="text-gray-400">#{{ $ticket->id }}</span>
  </div>
  <h2 class="text-2xl font-bold font-heading text-white flex items-center gap-3">

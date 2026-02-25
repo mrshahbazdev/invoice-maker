@@ -14,7 +14,7 @@
  </style>
 </head>
 
-<body class="bg-gray-50 flex items-center justify-center min-h-screen p-6">
+<body class="bg-page flex items-center justify-center min-h-screen p-6">
  <div class="max-w-md w-full text-center">
  <div class="mb-8 flex justify-center">
  <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center">
@@ -24,9 +24,9 @@
  </svg>
  </div>
  </div>
- <h1 class="text-4xl font-bold text-gray-900 mb-4">403</h1>
- <h2 class="text-xl font-semibold text-gray-800 mb-4">Access Denied</h2>
- <p class="text-gray-600 mb-8">
+ <h1 class="text-4xl font-bold text-txmain mb-4">403</h1>
+ <h2 class="text-xl font-semibold text-txmain mb-4">Access Denied</h2>
+ <p class="text-txmain mb-8">
  {{ isset($exception) ? $exception->getMessage() : 'Sorry, you do not have permission to access this page.' }}
  </p>
  <div class="space-y-4">

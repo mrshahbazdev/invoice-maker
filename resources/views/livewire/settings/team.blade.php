@@ -2,8 +2,8 @@
 
 <div>
  <div class="mb-8 items-center justify-between">
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Team Management') }}</h2>
- <p class="text-gray-600">{{ __('Invite and manage collaborators for') }} {{ auth()->user()->business->name }}
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Team Management') }}</h2>
+ <p class="text-txmain">{{ __('Invite and manage collaborators for') }} {{ auth()->user()->business->name }}
  </p>
  </div>
 
@@ -36,8 +36,8 @@
  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
  <!-- Invite New Member -->
  <div class="lg:col-span-1">
- <div class="bg-white rounded-lg shadow p-6 h-fit border border-gray-100">
- <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+ <div class="bg-card rounded-lg shadow p-6 h-fit border border-gray-100">
+ <h3 class="text-lg font-semibold text-txmain mb-4 flex items-center">
  <svg class="w-5 h-5 mr-2 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z">
@@ -47,14 +47,14 @@
  </h3>
  <form wire:submit="invite" class="space-y-4">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Email Address') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Email Address') }}</label>
  <input type="email" wire:model="email"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
  placeholder="{{ __('colleague@example.com') }}">
  @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Role') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Role') }}</label>
  <select wire:model="role"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent transition">
  <option value="viewer">{{ __('Viewer (Read Only)') }}</option>
@@ -80,24 +80,24 @@
 
  <!-- Team Members List -->
  <div class="lg:col-span-2 space-y-8">
- <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-100">
- <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
- <h3 class="text-lg font-semibold text-gray-900">{{ __('Current Members') }}</h3>
+ <div class="bg-card rounded-lg shadow overflow-hidden border border-gray-100">
+ <div class="px-6 py-4 border-b border-gray-100 bg-page">
+ <h3 class="text-lg font-semibold text-txmain">{{ __('Current Members') }}</h3>
  </div>
  <div class="divide-y divide-gray-100">
  @foreach($members as $member)
- <div class="p-6 flex items-center justify-between hover:bg-gray-50 transition">
+ <div class="p-6 flex items-center justify-between hover:bg-page transition">
  <div class="flex items-center space-x-4">
  <div
  class="h-10 w-10 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 font-bold">
  {{ substr($member->name, 0, 2) }}
  </div>
  <div>
- <div class="font-medium text-gray-900 flex items-center">
+ <div class="font-medium text-txmain flex items-center">
  {{ $member->name }}
  @if($member->id === auth()->id())
  <span
- class="ml-2 px-2 py-0.5 text-[10px] bg-gray-100 text-gray-600 rounded-full">{{ __('You') }}</span>
+ class="ml-2 px-2 py-0.5 text-[10px] bg-page text-txmain rounded-full">{{ __('You') }}</span>
  @endif
  </div>
  <div class="text-sm text-gray-500">{{ $member->email }}</div>
@@ -127,9 +127,9 @@
 
  <!-- Pending Invitations -->
  @if($invitations->count() > 0)
- <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-100">
- <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex items-center">
- <h3 class="text-lg font-semibold text-gray-900">{{ __('Pending Invitations') }}</h3>
+ <div class="bg-card rounded-lg shadow overflow-hidden border border-gray-100">
+ <div class="px-6 py-4 border-b border-gray-100 bg-page flex items-center">
+ <h3 class="text-lg font-semibold text-txmain">{{ __('Pending Invitations') }}</h3>
  <span
  class="ml-2 px-2 py-0.5 text-xs bg-brand-100 text-brand-700 rounded-full font-bold">{{ $invitations->count() }}</span>
  </div>
@@ -137,7 +137,7 @@
  @foreach($invitations as $invite)
  <div class="p-6 flex items-center justify-between bg-brand-50/30 hover:bg-brand-50/50 transition">
  <div>
- <div class="font-medium text-gray-900">{{ $invite->email }}</div>
+ <div class="font-medium text-txmain">{{ $invite->email }}</div>
  <div class="text-xs text-gray-500 mt-1 flex items-center">
  <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -148,7 +148,7 @@
  </div>
  <div class="flex items-center space-x-3">
  <span
- class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white border border-gray-200 text-gray-600 rounded shadow-sm">
+ class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-card border border-gray-200 text-txmain rounded shadow-sm">
  {{ $invite->role }}
  </span>
  <button wire:click="cancelInvitation({{ $invite->id }})"
@@ -159,7 +159,7 @@
  </div>
  @endforeach
  </div>
- <div class="px-6 py-4 bg-gray-50 text-xs text-gray-500 italic">
+ <div class="px-6 py-4 bg-page text-xs text-gray-500 italic">
  {{ __('Invited users will receive a link to join your business. Links are valid for 7 days.') }}
  </div>
  </div>

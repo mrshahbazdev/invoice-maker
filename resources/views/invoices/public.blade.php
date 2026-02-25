@@ -48,14 +48,14 @@
  </style>
 </head>
 
-<body class="bg-gray-100 min-h-screen pb-12">
+<body class="bg-page min-h-screen pb-12">
  <!-- Top Action Bar -->
- <div class="bg-white shadow-sm border-b sticky top-0 z-50 no-print">
+ <div class="bg-card shadow-sm border-b sticky top-0 z-50 no-print">
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div class="flex justify-between items-center h-16">
  <div class="flex items-center">
- <span class="text-xl font-bold text-gray-900">{{ $invoice->business->name }}</span>
- <span class="ml-4 px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+ <span class="text-xl font-bold text-txmain">{{ $invoice->business->name }}</span>
+ <span class="ml-4 px-3 py-1 rounded-full text-xs font-medium bg-page text-txmain">
  {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} {{ $invoice->invoice_number }}
  </span>
  @if($invoice->status === 'paid')
@@ -65,7 +65,7 @@
  @endif
  </div>
  <div class="flex items-center space-x-4">
- <button onclick="window.print()" class="text-gray-600 hover:text-gray-900 flex items-center">
+ <button onclick="window.print()" class="text-txmain hover:text-txmain flex items-center">
  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
@@ -74,7 +74,7 @@
  {{ __('Print') }}
  </button>
  <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('client.register', ['invoice' => $invoice->id]) }}"
- class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+ class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-txmain bg-card hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
@@ -107,7 +107,7 @@
  method="POST">
  @csrf
  <button type="submit"
- class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50">
+ class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-txmain bg-card hover:bg-page">
  {{ __('Request Revision') }}
  </button>
  </form>
@@ -203,7 +203,7 @@
  $fontFamily = $template->font_family ?? 'Arial, Helvetica, sans-serif';
  $enableQr = $template->enable_qr ?? false;
  @endphp
- <div style="font-family: {{ $fontFamily }}; color: #333;" class="bg-white">
+ <div style="font-family: {{ $fontFamily }}; color: #333;" class="bg-card">
 
  <!-- Header -->
  <div
@@ -239,7 +239,7 @@
  $qrData = $epcQrString ?? URL::signedRoute('invoices.public.show', $invoice->id);
  $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(72)->generate($qrData));
  @endphp
- <div class="p-1.5 bg-white rounded-xl shadow-sm border border-gray-100">
+ <div class="p-1.5 bg-card rounded-xl shadow-sm border border-gray-100">
  <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code"
  class="w-[72px] h-[72px]">
  </div>
@@ -251,24 +251,24 @@
  </div>
 
  <div
- class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-100 inline-block text-left w-full max-w-sm">
+ class="bg-page rounded-2xl p-6 shadow-sm border border-gray-100 inline-block text-left w-full max-w-sm">
  <div class="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
  <span
  class="text-xs uppercase tracking-wider font-semibold text-gray-500">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
  {{ __('No') }}:</span>
- <span class="text-sm font-bold text-gray-900">{{ $invoice->invoice_number }}</span>
+ <span class="text-sm font-bold text-txmain">{{ $invoice->invoice_number }}</span>
  </div>
  <div class="flex justify-between items-center mb-3">
  <span
  class="text-xs uppercase tracking-wider font-semibold text-gray-500">{{ __('Date') }}:</span>
  <span
- class="text-sm font-medium text-gray-700">{{ $invoice->invoice_date->translatedFormat('M d, Y') }}</span>
+ class="text-sm font-medium text-txmain">{{ $invoice->invoice_date->translatedFormat('M d, Y') }}</span>
  </div>
  <div class="flex justify-between items-center mb-4">
  <span
  class="text-xs uppercase tracking-wider font-semibold text-gray-500">{{ $invoice->isEstimate() ? __('Expiry Date') : __('Due Date') }}:</span>
  <span
- class="text-sm font-medium text-gray-700">{{ $invoice->due_date->translatedFormat('M d, Y') }}</span>
+ class="text-sm font-medium text-txmain">{{ $invoice->due_date->translatedFormat('M d, Y') }}</span>
  </div>
  <div class="flex justify-between items-center pt-3 mt-1"
  style="border-top: 1.5px dashed {{ $primaryColor }}40;">
@@ -287,17 +287,17 @@
  style="color: {{ $primaryColor }};">
  {{ __('Bill To') }}
  </h3>
- <div class="text-sm text-gray-700 leading-relaxed">
- <strong class="text-base text-gray-900 block mb-1">{{ $invoice->client->name }}</strong>
+ <div class="text-sm text-txmain leading-relaxed">
+ <strong class="text-base text-txmain block mb-1">{{ $invoice->client->name }}</strong>
  @if($invoice->client->company_name)
- <div class="text-gray-600 font-medium">{{ $invoice->client->company_name }}</div> @endif
+ <div class="text-txmain font-medium">{{ $invoice->client->company_name }}</div> @endif
  @if($invoice->client->address)
  <div class="mt-2 text-gray-500">{!! nl2br(e($invoice->client->address)) !!}</div> @endif
  <div class="mt-2 text-gray-500">
  @if($invoice->client->phone) <span class="block">{{ $invoice->client->phone }}</span>
  @endif
  @if($invoice->client->email) <a href="mailto:{{ $invoice->client->email }}"
- class="text-gray-500 hover:text-gray-900 underline decoration-gray-300 underline-offset-2">{{ $invoice->client->email }}</a>
+ class="text-gray-500 hover:text-txmain underline decoration-gray-300 underline-offset-2">{{ $invoice->client->email }}</a>
  @endif
  </div>
  @if($invoice->client->tax_number)
@@ -332,11 +332,11 @@
  </th>
  </tr>
  </thead>
- <tbody class="divide-y divide-gray-100 bg-white text-gray-700 text-sm">
+ <tbody class="divide-y divide-gray-100 bg-card text-txmain text-sm">
  @foreach($invoice->items as $item)
- <tr class="hover:bg-gray-50 transition-colors">
+ <tr class="hover:bg-page transition-colors">
  <td class="py-5 px-6">
- <p class="font-bold text-gray-900">{{ explode(' - ', $item->description)[0] }}
+ <p class="font-bold text-txmain">{{ explode(' - ', $item->description)[0] }}
  </p>
  @if(count(explode(' - ', $item->description)) > 1)
  <p class="text-xs text-gray-500 mt-1 leading-relaxed">
@@ -344,9 +344,9 @@
  </p>
  @endif
  </td>
- <td class="py-5 px-4 text-center text-gray-600 font-medium">{{ $item->quantity }}
+ <td class="py-5 px-4 text-center text-txmain font-medium">{{ $item->quantity }}
  </td>
- <td class="py-5 px-4 text-right text-gray-600">
+ <td class="py-5 px-4 text-right text-txmain">
  {{ $invoice->currency_symbol }}{{ number_format($item->unit_price, 2) }}
  </td>
  @if($template->show_tax ?? true)
@@ -359,7 +359,7 @@
  @endif
  </td>
  @endif
- <td class="py-5 px-6 text-right font-bold text-gray-900">
+ <td class="py-5 px-6 text-right font-bold text-txmain">
  {{ $invoice->currency_symbol }}{{ number_format($item->total, 2) }}
  </td>
  </tr>
@@ -371,10 +371,10 @@
  <!-- Items Card View (Mobile) -->
  <div class="mb-10 space-y-4 md:hidden">
  @foreach($invoice->items as $item)
- <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 space-y-3">
+ <div class="bg-page rounded-2xl p-4 border border-gray-100 space-y-3">
  <div class="flex justify-between items-start">
  <div class="flex-1">
- <p class="font-bold text-gray-900">{{ explode(' - ', $item->description)[0] }}</p>
+ <p class="font-bold text-txmain">{{ explode(' - ', $item->description)[0] }}</p>
  @if(count(explode(' - ', $item->description)) > 1)
  <p class="text-xs text-gray-500 mt-1 leading-relaxed">
  {{ substr($item->description, strpos($item->description, ' - ') + 3) }}
@@ -392,20 +392,20 @@
  <div>
  <span
  class="text-gray-400 uppercase tracking-widest font-bold text-[10px]">{{ __('Qty') }}</span>
- <span class="block font-medium text-gray-900">{{ $item->quantity }}</span>
+ <span class="block font-medium text-txmain">{{ $item->quantity }}</span>
  </div>
  <div>
  <span
  class="text-gray-400 uppercase tracking-widest font-bold text-[10px]">{{ __('Price') }}</span>
  <span
- class="block font-medium text-gray-900">{{ $invoice->currency_symbol }}{{ number_format($item->unit_price, 2) }}</span>
+ class="block font-medium text-txmain">{{ $invoice->currency_symbol }}{{ number_format($item->unit_price, 2) }}</span>
  </div>
  </div>
  @if(($template->show_tax ?? true) && $item->tax_rate > 0)
  <div class="text-right">
  <span
  class="text-gray-400 uppercase tracking-widest font-bold text-[10px]">{{ __('Tax') }}</span>
- <span class="block font-medium text-gray-900">{{ $item->tax_rate }}%</span>
+ <span class="block font-medium text-txmain">{{ $item->tax_rate }}%</span>
  </div>
  @endif
  </div>
@@ -418,12 +418,12 @@
  <!-- Notes / Payment Terms -->
  <div class="w-full lg:w-3/5 order-2 lg:order-1">
  @if($invoice->notes || $invoice->payment_terms || ($template->payment_terms ?? false))
- <div class="bg-gray-50/50 rounded-2xl p-6 border border-gray-100">
+ <div class="bg-page/50 rounded-2xl p-6 border border-gray-100">
  @if($invoice->notes)
  <div class="mb-6">
  <h4 class="text-xs font-bold uppercase tracking-widest mb-2"
  style="color: {{ $primaryColor }};">{{ __('Notes') }}</h4>
- <p class="text-sm text-gray-600 leading-relaxed">{{ $invoice->notes }}</p>
+ <p class="text-sm text-txmain leading-relaxed">{{ $invoice->notes }}</p>
  </div>
  @endif
 
@@ -432,7 +432,7 @@
  <h4 class="text-xs font-bold uppercase tracking-widest mb-2"
  style="color: {{ $primaryColor }};">{{ __('Payment Terms & Instructions') }}
  </h4>
- <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+ <p class="text-sm text-txmain leading-relaxed whitespace-pre-line">
  {!! e($invoice->payment_terms ?: $template->payment_terms) !!}
  </p>
  </div>
@@ -443,21 +443,21 @@
 
  <!-- Totals Table -->
  <div class="w-full lg:w-2/5 order-1 lg:order-2">
- <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-100 text-sm">
- <div class="flex justify-between py-2 text-gray-600">
+ <div class="bg-page rounded-2xl p-6 shadow-sm border border-gray-100 text-sm">
+ <div class="flex justify-between py-2 text-txmain">
  <span>{{ __('Subtotal') }}:</span>
  <span
- class="font-medium text-gray-900">{{ $invoice->currency_symbol }}{{ number_format($invoice->subtotal, 2) }}</span>
+ class="font-medium text-txmain">{{ $invoice->currency_symbol }}{{ number_format($invoice->subtotal, 2) }}</span>
  </div>
  @if($template->show_tax ?? true)
- <div class="flex justify-between py-2 text-gray-600">
+ <div class="flex justify-between py-2 text-txmain">
  <span>{{ __('Total Tax') }}:</span>
  <span
- class="font-medium text-gray-900">{{ $invoice->currency_symbol }}{{ number_format($invoice->tax_total, 2) }}</span>
+ class="font-medium text-txmain">{{ $invoice->currency_symbol }}{{ number_format($invoice->tax_total, 2) }}</span>
  </div>
  @endif
  @if(($template->show_discount ?? true) && $invoice->discount > 0)
- <div class="flex justify-between py-2 text-gray-600">
+ <div class="flex justify-between py-2 text-txmain">
  <span>{{ __('Discount') }}:</span>
  <span
  class="font-medium text-red-500">-{{ $invoice->currency_symbol }}{{ number_format($invoice->discount, 2) }}</span>
@@ -467,9 +467,9 @@
  <div class="my-4 border-t border-gray-200"></div>
 
  <div class="flex justify-between items-center py-2">
- <span class="text-base font-bold text-gray-900">{{ __('Total') }}:</span>
+ <span class="text-base font-bold text-txmain">{{ __('Total') }}:</span>
  <span
- class="text-xl font-black text-gray-900">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
+ class="text-xl font-black text-txmain">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
  </div>
 
  @if($invoice->amount_paid > 0)
@@ -497,11 +497,11 @@
 
  <div class="w-full md:w-1/3 text-left">
  @if($invoice->business->bank_details)
- <div class="bg-gray-50 rounded-xl p-4 border border-gray-100 text-xs">
- <div class="font-bold text-gray-700 mb-1 uppercase tracking-wider">
+ <div class="bg-page rounded-xl p-4 border border-gray-100 text-xs">
+ <div class="font-bold text-txmain mb-1 uppercase tracking-wider">
  {{ __('Bank Details') }}
  </div>
- <div class="text-gray-600 whitespace-pre-line leading-relaxed">
+ <div class="text-txmain whitespace-pre-line leading-relaxed">
  {!! e($invoice->business->bank_details) !!}
  </div>
  </div>
@@ -541,18 +541,18 @@
  </div>
 
  <!-- Discussion Section -->
- <div class="max-w-2xl mx-auto mt-12 bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl p-6 no-print">
- <h3 class="text-lg font-semibold text-gray-900 mb-6">{{ __('Discussion') }}</h3>
+ <div class="max-w-2xl mx-auto mt-12 bg-card shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl p-6 no-print">
+ <h3 class="text-lg font-semibold text-txmain mb-6">{{ __('Discussion') }}</h3>
 
  <div class="space-y-6 mb-8">
  @forelse(\App\Models\InvoiceComment::where('invoice_id', $invoice->id)->where('is_internal', false)->get() as $comment)
  <div class="flex space-x-3">
- <div class="flex-1 bg-gray-50 rounded-lg px-4 py-3">
+ <div class="flex-1 bg-page rounded-lg px-4 py-3">
  <div class="flex items-center justify-between mb-1">
- <h4 class="text-sm font-bold text-gray-900">{{ $comment->user->name ?? __('Client') }}</h4>
+ <h4 class="text-sm font-bold text-txmain">{{ $comment->user->name ?? __('Client') }}</h4>
  <span class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
  </div>
- <p class="text-sm text-gray-700">{{ $comment->comment }}</p>
+ <p class="text-sm text-txmain">{{ $comment->comment }}</p>
  </div>
  </div>
  @empty
@@ -567,7 +567,7 @@
  <div>
  <label for="comment" class="sr-only">{{ __('Add a comment') }}</label>
  <textarea id="comment" name="comment" rows="3" required
- class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6"
+ class="block w-full rounded-md border-0 py-1.5 text-txmain shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6"
  placeholder="{{ __('Ask a question or request a change...') }}"></textarea>
  </div>
  <div class="mt-3 flex justify-end">
@@ -582,7 +582,7 @@
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pb-12 text-center no-print">
  <p class="text-sm text-gray-400">
  {{ __('Generated by InvoiceMaker on') }} {{ now()->translatedFormat('M d, Y') }} | <a
- href="https://allocore.de" class="text-gray-400 hover:text-gray-600 transition-colors">Allocore.de</a>
+ href="https://allocore.de" class="text-gray-400 hover:text-txmain transition-colors">Allocore.de</a>
  </p>
  </div>
 </body>

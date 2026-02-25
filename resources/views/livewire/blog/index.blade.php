@@ -1,6 +1,6 @@
-<div class="bg-gray-50 min-h-screen pb-20">
+<div class="bg-page min-h-screen pb-20">
  <!-- Hero Section -->
- <div class="relative bg-white pt-24 pb-12 lg:pt-32 border-b border-gray-100 overflow-hidden">
+ <div class="relative bg-card pt-24 pb-12 lg:pt-32 border-b border-gray-100 overflow-hidden">
  <div class="absolute inset-0 z-0">
  <div
  class="absolute -top-24 -left-24 w-96 h-96 bg-brand-50 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob">
@@ -10,7 +10,7 @@
  </div>
  </div>
  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
- <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
+ <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-txmain tracking-tight mb-6">
  @if($category)
  Articles in <span
  class="text-brand-600">{{ App\Models\Category::where('slug', $category)->value('name') }}</span>
@@ -30,12 +30,12 @@
  @if($categories->count() > 0)
  <div class="flex flex-wrap items-center justify-center gap-3 mb-16">
  <a href="{{ route('public.blog.index') }}"
- class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 {{ !$category ? 'bg-gray-900 text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 shadow-sm' }}">
+ class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 {{ !$category ? 'bg-gray-900 text-white shadow-md' : 'bg-card text-txmain hover:bg-page border border-gray-200 shadow-sm' }}">
  All Topics
  </a>
  @foreach($categories as $cat)
  <a href="{{ route('public.blog.index', ['category' => $cat->slug]) }}"
- class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 {{ $category === $cat->slug ? 'bg-gray-900 text-white shadow-md' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200 shadow-sm' }}">
+ class="px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 {{ $category === $cat->slug ? 'bg-gray-900 text-white shadow-md' : 'bg-card text-txmain hover:bg-page border border-gray-200 shadow-sm' }}">
  {{ $cat->name }} <span
  class="ml-1 opacity-70 border-l border-current pl-1">{{ $cat->posts_count }}</span>
  </a>
@@ -47,9 +47,9 @@
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
  @foreach($posts as $post)
  <article
- class="flex flex-col bg-white rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group border border-gray-100 overflow-hidden">
+ class="flex flex-col bg-card rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group border border-gray-100 overflow-hidden">
  <a href="{{ route('public.blog.show', $post->slug) }}"
- class="relative aspect-[16/10] block overflow-hidden bg-gray-100">
+ class="relative aspect-[16/10] block overflow-hidden bg-page">
  @if($post->featured_image)
  <img src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}"
  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -64,7 +64,7 @@
  @if($post->category)
  <div class="absolute top-4 left-4">
  <span
- class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white/90 backdrop-blur-sm text-gray-900 shadow-sm tracking-wide">
+ class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-card/90 backdrop-blur-sm text-txmain shadow-sm tracking-wide">
  {{ $post->category->name }}
  </span>
  </div>
@@ -83,10 +83,10 @@
 
  <a href="{{ route('public.blog.show', $post->slug) }}"
  class="block group-hover:text-brand-600 transition-colors">
- <h3 class="text-2xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2">
+ <h3 class="text-2xl font-bold text-txmain mb-3 leading-tight line-clamp-2">
  {{ $post->title }}
  </h3>
- <p class="text-gray-600 line-clamp-3 leading-relaxed text-sm">
+ <p class="text-txmain line-clamp-3 leading-relaxed text-sm">
  {{ $post->excerpt ?: Str::limit(strip_tags($post->content), 120) }}
  </p>
  </a>
@@ -112,14 +112,14 @@
  {{ $posts->links() }}
  </div>
  @else
- <div class="text-center py-24 bg-white rounded-3xl border border-gray-100 shadow-sm max-w-3xl mx-auto">
- <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gray-50 text-gray-400 mb-6">
+ <div class="text-center py-24 bg-card rounded-3xl border border-gray-100 shadow-sm max-w-3xl mx-auto">
+ <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-page text-gray-400 mb-6">
  <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
  </svg>
  </div>
- <h3 class="text-2xl font-bold text-gray-900 mb-2">No active articles</h3>
+ <h3 class="text-2xl font-bold text-txmain mb-2">No active articles</h3>
  <p class="text-gray-500 max-w-md mx-auto text-lg leading-relaxed">
  @if($category)
  There are currently no articles published under this topic. Please check out our other categories.
@@ -154,7 +154,7 @@
  platform to generate invoices seamlessly, track their growth, and get paid faster.</p>
  <div class="flex flex-col sm:flex-row justify-center gap-4">
  <a href="{{ route('register') }}"
- class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-lg font-bold rounded-xl text-gray-900 bg-white hover:bg-gray-50 transition-all shadow-lg shadow-white/10 hover:scale-105">
+ class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-lg font-bold rounded-xl text-txmain bg-card hover:bg-page transition-all shadow-lg shadow-white/10 hover:scale-105">
  Create Free Account
  </a>
  </div>

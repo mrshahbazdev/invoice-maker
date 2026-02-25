@@ -20,13 +20,13 @@
 
 <div class="sm:flex sm:items-center sm:justify-between mb-8 gap-4">
  <div>
- <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">My
+ <h2 class="text-2xl font-bold leading-7 text-txmain sm:truncate sm:text-3xl sm:tracking-tight">My
  Invoices</h2>
  <p class="mt-1 text-sm text-gray-500">Overview of your billing history and outstanding balances.</p>
  </div>
  <div class="mt-4 sm:mt-0 flex flex-col sm:flex-row gap-2">
  <a href="{{ route('client.invoices.download-all') }}"
- class="inline-flex items-center justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+ class="inline-flex items-center justify-center rounded-lg bg-card px-3 py-2 text-sm font-semibold text-txmain shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-page">
  <svg class="w-4 h-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
  stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round"
@@ -48,7 +48,7 @@
 <!-- Summary Cards -->
 <div class="grid grid-cols-1 gap-5 sm:grid-cols-3 mb-8">
  <!-- Paid -->
- <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-900/5">
+ <div class="overflow-hidden rounded-xl bg-card shadow-sm ring-1 ring-gray-900/5">
  <div class="p-5">
  <div class="flex items-center">
  <div class="flex-shrink-0">
@@ -64,7 +64,7 @@
  <dl>
  <dt class="truncate text-sm font-medium text-gray-500">Total Paid</dt>
  <dd>
- <div class="text-2xl font-semibold text-gray-900">
+ <div class="text-2xl font-semibold text-txmain">
  ${{ number_format($totalPaid, 2) }}</div>
  </dd>
  </dl>
@@ -74,7 +74,7 @@
  </div>
 
  <!-- Pending -->
- <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-900/5">
+ <div class="overflow-hidden rounded-xl bg-card shadow-sm ring-1 ring-gray-900/5">
  <div class="p-5">
  <div class="flex items-center">
  <div class="flex-shrink-0">
@@ -90,7 +90,7 @@
  <dl>
  <dt class="truncate text-sm font-medium text-gray-500">Pending</dt>
  <dd>
- <div class="text-2xl font-semibold text-gray-900">
+ <div class="text-2xl font-semibold text-txmain">
  ${{ number_format($totalPending, 2) }}</div>
  </dd>
  </dl>
@@ -100,7 +100,7 @@
  </div>
 
  <!-- Overdue -->
- <div class="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-900/5">
+ <div class="overflow-hidden rounded-xl bg-card shadow-sm ring-1 ring-gray-900/5">
  <div class="p-5">
  <div class="flex items-center">
  <div class="flex-shrink-0">
@@ -116,7 +116,7 @@
  <dl>
  <dt class="truncate text-sm font-medium text-gray-500">Overdue</dt>
  <dd>
- <div class="text-2xl font-semibold text-gray-900">
+ <div class="text-2xl font-semibold text-txmain">
  ${{ number_format($totalOverdue, 2) }}</div>
  </dd>
  </dl>
@@ -128,9 +128,9 @@
 
 <!-- Project Progress Bar -->
 <div class="mb-8">
- <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 shadow-sm ring-1 ring-gray-900/5">
+ <div class="bg-card rounded-xl shadow-sm border border-gray-100 p-6 shadow-sm ring-1 ring-gray-900/5">
  <div class="flex items-center justify-between mb-2">
- <p class="text-sm font-bold text-gray-900 uppercase tracking-wider">
+ <p class="text-sm font-bold text-txmain uppercase tracking-wider">
  {{ __('Overall Payment Progress') }}
  </p>
  @php
@@ -139,7 +139,7 @@
  @endphp
  <span class="text-lg font-black text-brand-600">{{ $progress }}%</span>
  </div>
- <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden shadow-inner">
+ <div class="w-full bg-page rounded-full h-3 overflow-hidden shadow-inner">
  <div class="bg-brand-600 h-full rounded-full transition-all duration-1000 shadow-[0_0_8px_rgba(79,70,229,0.4)]"
  style="width: {{ $progress }}%"></div>
  </div>
@@ -153,27 +153,27 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
  <!-- Table Section -->
  <div class="lg:col-span-2">
- <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl overflow-hidden">
- <div class="border-b border-gray-200 bg-white px-6 py-5">
- <h3 class="text-base font-semibold leading-6 text-gray-900">Recent Transactions</h3>
+ <div class="bg-card shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl overflow-hidden">
+ <div class="border-b border-gray-200 bg-card px-6 py-5">
+ <h3 class="text-base font-semibold leading-6 text-txmain">Recent Transactions</h3>
  </div>
 
  <div class="overflow-x-auto hidden md:block">
  <table class="min-w-full divide-y divide-gray-300">
- <thead class="bg-gray-50">
+ <thead class="bg-page">
  <tr>
  <th scope="col"
- class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+ class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-txmain sm:pl-6">
  Invoice #
  </th>
- <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+ <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-txmain">
  From</th>
- <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+ <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-txmain">
  Date</th>
- <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-gray-900">
+ <th scope="col" class="px-3 py-3.5 text-right text-sm font-semibold text-txmain">
  Amount
  Due</th>
- <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-gray-900">
+ <th scope="col" class="px-3 py-3.5 text-center text-sm font-semibold text-txmain">
  Status
  </th>
  <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
@@ -181,12 +181,12 @@
  </th>
  </tr>
  </thead>
- <tbody class="divide-y divide-gray-200 bg-white" x-data>
+ <tbody class="divide-y divide-gray-200 bg-card" x-data>
  @forelse($invoices as $invoice)
- <tr class="hover:bg-gray-50 transition-colors cursor-pointer group"
+ <tr class="hover:bg-page transition-colors cursor-pointer group"
  @click="$el.nextElementSibling.classList.toggle('hidden')">
  <td
- class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 group-hover:text-brand-600 transition-colors">
+ class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-txmain sm:pl-6 group-hover:text-brand-600 transition-colors">
  {{ $invoice->invoice_number }}
  </td>
  <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
@@ -201,7 +201,7 @@
  </div>
  @endif
  </td>
- <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900 text-right font-medium">
+ <td class="whitespace-nowrap px-3 py-4 text-sm text-txmain text-right font-medium">
  ${{ number_format($invoice->amount_due, 2) }}
  @if($invoice->amount_paid > 0)
  <div class="text-xs font-normal text-gray-500 mt-0.5">
@@ -215,7 +215,7 @@
  'paid' => 'bg-green-50 text-green-700 ring-green-600/20',
  'overdue' => 'bg-red-50 text-red-700 ring-red-600/10',
  'sent', 'viewed' => 'bg-brand-50 text-brand-700 ring-brand-700/10',
- default => 'bg-gray-50 text-gray-600 ring-gray-500/10'
+ default => 'bg-page text-txmain ring-gray-500/10'
  };
  @endphp
  <span
@@ -227,7 +227,7 @@
  class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
  <div class="flex items-center justify-end space-x-3">
  <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.download', $invoice->id) }}"
- class="text-gray-400 hover:text-gray-600" title="Download PDF">
+ class="text-gray-400 hover:text-txmain" title="Download PDF">
  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
  stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round"
@@ -244,13 +244,13 @@
  </tr>
 
  <!-- Expandable Details Row -->
- <tr class="hidden bg-gray-50/50">
+ <tr class="hidden bg-page/50">
  <td colspan="6" class="px-6 py-4">
- <div class="text-sm text-gray-900">
- <h4 class="font-medium mb-3 text-gray-700">Invoice Items</h4>
- <div class="ring-1 ring-gray-200 rounded-lg overflow-hidden bg-white">
+ <div class="text-sm text-txmain">
+ <h4 class="font-medium mb-3 text-txmain">Invoice Items</h4>
+ <div class="ring-1 ring-gray-200 rounded-lg overflow-hidden bg-card">
  <table class="min-w-full divide-y divide-gray-200">
- <thead class="bg-gray-50">
+ <thead class="bg-page">
  <tr>
  <th scope="col"
  class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -269,7 +269,7 @@
  <tbody class="divide-y divide-gray-200">
  @foreach($invoice->items as $item)
  <tr>
- <td class="px-3 py-2 text-sm text-gray-900">
+ <td class="px-3 py-2 text-sm text-txmain">
  {{ $item->description }}
  </td>
  <td class="px-3 py-2 text-sm text-gray-500 text-right">
@@ -277,31 +277,31 @@
  </td>
  <td class="px-3 py-2 text-sm text-gray-500 text-right">
  ${{ number_format($item->unit_price, 2) }}</td>
- <td class="px-3 py-2 text-sm font-medium text-gray-900 text-right">
+ <td class="px-3 py-2 text-sm font-medium text-txmain text-right">
  ${{ number_format($item->total, 2) }}</td>
  </tr>
  @endforeach
  </tbody>
- <tfoot class="bg-gray-50">
+ <tfoot class="bg-page">
  <tr>
  <td colspan="3" class="px-3 py-2 text-right text-sm text-gray-500">
  Subtotal</td>
- <td class="px-3 py-2 text-right text-sm text-gray-900">
+ <td class="px-3 py-2 text-right text-sm text-txmain">
  ${{ number_format($invoice->subtotal, 2) }}</td>
  </tr>
  @if($invoice->tax_total > 0)
  <tr>
  <td colspan="3" class="px-3 py-2 text-right text-sm text-gray-500">
  Tax</td>
- <td class="px-3 py-2 text-right text-sm text-gray-900">
+ <td class="px-3 py-2 text-right text-sm text-txmain">
  ${{ number_format($invoice->tax_total, 2) }}</td>
  </tr>
  @endif
  <tr class="border-t border-gray-200">
  <td colspan="3"
- class="px-3 py-3 text-right text-sm font-semibold text-gray-900">
+ class="px-3 py-3 text-right text-sm font-semibold text-txmain">
  Total</td>
- <td class="px-3 py-3 text-right text-sm font-bold text-gray-900">
+ <td class="px-3 py-3 text-right text-sm font-bold text-txmain">
  ${{ number_format($invoice->grand_total, 2) }}</td>
  </tr>
  </tfoot>
@@ -323,7 +323,7 @@
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
  </svg>
- <h3 class="mt-2 text-sm font-semibold text-gray-900">No invoices</h3>
+ <h3 class="mt-2 text-sm font-semibold text-txmain">No invoices</h3>
  <p class="mt-1 text-sm text-gray-500">There are no invoices currently associated
  with
  your account.</p>
@@ -339,13 +339,13 @@
  @forelse($invoices as $invoice)
  <div class="p-4 space-y-3">
  <div class="flex items-center justify-between">
- <span class="text-sm font-bold text-gray-900">{{ $invoice->invoice_number }}</span>
+ <span class="text-sm font-bold text-txmain">{{ $invoice->invoice_number }}</span>
  @php
  $statusClass = match ($invoice->status) {
  'paid' => 'bg-green-50 text-green-700 ring-green-600/20',
  'overdue' => 'bg-red-50 text-red-700 ring-red-600/10',
  'sent', 'viewed' => 'bg-brand-50 text-brand-700 ring-brand-700/10',
- default => 'bg-gray-50 text-gray-600 ring-gray-500/10'
+ default => 'bg-page text-txmain ring-gray-500/10'
  };
  @endphp
  <span
@@ -354,17 +354,17 @@
  </span>
  </div>
  <div class="flex flex-col text-sm text-gray-500">
- <span class="font-medium text-gray-700">{{ $invoice->business->name }}</span>
+ <span class="font-medium text-txmain">{{ $invoice->business->name }}</span>
  <span>{{ $invoice->invoice_date->format('M d, Y') }}</span>
  </div>
  <div class="flex items-center justify-between pt-2">
  <div class="text-sm">
  <span class="text-gray-500">Due:</span>
- <span class="font-bold text-gray-900">${{ number_format($invoice->amount_due, 2) }}</span>
+ <span class="font-bold text-txmain">${{ number_format($invoice->amount_due, 2) }}</span>
  </div>
  <div class="flex items-center space-x-2">
  <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.download', $invoice->id) }}"
- class="p-2 text-gray-400 hover:text-gray-600 rounded-full bg-gray-50">
+ class="p-2 text-gray-400 hover:text-txmain rounded-full bg-page">
  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
  stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round"
@@ -387,7 +387,7 @@
  </div>
 
  @if($invoices->hasPages())
- <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+ <div class="bg-page px-6 py-4 border-t border-gray-200">
  {{ $invoices->links() }}
  </div>
  @endif
@@ -395,25 +395,25 @@
  </div>
 
  <!-- Activity Timeline -->
- <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl p-6">
- <h3 class="text-base font-semibold leading-6 text-gray-900 mb-6">Recent Activity</h3>
+ <div class="bg-card shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl p-6">
+ <h3 class="text-base font-semibold leading-6 text-txmain mb-6">Recent Activity</h3>
  <ul role="list" class="space-y-6">
  @foreach($invoices->take(5) as $invoice)
  <li class="relative flex gap-x-4">
  <div class="absolute left-0 top-0 flex w-6 justify-center {{ $loop->last ? 'h-6' : '-bottom-6' }}">
  <div class="w-px bg-gray-200"></div>
  </div>
- <div class="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
+ <div class="relative flex h-6 w-6 flex-none items-center justify-center bg-card">
  @if($invoice->status === 'paid')
  <div class="h-1.5 w-1.5 rounded-full bg-green-500 ring-1 ring-green-500"></div>
  @elseif($invoice->status === 'overdue')
  <div class="h-1.5 w-1.5 rounded-full bg-red-500 ring-1 ring-red-500"></div>
  @else
- <div class="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300"></div>
+ <div class="h-1.5 w-1.5 rounded-full bg-page ring-1 ring-gray-300"></div>
  @endif
  </div>
  <p class="flex-auto py-0.5 text-xs leading-5 text-gray-500">
- <span class="font-medium text-gray-900">
+ <span class="font-medium text-txmain">
  {{ $invoice->status === 'paid' ? 'Paid' : 'Received' }}
  </span> invoice {{ $invoice->invoice_number }} from {{ $invoice->business->name }}.
  </p>

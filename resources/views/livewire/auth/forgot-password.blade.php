@@ -1,7 +1,7 @@
 <div>
  <div class="text-center mb-8">
- <h1 class="text-2xl font-bold text-gray-900">{{ __('Forgot Password') }}</h1>
- <p class="text-gray-600 mt-2">{{ __('Enter your email to reset your password') }}</p>
+ <h1 class="text-2xl font-bold text-txmain">{{ __('Forgot Password') }}</h1>
+ <p class="text-txmain mt-2">{{ __('Enter your email to reset your password') }}</p>
  </div>
 
  @if (session('status') || $status)
@@ -12,7 +12,7 @@
 
  <form wire:submit="sendResetLink">
  <div class="mb-4">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Email') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Email') }}</label>
  <input type="email" wire:model="email"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('you@example.com') }}">
@@ -33,7 +33,7 @@
  </form>
 
  <div class="mt-6 text-center">
- <p class="text-sm text-gray-600">
+ <p class="text-sm text-txmain">
  <a href="{{ route('login') }}"
  class="text-brand-600 hover:text-brand-700 font-medium">{{ __('Back to sign in') }}</a>
  </p>

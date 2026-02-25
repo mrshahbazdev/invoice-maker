@@ -3,24 +3,24 @@
 <div>
  <div class="mb-8 flex items-center justify-between">
  <div>
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Record Expense') }}</h2>
- <p class="text-gray-600">{{ __('Enter your expense details and upload a receipt') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Record Expense') }}</h2>
+ <p class="text-txmain">{{ __('Enter your expense details and upload a receipt') }}</p>
  </div>
- <a href="{{ route('expenses.index') }}" class="text-gray-600 hover:text-gray-900">{{ __('Back to List') }}</a>
+ <a href="{{ route('expenses.index') }}" class="text-txmain hover:text-txmain">{{ __('Back to List') }}</a>
  </div>
 
  <div class="max-w-3xl mx-auto">
- <div class="bg-white rounded-lg shadow p-6">
+ <div class="bg-card rounded-lg shadow p-6">
  <form wire:submit="save">
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Date') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Date') }}</label>
  <input type="date" wire:model="date"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  @error('date') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Payment Source') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Payment Source') }}</label>
  <select wire:model="source"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="cash">{{ __('Cash (Kasse)') }}</option>
@@ -32,7 +32,7 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Category') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Category') }}</label>
  <select wire:model.live="category_id"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="">{{ __('Select Category') }}</option>
@@ -46,7 +46,7 @@
  </div>
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Link to Invoice (Optional)') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Link to Invoice (Optional)') }}</label>
  <select wire:model="invoice_id"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="">{{ __('No Link') }}</option>
@@ -62,7 +62,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Link to Client (Optional)') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Link to Client (Optional)') }}</label>
  <select wire:model="client_id"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="">{{ __('No Link') }}</option>
@@ -74,7 +74,7 @@
  </div>
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Link to Product (Optional)') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Link to Product (Optional)') }}</label>
  <select wire:model="product_id"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="">{{ __('No Link') }}</option>
@@ -109,7 +109,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Partner / Company') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Partner / Company') }}</label>
  <input type="text" wire:model="partner_name"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('Apple, Microsoft, etc.') }}">
@@ -117,7 +117,7 @@
  </div>
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('External Reference / Invoice #') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('External Reference / Invoice #') }}</label>
  <input type="text" wire:model="reference_number"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('RE-12345') }}">
@@ -127,7 +127,7 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Amount') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Amount') }}</label>
  <div class="relative">
  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
  <span class="text-gray-500">{{ Auth::user()->business->currency_symbol }}</span>
@@ -139,7 +139,7 @@
  @error('amount') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Description') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Description') }}</label>
  <input type="text" wire:model="description"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('What was this expense for?') }}">
@@ -149,7 +149,7 @@
 
  <div class="mb-6">
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Receipt Image (Optional)') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Receipt Image (Optional)') }}</label>
  <div
  class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg">
  <div class="space-y-1 text-center">
@@ -166,7 +166,7 @@
  clip-rule="evenodd" />
  </svg>
  <span
- class="ml-2 text-sm text-gray-600">{{ $receipt->getClientOriginalName() }}</span>
+ class="ml-2 text-sm text-txmain">{{ $receipt->getClientOriginalName() }}</span>
  </div>
  @endif
  </div>
@@ -194,9 +194,9 @@
  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
  </svg>
  @endif
- <div class="flex text-sm text-gray-600">
+ <div class="flex text-sm text-txmain">
  <label for="file-upload"
- class="relative cursor-pointer bg-white rounded-md font-medium text-brand-600 hover:text-brand-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-brand-500">
+ class="relative cursor-pointer bg-card rounded-md font-medium text-brand-600 hover:text-brand-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-brand-500">
  <span>{{ __('Upload a file') }}</span>
  <input id="file-upload" wire:model="receipt" type="file" class="sr-only">
  </label>
@@ -212,7 +212,7 @@
 
  <div class="flex justify-end gap-3 mt-8">
  <a href="{{ route('expenses.index') }}"
- class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+ class="px-6 py-2 border border-gray-300 rounded-lg text-txmain hover:bg-page transition">
  {{ __('Cancel') }}
  </a>
  <button type="submit" wire:loading.attr="disabled"

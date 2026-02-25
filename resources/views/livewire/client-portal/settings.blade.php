@@ -1,7 +1,7 @@
 <div>
  <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
  <div>
- <h2 class="text-xl font-extrabold leading-7 text-gray-900 sm:text-3xl sm:truncate sm:tracking-tight">
+ <h2 class="text-xl font-extrabold leading-7 text-txmain sm:text-3xl sm:truncate sm:tracking-tight">
  {{ __('Profile Settings') }}
  </h2>
  <p class="mt-1 text-xs sm:text-sm text-gray-500">
@@ -23,16 +23,16 @@
 
  <div class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
  <div class="px-4 sm:px-0">
- <h2 class="text-base font-bold leading-7 text-gray-900 uppercase tracking-widest text-xs">
+ <h2 class="text-base font-bold leading-7 text-txmain uppercase tracking-widest text-xs">
  {{ __('Personal Information') }}
  </h2>
- <p class="mt-2 text-sm leading-6 text-gray-600">
+ <p class="mt-2 text-sm leading-6 text-txmain">
  {{ __("Update your account's profile information and email address.") }}
  </p>
  </div>
 
  <form wire:submit="updateProfile"
- class="bg-white shadow-xl shadow-gray-200/50 ring-1 ring-gray-900/5 sm:rounded-2xl md:col-span-2 overflow-hidden">
+ class="bg-card shadow-xl shadow-gray-200/50 ring-1 ring-gray-900/5 sm:rounded-2xl md:col-span-2 overflow-hidden">
  <div class="px-4 py-6 sm:p-8">
  <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
@@ -55,7 +55,7 @@
  <label for="name"
  class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ __('Full Name') }}</label>
  <input type="text" wire:model="name" id="name" autocomplete="name"
- class="block w-full rounded-xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
+ class="block w-full rounded-xl border-0 py-3 text-txmain shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
  @error('name') <span class="text-red-500 text-xs mt-2 block font-medium">{{ $message }}</span>
  @enderror
  </div>
@@ -64,7 +64,7 @@
  <label for="email"
  class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ __('Email Address') }}</label>
  <input type="email" wire:model="email" id="email" autocomplete="email"
- class="block w-full rounded-xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
+ class="block w-full rounded-xl border-0 py-3 text-txmain shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
  @error('email') <span class="text-red-500 text-xs mt-2 block font-medium">{{ $message }}</span>
  @enderror
  </div>
@@ -73,14 +73,14 @@
  <label for="address"
  class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ __('Billing Address') }}</label>
  <textarea wire:model="address" id="address" rows="3"
- class="block w-full rounded-xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200"></textarea>
+ class="block w-full rounded-xl border-0 py-3 text-txmain shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200"></textarea>
  @error('address') <span
  class="text-red-500 text-xs mt-2 block font-medium">{{ $message }}</span>
  @enderror
  </div>
  </div>
  </div>
- <div class="flex items-center justify-end gap-x-6 border-t border-gray-100 px-4 py-6 sm:px-8 bg-gray-50/50">
+ <div class="flex items-center justify-end gap-x-6 border-t border-gray-100 px-4 py-6 sm:px-8 bg-page/50">
  <button type="submit" wire:loading.attr="disabled"
  class="inline-flex items-center justify-center rounded-xl bg-brand-600 px-8 py-3 text-sm font-black text-white shadow-lg shadow-brand-600/20 hover:bg-brand-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 transition-all duration-200 active:scale-95 disabled:opacity-50">
  <svg wire:loading wire:target="updateProfile" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
@@ -103,16 +103,16 @@
 
  <div class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
  <div class="px-4 sm:px-0">
- <h2 class="text-base font-bold leading-7 text-gray-900 uppercase tracking-widest text-xs">
+ <h2 class="text-base font-bold leading-7 text-txmain uppercase tracking-widest text-xs">
  {{ __('Update Password') }}
  </h2>
- <p class="mt-2 text-sm leading-6 text-gray-600">
+ <p class="mt-2 text-sm leading-6 text-txmain">
  {{ __('Ensure your account is using a long, random password to stay secure.') }}
  </p>
  </div>
 
  <form wire:submit="updatePassword"
- class="bg-white shadow-xl shadow-gray-200/50 ring-1 ring-gray-900/5 sm:rounded-2xl md:col-span-2 overflow-hidden">
+ class="bg-card shadow-xl shadow-gray-200/50 ring-1 ring-gray-900/5 sm:rounded-2xl md:col-span-2 overflow-hidden">
  <div class="px-4 py-6 sm:p-8">
  <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
@@ -137,7 +137,7 @@
  <label for="current_password"
  class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ __('Current Password') }}</label>
  <input type="password" wire:model="current_password" id="current_password"
- class="block w-full rounded-xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
+ class="block w-full rounded-xl border-0 py-3 text-txmain shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
  @error('current_password') <span
  class="text-red-500 text-xs mt-2 block font-medium">{{ $message }}</span> @enderror
  </div>
@@ -146,7 +146,7 @@
  <label for="password"
  class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ __('New Password') }}</label>
  <input type="password" wire:model="password" id="password"
- class="block w-full rounded-xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
+ class="block w-full rounded-xl border-0 py-3 text-txmain shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
  @error('password') <span
  class="text-red-500 text-xs mt-2 block font-medium">{{ $message }}</span>
  @enderror
@@ -156,11 +156,11 @@
  <label for="password_confirmation"
  class="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">{{ __('Confirm Password') }}</label>
  <input type="password" wire:model="password_confirmation" id="password_confirmation"
- class="block w-full rounded-xl border-0 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
+ class="block w-full rounded-xl border-0 py-3 text-txmain shadow-sm ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm transition-all duration-200">
  </div>
  </div>
  </div>
- <div class="flex items-center justify-end gap-x-6 border-t border-gray-100 px-4 py-6 sm:px-8 bg-gray-50/50">
+ <div class="flex items-center justify-end gap-x-6 border-t border-gray-100 px-4 py-6 sm:px-8 bg-page/50">
  <button type="submit" wire:loading.attr="disabled"
  class="inline-flex items-center justify-center rounded-xl bg-brand-600 px-8 py-3 text-sm font-black text-white shadow-lg shadow-brand-600/20 hover:bg-brand-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 transition-all duration-200 active:scale-95 disabled:opacity-50">
  <svg wire:loading wire:target="updatePassword" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"

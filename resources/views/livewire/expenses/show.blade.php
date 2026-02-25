@@ -3,12 +3,12 @@
 <div>
  <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
  <div>
- <h2 class="text-2xl font-bold text-gray-900">{{ __('View Expense') }}</h2>
- <p class="text-gray-600">{{ __('Details of the recorded expenditure') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('View Expense') }}</h2>
+ <p class="text-txmain">{{ __('Details of the recorded expenditure') }}</p>
  </div>
  <div class="flex gap-2">
  <a href="{{ route('expenses.index') }}"
- class="text-gray-600 hover:text-gray-900 py-2">{{ __('Back to List') }}</a>
+ class="text-txmain hover:text-txmain py-2">{{ __('Back to List') }}</a>
  <a href="{{ route('expenses.edit', $expense) }}"
  class="bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 shadow-sm transition duration-200 text-center font-medium">
  {{ __('Edit Expense') }}
@@ -16,12 +16,12 @@
  </div>
  </div>
 
- <div class="mx-auto bg-white rounded-lg shadow overflow-hidden">
+ <div class="mx-auto bg-card rounded-lg shadow overflow-hidden">
  <div class="p-6">
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
  <div>
  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{{ __('Date') }}</h3>
- <p class="text-gray-900 font-semibold">{{ $expense->date->format('M d, Y') }}</p>
+ <p class="text-txmain font-semibold">{{ $expense->date->format('M d, Y') }}</p>
  </div>
 
  <div>
@@ -31,20 +31,20 @@
  $cashBookEntry = \App\Models\CashBookEntry::where('expense_id', $expense->id)->first();
  $source = $cashBookEntry ? $cashBookEntry->source : 'cash';
  @endphp
- <p class="text-gray-900 font-semibold">{{ $source === 'bank' ? __('Bank') : __('Cash (Kasse)') }}
+ <p class="text-txmain font-semibold">{{ $source === 'bank' ? __('Bank') : __('Cash (Kasse)') }}
  </p>
  </div>
 
  <div>
  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{{ __('Amount') }}</h3>
- <p class="text-gray-900 font-bold text-xl">
+ <p class="text-txmain font-bold text-xl">
  {{ Auth::user()->business->currency_symbol }}{{ number_format($expense->amount, 2) }}</p>
  </div>
 
  <div>
  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{{ __('Category') }}</h3>
  <span
- class="px-2 py-0.5 rounded bg-gray-100 border border-gray-200 text-sm font-semibold text-gray-700">
+ class="px-2 py-0.5 rounded bg-page border border-gray-200 text-sm font-semibold text-txmain">
  {{ __($expense->category) }}
  </span>
  </div>
@@ -52,19 +52,19 @@
  <div>
  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
  {{ __('Partner / Company') }}</h3>
- <p class="text-gray-900 font-semibold">{{ $expense->partner_name ?: '-' }}</p>
+ <p class="text-txmain font-semibold">{{ $expense->partner_name ?: '-' }}</p>
  </div>
 
  <div>
  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
  {{ __('Reference / Invoice #') }}</h3>
- <p class="text-gray-900 font-semibold">{{ $expense->reference_number ?: '-' }}</p>
+ <p class="text-txmain font-semibold">{{ $expense->reference_number ?: '-' }}</p>
  </div>
 
  <div class="lg:col-span-2">
  <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">{{ __('Description') }}
  </h3>
- <p class="text-gray-900 font-semibold">{{ $expense->description }}</p>
+ <p class="text-txmain font-semibold">{{ $expense->description }}</p>
  </div>
 
  @if($expense->invoice_id && $expense->invoice)
@@ -85,7 +85,7 @@
 
  @if($expense->receipt_path)
  <div class="mt-8 border-t border-gray-100 pt-8">
- <h3 class="text-lg font-bold text-gray-900 mb-4">{{ __('Receipt / Proof of Payment') }}</h3>
+ <h3 class="text-lg font-bold text-txmain mb-4">{{ __('Receipt / Proof of Payment') }}</h3>
  <div class="flex justify-start">
  @if (in_array(strtolower(pathinfo($expense->receipt_path, PATHINFO_EXTENSION)), ['png', 'jpg', 'jpeg', 'gif', 'webp']))
  <a href="{{ Storage::url($expense->receipt_path) }}" target="_blank"
@@ -95,7 +95,7 @@
  </a>
  @else
  <a href="{{ Storage::url($expense->receipt_path) }}" target="_blank"
- class="flex flex-col items-center justify-center p-8 border rounded-xl bg-gray-50 hover:bg-gray-100 transition min-w-[300px]">
+ class="flex flex-col items-center justify-center p-8 border rounded-xl bg-page hover:bg-page transition min-w-[300px]">
  <svg class="h-16 w-16 text-gray-400 mb-2" fill="currentColor" viewBox="0 0 20 20">
  <path fill-rule="evenodd"
  d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"

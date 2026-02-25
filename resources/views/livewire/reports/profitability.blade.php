@@ -3,7 +3,7 @@
 <div class="space-y-8">
  <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-gray-100 pb-8">
  <div>
- <h2 class="text-3xl font-bold text-gray-900 tracking-tight">{{ __('Profitability Report') }}</h2>
+ <h2 class="text-3xl font-bold text-txmain tracking-tight">{{ __('Profitability Report') }}</h2>
  <p class="text-gray-500 text-base">
  {{ __('Analyze which customers and products drive your growth.') }}
  </p>
@@ -27,22 +27,22 @@
  </div>
  <input type="text" wire:model.live.debounce.300ms="search"
  placeholder="{{ __('Search client or product...') }}"
- class="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-sm font-medium transition-all outline-none">
+ class="w-full pl-11 pr-4 py-3 bg-card border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-sm font-medium transition-all outline-none">
  </div>
 
  <!-- Date Range -->
  <div
- class="flex items-center gap-3 bg-white px-4 py-2.5 rounded-xl border border-gray-200 w-full md:w-auto">
+ class="flex items-center gap-3 bg-card px-4 py-2.5 rounded-xl border border-gray-200 w-full md:w-auto">
  <div class="flex flex-col">
  <span class="text-[9px] font-black text-gray-400 uppercase tracking-tighter">{{ __('From') }}</span>
  <input type="date" wire:model.live="startDate"
- class="border-none focus:ring-0 text-sm font-bold text-gray-800 p-0">
+ class="border-none focus:ring-0 text-sm font-bold text-txmain p-0">
  </div>
  <span class="text-gray-300 font-bold">→</span>
  <div class="flex flex-col">
  <span class="text-[9px] font-black text-gray-400 uppercase tracking-tighter">{{ __('To') }}</span>
  <input type="date" wire:model.live="endDate"
- class="border-none focus:ring-0 text-sm font-bold text-gray-800 p-0">
+ class="border-none focus:ring-0 text-sm font-bold text-txmain p-0">
  </div>
  </div>
 
@@ -61,7 +61,7 @@
  <!-- Summary Cards -->
  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
  <div
- class="bg-white p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-brand-200">
+ class="bg-card p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-brand-200">
  <div
  class="w-12 h-12 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center mr-4 group-hover:bg-brand-600 group-hover:text-white transition-all duration-300">
  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,14 +72,14 @@
  <div>
  <span
  class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Total Revenue') }}</span>
- <p class="text-2xl font-bold text-gray-900 mt-0.5">
+ <p class="text-2xl font-bold text-txmain mt-0.5">
  {{ number_format($totalRevenue, 2, '.', ',') }} €
  </p>
  </div>
  </div>
 
  <div
- class="bg-white p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-red-200">
+ class="bg-card p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-red-200">
  <div
  class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mr-4 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -97,7 +97,7 @@
  </div>
 
  <div
- class="bg-white p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-emerald-200 relative overflow-hidden">
+ class="bg-card p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-emerald-200 relative overflow-hidden">
  <div class="absolute right-0 top-0 w-1 pt-12 h-full bg-emerald-500"></div>
  <div
  class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mr-4 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
@@ -110,7 +110,7 @@
  <div>
  <span
  class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Net Profit') }}</span>
- <p class="text-2xl font-bold text-gray-900 mt-0.5">
+ <p class="text-2xl font-bold text-txmain mt-0.5">
  {{ number_format($netIncome, 2, '.', ',') }} €
  </p>
  </div>
@@ -129,11 +129,11 @@
  <div class="space-y-2">
  @forelse($topClients as $client)
  <div
- class="bg-white px-4 py-2.5 rounded-xl flex items-center justify-between shadow-sm border border-brand-50/50">
+ class="bg-card px-4 py-2.5 rounded-xl flex items-center justify-between shadow-sm border border-brand-50/50">
  <div class="flex items-center gap-3">
  <span
  class="w-5 h-5 rounded bg-brand-600 text-white text-[9px] flex items-center justify-center font-bold">{{ $loop->iteration }}</span>
- <span class="text-sm font-semibold text-gray-700">{{ $client['name'] }}</span>
+ <span class="text-sm font-semibold text-txmain">{{ $client['name'] }}</span>
  </div>
  <span class="text-sm font-bold text-brand-600">+
  {{ number_format($client['difference'], 2, '.', ',') }} €</span>
@@ -155,11 +155,11 @@
  <div class="space-y-2">
  @forelse($topProducts as $product)
  <div
- class="bg-white px-4 py-2.5 rounded-xl flex items-center justify-between shadow-sm border border-brand-50/50">
+ class="bg-card px-4 py-2.5 rounded-xl flex items-center justify-between shadow-sm border border-brand-50/50">
  <div class="flex items-center gap-3">
  <span
  class="w-5 h-5 rounded bg-brand-600 text-white text-[9px] flex items-center justify-center font-bold">{{ $loop->iteration }}</span>
- <span class="text-sm font-semibold text-gray-700">{{ $product['name'] }}</span>
+ <span class="text-sm font-semibold text-txmain">{{ $product['name'] }}</span>
  </div>
  <span class="text-sm font-bold text-brand-600">+
  {{ number_format($product['difference'], 2, '.', ',') }} €</span>
@@ -174,16 +174,16 @@
 
  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
  <!-- Client ROI -->
- <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
- <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
- <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider">{{ __('Client ROI') }}</h3>
+ <div class="bg-card rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+ <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between bg-page/50">
+ <h3 class="text-sm font-bold text-txmain uppercase tracking-wider">{{ __('Client ROI') }}</h3>
  <span
  class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Revenue vs Direct Costs') }}</span>
  </div>
  <div class="overflow-x-auto">
  <table class="w-full text-left border-collapse">
  <thead>
- <tr class="bg-gray-50/50 border-b border-gray-100">
+ <tr class="bg-page/50 border-b border-gray-100">
  <th class="px-6 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider">
  {{ __('Client') }}</th>
  <th
@@ -199,14 +199,14 @@
  </thead>
  <tbody class="divide-y divide-gray-50">
  @foreach($clientProfitability as $client)
- <tr class="hover:bg-gray-50/50 transition-colors group">
+ <tr class="hover:bg-page/50 transition-colors group">
  <td class="px-6 py-4">
  <span
- class="text-sm font-bold text-gray-800 group-hover:text-brand-600 transition-colors">{{ $client['name'] }}</span>
+ class="text-sm font-bold text-txmain group-hover:text-brand-600 transition-colors">{{ $client['name'] }}</span>
  </td>
  <td class="px-6 py-4 text-right">
  <span
- class="text-sm font-medium text-gray-600">{{ number_format($client['sales'], 2, '.', ',') }}
+ class="text-sm font-medium text-txmain">{{ number_format($client['sales'], 2, '.', ',') }}
  €</span>
  </td>
  <td class="px-6 py-4 text-right">
@@ -238,16 +238,16 @@
  </div>
 
  <!-- Product Margins -->
- <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
- <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
- <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider">{{ __('Product Margins') }}</h3>
+ <div class="bg-card rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+ <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between bg-page/50">
+ <h3 class="text-sm font-bold text-txmain uppercase tracking-wider">{{ __('Product Margins') }}</h3>
  <span
  class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Sales vs Purchase Cost') }}</span>
  </div>
  <div class="overflow-x-auto">
  <table class="w-full text-left border-collapse">
  <thead>
- <tr class="bg-gray-50/50 border-b border-gray-100">
+ <tr class="bg-page/50 border-b border-gray-100">
  <th class="px-6 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider">
  {{ __('Product') }}</th>
  <th
@@ -263,16 +263,16 @@
  </thead>
  <tbody class="divide-y divide-gray-50">
  @foreach($productProfitability as $product)
- <tr class="hover:bg-gray-50/50 transition-colors group">
+ <tr class="hover:bg-page/50 transition-colors group">
  <td class="px-6 py-4">
  <span
- class="text-sm font-bold text-gray-800 group-hover:text-brand-600 transition-colors uppercase">{{ $product['name'] }}</span>
+ class="text-sm font-bold text-txmain group-hover:text-brand-600 transition-colors uppercase">{{ $product['name'] }}</span>
  <div class="text-[10px] text-gray-400 font-medium uppercase mt-0.5">
  {{ $product['sold'] }} {{ __('sold') }}</div>
  </td>
  <td class="px-6 py-4 text-right">
  <span
- class="text-sm font-medium text-gray-600">{{ number_format($product['sales'], 2, '.', ',') }}
+ class="text-sm font-medium text-txmain">{{ number_format($product['sales'], 2, '.', ',') }}
  €</span>
  </td>
  <td class="px-6 py-4 text-right">

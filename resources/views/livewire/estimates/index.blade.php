@@ -3,8 +3,8 @@
 <div>
  <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
  <div>
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Estimates & Quotations') }}</h2>
- <p class="text-gray-600">{{ __('Manage your estimates and bids') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Estimates & Quotations') }}</h2>
+ <p class="text-txmain">{{ __('Manage your estimates and bids') }}</p>
  </div>
  <div class="flex gap-2">
  <a href="{{ route('estimates.create') }}"
@@ -20,7 +20,7 @@
  </div>
  @endif
 
- <div class="bg-white rounded-lg shadow">
+ <div class="bg-card rounded-lg shadow">
  <div class="p-4 border-b flex flex-col md:flex-row gap-4">
  <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search estimates...') }}"
  class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
@@ -36,38 +36,38 @@
  <div class="overflow-x-auto">
  <table class="w-full">
  <thead>
- <tr class="border-b bg-gray-50">
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700 cursor-pointer"
+ <tr class="border-b bg-page">
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
  wire:click="sortBy('invoice_number')">
  {{ __('Estimate Number') }}
  @if($sortBy === 'invoice_number')
  <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
  @endif
  </th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Client') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700 cursor-pointer"
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Client') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
  wire:click="sortBy('invoice_date')">
  {{ __('Date') }}
  @if($sortBy === 'invoice_date')
  <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
  @endif
  </th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Expires') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Amount') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Status') }}</th>
- <th class="text-right py-3 px-4 text-sm font-semibold text-gray-700">{{ __('Actions') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Expires') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Amount') }}</th>
+ <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Status') }}</th>
+ <th class="text-right py-3 px-4 text-sm font-semibold text-txmain">{{ __('Actions') }}</th>
  </tr>
  </thead>
  <tbody>
  @forelse($estimates as $estimate)
- <tr class="border-b hover:bg-gray-50">
+ <tr class="border-b hover:bg-page">
  <td class="py-3 px-4 text-brand-600 font-medium">
  {{ $estimate->invoice_number }}
  </td>
- <td class="py-3 px-4 text-gray-600">{{ $estimate->client->name }}</td>
- <td class="py-3 px-4 text-gray-600">{{ $estimate->invoice_date->format('M d, Y') }}</td>
- <td class="py-3 px-4 text-gray-600">{{ $estimate->due_date->format('M d, Y') }}</td>
- <td class="py-3 px-4 text-gray-900 font-medium">
+ <td class="py-3 px-4 text-txmain">{{ $estimate->client->name }}</td>
+ <td class="py-3 px-4 text-txmain">{{ $estimate->invoice_date->format('M d, Y') }}</td>
+ <td class="py-3 px-4 text-txmain">{{ $estimate->due_date->format('M d, Y') }}</td>
+ <td class="py-3 px-4 text-txmain font-medium">
  {{ $estimate->currency_symbol }}{{ number_format($estimate->grand_total, 2) }}
  </td>
  <td class="py-3 px-4">
@@ -105,7 +105,7 @@
 
  @if($estimates->hasPages())
  <div class="p-4 border-t flex justify-between items-center">
- <span class="text-sm text-gray-600">
+ <span class="text-sm text-txmain">
  {{ __('Showing') }} {{ $estimates->firstItem() }} {{ __('to') }} {{ $estimates->lastItem() }}
  {{ __('of') }} {{ $estimates->total() }}
  {{ __('results') }}

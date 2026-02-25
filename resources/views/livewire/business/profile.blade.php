@@ -2,15 +2,15 @@
 
 <div>
  <div class="mb-8">
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Business Profile') }}</h2>
- <p class="text-gray-600">{{ __('Manage your business information') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Business Profile') }}</h2>
+ <p class="text-txmain">{{ __('Manage your business information') }}</p>
  </div>
 
  <div class="">
- <form wire:submit="save" class="bg-white rounded-lg shadow p-6">
+ <form wire:submit="save" class="bg-card rounded-lg shadow p-6">
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Business Name') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Business Name') }}</label>
  <input type="text" wire:model="name"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('Your Business Name') }}">
@@ -18,7 +18,7 @@
  </div>
 
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Email') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Email') }}</label>
  <input type="email" wire:model="email"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('business@example.com') }}">
@@ -26,7 +26,7 @@
  </div>
 
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Phone') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Phone') }}</label>
  <input type="text" wire:model="phone"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('+1 (555) 123-4567') }}">
@@ -35,7 +35,7 @@
 
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Tax Number / VAT / GST') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Tax Number / VAT / GST') }}</label>
  <input type="text" wire:model="tax_number"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('e.g. US123456789') }}">
@@ -43,7 +43,7 @@
  </div>
 
  <div wire:ignore>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Address') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Address') }}</label>
  <textarea wire:model="address" rows="3"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('123 Business Street') }}&#10;{{ __('City, State ZIP') }}"></textarea>
@@ -52,7 +52,7 @@
 
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Bank Details (Shown on Invoices)') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Bank Details (Shown on Invoices)') }}</label>
  <textarea wire:model="bank_details" rows="3"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('Bank Name: Example Bank') }}&#10;{{ __('Account No: 123456789') }}&#10;{{ __('Routing/Swift: EXMPUS33') }}"></textarea>
@@ -62,14 +62,14 @@
  <div class="space-y-4">
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('IBAN (For EPC-QR Bank Transfer)') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('IBAN (For EPC-QR Bank Transfer)') }}</label>
  <input type="text" wire:model="iban"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="DE00 0000 0000 0000 0000 00">
  @error('iban') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('BIC') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('BIC') }}</label>
  <input type="text" wire:model="bic"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="EXAMPPBBXXX">
@@ -79,7 +79,7 @@
 
  <div class="md:col-span-2">
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Default Payment Terms & Instructions') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Default Payment Terms & Instructions') }}</label>
  <textarea wire:model="payment_terms" rows="2"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('e.g. Please initiate wire transfer immediately.') }}"></textarea>
@@ -87,7 +87,7 @@
  </div>
 
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Currency') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Currency') }}</label>
  <select wire:model="currency"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="USD">{{ __('USD - US Dollar') }}</option>
@@ -104,7 +104,7 @@
  </div>
 
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Language') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Language') }}</label>
  <select wire:model="language"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="en">English</option>
@@ -122,7 +122,7 @@
  </div>
 
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Timezone') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Timezone') }}</label>
  <select wire:model="timezone"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="UTC">UTC</option>
@@ -139,7 +139,7 @@
  </div>
 
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Logo') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Logo') }}</label>
  <div class="flex items-center gap-4">
  @if($business && $business->logo)
  <div class="relative group">
@@ -164,14 +164,14 @@
 
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Invoice Number Prefix') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Invoice Number Prefix') }}</label>
  <input type="text" wire:model="invoice_number_prefix"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="e.g. INV">
  @error('invoice_number_prefix') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Next Invoice Number') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Next Invoice Number') }}</label>
  <input type="number" wire:model="invoice_number_next"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="1">
@@ -180,14 +180,14 @@
 
  <div>
  <label
- class="block text-sm font-medium text-gray-700 mb-1">{{ __('Booking Number Prefix (Expenses)') }}</label>
+ class="block text-sm font-medium text-txmain mb-1">{{ __('Booking Number Prefix (Expenses)') }}</label>
  <input type="text" wire:model="booking_number_prefix"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="e.g. EXP">
  @error('booking_number_prefix') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Next Booking Number') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Next Booking Number') }}</label>
  <input type="number" wire:model="booking_number_next"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="1">
@@ -195,14 +195,14 @@
  </div>
 
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Bank Booking Account') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Bank Booking Account') }}</label>
  <input type="text" wire:model="bank_booking_account"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="e.g. 1200">
  @error('bank_booking_account') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Cash Booking Account') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Cash Booking Account') }}</label>
  <input type="text" wire:model="cash_booking_account"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="e.g. 1000">
@@ -211,21 +211,21 @@
  </div>
 
  <div class="mb-8 border-t border-gray-200 pt-8">
- <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Email Settings (Optional SMTP)') }}</h3>
+ <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Email Settings (Optional SMTP)') }}</h3>
  <p class="text-sm text-gray-500 mb-6">
  {{ __('Configure your own SMTP server to send emails from your own domain. If left empty, the system default will be used.') }}
  </p>
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('SMTP Host') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('SMTP Host') }}</label>
  <input type="text" wire:model="smtp_host"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="smtp.example.com">
  @error('smtp_host') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('SMTP Port') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('SMTP Port') }}</label>
  <input type="number" wire:model="smtp_port"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="587">
@@ -235,13 +235,13 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('SMTP Username') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('SMTP Username') }}</label>
  <input type="text" wire:model="smtp_username"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  @error('smtp_username') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('SMTP Password') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('SMTP Password') }}</label>
  <input type="password" wire:model="smtp_password"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  @error('smtp_password') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
@@ -250,7 +250,7 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Encryption') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Encryption') }}</label>
  <select wire:model="smtp_encryption"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="">{{ __('None') }}</option>
@@ -260,7 +260,7 @@
  @error('smtp_encryption') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
  </div>
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('From Email') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('From Email') }}</label>
  <input type="email" wire:model="smtp_from_address"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="info@yourcompany.com">
@@ -270,7 +270,7 @@
 
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('From Name') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('From Name') }}</label>
  <input type="text" wire:model="smtp_from_name"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="Your Company Name">
@@ -278,7 +278,7 @@
  </div>
  <div class="flex items-end pb-1">
  <button type="button" wire:click="testSmtpConnection" wire:loading.attr="disabled"
- class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+ class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-txmain bg-card hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
  <svg wire:loading wire:target="testSmtpConnection"
  class="animate-spin -ml-1 mr-3 h-5 w-5 text-brand-500" xmlns="http://www.w3.org/2000/svg"
  fill="none" viewBox="0 0 24 24">
@@ -296,11 +296,11 @@
  </div>
 
  <div class="mb-8 border-t border-gray-200 pt-8">
- <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Online Payments') }}</h3>
- <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+ <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Online Payments') }}</h3>
+ <div class="bg-page rounded-lg p-6 border border-gray-200">
  <div class="flex items-center justify-between">
  <div>
- <h4 class="text-base font-medium text-gray-900">{{ __('Stripe Integration') }}</h4>
+ <h4 class="text-base font-medium text-txmain">{{ __('Stripe Integration') }}</h4>
  <p class="text-sm text-gray-500 mt-1">
  {{ __('Accept credit cards, Apple Pay, and Google Pay directly on your invoices.') }}
  </p>

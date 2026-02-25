@@ -2,7 +2,7 @@
  <x-slot name="header">
  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
  <div>
- <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+ <h2 class="font-semibold text-2xl text-txmain leading-tight">
  {{ __('Support Tickets') }}
  </h2>
  <p class="text-sm text-gray-500 mt-1">Manage your support requests</p>
@@ -18,8 +18,8 @@
 
  <div class="py-12">
  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
- <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
- <div class="p-6 bg-white border-b border-gray-200">
+ <div class="bg-card overflow-hidden shadow-sm sm:rounded-lg">
+ <div class="p-6 bg-card border-b border-gray-200">
 
  @if (session()->has('message'))
  <div class="mb-6 bg-green-50 border-l-4 border-green-400 p-4">
@@ -41,7 +41,7 @@
  @if($tickets->count() > 0)
  <div class="overflow-x-auto">
  <table class="min-w-full divide-y divide-gray-200">
- <thead class="bg-gray-50">
+ <thead class="bg-page">
  <tr>
  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket ID</th>
  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
@@ -51,14 +51,14 @@
  <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
  </tr>
  </thead>
- <tbody class="bg-white divide-y divide-gray-200">
+ <tbody class="bg-card divide-y divide-gray-200">
  @foreach($tickets as $ticket)
- <tr class="hover:bg-gray-50 transition-colors">
+ <tr class="hover:bg-page transition-colors">
  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
  #{{ $ticket->id }}
  </td>
  <td class="px-6 py-4 whitespace-nowrap">
- <div class="text-sm font-medium text-gray-900">{{ $ticket->subject }}</div>
+ <div class="text-sm font-medium text-txmain">{{ $ticket->subject }}</div>
  <div class="text-xs text-gray-500">{{ ucfirst($ticket->category ?? 'General') }}</div>
  </td>
  <td class="px-6 py-4 whitespace-nowrap">
@@ -67,9 +67,9 @@
  'open' => 'bg-green-100 text-green-800',
  'in_progress' => 'bg-yellow-100 text-yellow-800',
  'resolved' => 'bg-brand-100 text-brand-800',
- 'closed' => 'bg-gray-100 text-gray-800',
+ 'closed' => 'bg-page text-txmain',
  ];
- $statusColor = $statusColors[$ticket->status] ?? 'bg-gray-100 text-gray-800';
+ $statusColor = $statusColors[$ticket->status] ?? 'bg-page text-txmain';
  @endphp
  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColor }}">
  {{ str_replace('_', ' ', ucfirst($ticket->status)) }}
@@ -78,12 +78,12 @@
  <td class="px-6 py-4 whitespace-nowrap">
  @php
  $priorityColors = [
- 'low' => 'text-gray-600',
+ 'low' => 'text-txmain',
  'medium' => 'text-brand-600',
  'high' => 'text-orange-600 font-bold',
  'urgent' => 'text-red-600 font-bold',
  ];
- $priorityColor = $priorityColors[$ticket->priority] ?? 'text-gray-600';
+ $priorityColor = $priorityColors[$ticket->priority] ?? 'text-txmain';
  @endphp
  <span class="text-sm {{ $priorityColor }}">
  {{ ucfirst($ticket->priority) }}
@@ -108,7 +108,7 @@
  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
  </svg>
- <h3 class="mt-2 text-sm font-medium text-gray-900">No support tickets</h3>
+ <h3 class="mt-2 text-sm font-medium text-txmain">No support tickets</h3>
  <p class="mt-1 text-sm text-gray-500">You haven't opened any support requests yet.</p>
  <div class="mt-6">
  <a href="{{ route('client.tickets.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">

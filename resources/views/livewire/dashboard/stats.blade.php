@@ -2,11 +2,11 @@
  <!-- Stats Grid -->
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
  <!-- Total Invoiced -->
- <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+ <div class="bg-card rounded-xl shadow-sm p-6 border border-gray-100">
  <div class="flex items-center justify-between">
  <div>
  <p class="text-sm font-medium text-gray-500">{{ __('Total Invoiced') }}</p>
- <p class="text-2xl font-bold text-gray-900">
+ <p class="text-2xl font-bold text-txmain">
  {{ auth()->user()->business->currency_symbol }}{{ number_format($totalInvoiced, 2) }}</p>
  </div>
  <div class="p-3 bg-brand-50 rounded-lg">
@@ -23,7 +23,7 @@
  </div>
 
  <!-- Total Paid -->
- <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+ <div class="bg-card rounded-xl shadow-sm p-6 border border-gray-100">
  <div class="flex items-center justify-between">
  <div>
  <p class="text-sm font-medium text-gray-500">{{ __('Total Paid') }}</p>
@@ -44,7 +44,7 @@
  </div>
 
  <!-- Outstanding -->
- <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+ <div class="bg-card rounded-xl shadow-sm p-6 border border-gray-100">
  <div class="flex items-center justify-between">
  <div>
  <p class="text-sm font-medium text-gray-500">{{ __('Outstanding') }}</p>
@@ -64,7 +64,7 @@
  </div>
 
  <!-- Total Clients -->
- <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+ <div class="bg-card rounded-xl shadow-sm p-6 border border-gray-100">
  <div class="flex items-center justify-between">
  <div>
  <p class="text-sm font-medium text-gray-500">{{ __('Total Clients') }}</p>
@@ -88,25 +88,25 @@
  <!-- Recent Activity -->
  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
  <!-- Recent Invoices -->
- <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+ <div class="bg-card rounded-xl shadow-sm border border-gray-100">
  <div class="p-6 border-b border-gray-100">
- <h3 class="text-lg font-semibold text-gray-900">{{ __('Recent Invoices') }}</h3>
+ <h3 class="text-lg font-semibold text-txmain">{{ __('Recent Invoices') }}</h3>
  </div>
  <div class="divide-y divide-gray-100">
  @forelse($recentInvoices as $invoice)
- <div class="p-4 flex items-center justify-between hover:bg-gray-50">
+ <div class="p-4 flex items-center justify-between hover:bg-page">
  <div>
- <p class="font-medium text-gray-900">{{ $invoice->invoice_number }}</p>
+ <p class="font-medium text-txmain">{{ $invoice->invoice_number }}</p>
  <p class="text-sm text-gray-500">{{ $invoice->client->display_name ?? 'N/A' }}</p>
  </div>
  <div class="text-right">
- <p class="font-medium text-gray-900">
+ <p class="font-medium text-txmain">
  {{ auth()->user()->business->currency_symbol }}{{ number_format($invoice->total, 2) }}</p>
  <span class="inline-flex px-2 py-1 text-xs rounded-full
  @if($invoice->status === 'paid') bg-green-100 text-green-800
  @elseif($invoice->status === 'overdue') bg-red-100 text-red-800
  @elseif($invoice->status === 'sent') bg-brand-100 text-brand-800
- @else bg-gray-100 text-gray-800 @endif">
+ @else bg-page text-txmain @endif">
  {{ __(ucfirst($invoice->status)) }}
  </span>
  </div>
@@ -118,15 +118,15 @@
  </div>
 
  <!-- Recent Payments -->
- <div class="bg-white rounded-xl shadow-sm border border-gray-100">
+ <div class="bg-card rounded-xl shadow-sm border border-gray-100">
  <div class="p-6 border-b border-gray-100">
- <h3 class="text-lg font-semibold text-gray-900">{{ __('Recent Payments') }}</h3>
+ <h3 class="text-lg font-semibold text-txmain">{{ __('Recent Payments') }}</h3>
  </div>
  <div class="divide-y divide-gray-100">
  @forelse($recentPayments as $payment)
- <div class="p-4 flex items-center justify-between hover:bg-gray-50">
+ <div class="p-4 flex items-center justify-between hover:bg-page">
  <div>
- <p class="font-medium text-gray-900">{{ $payment->client->display_name ?? 'N/A' }}</p>
+ <p class="font-medium text-txmain">{{ $payment->client->display_name ?? 'N/A' }}</p>
  <p class="text-sm text-gray-500">{{ $payment->payment_date->format('M d, Y') }}</p>
  </div>
  <div class="text-right">

@@ -2,8 +2,8 @@
 
 <div>
  <div class="mb-8">
- <h2 class="text-2xl font-bold text-gray-900">{{ __('Dashboard') }}</h2>
- <p class="text-gray-600">{{ __('Overview of your invoice business') }}</p>
+ <h2 class="text-2xl font-bold text-txmain">{{ __('Dashboard') }}</h2>
+ <p class="text-txmain">{{ __('Overview of your invoice business') }}</p>
  </div>
 
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -68,16 +68,16 @@
  </div>
 
  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
- <div class="bg-white rounded-lg shadow p-6">
- <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Recent Invoices') }}</h3>
+ <div class="bg-card rounded-lg shadow p-6">
+ <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Recent Invoices') }}</h3>
  <div class="overflow-x-auto">
  <table class="w-full">
  <thead>
  <tr class="border-b">
- <th class="text-left py-2 text-sm font-medium text-gray-600">{{ __('Invoice') }}</th>
- <th class="text-left py-2 text-sm font-medium text-gray-600">{{ __('Client') }}</th>
- <th class="text-left py-2 text-sm font-medium text-gray-600">{{ __('Amount') }}</th>
- <th class="text-left py-2 text-sm font-medium text-gray-600">{{ __('Status') }}</th>
+ <th class="text-left py-2 text-sm font-medium text-txmain">{{ __('Invoice') }}</th>
+ <th class="text-left py-2 text-sm font-medium text-txmain">{{ __('Client') }}</th>
+ <th class="text-left py-2 text-sm font-medium text-txmain">{{ __('Amount') }}</th>
+ <th class="text-left py-2 text-sm font-medium text-txmain">{{ __('Status') }}</th>
  </tr>
  </thead>
  <tbody>
@@ -89,8 +89,8 @@
  {{ $invoice->invoice_number }}
  </a>
  </td>
- <td class="py-3 text-sm text-gray-600">{{ $invoice->client->name }}</td>
- <td class="py-3 text-sm text-gray-900">
+ <td class="py-3 text-sm text-txmain">{{ $invoice->client->name }}</td>
+ <td class="py-3 text-sm text-txmain">
  {{ auth()->user()->business->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}
  </td>
  <td class="py-3">
@@ -116,8 +116,8 @@
  @endif
  </div>
 
- <div class="bg-white rounded-lg shadow p-6">
- <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ __('Revenue vs Expenses') }} ({{ now()->year }})
+ <div class="bg-card rounded-lg shadow p-6">
+ <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Revenue vs Expenses') }} ({{ now()->year }})
  </h3>
  <div class="h-64 flex items-stretch justify-between gap-2 border-b border-gray-100 pb-2">
  @for($month = 1; $month <= 12; $month++)
@@ -162,13 +162,13 @@
  </div>
 
  @if(count($expensesByCategory) > 0)
- <div class="mt-8 bg-white rounded-lg shadow p-6">
- <h3 class="text-lg font-semibold text-gray-900 mb-6">{{ __('Expense Breakdown') }}</h3>
+ <div class="mt-8 bg-card rounded-lg shadow p-6">
+ <h3 class="text-lg font-semibold text-txmain mb-6">{{ __('Expense Breakdown') }}</h3>
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
  @foreach($expensesByCategory as $cat => $total)
- <div class="p-4 border rounded-lg bg-gray-50 flex flex-col justify-between">
+ <div class="p-4 border rounded-lg bg-page flex flex-col justify-between">
  <span class="text-sm font-medium text-gray-500 uppercase">{{ $cat }}</span>
- <span class="text-xl font-bold text-gray-900 mt-1">
+ <span class="text-xl font-bold text-txmain mt-1">
  {{ auth()->user()->business->currency_symbol }}{{ number_format($total, 2) }}
  </span>
  @php

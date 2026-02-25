@@ -74,7 +74,7 @@
  <input type="checkbox" wire:click="toggleLanguage('{{ $code }}', '{{ $name }}')"
  class="sr-only peer" {{ $isEnabled ? 'checked' : '' }} {{ $isBase ? 'disabled' : '' }}>
  <div
- class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-500">
+ class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-500">
  </div>
  </label>
  </div>
@@ -175,7 +175,7 @@
  <div
  class="bg-gray-800 rounded-2xl border border-gray-700 p-12 shadow-sm flex flex-col items-center justify-center h-full min-h-[400px] text-center">
  <div class="w-20 h-20 bg-gray-900 rounded-full flex items-center justify-center mb-6">
- <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+ <svg class="w-10 h-10 text-txmain" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.53 3 18.051">
  </path>

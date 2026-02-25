@@ -1,12 +1,12 @@
 <div>
  <div class="text-center mb-8">
- <h1 class="text-2xl font-bold text-gray-900">{{ __('Create Account') }}</h1>
- <p class="text-gray-600 mt-2">{{ __('Start creating invoices today') }}</p>
+ <h1 class="text-2xl font-bold text-txmain">{{ __('Create Account') }}</h1>
+ <p class="text-txmain mt-2">{{ __('Start creating invoices today') }}</p>
  </div>
 
  <form wire:submit="register">
  <div class="mb-4">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Full Name') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Full Name') }}</label>
  <input type="text" wire:model="name"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('John Doe') }}">
@@ -14,7 +14,7 @@
  </div>
 
  <div class="mb-4">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Email') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Email') }}</label>
  <input type="email" wire:model="email"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('you@example.com') }}">
@@ -22,7 +22,7 @@
  </div>
 
  <div class="mb-4">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Password') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Password') }}</label>
  <input type="password" wire:model="password"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="••••••••">
@@ -30,7 +30,7 @@
  </div>
 
  <div class="mb-4">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Confirm Password') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Confirm Password') }}</label>
  <input type="password" wire:model="password_confirmation"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="••••••••">
@@ -38,7 +38,7 @@
  </div>
 
  <div class="mb-6">
- <label class="block text-sm font-medium text-gray-700 mb-1">{{ __('Business Name') }}</label>
+ <label class="block text-sm font-medium text-txmain mb-1">{{ __('Business Name') }}</label>
  <input type="text" wire:model="business_name"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
  placeholder="{{ __('Your Business Name') }}">
@@ -59,7 +59,7 @@
  </form>
 
  <div class="mt-6 text-center">
- <p class="text-sm text-gray-600">
+ <p class="text-sm text-txmain">
  {{ __('Already have an account?') }}
  <a href="{{ route('login') }}" class="text-brand-600 hover:text-brand-700 font-medium">{{ __('Sign in') }}</a>
  </p>

@@ -21,7 +21,7 @@
 <body class="min-h-screen flex flex-col antialiased">
 
  <!-- Navbar -->
- <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+ <nav class="bg-card border-b border-gray-200 sticky top-0 z-50">
  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div class="flex justify-between items-center h-16">
  <!-- Left side -->
@@ -32,7 +32,7 @@
  {{ substr(auth()->user()->name, 0, 1) }}
  </div>
  <div>
- <h1 class="text-sm sm:text-lg font-bold text-gray-900 leading-tight">Client Portal</h1>
+ <h1 class="text-sm sm:text-lg font-bold text-txmain leading-tight">Client Portal</h1>
  <p class="hidden sm:block text-[10px] text-gray-500 font-medium lowercase">Welcome,
  {{ auth()->user()->name }}</p>
  </div>
@@ -42,7 +42,7 @@
  <!-- Right side -->
  <div class="flex items-center space-x-3 sm:space-x-6">
  <a href="{{ route('client.dashboard') }}"
- class="text-xs sm:text-sm font-medium {{ request()->routeIs('client.dashboard') ? 'text-brand-600' : 'text-gray-500 hover:text-gray-900' }} transition-colors duration-150 flex items-center">
+ class="text-xs sm:text-sm font-medium {{ request()->routeIs('client.dashboard') ? 'text-brand-600' : 'text-gray-500 hover:text-txmain' }} transition-colors duration-150 flex items-center">
  <svg class="w-4 h-4 mr-1 sm:mr-1.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
  stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round"
@@ -51,7 +51,7 @@
  <span class="hidden sm:inline">Dashboard</span>
  </a>
  <a href="{{ route('client.settings') }}"
- class="text-xs sm:text-sm font-medium {{ request()->routeIs('client.settings') ? 'text-brand-600' : 'text-gray-500 hover:text-gray-900' }} transition-colors duration-150 flex items-center">
+ class="text-xs sm:text-sm font-medium {{ request()->routeIs('client.settings') ? 'text-brand-600' : 'text-gray-500 hover:text-txmain' }} transition-colors duration-150 flex items-center">
  <svg class="w-4 h-4 mr-1 sm:mr-1.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
  stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round"

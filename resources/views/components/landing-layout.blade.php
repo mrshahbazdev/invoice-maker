@@ -112,11 +112,11 @@
  </style>
 </head>
 
-<body class="bg-gray-50 text-gray-900 antialiased selection:bg-brand-100 selection:text-brand-700">
+<body class="bg-page text-txmain antialiased selection:bg-brand-100 selection:text-brand-700">
 
  <!-- Header -->
  <header x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)"
- :class="scrolled ? 'bg-white/80 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'"
+ :class="scrolled ? 'bg-card/80 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'"
  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8">
  <nav class="max-w-7xl mx-auto flex items-center justify-between">
  <div class="flex items-center">
@@ -144,16 +144,16 @@
  <!-- Desktop Nav -->
  <div class="hidden md:flex items-center space-x-8">
  <a href="/#features"
- class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">{{ __('Features') }}</a>
+ class="text-sm font-medium text-txmain hover:text-brand-600 transition-colors">{{ __('Features') }}</a>
  <a href="/#how-it-works"
- class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">{{ __('How it Works') }}</a>
+ class="text-sm font-medium text-txmain hover:text-brand-600 transition-colors">{{ __('How it Works') }}</a>
  <a href="{{ route('public.blog.index') }}"
- class="text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">{{ __('Blog') }}</a>
+ class="text-sm font-medium text-txmain hover:text-brand-600 transition-colors">{{ __('Blog') }}</a>
 
  <!-- Language Selector -->
  <div class="relative" x-data="{ open: false }">
  <button @click="open = !open"
- class="flex items-center text-sm font-medium text-gray-600 hover:text-brand-600 transition-colors">
+ class="flex items-center text-sm font-medium text-txmain hover:text-brand-600 transition-colors">
  <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.53 3 18.051">
@@ -162,7 +162,7 @@
  {{ strtoupper(app()->getLocale()) }}
  </button>
  <div x-show="open" @click.away="open = false" x-cloak
- class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50 overflow-hidden transform transition-all">
+ class="absolute right-0 mt-2 w-48 bg-card rounded-xl shadow-xl border border-gray-100 py-2 z-50 overflow-hidden transform transition-all">
  @php
  $locales = \App\Models\Setting::get('site.enabled_languages', [
  'en' => 'English',
@@ -179,7 +179,7 @@
  @endphp
  @foreach($locales as $code => $name)
  <a href="{{ route('language.switch', $code) }}"
- class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 {{ app()->getLocale() == $code ? 'font-bold bg-gray-50' : '' }}">
+ class="block px-4 py-2 text-sm text-txmain hover:bg-brand-50 hover:text-brand-700 {{ app()->getLocale() == $code ? 'font-bold bg-page' : '' }}">
  {{ $name }}
  </a>
  @endforeach
@@ -194,7 +194,7 @@
  </a>
  @else
  <a href="{{ route('login') }}"
- class="text-sm font-semibold text-gray-700 hover:text-brand-600 transition-colors">{{ __('Sign In') }}</a>
+ class="text-sm font-semibold text-txmain hover:text-brand-600 transition-colors">{{ __('Sign In') }}</a>
  <a href="{{ route('register') }}"
  class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-brand-600 rounded-full hover:bg-brand-700 shadow-lg shadow-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-all">
  {{ __('Get Started') }}
@@ -207,7 +207,7 @@
  <div class="md:hidden flex items-center space-x-4">
  <!-- Language Selector Mobile -->
  <div class="relative" x-data="{ open: false }">
- <button @click="open = !open" class="p-2 text-gray-600 hover:text-brand-600 transition-colors">
+ <button @click="open = !open" class="p-2 text-txmain hover:text-brand-600 transition-colors">
  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.53 3 18.051">
@@ -215,17 +215,17 @@
  </svg>
  </button>
  <div x-show="open" @click.away="open = false" x-cloak
- class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+ class="absolute right-0 mt-2 w-48 bg-card rounded-xl shadow-xl border border-gray-100 py-2 z-50">
  @foreach($locales as $code => $name)
  <a href="{{ route('language.switch', $code) }}"
- class="block px-4 py-2 text-sm text-gray-700 hover:bg-brand-50">
+ class="block px-4 py-2 text-sm text-txmain hover:bg-brand-50">
  {{ $name }}
  </a>
  @endforeach
  </div>
  </div>
 
- <button @click="mobileMenuOpen = true" class="p-2 text-gray-600 hover:text-brand-600 transition-colors">
+ <button @click="mobileMenuOpen = true" class="p-2 text-txmain hover:text-brand-600 transition-colors">
  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M4 6h16M4 12h16M4 18h16"></path>
@@ -236,7 +236,7 @@
 
  <!-- Mobile Nav Overlay -->
  <div x-show="mobileMenuOpen" x-cloak
- class="md:hidden fixed inset-0 z-50 flex flex-col bg-white overflow-y-auto">
+ class="md:hidden fixed inset-0 z-50 flex flex-col bg-card overflow-y-auto">
  <div class="px-4 py-5 flex items-center justify-between border-b border-gray-100">
  <a href="/" class="flex items-center">
  @if($logo = \App\Models\Setting::get('site.logo'))
@@ -248,7 +248,7 @@
  </span>
  @endif
  </a>
- <button @click="mobileMenuOpen = false" class="p-2 text-gray-600">
+ <button @click="mobileMenuOpen = false" class="p-2 text-txmain">
  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
  </path>
@@ -257,11 +257,11 @@
  </div>
  <div class="px-4 py-8 space-y-6">
  <a href="/#features" @click="mobileMenuOpen = false"
- class="block text-lg font-medium text-gray-900">{{ __('Features') }}</a>
+ class="block text-lg font-medium text-txmain">{{ __('Features') }}</a>
  <a href="/#how-it-works" @click="mobileMenuOpen = false"
- class="block text-lg font-medium text-gray-900">{{ __('How it Works') }}</a>
+ class="block text-lg font-medium text-txmain">{{ __('How it Works') }}</a>
  <a href="{{ route('public.blog.index') }}" @click="mobileMenuOpen = false"
- class="block text-lg font-medium text-gray-900">{{ __('Blog') }}</a>
+ class="block text-lg font-medium text-txmain">{{ __('Blog') }}</a>
  <div class="pt-6 border-t border-gray-100 space-y-4">
  @auth
  <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
@@ -270,7 +270,7 @@
  </a>
  @else
  <a href="{{ route('login') }}"
- class="block w-full text-center px-6 py-3 text-lg font-semibold text-gray-900 border border-gray-200 rounded-2xl">{{ __('Sign In') }}</a>
+ class="block w-full text-center px-6 py-3 text-lg font-semibold text-txmain border border-gray-200 rounded-2xl">{{ __('Sign In') }}</a>
  <a href="{{ route('register') }}"
  class="block w-full text-center px-6 py-3 text-lg font-semibold text-white bg-brand-600 rounded-2xl">{{ __('Get Started') }}</a>
  @endauth

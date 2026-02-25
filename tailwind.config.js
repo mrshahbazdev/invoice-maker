@@ -21,7 +21,10 @@ export default {
                     800: 'var(--color-brand-800, #3730a3)',
                     900: 'var(--color-brand-900, #312e81)',
                     950: 'var(--color-brand-950, #1e1b4b)',
-                }
+                },
+                page: 'var(--color-page-bg, #f3f4f6)',
+                card: 'var(--color-card-bg, #ffffff)',
+                txmain: 'var(--color-text-main, #1f2937)',
             }
         },
     },

@@ -42,6 +42,9 @@ class Business extends Model
         'iban',
         'bic',
         'theme_id',
+        'page_bg_color_id',
+        'card_bg_color_id',
+        'text_color_id',
     ];
 
     protected $casts = [
@@ -195,6 +198,21 @@ class Business extends Model
     public function theme()
     {
         return $this->belongsTo(Theme::class);
+    }
+
+    public function pageBgColor()
+    {
+        return $this->belongsTo(Theme::class, 'page_bg_color_id');
+    }
+
+    public function cardBgColor()
+    {
+        return $this->belongsTo(Theme::class, 'card_bg_color_id');
+    }
+
+    public function textColor()
+    {
+        return $this->belongsTo(Theme::class, 'text_color_id');
     }
 
     public function users()

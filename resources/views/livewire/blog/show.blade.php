@@ -1,4 +1,4 @@
-<div class="bg-white min-h-screen pb-24">
+<div class="bg-card min-h-screen pb-24">
  <article>
  <!-- Post Header -->
  <header class="pt-24 pb-12 lg:pt-32 lg:pb-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center">
@@ -9,7 +9,7 @@
  </a>
  @endif
 
- <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-8">
+ <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-txmain tracking-tight leading-tight mb-8">
  {{ $post->title }}
  </h1>
 
@@ -38,7 +38,7 @@
  <!-- Post Content -->
  <div class="px-4 sm:px-6 lg:px-8">
  <div
- class="max-w-3xl mx-auto prose prose-lg prose-blue text-gray-700 prose-headings:font-bold prose-headings:text-gray-900 prose-a:text-brand-600 hover:prose-a:text-brand-800 prose-img:rounded-2xl prose-img:shadow-lg">
+ class="max-w-3xl mx-auto prose prose-lg prose-blue text-txmain prose-headings:font-bold prose-headings:text-txmain prose-a:text-brand-600 hover:prose-a:text-brand-800 prose-img:rounded-2xl prose-img:shadow-lg">
  {!! $post->content !!}
  </div>
  </div>
@@ -47,7 +47,7 @@
  <!-- Post Footer CTA -->
  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-24">
  <div
- class="bg-gray-50 rounded-[2.5rem] p-10 md:p-16 text-center border border-gray-100 shadow-sm relative overflow-hidden">
+ class="bg-page rounded-[2.5rem] p-10 md:p-16 text-center border border-gray-100 shadow-sm relative overflow-hidden">
  <div class="absolute inset-0 z-0">
  <div
  class="absolute -top-24 -left-24 w-64 h-64 bg-brand-100 rounded-full mix-blend-multiply opacity-50 filter blur-3xl">
@@ -58,7 +58,7 @@
  </div>
 
  <div class="relative z-10">
- <h2 class="text-3xl font-extrabold text-gray-900 mb-4 tracking-tight">Start your journey today</h2>
+ <h2 class="text-3xl font-extrabold text-txmain mb-4 tracking-tight">Start your journey today</h2>
  <p class="text-gray-500 mb-10 max-w-2xl mx-auto text-lg leading-relaxed">
  Join thousands of entrepreneurs using our platform to generate professional invoices and get paid
  faster.
@@ -69,7 +69,7 @@
  Create Free Account
  </a>
  <a href="{{ route('public.blog.index') }}"
- class="px-8 py-4 bg-white text-gray-700 font-bold rounded-xl hover:bg-gray-50 transition-colors border border-gray-200 shadow-sm">
+ class="px-8 py-4 bg-card text-txmain font-bold rounded-xl hover:bg-page transition-colors border border-gray-200 shadow-sm">
  Read More Articles
  </a>
  </div>

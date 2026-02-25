@@ -9,12 +9,12 @@
 
  <div class="mb-8 flex flex-col xl:flex-row items-stretch justify-between gap-6">
  <div class="flex-1">
- <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">{{ __('Cash Book') }}</h2>
+ <h2 class="text-3xl font-extrabold text-txmain tracking-tight">{{ __('Cash Book') }}</h2>
  <p class="text-gray-500 font-medium">{{ __('Monitor your flow of capital with precision.') }}</p>
  </div>
 
  <div
- class="xl:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-0 bg-white rounded-2xl shadow-xl shadow-brand-900/5 border border-gray-100 overflow-hidden">
+ class="xl:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-0 bg-card rounded-2xl shadow-xl shadow-brand-900/5 border border-gray-100 overflow-hidden">
  <!-- Income Card -->
  <div
  class="px-6 py-5 border-b sm:border-b-0 sm:border-r border-gray-100 flex items-center group hover:bg-green-50/30 transition-colors">
@@ -62,7 +62,7 @@
  </svg>
  </div>
  <div
- class="w-12 h-12 bg-white/20 text-white rounded-xl flex items-center justify-center mr-4 backdrop-blur-md">
+ class="w-12 h-12 bg-card/20 text-white rounded-xl flex items-center justify-center mr-4 backdrop-blur-md">
  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
@@ -92,7 +92,7 @@
  {{ __('AI Insights') }}
  </button>
  <a href="{{ route('accounting.cash-book.export.excel', ['startDate' => $startDate, 'endDate' => $endDate]) }}"
- class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-white border border-gray-200 rounded-xl shadow-lg shadow-gray-200/50 text-sm font-bold text-gray-700 hover:bg-green-600 hover:text-white hover:border-green-600 transition-all group">
+ class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-card border border-gray-200 rounded-xl shadow-lg shadow-gray-200/50 text-sm font-bold text-txmain hover:bg-green-600 hover:text-white hover:border-green-600 transition-all group">
  <svg class="w-5 h-5 mr-2 text-green-600 group-hover:text-white" fill="none" stroke="currentColor"
  viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -102,7 +102,7 @@
  {{ __('Excel') }}
  </a>
  <a href="{{ route('accounting.cash-book.export.pdf', ['startDate' => $startDate, 'endDate' => $endDate]) }}"
- class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-white border border-gray-200 rounded-xl shadow-lg shadow-gray-200/50 text-sm font-bold text-gray-700 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all group">
+ class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-3 bg-card border border-gray-200 rounded-xl shadow-lg shadow-gray-200/50 text-sm font-bold text-txmain hover:bg-red-600 hover:text-white hover:border-red-600 transition-all group">
  <svg class="w-5 h-5 mr-2 text-red-600 group-hover:text-white" fill="none" stroke="currentColor"
  viewBox="0 0 24 24">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -134,16 +134,16 @@
  </svg>
  </button>
  </div>
- <div class="prose prose-indigo max-w-none text-gray-700 text-sm leading-relaxed">
+ <div class="prose prose-indigo max-w-none text-txmain text-sm leading-relaxed">
  {!! nl2br(e($aiInsights)) !!}
  </div>
  </div>
  </div>
  @endif
 
- <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+ <div class="bg-card rounded-xl shadow-sm border border-gray-200 overflow-hidden">
  <!-- Filters -->
- <div class="p-6 bg-gray-50/50 border-b border-gray-200">
+ <div class="p-6 bg-page/50 border-b border-gray-200">
  <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
  <div class="md:col-span-1">
  <label class="block text-xs font-bold text-gray-500 uppercase mb-1">{{ __('Search') }}</label>
@@ -185,7 +185,7 @@
  <div class="overflow-x-auto">
  <table class="w-full text-[13px] border-collapse">
  <thead>
- <tr class="bg-gray-50 border-b border-gray-200">
+ <tr class="bg-page border-b border-gray-200">
  <th class="px-3 py-3 w-8"></th>
  <th class="px-3 py-3 text-left font-bold text-gray-500 uppercase tracking-wider cursor-pointer"
  wire:click="sortBy('booking_number')">
@@ -238,7 +238,7 @@
  $routeUrl = route('expenses.show', $entry->expense_id);
  }
  @endphp
- <tr class="hover:bg-gray-50 cursor-pointer transition-colors {{ $loop->odd ? 'bg-white' : 'bg-gray-50/20' }}"
+ <tr class="hover:bg-page cursor-pointer transition-colors {{ $loop->odd ? 'bg-card' : 'bg-page/20' }}"
  onclick="if('{{ $routeUrl }}' !== '#') window.location='{{ $routeUrl }}'">
  <td class="px-3 py-2 text-center">
  <span
@@ -247,27 +247,27 @@
  <td class="px-3 py-2 whitespace-nowrap font-medium text-gray-500">
  {{ $entry->booking_number }}
  </td>
- <td class="px-3 py-2 whitespace-nowrap text-gray-900 font-semibold italic">
+ <td class="px-3 py-2 whitespace-nowrap text-txmain font-semibold italic">
  {{ $entry->reference_number ?? '-' }}
  </td>
- <td class="px-3 py-2 whitespace-nowrap text-gray-600">
+ <td class="px-3 py-2 whitespace-nowrap text-txmain">
  {{ $entry->document_date ? $entry->document_date->format('d.m.Y') : ($entry->invoice ? $entry->invoice->invoice_date->format('d.m.Y') : $entry->date->format('d.m.Y')) }}
  </td>
  <td class="px-3 py-2 whitespace-nowrap text-center text-[11px] text-gray-500">
  {{ $entry->type === 'income' ? __('vollständig bezahlt') : __('Bezahlt') }}
  </td>
- <td class="px-3 py-2 text-gray-900 font-bold max-w-xs truncate">
+ <td class="px-3 py-2 text-txmain font-bold max-w-xs truncate">
  {{ $entry->partner_name ?? ($entry->invoice && $entry->invoice->client ? ($entry->invoice->client->company_name ?? $entry->invoice->client->name) : $entry->description) }}
  </td>
- <td class="px-3 py-2 whitespace-nowrap text-gray-600 font-medium">
+ <td class="px-3 py-2 whitespace-nowrap text-txmain font-medium">
  {{ $entry->date->format('d.m.Y') }}
  </td>
- <td class="px-3 py-2 whitespace-nowrap text-right font-extrabold text-gray-900">
+ <td class="px-3 py-2 whitespace-nowrap text-right font-extrabold text-txmain">
  {{ number_format($entry->amount, 2, ',', '.') }} €
  </td>
- <td class="px-3 py-2 whitespace-nowrap text-gray-600">
+ <td class="px-3 py-2 whitespace-nowrap text-txmain">
  <span
- class="px-2 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-bold text-gray-600 uppercase tracking-tighter">
+ class="px-2 py-0.5 rounded bg-page border border-gray-200 text-[10px] font-bold text-txmain uppercase tracking-tighter">
  {{ $entry->category->name ?? ($entry->type === 'income' ? __('Einnahmen') : __('Allgemeines')) }}
  </span>
  </td>
@@ -307,7 +307,7 @@
  </div>
 
  @if($entries->hasPages())
- <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+ <div class="px-6 py-4 bg-page border-t border-gray-200">
  {{ $entries->links() }}
  </div>
  @endif
