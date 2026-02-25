@@ -13713,3 +13713,4 @@ Rgo=
 #9 C:/Users/user/Downloads/menu-cto-build-a-complete-working-laravel-invoice-maker-saas-mvp-with/cto-hosted-r8vyv2gc-d0a517842801070857da350ef6450083d7abc79e/test_reminder.php(25): Illuminate/Database/Eloquent/Model->save()
 #10 {main}
 "} 
+[2026-02-25 06:25:48] local.INFO: Successfully synced Invoice #60 to Business #3 Expenses.  

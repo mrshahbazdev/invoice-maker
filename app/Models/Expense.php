@@ -26,6 +26,7 @@ class Expense extends Model
         'receipt_path',
         'invoice_id',
         'category_id',
+        'network_invoice_id',
     ];
 
     protected $casts = [
@@ -63,5 +64,10 @@ class Expense extends Model
     public function cash_book_entry()
     {
         return $this->hasOne(CashBookEntry::class);
+    }
+
+    public function networkInvoice()
+    {
+        return $this->belongsTo(Invoice::class, 'network_invoice_id');
     }
 }

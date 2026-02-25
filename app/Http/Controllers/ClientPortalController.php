@@ -27,6 +27,8 @@ class ClientPortalController
                 $invoice->client->update(['user_id' => $existingUser->id]);
             }
 
+            \App\Services\NetworkSyncService::syncInvoiceToExpense($invoice);
+
             // If they are already logged in as that user, take them to the client dashboard directly
             if (auth()->check() && auth()->user()->id === $existingUser->id) {
                 return redirect()->route('client.dashboard')->with('success', 'Invoice has been saved to your account!');
@@ -51,6 +53,8 @@ class ClientPortalController
             if ($existingUser && !$invoice->client->user_id) {
                 $invoice->client->update(['user_id' => $existingUser->id]);
             }
+
+            \App\Services\NetworkSyncService::syncInvoiceToExpense($invoice);
             return redirect()->route('login')->with('success', 'Your email is already registered. We have linked this invoice to your account. Please log in to view it.');
         }
 
@@ -68,6 +72,8 @@ class ClientPortalController
 
         // Link the user to the client record
         $invoice->client->update(['user_id' => $user->id]);
+
+        \App\Services\NetworkSyncService::syncInvoiceToExpense($invoice);
 
         // Log the user in
         \Illuminate\Support\Facades\Auth::login($user);
