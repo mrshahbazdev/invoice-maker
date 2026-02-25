@@ -26,6 +26,9 @@ class User extends Authenticatable
         'two_factor_confirmed_at',
         'is_super_admin',
         'is_active',
+        'openai_api_key',
+        'anthropic_api_key',
+        'default_ai_provider',
     ];
 
     protected $hidden = [
@@ -33,6 +36,8 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_secret',
         'two_factor_recovery_codes',
+        'openai_api_key',
+        'anthropic_api_key',
     ];
 
     protected function casts(): array
@@ -44,6 +49,8 @@ class User extends Authenticatable
             'two_factor_recovery_codes' => 'array',
             'is_super_admin' => 'boolean',
             'is_active' => 'boolean',
+            'openai_api_key' => 'encrypted',
+            'anthropic_api_key' => 'encrypted',
         ];
     }
 

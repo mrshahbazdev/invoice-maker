@@ -29,10 +29,19 @@ class Show extends Component
     public string $setupCode = '';
     public array $recoveryCodes = [];
 
+    // AI Configuration
+    public ?string $openai_api_key = '';
+    public ?string $anthropic_api_key = '';
+    public string $default_ai_provider = 'openai';
+
     public function mount()
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        $user = Auth::user();
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->openai_api_key = $user->openai_api_key;
+        $this->anthropic_api_key = $user->anthropic_api_key;
+        $this->default_ai_provider = $user->default_ai_provider ?? 'openai';
     }
 
     public function updateProfileInformation()
@@ -46,6 +55,23 @@ class Show extends Component
         $user->save();
 
         session()->flash('profile_message', __('Profile information updated successfully.'));
+    }
+
+    public function updateAiSettings()
+    {
+        $this->validate([
+            'openai_api_key' => 'nullable|string',
+            'anthropic_api_key' => 'nullable|string',
+            'default_ai_provider' => 'required|in:openai,anthropic',
+        ]);
+
+        $user = Auth::user();
+        $user->openai_api_key = $this->openai_api_key;
+        $user->anthropic_api_key = $this->anthropic_api_key;
+        $user->default_ai_provider = $this->default_ai_provider;
+        $user->save();
+
+        session()->flash('ai_message', __('AI Configuration updated successfully.'));
     }
 
     public function updatePassword()

@@ -211,6 +211,67 @@
                 </section>
             </div>
 
+            <!-- AI Configuration Section -->
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <section class="max-w-xl">
+                    <header>
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('AI Configuration') }}
+                        </h2>
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ __('Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).') }}
+                        </p>
+                    </header>
+
+                    <form wire:submit="updateAiSettings" class="mt-6 space-y-6">
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700" for="default_ai_provider">
+                                {{ __('Default AI Provider') }}
+                            </label>
+                            <select wire:model="default_ai_provider" id="default_ai_provider"
+                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
+                                <option value="openai">{{ __('OpenAI (ChatGPT)') }}</option>
+                                <option value="anthropic">{{ __('Anthropic (Claude)') }}</option>
+                            </select>
+                            @error('default_ai_provider') <span class="text-sm text-red-600 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700" for="openai_api_key">
+                                {{ __('OpenAI API Key') }}
+                            </label>
+                            <input wire:model="openai_api_key" id="openai_api_key" type="password" placeholder="sk-..."
+                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" />
+                            @error('openai_api_key') <span class="text-sm text-red-600 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700" for="anthropic_api_key">
+                                {{ __('Anthropic API Key') }}
+                            </label>
+                            <input wire:model="anthropic_api_key" id="anthropic_api_key" type="password"
+                                placeholder="sk-ant-..."
+                                class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" />
+                            @error('anthropic_api_key') <span class="text-sm text-red-600 mt-2">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <button type="submit"
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                {{ __('Save') }}
+                            </button>
+
+                            @if (session()->has('ai_message'))
+                                <p class="text-sm text-gray-600">{{ session('ai_message') }}</p>
+                            @endif
+                        </div>
+                    </form>
+                </section>
+            </div>
+
         </div>
     </div>
 </div>

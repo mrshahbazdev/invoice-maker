@@ -15,9 +15,23 @@ class AiService
 
     public function __construct()
     {
-        $this->provider = Setting::get('ai.default_provider', 'openai');
-        $this->openaiKey = Setting::get('ai.openai_api_key');
-        $this->anthropicKey = Setting::get('ai.anthropic_api_key');
+        $user = auth()->user();
+
+        // 1. Check if user is logged in
+        // 2. Try to grab user's specific setting
+        // 3. Fallback to global setting if user setting is empty
+
+        $this->provider = ($user && $user->default_ai_provider)
+            ? $user->default_ai_provider
+            : Setting::get('ai.default_provider', 'openai');
+
+        $this->openaiKey = ($user && $user->openai_api_key)
+            ? $user->openai_api_key
+            : Setting::get('ai.openai_api_key');
+
+        $this->anthropicKey = ($user && $user->anthropic_api_key)
+            ? $user->anthropic_api_key
+            : Setting::get('ai.anthropic_api_key');
     }
 
     public function generateText(string $prompt, ?string $imagePath = null): string
