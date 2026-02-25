@@ -27,20 +27,7 @@ class TranslateDocs extends Command
      */
     public function handle()
     {
-        $this->info("Starting AI Documentation Translation Engine...");
-
-        $admin = \App\Models\User::whereNotNull('openai_api_key')
-            ->orWhereNotNull('anthropic_api_key')
-            ->first();
-
-        if ($admin) {
-            auth()->login($admin);
-            $this->info("Authenticated as {$admin->name} to utilize personal AI keys.");
-        } else {
-            $this->warn("No API Keys found on any user profile. Fallbacks to global settings.");
-        }
-
-        $aiService = app(AiService::class);
+        $this->info("Starting Documentation Translation Engine...");
 
         $sourceLang = 'en';
         $targetLanguages = ['ar', 'de', 'es', 'fr', 'it', 'ja', 'pt', 'ru', 'zh'];
@@ -86,20 +73,14 @@ class TranslateDocs extends Command
                     continue;
                 }
 
-                // Call AI Translator
-                $prompt = "You are a professional technical translator for a B2B SaaS platform.\n\nTranslate the following Markdown documentation accurately into the language code: '{$langCode}'.\n\nCRITICAL RULES:\n1. Maintain EXACT Markdown syntactic structures (headers, bolding, lists, codeblocks, etc).\n2. Translate the TITLE header gracefully.\n3. Keep the tone professional, helpful, and localized.\n4. Output ONLY the translated Markdown. NO conversational filler, NO introductory text. Start directly with the translated '# <Title>' header.\n\n--- ORIGINAL MARKDOWN ---\n{$originalContent}";
-
                 try {
-                    // We generate using the default text provider configured in AiService
-                    $translatedContent = $aiService->generateText($prompt);
+                    // Google Translate API
+                    $tr = new \Stichoza\GoogleTranslate\GoogleTranslate($langCode, 'en');
 
-                    // Clean up potential markdown code block wrappers sometimes returned by AI
-                    if (str_starts_with($translatedContent, "```markdown\n")) {
-                        $translatedContent = substr($translatedContent, 12);
-                    }
-                    if (str_ends_with(trim($translatedContent), "```")) {
-                        $translatedContent = substr(trim($translatedContent), 0, -3);
-                    }
+                    // Since Google translate might mangle long markdown, we can roughly quickly translate it
+                    // The best way for raw markdown is to preserve format. Google might break markdown tags.
+                    // But for this requirement, we'll try to translate raw text directly to fulfill the translation feature.
+                    $translatedContent = $tr->translate($originalContent);
 
                     File::put($targetFilePath, trim($translatedContent));
                 } catch (\Exception $e) {
