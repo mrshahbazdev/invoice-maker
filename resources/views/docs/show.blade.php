@@ -1,6 +1,4 @@
-@component('layouts.public')
-@section('title', $title)
-@section('metaDescription', $description)
+@component('layouts.public', ['title' => $title, 'metaDescription' => $description])
 
 @section('seo_tags')
     <link rel="canonical" href="{{ route('docs.show', ['lang' => $currentLang, 'slug' => $slug]) }}" />

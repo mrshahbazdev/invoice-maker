@@ -101,10 +101,32 @@ class DocumentationController
             return $posA <=> $posB;
         });
 
+        $pageTitle = 'Help Center & Documentation';
+        $pageDescription = 'Everything you need to know to run your business smoothly. Master our invoicing, accounting, and AI features today.';
+
+        if ($lang !== 'en') {
+            $pageTitle = \Illuminate\Support\Facades\Cache::remember("docs.title.{$lang}", 86400 * 30, function () use ($lang, $pageTitle) {
+                try {
+                    return (new \Stichoza\GoogleTranslate\GoogleTranslate($lang, 'en'))->translate($pageTitle);
+                } catch (\Exception $e) {
+                    return $pageTitle;
+                }
+            });
+            $pageDescription = \Illuminate\Support\Facades\Cache::remember("docs.desc.{$lang}", 86400 * 30, function () use ($lang, $pageDescription) {
+                try {
+                    return (new \Stichoza\GoogleTranslate\GoogleTranslate($lang, 'en'))->translate($pageDescription);
+                } catch (\Exception $e) {
+                    return $pageDescription;
+                }
+            });
+        }
+
         return view('docs.index', [
             'articles' => $articles,
             'currentLang' => $lang,
             'supportedLanguages' => $this->supportedLanguages,
+            'pageTitle' => $pageTitle,
+            'pageDescription' => $pageDescription,
         ]);
     }
 

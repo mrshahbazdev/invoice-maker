@@ -1,7 +1,4 @@
-@component('layouts.public')
-<x-slot:title>Documentation - {{ config('app.name', 'Invoice Maker') }}</x-slot:title>
-<x-slot:metaDescription>Complete user guides, tutorials, and documentation for the
-    {{ config('app.name', 'Invoice Maker') }} platform.</x-slot:metaDescription>
+@component('layouts.public', ['title' => $pageTitle, 'metaDescription' => $pageDescription])
 
 @section('seo_tags')
     <link rel="canonical" href="{{ route('docs.index', ['lang' => $currentLang]) }}" />
@@ -16,11 +13,10 @@
 
         <div class="text-center mb-16">
             <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl lg:text-6xl tracking-tight">
-                Help Center & Documentation
+                {{ $pageTitle }}
             </h1>
             <p class="mt-5 text-xl text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-                Everything you need to know to run your business smoothly. Master our invoicing, accounting, and AI
-                features today.
+                {{ $pageDescription }}
             </p>
 
             <!-- Language Selector -->
