@@ -21,3 +21,5 @@ yarn-error.log
 !/verify_seed.php
 /routes_list.txt
 /temp_old_create.blade.php
+/bootstrap/cache/*.php
+!/bootstrap/cache/.gitignore
