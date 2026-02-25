@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
 
-class DocumentationController extends Controller
+class DocumentationController
 {
     /**
      * Map of language codes to their human-readable names
