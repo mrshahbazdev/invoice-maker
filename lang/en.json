@@ -441,5 +441,13 @@
     "Custom Subject": "Custom Subject",
     "Invoice {invoice_number} from {business_name}": "Invoice {invoice_number} from {business_name}",
     "Custom Body Template": "Custom Body Template",
-    "Hello {client_name},\\n\\nHere is your new invoice {invoice_number}...": "Hello {client_name},\\n\\nHere is your new invoice {invoice_number}..."
+    "Hello {client_name},\\n\\nHere is your new invoice {invoice_number}...": "Hello {client_name},\\n\\nHere is your new invoice {invoice_number}...",
+    "AI Configuration": "AI Configuration",
+    "Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).": "Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).",
+    "Default AI Provider": "Default AI Provider",
+    "OpenAI (ChatGPT)": "OpenAI (ChatGPT)",
+    "Anthropic (Claude)": "Anthropic (Claude)",
+    "OpenAI API Key": "OpenAI API Key",
+    "Anthropic API Key": "Anthropic API Key",
+    "AI Configuration updated successfully.": "AI Configuration updated successfully."
 }

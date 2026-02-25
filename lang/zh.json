@@ -458,5 +458,13 @@
     "Chinese": "中文",
     "Japanese": "日语",
     "Russian": "俄语",
-    "Any additional notes...": "任何附加说明..."
+    "Any additional notes...": "任何附加说明...",
+    "AI Configuration": "AI 配置",
+    "Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).": "提供您自己的 API 密钥以个性化您的 AI 交互。如果留空，系统将使用默认的全局密钥（如果可用）。",
+    "Default AI Provider": "默认 AI 提供商",
+    "OpenAI (ChatGPT)": "OpenAI (ChatGPT)",
+    "Anthropic (Claude)": "Anthropic (Claude)",
+    "OpenAI API Key": "OpenAI API 密钥",
+    "Anthropic API Key": "Anthropic API 密钥",
+    "AI Configuration updated successfully.": "AI 配置已成功更新。"
 }

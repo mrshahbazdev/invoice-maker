@@ -453,5 +453,13 @@
     "Chinese": "Chinesisch",
     "Japanese": "Japanisch",
     "Russian": "Russisch",
-    "Any additional notes...": "Irgendwelche zusätzlichen Notizen..."
+    "Any additional notes...": "Irgendwelche zusätzlichen Notizen...",
+    "AI Configuration": "KI-Konfiguration",
+    "Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).": "Geben Sie Ihre eigenen API-Schlüssel ein, um Ihre KI-Interaktionen zu personalisieren. Wenn leer gelassen, werden die globalen Standardschlüssel verwendet (falls verfügbar).",
+    "Default AI Provider": "Standard-KI-Anbieter",
+    "OpenAI (ChatGPT)": "OpenAI (ChatGPT)",
+    "Anthropic (Claude)": "Anthropic (Claude)",
+    "OpenAI API Key": "OpenAI API-Schlüssel",
+    "Anthropic API Key": "Anthropic API-Schlüssel",
+    "AI Configuration updated successfully.": "KI-Konfiguration erfolgreich aktualisiert."
 }

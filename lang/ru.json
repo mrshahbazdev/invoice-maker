@@ -458,5 +458,13 @@
     "Chinese": "Китайский",
     "Japanese": "Японский",
     "Russian": "Русский",
-    "Any additional notes...": "Любые дополнительные заметки..."
+    "Any additional notes...": "Любые дополнительные заметки...",
+    "AI Configuration": "Конфигурация ИИ",
+    "Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).": "Укажите свои собственные API-ключи, чтобы персонализировать взаимодействие с ИИ. Если оставить пустым, система будет использовать глобальные ключи по умолчанию (если доступны).",
+    "Default AI Provider": "Провайдер ИИ по умолчанию",
+    "OpenAI (ChatGPT)": "OpenAI (ChatGPT)",
+    "Anthropic (Claude)": "Anthropic (Claude)",
+    "OpenAI API Key": "API-ключ OpenAI",
+    "Anthropic API Key": "API-ключ Anthropic",
+    "AI Configuration updated successfully.": "Конфигурация ИИ успешно обновлена."
 }

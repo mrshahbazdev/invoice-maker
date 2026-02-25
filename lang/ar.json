@@ -458,5 +458,13 @@
     "Chinese": "الصينية",
     "Japanese": "اليابانية",
     "Russian": "الروسية",
-    "Any additional notes...": "أي ملاحظات إضافية..."
+    "Any additional notes...": "أي ملاحظات إضافية...",
+    "AI Configuration": "تكوين الذكاء الاصطناعي",
+    "Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).": "قدم مفاتيح واجهة برمجة التطبيقات (API) الخاصة بك لتخصيص تفاعلات الذكاء الاصطناعي الخاصة بك. إذا تُرك فارغًا، فسيستخدم النظام المفاتيح العالمية الافتراضية (إن وُجدت).",
+    "Default AI Provider": "موفر الذكاء الاصطناعي الافتراضي",
+    "OpenAI (ChatGPT)": "OpenAI (ChatGPT)",
+    "Anthropic (Claude)": "Anthropic (Claude)",
+    "OpenAI API Key": "مفتاح OpenAI API",
+    "Anthropic API Key": "مفتاح Anthropic API",
+    "AI Configuration updated successfully.": "تم تحديث تكوين الذكاء الاصطناعي بنجاح."
 }

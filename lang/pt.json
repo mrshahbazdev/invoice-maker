@@ -458,5 +458,13 @@
     "Chinese": "Chinês",
     "Japanese": "Japonês",
     "Russian": "Russo",
-    "Any additional notes...": "Qualquer nota adicional..."
+    "Any additional notes...": "Qualquer nota adicional...",
+    "AI Configuration": "Configuração de IA",
+    "Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).": "Forneça suas próprias chaves de API para personalizar suas interações com IA. Se deixado em branco, o sistema usará as chaves globais padrão (se disponíveis).",
+    "Default AI Provider": "Provedor de IA Padrão",
+    "OpenAI (ChatGPT)": "OpenAI (ChatGPT)",
+    "Anthropic (Claude)": "Anthropic (Claude)",
+    "OpenAI API Key": "Chave de API da OpenAI",
+    "Anthropic API Key": "Chave de API da Anthropic",
+    "AI Configuration updated successfully.": "Configuração de IA atualizada com sucesso."
 }

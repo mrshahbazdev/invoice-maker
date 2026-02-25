@@ -458,5 +458,13 @@
     "Chinese": "中国語",
     "Japanese": "日本語",
     "Russian": "ロシア語",
-    "Any additional notes...": "その他の注意事項..."
+    "Any additional notes...": "その他の注意事項...",
+    "AI Configuration": "AI 設定",
+    "Provide your own API keys to personalize your AI interactions. If left blank, the system will use the default global keys (if available).": "独自の API キーを提供して、AI との対話をパーソナライズします。空白の場合、システムはデフォルトのグローバル キーを使用します（利用可能な場合）。",
+    "Default AI Provider": "デフォルトの AI プロバイダー",
+    "OpenAI (ChatGPT)": "OpenAI (ChatGPT)",
+    "Anthropic (Claude)": "Anthropic (Claude)",
+    "OpenAI API Key": "OpenAI API キー",
+    "Anthropic API Key": "Anthropic API キー",
+    "AI Configuration updated successfully.": "AI 設定が正常に更新されました。"
 }
