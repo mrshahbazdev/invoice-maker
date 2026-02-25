@@ -1,3 +1,117 @@
-<?php namespace App\Livewire\Admin\Settings; use Livewire\Component; class Themes extends Component
-{ public $themes = []; public $editingThemeId = null; public $name = ''; public $primary_color = '#0ea5e9'; public $is_active = true; public $isModalOpen = false; public function mount() { if (\App\Models\Theme::count() === 0) { $this->seedDefaultThemes(); } $this->loadThemes(); } public function loadThemes() { $this->themes = \App\Models\Theme::orderBy('name')->get(); } protected function seedDefaultThemes() { $defaults = [ ['name' => 'Default Indigo', 'primary_color' => '#6366f1', 'is_active' => true], ['name' => 'Ocean Blue', 'primary_color' => '#0ea5e9', 'is_active' => true], ['name' => 'Emerald Green', 'primary_color' => '#10b981', 'is_active' => true], ['name' => 'Sunset Orange', 'primary_color' => '#f97316', 'is_active' => true], ['name' => 'Rose Pink', 'primary_color' => '#f43f5e', 'is_active' => true], ['name' => 'Slate Gray', 'primary_color' => '#64748b', 'is_active' => true], ]; foreach ($defaults as $theme) { \App\Models\Theme::create($theme); } } public function create() { $this->resetInputFields(); $this->isModalOpen = true; } public function edit($id) { $theme = \App\Models\Theme::findOrFail($id); $this->editingThemeId = $theme->id; $this->name = $theme->name; $this->primary_color = $theme->primary_color; $this->is_active = $theme->is_active; $this->isModalOpen = true; } public function save() { $this->validate([ 'name' => 'required|string|max:100', 'primary_color' => 'required|string|size:7|regex:/^#[a-fA-F0-9]{6}$/', 'is_active' => 'boolean', ]); \App\Models\Theme::updateOrCreate( ['id' => $this->editingThemeId], [ 'name' => $this->name, 'primary_color' => $this->primary_color, 'is_active' => $this->is_active, ] ); session()->flash('message', $this->editingThemeId ? 'Theme updated successfully.' : 'Theme created successfully.'); $this->isModalOpen = false; $this->resetInputFields(); $this->loadThemes(); } public function delete($id) { \App\Models\Theme::find($id)->delete(); session()->flash('message', 'Theme deleted successfully.'); $this->loadThemes(); } public function toggleActive($id) { $theme = \App\Models\Theme::find($id); if ($theme) { $theme->is_active = !$theme->is_active; $theme->save(); $this->loadThemes(); } } private function resetInputFields() { $this->editingThemeId = null; $this->name = ''; $this->primary_color = '#0ea5e9'; $this->is_active = true; } #[\Livewire\Attributes\Layout('layouts.admin', ['title' => 'Theme Palettes'])] public function render() { return view('livewire.admin.settings.themes'); }
+<?php
+
+namespace App\Livewire\Admin\Settings;
+
+use Livewire\Component;
+
+class Themes extends Component
+{
+    public $themes = [];
+    public $editingThemeId = null;
+
+    public $name = '';
+    public $primary_color = '#0ea5e9';
+    public $is_active = true;
+
+    public $isModalOpen = false;
+
+    public function mount()
+    {
+        if (\App\Models\Theme::count() === 0) {
+            $this->seedDefaultThemes();
+        }
+        $this->loadThemes();
+    }
+
+    public function loadThemes()
+    {
+        $this->themes = \App\Models\Theme::orderBy('name')->get();
+    }
+
+    protected function seedDefaultThemes()
+    {
+        $defaults = [
+            ['name' => 'Default Indigo', 'primary_color' => '#6366f1', 'is_active' => true],
+            ['name' => 'Ocean Blue', 'primary_color' => '#0ea5e9', 'is_active' => true],
+            ['name' => 'Emerald Green', 'primary_color' => '#10b981', 'is_active' => true],
+            ['name' => 'Sunset Orange', 'primary_color' => '#f97316', 'is_active' => true],
+            ['name' => 'Rose Pink', 'primary_color' => '#f43f5e', 'is_active' => true],
+            ['name' => 'Slate Gray', 'primary_color' => '#64748b', 'is_active' => true],
+        ];
+
+        foreach ($defaults as $theme) {
+            \App\Models\Theme::create($theme);
+        }
+    }
+
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->isModalOpen = true;
+    }
+
+    public function edit($id)
+    {
+        $theme = \App\Models\Theme::findOrFail($id);
+        $this->editingThemeId = $theme->id;
+        $this->name = $theme->name;
+        $this->primary_color = $theme->primary_color;
+        $this->is_active = $theme->is_active;
+        $this->isModalOpen = true;
+    }
+
+    public function save()
+    {
+        $this->validate([
+            'name' => 'required|string|max:100',
+            'primary_color' => 'required|string|size:7|regex:/^#[a-fA-F0-9]{6}$/',
+            'is_active' => 'boolean',
+        ]);
+
+        \App\Models\Theme::updateOrCreate(
+            ['id' => $this->editingThemeId],
+            [
+                'name' => $this->name,
+                'primary_color' => $this->primary_color,
+                'is_active' => $this->is_active,
+            ]
+        );
+
+        session()->flash('message', $this->editingThemeId ? 'Theme updated successfully.' : 'Theme created successfully.');
+
+        $this->isModalOpen = false;
+        $this->resetInputFields();
+        $this->loadThemes();
+    }
+
+    public function delete($id)
+    {
+        \App\Models\Theme::find($id)->delete();
+        session()->flash('message', 'Theme deleted successfully.');
+        $this->loadThemes();
+    }
+
+    public function toggleActive($id)
+    {
+        $theme = \App\Models\Theme::find($id);
+        if ($theme) {
+            $theme->is_active = !$theme->is_active;
+            $theme->save();
+            $this->loadThemes();
+        }
+    }
+
+    private function resetInputFields()
+    {
+        $this->editingThemeId = null;
+        $this->name = '';
+        $this->primary_color = '#0ea5e9';
+        $this->is_active = true;
+    }
+
+    #[\Livewire\Attributes\Layout('layouts.admin', ['title' => 'Theme Palettes'])]
+    public function render()
+    {
+        return view('livewire.admin.settings.themes');
+    }
 }

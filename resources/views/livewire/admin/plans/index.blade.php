@@ -1,2 +1,194 @@
-<div class="max-w-7xl mx-auto space-y-6"> <div class="flex justify-between items-center mb-8"> <div> <h2 class="text-2xl font-bold font-heading text-white">Subscription Plans</h2> <p class="text-gray-400 mt-1">Manage pricing tiers, limits, and features.</p> </div> <button wire:click="createPlan" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-lg shadow-brand-500/20 transition-all flex items-center gap-2"> <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path> </svg> Create Plan </button> </div> @if (session()->has('message')) <div class="mb-6 bg-green-500/10 border border-green-500/20 text-green-400 px-4 py-3 rounded-xl flex items-center"> <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> {{ session('message') }} </div> @endif <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> @foreach($plans as $plan) <div class="bg-gray-800/50 backdrop-blur-xl border {{ $plan->is_active ? 'border-gray-700/50' : 'border-red-900/50' }} rounded-2xl p-6 relative flex flex-col h-full"> @if(!$plan->is_active) <div class="absolute top-0 right-0 mt-4 mr-4 px-2 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded-md uppercase tracking-wider"> Inactive </div> @endif <h3 class="text-xl font-bold text-white mb-1">{{ $plan->name }}</h3> <p class="text-sm text-gray-400 mb-4 font-mono">{{ $plan->slug }}</p> <div class="flex items-baseline space-x-2 mb-6 border-b border-gray-700/50 pb-4"> <span class="text-3xl font-extrabold text-white">{{ number_format($plan->price_monthly, 2) }}</span> <span class="text-gray-400 font-medium">{{ $plan->currency }} / mo</span> </div> <div class="space-y-3 flex-1 mb-6"> <div class="flex items-center justify-between text-sm"> <span class="text-gray-400">Invoices</span> <span class="font-bold {{ $plan->max_invoices === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_invoices === null ? 'Unlimited' : $plan->max_invoices }}</span> </div> <div class="flex items-center justify-between text-sm"> <span class="text-gray-400">Clients</span> <span class="font-bold {{ $plan->max_clients === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_clients === null ? 'Unlimited' : $plan->max_clients }}</span> </div> <div class="flex items-center justify-between text-sm"> <span class="text-gray-400">Products</span> <span class="font-bold {{ $plan->max_products === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_products === null ? 'Unlimited' : $plan->max_products }}</span> </div> </div> <button wire:click="editPlan({{ $plan->id }})" class="w-full py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-colors"> Edit Plan </button> </div> @endforeach </div> <!-- Edit/Create Modal overlay --> @if($editingPlan) <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true"> <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"> <div wire:click="cancelEdit" class="fixed inset-0 bg-gray-900 bg-opacity-75 backdrop-blur-sm transition-opacity" aria-hidden="true"> </div> <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span> <div class="inline-block align-bottom bg-gray-800 border border-gray-700 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full"> <form wire:submit.prevent="savePlan"> <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-700"> <div class="sm:flex sm:items-start"> <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full"> <h3 class="text-lg leading-6 font-bold text-white" id="modal-title"> {{ $editingPlan === 'new' ? 'Create New Plan' : 'Edit Plan' }} </h3> <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4"> <div> <label class="block text-sm font-medium text-gray-400 mb-1">Plan Name</label> <input type="text" wire:model="name" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500" required> @error('name') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror </div> <div> <label class="block text-sm font-medium text-gray-400 mb-1">Slug (Identifier)</label> <input type="text" wire:model="slug" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500 font-mono text-sm" required> @error('slug') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror </div> <div> <label class="block text-sm font-medium text-gray-400 mb-1">Monthly Price</label> <div class="relative"> <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"> <span class="text-gray-500 sm:text-sm">$</span> </div> <input type="number" step="0.01" wire:model="price_monthly" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-7 pr-4 py-2 focus:ring-brand-500 focus:border-brand-500" required> </div> @error('price_monthly') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror </div> <div> <label class="block text-sm font-medium text-gray-400 mb-1">Yearly Price</label> <div class="relative"> <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"> <span class="text-gray-500 sm:text-sm">$</span> </div> <input type="number" step="0.01" wire:model="price_yearly" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-7 pr-4 py-2 focus:ring-brand-500 focus:border-brand-500" required> </div> @error('price_yearly') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror </div> <div class="sm:col-span-2 mt-4 pt-4 border-t border-gray-700"> <h4 class="text-sm font-bold text-gray-300 mb-4">Limits (Empty = Unlimited)</h4> </div> <div> <label class="block text-sm font-medium text-gray-400 mb-1">Max Invoices</label> <input type="number" wire:model="max_invoices" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500" placeholder="Unlimited"> @error('max_invoices') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror </div> <div> <label class="block text-sm font-medium text-gray-400 mb-1">Max Clients</label> <input type="number" wire:model="max_clients" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500" placeholder="Unlimited"> @error('max_clients') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror </div> <div> <label class="block text-sm font-medium text-gray-400 mb-1">Max Products</label> <input type="number" wire:model="max_products" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500" placeholder="Unlimited"> @error('max_products') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror </div> <div class="flex items-center mt-6"> <input type="checkbox" wire:model="is_active" id="is_active" class="h-5 w-5 rounded border-gray-600 bg-gray-800 text-brand-600 focus:ring-brand-500 focus:ring-offset-gray-900"> <label for="is_active" class="ml-2 block text-sm font-medium text-white">Active (Visible to users)</label> </div> </div> </div> </div> </div> <div class="bg-gray-800 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-2xl border-t border-gray-700"> <button type="submit" class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-brand-600 text-base font-medium text-white hover:bg-brand-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-colors"> Save Plan </button> <button type="button" wire:click="cancelEdit" class="mt-3 w-full inline-flex justify-center rounded-xl border border-gray-600 shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-gray-300 hover:bg-gray-700 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors"> Cancel </button> </div> </form> </div> </div> </div> @endif
+<div class="max-w-7xl mx-auto space-y-6">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h2 class="text-2xl font-bold font-heading text-white">Subscription Plans</h2>
+            <p class="text-gray-400 mt-1">Manage pricing tiers, limits, and features.</p>
+        </div>
+        <button wire:click="createPlan"
+            class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-lg shadow-brand-500/20 transition-all flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Create Plan
+        </button>
+    </div>
+
+    @if (session()->has('message'))
+        <div class="mb-6 bg-green-500/10 border border-green-500/20 text-green-400 px-4 py-3 rounded-xl flex items-center">
+            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            {{ session('message') }}
+        </div>
+    @endif
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @foreach($plans as $plan)
+            <div
+                class="bg-gray-800/50 backdrop-blur-xl border {{ $plan->is_active ? 'border-gray-700/50' : 'border-red-900/50' }} rounded-2xl p-6 relative flex flex-col h-full">
+                @if(!$plan->is_active)
+                    <div
+                        class="absolute top-0 right-0 mt-4 mr-4 px-2 py-1 bg-red-500/20 text-red-400 text-xs font-bold rounded-md uppercase tracking-wider">
+                        Inactive
+                    </div>
+                @endif
+
+                <h3 class="text-xl font-bold text-white mb-1">{{ $plan->name }}</h3>
+                <p class="text-sm text-gray-400 mb-4 font-mono">{{ $plan->slug }}</p>
+
+                <div class="flex items-baseline space-x-2 mb-6 border-b border-gray-700/50 pb-4">
+                    <span class="text-3xl font-extrabold text-white">{{ number_format($plan->price_monthly, 2) }}</span>
+                    <span class="text-gray-400 font-medium">{{ $plan->currency }} / mo</span>
+                </div>
+
+                <div class="space-y-3 flex-1 mb-6">
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-400">Invoices</span>
+                        <span
+                            class="font-bold {{ $plan->max_invoices === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_invoices === null ? 'Unlimited' : $plan->max_invoices }}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-400">Clients</span>
+                        <span
+                            class="font-bold {{ $plan->max_clients === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_clients === null ? 'Unlimited' : $plan->max_clients }}</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-400">Products</span>
+                        <span
+                            class="font-bold {{ $plan->max_products === null ? 'text-brand-400' : 'text-white' }}">{{ $plan->max_products === null ? 'Unlimited' : $plan->max_products }}</span>
+                    </div>
+                </div>
+
+                <button wire:click="editPlan({{ $plan->id }})"
+                    class="w-full py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-medium transition-colors">
+                    Edit Plan
+                </button>
+            </div>
+        @endforeach
+    </div>
+
+    <!-- Edit/Create Modal overlay -->
+    @if($editingPlan)
+        <div class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div wire:click="cancelEdit"
+                    class="fixed inset-0 bg-gray-900 bg-opacity-75 backdrop-blur-sm transition-opacity" aria-hidden="true">
+                </div>
+
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                <div
+                    class="inline-block align-bottom bg-gray-800 border border-gray-700 rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                    <form wire:submit.prevent="savePlan">
+                        <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4 border-b border-gray-700">
+                            <div class="sm:flex sm:items-start">
+                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                    <h3 class="text-lg leading-6 font-bold text-white" id="modal-title">
+                                        {{ $editingPlan === 'new' ? 'Create New Plan' : 'Edit Plan' }}
+                                    </h3>
+
+                                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-400 mb-1">Plan Name</label>
+                                            <input type="text" wire:model="name"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
+                                                required>
+                                            @error('name') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-400 mb-1">Slug
+                                                (Identifier)</label>
+                                            <input type="text" wire:model="slug"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500 font-mono text-sm"
+                                                required>
+                                            @error('slug') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-400 mb-1">Monthly
+                                                Price</label>
+                                            <div class="relative">
+                                                <div
+                                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <span class="text-gray-500 sm:text-sm">$</span>
+                                                </div>
+                                                <input type="number" step="0.01" wire:model="price_monthly"
+                                                    class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-7 pr-4 py-2 focus:ring-brand-500 focus:border-brand-500"
+                                                    required>
+                                            </div>
+                                            @error('price_monthly') <span
+                                            class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-400 mb-1">Yearly Price</label>
+                                            <div class="relative">
+                                                <div
+                                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <span class="text-gray-500 sm:text-sm">$</span>
+                                                </div>
+                                                <input type="number" step="0.01" wire:model="price_yearly"
+                                                    class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-7 pr-4 py-2 focus:ring-brand-500 focus:border-brand-500"
+                                                    required>
+                                            </div>
+                                            @error('price_yearly') <span
+                                            class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                                        </div>
+
+                                        <div class="sm:col-span-2 mt-4 pt-4 border-t border-gray-700">
+                                            <h4 class="text-sm font-bold text-gray-300 mb-4">Limits (Empty = Unlimited)</h4>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-400 mb-1">Max Invoices</label>
+                                            <input type="number" wire:model="max_invoices"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
+                                                placeholder="Unlimited">
+                                            @error('max_invoices') <span
+                                            class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-400 mb-1">Max Clients</label>
+                                            <input type="number" wire:model="max_clients"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
+                                                placeholder="Unlimited">
+                                            @error('max_clients') <span
+                                            class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-400 mb-1">Max Products</label>
+                                            <input type="number" wire:model="max_products"
+                                                class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
+                                                placeholder="Unlimited">
+                                            @error('max_products') <span
+                                            class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                                        </div>
+                                        <div class="flex items-center mt-6">
+                                            <input type="checkbox" wire:model="is_active" id="is_active"
+                                                class="h-5 w-5 rounded border-gray-600 bg-gray-800 text-brand-600 focus:ring-brand-500 focus:ring-offset-gray-900">
+                                            <label for="is_active" class="ml-2 block text-sm font-medium text-white">Active
+                                                (Visible to users)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-gray-800 px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse rounded-b-2xl border-t border-gray-700">
+                            <button type="submit"
+                                class="w-full inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2 bg-brand-600 text-base font-medium text-white hover:bg-brand-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm transition-colors">
+                                Save Plan
+                            </button>
+                            <button type="button" wire:click="cancelEdit"
+                                class="mt-3 w-full inline-flex justify-center rounded-xl border border-gray-600 shadow-sm px-4 py-2 bg-gray-800 text-base font-medium text-gray-300 hover:bg-gray-700 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-colors">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

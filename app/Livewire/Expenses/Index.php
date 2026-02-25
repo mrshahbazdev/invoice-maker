@@ -1,6 +1,71 @@
-<?php namespace App\Livewire\Expenses; use App\Models\Expense;
+<?php
+
+namespace App\Livewire\Expenses;
+
+use App\Models\Expense;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Livewire\WithPagination; class Index extends Component
-{ use WithPagination; public $search = ''; public $category = ''; public $sortBy = 'date'; public $sortDirection = 'desc'; public function updatingSearch() { $this->resetPage(); } public function sortBy($field) { if ($this->sortBy === $field) { $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc'; } else { $this->sortBy = $field; $this->sortDirection = 'asc'; } } public function delete(Expense $expense) { $this->authorize('delete', $expense); // Also delete the associated Cash Book Entry explicitly if it exists // (the DB constraints are just set null, but we want it fully removed to clean up) if ($expense->cash_book_entry) { $expense->cash_book_entry->delete(); } $expense->delete(); session()->flash('message', 'Expense and its accounting entry deleted successfully.'); } public function render() { $expenses = Auth::user()->business->expenses() ->when($this->search, function ($query) { $query->where('description', 'like', '%' . $this->search . '%') ->orWhere('category', 'like', '%' . $this->search . '%'); }) ->when($this->category, function ($query) { $query->where('category', $this->category); }) ->orderBy($this->sortBy, $this->sortDirection) ->paginate(10); $categories = Auth::user()->business->expenses() ->select('category') ->distinct() ->pluck('category'); return view('livewire.expenses.index', [ 'expenses' => $expenses, 'categories' => $categories, ]); }
+use Livewire\WithPagination;
+
+class Index extends Component
+{
+    use WithPagination;
+
+    public $search = '';
+    public $category = '';
+    public $sortBy = 'date';
+    public $sortDirection = 'desc';
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortBy === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
+
+    public function delete(Expense $expense)
+    {
+        $this->authorize('delete', $expense);
+
+        // Also delete the associated Cash Book Entry explicitly if it exists
+        // (the DB constraints are just set null, but we want it fully removed to clean up)
+        if ($expense->cash_book_entry) {
+            $expense->cash_book_entry->delete();
+        }
+
+        $expense->delete();
+        session()->flash('message', 'Expense and its accounting entry deleted successfully.');
+    }
+
+    public function render()
+    {
+        $expenses = Auth::user()->business->expenses()
+            ->when($this->search, function ($query) {
+                $query->where('description', 'like', '%' . $this->search . '%')
+                    ->orWhere('category', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->category, function ($query) {
+                $query->where('category', $this->category);
+            })
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate(10);
+
+        $categories = Auth::user()->business->expenses()
+            ->select('category')
+            ->distinct()
+            ->pluck('category');
+
+        return view('livewire.expenses.index', [
+            'expenses' => $expenses,
+            'categories' => $categories,
+        ]);
+    }
 }
