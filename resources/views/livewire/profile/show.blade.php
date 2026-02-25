@@ -223,7 +223,41 @@
                         </p>
                     </header>
 
-                    <form wire:submit="updateThemeSettings" class="mt-6 space-y-6">
+                    <div class="mt-6 mb-8 border-b border-gray-200 pb-8">
+                        <h3 class="text-sm font-semibold text-txmain mb-4">{{ __('Suggested Combinations') }}</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            @php
+                                $presets = [
+                                    ['name' => __('Midnight Dark'), 'brand' => '#6366f1', 'page' => '#030712', 'card' => '#111827', 'text' => '#f9fafb'],
+                                    ['name' => __('Hacker Green'), 'brand' => '#10b981', 'page' => '#052e16', 'card' => '#064e3b', 'text' => '#dcfce7'],
+                                    ['name' => __('Ocean Calm'), 'brand' => '#0ea5e9', 'page' => '#f0f9ff', 'card' => '#e0f2fe', 'text' => '#0c4a6e'],
+                                    ['name' => __('Elegant Sepia'), 'brand' => '#b45309', 'page' => '#fefce8', 'card' => '#ffffff', 'text' => '#451a03'],
+                                ];
+                            @endphp
+                            @foreach($presets as $preset)
+                                <button type="button"
+                                    wire:click="applyPreset('{{ $preset['brand'] }}', '{{ $preset['page'] }}', '{{ $preset['card'] }}', '{{ $preset['text'] }}')"
+                                    class="flex flex-col items-start border border-gray-200 rounded-lg p-3 hover:ring-2 hover:ring-brand-500 transition-all shadow-sm group bg-card focus:outline-none text-left">
+                                    <span class="text-xs font-semibold text-txmain mb-3">{{ $preset['name'] }}</span>
+                                    <div
+                                        class="flex items-center -space-x-2 relative w-full h-8 group-hover:space-x-1 transition-all">
+                                        <div class="w-8 h-8 rounded-full shadow-md z-[40] border-2 border-white ring-1 ring-gray-900/5"
+                                            style="background-color: {{ $preset['brand'] }};" title="Brand"></div>
+                                        <div class="w-8 h-8 rounded-full shadow-md z-[30] border-2 border-white ring-1 ring-gray-900/5"
+                                            style="background-color: {{ $preset['page'] }};" title="Page Background"></div>
+                                        <div class="w-8 h-8 rounded-full shadow-md z-[20] border-2 border-white ring-1 ring-gray-900/5"
+                                            style="background-color: {{ $preset['card'] }};" title="Card Background"></div>
+                                        <div class="w-8 h-8 rounded-full shadow-md z-[10] border-2 border-white ring-1 ring-gray-900/5"
+                                            style="background-color: {{ $preset['text'] }};" title="Text Color"></div>
+                                    </div>
+                                    <span
+                                        class="text-[10px] text-gray-500 mt-2 font-medium">{{ __('Click to apply preset') }}</span>
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <form wire:submit="updateThemeSettings" class="space-y-6">
                         @include('livewire.profile.theme-selector', ['label' => __('Brand Color (Buttons & Links)'), 'modelName' => 'theme_id', 'modelValue' => $theme_id, 'defaultHex' => '#6366f1'])
                         @include('livewire.profile.theme-selector', ['label' => __('Page Background Color'), 'modelName' => 'page_bg_color_id', 'modelValue' => $page_bg_color_id, 'defaultHex' => '#f9fafb'])
                         @include('livewire.profile.theme-selector', ['label' => __('Card Background Color'), 'modelName' => 'card_bg_color_id', 'modelValue' => $card_bg_color_id, 'defaultHex' => '#ffffff'])

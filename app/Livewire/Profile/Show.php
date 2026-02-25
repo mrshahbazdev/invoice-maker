@@ -105,6 +105,26 @@ class Show extends Component
         session()->flash('theme_message', __('Theme preference updated successfully.'));
     }
 
+    public function applyPreset($brandHex, $pageHex, $cardHex, $textHex)
+    {
+        $business = Auth::user()->business;
+        if (!$business)
+            return;
+
+        $this->theme_id = \App\Models\Theme::firstOrCreate(['primary_color' => $brandHex], ['name' => 'Preset Color ' . $brandHex])->id;
+        $this->page_bg_color_id = \App\Models\Theme::firstOrCreate(['primary_color' => $pageHex], ['name' => 'Preset Color ' . $pageHex])->id;
+        $this->card_bg_color_id = \App\Models\Theme::firstOrCreate(['primary_color' => $cardHex], ['name' => 'Preset Color ' . $cardHex])->id;
+        $this->text_color_id = \App\Models\Theme::firstOrCreate(['primary_color' => $textHex], ['name' => 'Preset Color ' . $textHex])->id;
+
+        $business->theme_id = $this->theme_id;
+        $business->page_bg_color_id = $this->page_bg_color_id;
+        $business->card_bg_color_id = $this->card_bg_color_id;
+        $business->text_color_id = $this->text_color_id;
+        $business->save();
+
+        session()->flash('theme_message', __('Theme combination applied successfully.'));
+    }
+
     public function updatePassword()
     {
         $this->validate([
