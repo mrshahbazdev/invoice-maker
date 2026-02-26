@@ -69,26 +69,11 @@ class Show extends Component
         $client = $this->invoice->client;
         $business = $this->invoice->business;
 
-        $placeholders = [
-            '{invoice_number}' => $this->invoice->invoice_number,
-            '{client_name}' => $client->name,
-            '{business_name}' => $business->name,
-            '{amount_due}' => $this->invoice->currency_symbol . number_format($this->invoice->amount_due, 2),
-            '{due_date}' => $this->invoice->due_date->format('d.m.Y'),
-            '{public_link}' => \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $this->invoice->id]),
-        ];
+        $templateService = new \App\Services\EmailTemplateService();
+        $template = $templateService->getParsedTemplate($this->invoice, $this->invoice->isEstimate() ? 'invoice' : 'invoice'); // Treat estimates as invoices for templates for now
 
-        $lang = $client->language ?? 'en';
-
-        // Dynamic Default Subject & Template based on client language
-        $defaultSubject = $this->getDefaultEmailSubject($lang);
-        $defaultTemplate = $this->getDefaultEmailTemplate($lang);
-
-        $subjectTemplate = $client->email_subject ?: $defaultSubject;
-        $bodyTemplate = $client->email_template ?: $defaultTemplate;
-
-        $this->emailSubject = str_replace(array_keys($placeholders), array_values($placeholders), $subjectTemplate);
-        $this->emailBody = str_replace(array_keys($placeholders), array_values($placeholders), $bodyTemplate);
+        $this->emailSubject = $template['subject'];
+        $this->emailBody = $template['body'];
 
         $this->showEmailModal = true;
     }

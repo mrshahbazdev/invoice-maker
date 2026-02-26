@@ -223,7 +223,7 @@
                                 @if($invoice->business->phone)
                                 <div>{{ $invoice->business->phone }}</div> @endif
                                 @if($invoice->business->email)
-                                <div>{{ $invoice->business->email }}</div> @endif
+                                <div><a href="mailto:{{ $invoice->business->email }}" class="hover:text-txmain underline decoration-gray-300 underline-offset-2">{{ $invoice->business->email }}</a></div> @endif
                                 @if($invoice->business->tax_number)
                                     <div class="mt-2 text-gray-400">{{ __('Tax ID') }}: {{ $invoice->business->tax_number }}
                                     </div>
@@ -283,10 +283,6 @@
 
                     <!-- Billing To -->
                     <div class="mb-12 pl-6 border-l-4" style="border-color: {{ $primaryColor }}30;">
-                        <h3 class="text-xs font-bold uppercase tracking-widest mb-3"
-                            style="color: {{ $primaryColor }};">
-                            {{ __('Bill To') }}
-                        </h3>
                         <div class="text-sm text-txmain leading-relaxed">
                             <strong class="text-base text-txmain block mb-1">{{ $invoice->client->name }}</strong>
                             @if($invoice->client->company_name)

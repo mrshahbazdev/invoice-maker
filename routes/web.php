@@ -26,6 +26,7 @@ use App\Livewire\Expenses\Create as ExpensesCreate;
 use App\Livewire\Expenses\Edit as ExpensesEdit;
 use App\Livewire\Expenses\Show as ExpensesShow;
 use App\Livewire\Settings\Team as SettingsTeam;
+use App\Livewire\Settings\EmailTemplates as SettingsEmailTemplates;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PublicInvoiceController;
@@ -108,6 +109,8 @@ Route::middleware(['auth', 'business.member'])->group(function () {
 
     // Team Settings
     Route::get('/settings/team', SettingsTeam::class)->name('settings.team');
+    // Email Templates
+    Route::get('/settings/email-templates', SettingsEmailTemplates::class)->name('settings.email-templates');
 
     Route::prefix('expenses')->group(function () {
         Route::get('/', ExpensesIndex::class)->name('expenses.index');
@@ -178,3 +181,19 @@ Route::get('/pay/{invoice:uuid}', [\App\Http\Controllers\PaymentController::clas
 Route::get('/pay/{invoice:uuid}/success', [\App\Http\Controllers\PaymentController::class, 'success'])->name('payment.success');
 
 Route::get('language/{locale}', [App\Http\Controllers\LanguageController::class, 'switch'])->name('language.switch');
+
+// External Cron Job API
+Route::get('/api/cron/{token}', function ($token) {
+    $expectedToken = config('app.cron_token', env('CRON_TOKEN', 'secret-cron-token'));
+    if ($token !== $expectedToken) {
+        abort(403, 'Unauthorized cron request');
+    }
+
+    \Illuminate\Support\Facades\Artisan::call('schedule:run');
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Scheduled tasks executed successfully.',
+        'output' => \Illuminate\Support\Facades\Artisan::output()
+    ]);
+})->name('api.cron');

@@ -10,3 +10,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('app:process-recurring-invoices')->daily();
 Schedule::command('invoices:send-reminders')->daily();
+Schedule::command('invoices:send-scheduled')->daily();

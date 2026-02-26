@@ -111,19 +111,13 @@ class ProcessRecurringInvoices extends Command
                 if ($newInvoice->client && $newInvoice->client->email) {
                     $pdfContent = $pdfService->generate($newInvoice);
 
-                    Mail::send([], [], function (Message $message) use ($newInvoice, $pdfContent) {
+                    $templateService = new \App\Services\EmailTemplateService();
+                    $template = $templateService->getParsedTemplate($newInvoice, 'invoice');
+
+                    Mail::send([], [], function (Message $message) use ($newInvoice, $pdfContent, $template) {
                         $message->to($newInvoice->client->email)
-                            ->subject("New Invoice from {$newInvoice->business->name} - {$newInvoice->invoice_number}")
-                            ->html("
-                                <p>Hi {$newInvoice->client->name},</p>
-                                <p>Please find attached your latest invoice (<b>{$newInvoice->invoice_number}</b>) from {$newInvoice->business->name}.</p>
-                                <p>This invoice is automatically generated as part of your recurring subscription.</p>
-                                <br>
-                                <p>You can view and pay this invoice online by clicking here:<br>
-                                <a href='" . route('invoices.public.show', $newInvoice) . "'>View Invoice Online</a></p>
-                                <br>
-                                <p>Thank you for your business!</p>
-                            ")
+                            ->subject($template['subject'])
+                            ->html($template['body'])
                             ->attachData($pdfContent, "Invoice-{$newInvoice->invoice_number}.pdf", [
                                 'mime' => 'application/pdf',
                             ]);
