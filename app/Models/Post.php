@@ -18,6 +18,13 @@ class Post extends Model
         'featured_image',
         'meta_title',
         'meta_description',
+        'focus_keyword',
+        'canonical_url',
+        'schema_type',
+        'schema_markup',
+        'local_seo_city',
+        'local_seo_region',
+        'related_post_ids',
         'is_published',
         'published_at',
     ];
@@ -25,6 +32,8 @@ class Post extends Model
     protected $casts = [
         'is_published' => 'boolean',
         'published_at' => 'datetime',
+        'schema_markup' => 'array',
+        'related_post_ids' => 'array',
     ];
 
     public function category()
