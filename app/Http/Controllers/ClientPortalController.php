@@ -17,6 +17,22 @@ class ClientPortalController
             abort(404);
         }
 
+        // If user is already logged in, save it to their active account
+        if (auth()->check()) {
+            $user = auth()->user();
+
+            // Link it if it's not already linked
+            if (!$invoice->client->user_id) {
+                $invoice->client->update(['user_id' => $user->id]);
+            }
+
+            \App\Services\NetworkSyncService::syncInvoiceToExpense($invoice);
+
+            if ($invoice->client->user_id === $user->id) {
+                return redirect()->route('client.dashboard')->with('success', 'Invoice has been saved to your account!');
+            }
+        }
+
         $existingUser = \App\Models\User::where('email', $invoice->client->email)->first();
 
         // If client already has a user account linked, or an account with this email exists
@@ -29,13 +45,12 @@ class ClientPortalController
 
             \App\Services\NetworkSyncService::syncInvoiceToExpense($invoice);
 
-            // If they are already logged in as that user, take them to the client dashboard directly
-            if (auth()->check() && auth()->user()->id === $existingUser->id) {
-                return redirect()->route('client.dashboard')->with('success', 'Invoice has been saved to your account!');
-            }
+            session()->put('url.intended', $request->fullUrl());
 
-            return redirect()->route('login')->with('success', 'Your email is already registered. We have linked this invoice to your account. Please log in to view it.');
+            return redirect()->route('login')->with('success', 'We have linked this invoice to your email. Please log in to view it.');
         }
+
+        session()->put('url.intended', $request->fullUrl());
 
         return view('client-portal.register', compact('invoice'));
     }

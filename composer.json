@@ -10,6 +10,7 @@
         "intervention/image": "^3.0",
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
+        "laravel/sanctum": "^4.0",
         "livewire/livewire": "^3.0",
         "nelexa/zip": "^4.0",
         "pragmarx/google2fa": "*",
