@@ -298,7 +298,8 @@
                             <div style="display: inline-block; vertical-align: top; text-align: {{ $metaAlign }};">
                                 <div class="invoice-number"
                                     style="color: {{ $primaryColor }}; text-transform: uppercase;">
-                                    {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}</div>
+                                    {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
+                                </div>
                                 <div class="invoice-meta">
                                     <p><strong>{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} #:</strong>
                                         {{ $invoice->invoice_number }}</p>
@@ -370,7 +371,8 @@
                         </td>
                         <td class="text-right">{{ (float) $item->quantity }}</td>
                         <td class="text-right">
-                            {{ $invoice->currency_symbol }}{{ number_format((float) $item->unit_price, 2) }}</td>
+                            {{ $invoice->currency_symbol }}{{ number_format((float) $item->unit_price, 2) }}
+                        </td>
                         <td class="text-right">{{ $invoice->currency_symbol }}{{ number_format((float) $item->total, 2) }}
                         </td>
                     </tr>
@@ -384,7 +386,8 @@
                     <div style="margin-bottom: 20px;">
                         <span class="address-label" style="color: {{ $primaryColor }};">{{ __('Payment Terms') }}</span>
                         <p style="font-size: 12px; color: #6b7280; white-space: pre-line; margin-top: 5px;">
-                            {{ $paymentTerms }}</p>
+                            {{ $paymentTerms }}
+                        </p>
                     </div>
                 @endif
 
@@ -413,13 +416,15 @@
                 <div class="total-row">
                     <div class="total-label">{{ __('Subtotal') }}</div>
                     <div class="total-value">
-                        {{ $invoice->currency_symbol }}{{ number_format((float) $invoice->subtotal, 2) }}</div>
+                        {{ $invoice->currency_symbol }}{{ number_format((float) $invoice->subtotal, 2) }}
+                    </div>
                 </div>
                 @if($showTax || $invoice->tax_total > 0)
                     <div class="total-row">
                         <div class="total-label">{{ __('Tax') }}</div>
                         <div class="total-value">
-                            {{ $invoice->currency_symbol }}{{ number_format((float) $invoice->tax_total, 2) }}</div>
+                            {{ $invoice->currency_symbol }}{{ number_format((float) $invoice->tax_total, 2) }}
+                        </div>
                     </div>
                 @endif
                 @if($showDiscount && $invoice->discount > 0)
@@ -432,7 +437,8 @@
                 <div class="total-row grand-total">
                     <div class="total-label">{{ __('Total') }}</div>
                     <div class="total-value">
-                        {{ $invoice->currency_symbol }}{{ number_format((float) $invoice->grand_total, 2) }}</div>
+                        {{ $invoice->currency_symbol }}{{ number_format((float) $invoice->grand_total, 2) }}
+                    </div>
                 </div>
 
                 @if($invoice->amount_paid > 0)
@@ -462,22 +468,30 @@
         <div class="footer">
             @if($invoice->business->bank_details || $invoice->business->iban || $invoice->business->bic)
                 <div style="margin-bottom: 20px; font-size: 11px; line-height: 1.4;">
-                    @if($invoice->business->bank_details)
-                        <strong>{{ __('Bank Details') }}:</strong> {!! nl2br(e($invoice->business->bank_details)) !!}<br>
+                    @php
+                        $bankDetails = $invoice->business->bank_details;
+                        $iban = $invoice->business->iban;
+                        $bic = $invoice->business->bic;
+                        $showIban = $iban && !str_contains(str_replace(' ', '', $bankDetails ?? ''), str_replace(' ', '', $iban));
+                        $showBic = $bic && !str_contains(str_replace(' ', '', $bankDetails ?? ''), str_replace(' ', '', $bic));
+                    @endphp
+                    @if($bankDetails)
+                        <strong>{{ __('Bank Details') }}:</strong><br>{!! nl2br(e($bankDetails)) !!}<br>
                     @endif
-                    @if($invoice->business->iban)
-                        <strong>{{ __('IBAN') }}:</strong> {{ $invoice->business->iban }} 
-                        @if($invoice->business->bic) | @endif
+                    @if($showIban)
+                        <strong>{{ __('IBAN') }}:</strong> {{ $iban }}
+                        @if($showBic) | @endif
                     @endif
-                    @if($invoice->business->bic)
-                        <strong>{{ __('BIC') }}:</strong> {{ $invoice->business->bic }}
+                    @if($showBic)
+                        <strong>{{ __('BIC') }}:</strong> {{ $bic }}
                     @endif
                 </div>
             @endif
             <p>{{ $footerMessage }}</p>
             <p style="margin-top: 5px; opacity: 0.5;">{{ __('Generated by InvoiceMaker on') }}
                 {{ now()->translatedFormat('M d, Y') }} | <a href="https://allocore.de"
-                    style="color: #9ca3af; text-decoration: none;">Allocore.de</a></p>
+                    style="color: #9ca3af; text-decoration: none;">Allocore.de</a>
+            </p>
         </div>
     </div>
 </body>

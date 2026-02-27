@@ -500,14 +500,21 @@
                                             {{ __('Bank Details') }}
                                         </div>
                                         <div class="text-txmain whitespace-pre-line leading-relaxed">
-                                            @if($invoice->business->bank_details)
-                                                {!! nl2br(e($invoice->business->bank_details)) !!}<br>
+                                            @php
+                                                $bankDetails = $invoice->business->bank_details;
+                                                $iban = $invoice->business->iban;
+                                                $bic = $invoice->business->bic;
+                                                $showIban = $iban && !str_contains(str_replace(' ', '', $bankDetails ?? ''), str_replace(' ', '', $iban));
+                                                $showBic = $bic && !str_contains(str_replace(' ', '', $bankDetails ?? ''), str_replace(' ', '', $bic));
+                                            @endphp
+                                            @if($bankDetails)
+                                                {!! nl2br(e($bankDetails)) !!}<br>
                                             @endif
-                                            @if($invoice->business->iban)
-                                                <strong>{{ __('IBAN') }}:</strong> {{ $invoice->business->iban }}<br>
+                                            @if($showIban)
+                                                <strong>{{ __('IBAN') }}:</strong> {{ $iban }}<br>
                                             @endif
-                                            @if($invoice->business->bic)
-                                                <strong>{{ __('BIC') }}:</strong> {{ $invoice->business->bic }}
+                                            @if($showBic)
+                                                <strong>{{ __('BIC') }}:</strong> {{ $bic }}
                                             @endif
                                         </div>
                                     </div>
