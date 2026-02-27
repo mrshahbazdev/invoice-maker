@@ -46,14 +46,14 @@ Route::middleware('auth:sanctum')->group(function () {
     // Invoices
     Route::apiResource('invoices', InvoiceController::class);
     Route::put('/invoices/{invoice}/status', [InvoiceController::class, 'updateStatus']);
-
-    // Admin/Global: Blog Management
-    // Note: If you want these strictly limited to Super Admins, you would apply the 'is_super_admin' middleware here.
-    Route::post('/blog/categories', [BlogCategoryController::class, 'store']);
-    Route::put('/blog/categories/{category}', [BlogCategoryController::class, 'update']);
-    Route::delete('/blog/categories/{category}', [BlogCategoryController::class, 'destroy']);
-
-    Route::post('/blog/posts', [BlogPostController::class, 'store']);
-    Route::post('/blog/posts/{post}', [BlogPostController::class, 'update']); // Use POST to support FormData image uploads
-    Route::delete('/blog/posts/{post}', [BlogPostController::class, 'destroy']);
 });
+
+// Admin/Global: Blog Management
+// Note: If you want these strictly limited to Super Admins, you would apply the 'is_super_admin' middleware here.
+Route::post('/blog/categories', [BlogCategoryController::class, 'store']);
+Route::put('/blog/categories/{category}', [BlogCategoryController::class, 'update']);
+Route::delete('/blog/categories/{category}', [BlogCategoryController::class, 'destroy']);
+
+Route::post('/blog/posts', [BlogPostController::class, 'store']);
+Route::post('/blog/posts/{post}', [BlogPostController::class, 'update']); // Use POST to support FormData image uploads
+Route::delete('/blog/posts/{post}', [BlogPostController::class, 'destroy']);

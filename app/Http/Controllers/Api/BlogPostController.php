@@ -78,7 +78,7 @@ class BlogPostController
         if ($request->hasFile('featured_image')) {
             // Delete old image if it exists
             if ($post->featured_image) {
-                Storage::cloud()->delete($post->featured_image);
+                Storage::delete($post->featured_image);
             }
             $validated['featured_image'] = $this->optimizeAndStoreImage($request->file('featured_image'));
         }
@@ -97,7 +97,7 @@ class BlogPostController
     public function destroy(Post $post)
     {
         if ($post->featured_image) {
-            Storage::cloud()->delete($post->featured_image);
+            Storage::delete($post->featured_image);
         }
 
         $post->delete();
@@ -125,7 +125,7 @@ class BlogPostController
 
         // Store the optimized image
         // We use the storage facade directly with put to write the binary string
-        Storage::cloud()->put($path, (string) $encoded);
+        Storage::disk('public')->put($path, (string) $encoded);
 
         return $path;
     }
