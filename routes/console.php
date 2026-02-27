@@ -8,6 +8,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command('app:process-recurring-invoices')->daily();
-Schedule::command('invoices:send-reminders')->daily();
-Schedule::command('invoices:send-scheduled')->daily();
+Schedule::command('app:process-recurring-invoices')->hourly();
+Schedule::command('invoices:send-reminders')->hourly();
+Schedule::command('invoices:send-scheduled')->hourly();
