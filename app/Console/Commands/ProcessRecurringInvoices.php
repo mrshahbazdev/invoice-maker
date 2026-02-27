@@ -37,7 +37,7 @@ class ProcessRecurringInvoices extends Command
         $today = Carbon::today()->toDateString();
 
         // 1. Find all eligible recurring invoices
-        // We only clone invoices that are active (not cancelled, draft, or estimate)
+        // We only clone invoices that are active (not cancelled or estimate)
         // For simplicity, we assume if it has is_recurring = true and a next_run_date <= today, it's eligible.
         $invoices = Invoice::where('is_recurring', true)
             ->whereNotNull('next_run_date')
