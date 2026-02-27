@@ -105,7 +105,7 @@ class ProcessRecurringInvoices extends Command
                 $parentInvoice->update([
                     'last_run_date' => Carbon::now(),
                     'next_run_date' => $nextRun,
-                    'status' => Invoice::STATUS_SENT, // Mark original template as active/sent
+                    'status' => Invoice::STATUS_DRAFT, // User requested template status stays Draft so they visually know it'll fire next
                 ]);
 
                 // 5. Automatically Email the new Invoice
