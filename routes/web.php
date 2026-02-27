@@ -189,11 +189,20 @@ Route::get('/api/cron/{token}', function ($token) {
         abort(403, 'Unauthorized cron request');
     }
 
-    \Illuminate\Support\Facades\Artisan::call('schedule:run');
+    // Run critical daily commands directly instead of relying on schedule:run
+    // which requires the ping to hit the exact start of the minute.
+    \Illuminate\Support\Facades\Artisan::call('app:process-recurring-invoices');
+    $out1 = \Illuminate\Support\Facades\Artisan::output();
+
+    \Illuminate\Support\Facades\Artisan::call('invoices:send-reminders');
+    $out2 = \Illuminate\Support\Facades\Artisan::output();
+
+    \Illuminate\Support\Facades\Artisan::call('invoices:send-scheduled');
+    $out3 = \Illuminate\Support\Facades\Artisan::output();
 
     return response()->json([
         'status' => 'success',
         'message' => 'Scheduled tasks executed successfully.',
-        'output' => \Illuminate\Support\Facades\Artisan::output()
+        'output' => trim($out1 . "\n" . $out2 . "\n" . $out3)
     ]);
 })->name('api.cron');
