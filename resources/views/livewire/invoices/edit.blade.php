@@ -12,7 +12,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
  <div>
  <label class="block text-sm font-medium text-txmain mb-1">{{ __('Client') }} *</label>
- <select wire:model="client_id"
+ <select wire:model.live="client_id"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  @foreach($this->clients as $client)
  <option value="{{ $client->id }}">{{ $client->name }} @if($client->company_name)
@@ -23,7 +23,7 @@
  </div>
  <div>
  <label class="block text-sm font-medium text-txmain mb-1">{{ __('Currency Override') }}</label>
- <select wire:model="currency"
+ <select wire:model.live="currency"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="USD">USD - {{ __('US Dollar') }}</option>
  <option value="EUR">EUR - {{ __('Euro') }}</option>
@@ -225,7 +225,7 @@
  </div>
  <div class="flex justify-between font-bold text-lg pt-2 border-t">
  <span>{{ __('Total') }}:</span>
- <span>{{ auth()->user()->business->currency_symbol }}{{ number_format((float) $this->totals['grand_total'], 2) }}</span>
+ <span>{{ $this->currency_symbol }}{{ number_format((float) $this->totals['grand_total'], 2) }}</span>
  </div>
  </div>
  </div>

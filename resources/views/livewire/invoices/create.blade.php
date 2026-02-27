@@ -11,7 +11,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
  <div>
  <label class="block text-sm font-medium text-txmain mb-1">{{ __('Client') }} *</label>
- <select wire:model="client_id"
+ <select wire:model.live="client_id"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="">{{ __('Select a client...') }}</option>
  @foreach($this->clients as $client)
@@ -24,7 +24,7 @@
  </div>
  <div>
  <label class="block text-sm font-medium text-txmain mb-1">{{ __('Currency') }}</label>
- <select wire:model="currency"
+ <select wire:model.live="currency"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="USD">USD - {{ __('US Dollar') }}</option>
  <option value="EUR">EUR - {{ __('Euro') }}</option>
@@ -147,7 +147,7 @@
  <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Select Client') }}</h3>
  <div class="mb-6">
  <label class="block text-sm font-medium text-txmain mb-1">{{ __('Client') }} *</label>
- <select wire:model="client_id"
+ <select wire:model.live="client_id"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="">{{ __('Select a client...') }}</option>
  @foreach($this->clients as $client)
@@ -287,7 +287,7 @@
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
  <div>
  <label class="block text-sm font-medium text-txmain mb-1">{{ __('Currency Override') }}</label>
- <select wire:model="currency"
+ <select wire:model.live="currency"
  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
  <option value="USD">USD - {{ __('US Dollar') }}</option>
  <option value="EUR">EUR - {{ __('Euro') }}</option>
@@ -444,7 +444,7 @@
  </div>
  <div class="flex justify-between font-bold text-lg pt-2 border-t">
  <span>{{ __('Total') }}:</span>
- <span>{{ auth()->user()->business->currency_symbol }}{{ number_format((float) $this->totals['grand_total'], 2) }}</span>
+ <span>{{ $this->currency_symbol }}{{ number_format((float) $this->totals['grand_total'], 2) }}</span>
  </div>
  </div>
  </div>

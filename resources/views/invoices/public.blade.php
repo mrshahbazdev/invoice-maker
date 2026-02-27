@@ -223,7 +223,9 @@
                                 @if($invoice->business->phone)
                                 <div>{{ $invoice->business->phone }}</div> @endif
                                 @if($invoice->business->email)
-                                <div><a href="mailto:{{ $invoice->business->email }}" class="hover:text-txmain underline decoration-gray-300 underline-offset-2">{{ $invoice->business->email }}</a></div> @endif
+                                    <div><a href="mailto:{{ $invoice->business->email }}"
+                                            class="hover:text-txmain underline decoration-gray-300 underline-offset-2">{{ $invoice->business->email }}</a>
+                                </div> @endif
                                 @if($invoice->business->tax_number)
                                     <div class="mt-2 text-gray-400">{{ __('Tax ID') }}: {{ $invoice->business->tax_number }}
                                     </div>
@@ -492,13 +494,21 @@
                         <div class="flex flex-col md:flex-row justify-between items-end gap-8">
 
                             <div class="w-full md:w-1/3 text-left">
-                                @if($invoice->business->bank_details)
+                                @if($invoice->business->bank_details || $invoice->business->iban || $invoice->business->bic)
                                     <div class="bg-page rounded-xl p-4 border border-gray-100 text-xs">
                                         <div class="font-bold text-txmain mb-1 uppercase tracking-wider">
                                             {{ __('Bank Details') }}
                                         </div>
                                         <div class="text-txmain whitespace-pre-line leading-relaxed">
-                                            {!! e($invoice->business->bank_details) !!}
+                                            @if($invoice->business->bank_details)
+                                                {!! nl2br(e($invoice->business->bank_details)) !!}<br>
+                                            @endif
+                                            @if($invoice->business->iban)
+                                                <strong>{{ __('IBAN') }}:</strong> {{ $invoice->business->iban }}<br>
+                                            @endif
+                                            @if($invoice->business->bic)
+                                                <strong>{{ __('BIC') }}:</strong> {{ $invoice->business->bic }}
+                                            @endif
                                         </div>
                                     </div>
                                 @endif
