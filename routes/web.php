@@ -207,9 +207,12 @@ Route::get('/api/cron/{token}', function ($token) {
     \Illuminate\Support\Facades\Artisan::call('invoices:send-scheduled');
     $out3 = \Illuminate\Support\Facades\Artisan::output();
 
+    \Illuminate\Support\Facades\Artisan::call('app:process-late-fees');
+    $out4 = \Illuminate\Support\Facades\Artisan::output();
+
     return response()->json([
         'status' => 'success',
         'message' => 'Scheduled tasks executed successfully.',
-        'output' => trim($out1 . "\n" . $out2 . "\n" . $out3)
+        'output' => trim($out1 . "\n" . $out2 . "\n" . $out3 . "\n" . $out4)
     ]);
 })->name('api.cron');
