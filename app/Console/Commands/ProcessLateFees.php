@@ -85,6 +85,10 @@ class ProcessLateFees extends Command
                             'is_internal' => true,
                         ]);
 
+                        if ($business->user) {
+                            $business->user->notify(new \App\Notifications\LateFeeAppliedNotification($invoice));
+                        }
+
                         $processedCount++;
                         $this->line("Applied late fee to Invoice #{$invoice->invoice_number}");
                     }

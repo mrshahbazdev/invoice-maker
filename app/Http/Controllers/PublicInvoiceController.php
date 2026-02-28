@@ -39,6 +39,13 @@ class PublicInvoiceController
             ?? config('app.locale');
         \Illuminate\Support\Facades\App::setLocale($locale);
 
+        // Throttle views to avoid spamming the database per IP per Invoice
+        $cacheKey = 'invoice_viewed_' . $invoice->id . '_' . $request->ip();
+        if (!cache()->has($cacheKey)) {
+            $invoice->business->user->notify(new \App\Notifications\InvoiceViewedNotification($invoice));
+            cache()->put($cacheKey, true, now()->addHours(1));
+        }
+
         return view('invoices.public', compact('invoice'));
     }
 
@@ -108,6 +115,11 @@ class PublicInvoiceController
             $newItem = $item->replicate();
             $newItem->invoice_id = $newInvoice->id;
             $newItem->save();
+        }
+
+        // Notify Business Owner
+        if ($invoice->business && $invoice->business->user) {
+            $invoice->business->user->notify(new \App\Notifications\EstimateAcceptedNotification($invoice));
         }
 
         return redirect()->back()->with('success', 'Estimate has been approved and successfully converted into an Invoice. The business owner has been notified.');

@@ -177,6 +177,10 @@
                             {{ $title ?? 'Admin Dashboard' }}
                         </h1>
                     </div>
+
+                    <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+                        <livewire:layout.notifications />
+                    </div>
                 </div>
             </header>
 

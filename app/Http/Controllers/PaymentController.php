@@ -108,6 +108,10 @@ class PaymentController extends Controller
                     // Update invoice status
                     $invoice->update(['status' => Invoice::STATUS_PAID]);
 
+                    if ($business->user) {
+                        $business->user->notify(new \App\Notifications\InvoicePaidNotification($invoice));
+                    }
+
                     // Create Cashbook entry automatically
                     \App\Models\CashBookEntry::create([
                         'business_id' => $business->id,

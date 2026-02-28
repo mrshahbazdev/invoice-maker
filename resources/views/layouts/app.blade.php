@@ -127,6 +127,9 @@
                                 </div>
                             </div>
 
+                            <!-- Notifications Component -->
+                            <livewire:layout.notifications />
+
                             <a href="{{ route('profile.show') }}"
                                 class="flex items-center text-xs sm:text-sm text-txmain hover:text-brand-600 focus:outline-none transition-colors px-2 py-1.5 rounded-md hover:bg-page font-medium">
                                 <svg class="w-4 h-4 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
