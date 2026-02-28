@@ -67,11 +67,7 @@
         }
 
         .mesh-gradient {
-            background-color: #f8fafc;
-            background-image:
-                radial-gradient(at 0% 0%, hsla(217, 100%, 97%, 1) 0, transparent 50%),
-                radial-gradient(at 50% 0%, hsla(225, 100%, 96%, 1) 0, transparent 50%),
-                radial-gradient(at 100% 0%, hsla(210, 100%, 95%, 1) 0, transparent 50%);
+            background-color: var(--color-page-bg);
         }
 
         .glass-card {
@@ -145,11 +141,11 @@
                 <a href="/#features"
                     class="text-sm font-medium text-txmain hover:text-brand-600 transition-colors">{{ __('Features') }}</a>
                 <a href="/#how-it-works"
-                    class="text-sm font-medium text-txmain hover:text-brand-600 transition-colors">{{ __('How it Works') }}</a>
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('How it Works') }}</a>
                 <a href="{{ route('docs.index', ['lang' => app()->getLocale()]) }}"
-                    class="text-sm font-medium text-txmain hover:text-brand-600 transition-colors">{{ __('Help Center') }}</a>
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Help Center') }}</a>
                 <a href="{{ route('public.blog.index') }}"
-                    class="text-sm font-medium text-txmain hover:text-brand-600 transition-colors">{{ __('Blog') }}</a>
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Blog') }}</a>
 
                 <!-- Language Selector -->
                 <div class="relative" x-data="{ open: false }">
@@ -286,7 +282,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-16 px-4">
+    <footer class="bg-darkbox text-white py-16 px-4">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 border-b border-gray-800 pb-12">
                 <div class="col-span-1 md:col-span-1">
@@ -299,7 +295,7 @@
                                 class="text-2xl font-bold text-white">{{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}</span>
                         @endif
                     </a>
-                    <p class="text-sm leading-relaxed">
+                    <p class="text-sm leading-relaxed text-gray-400">
                         {{ __('Manage your business smarter, not harder. The most automated invoicing platform built for modern entrepreneurs.') }}
                     </p>
                 </div>
@@ -318,7 +314,7 @@
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">{{ __('Support') }}</h4>
-                    <ul class="space-y-4 text-sm">
+                    <ul class="space-y-4 text-sm text-gray-400">
                         <li><a href="#" class="hover:text-brand-400 transition-colors">{{ __('Documentation') }}</a>
                         </li>
                         <li><a href="#" class="hover:text-brand-400 transition-colors">{{ __('Privacy Policy') }}</a>
