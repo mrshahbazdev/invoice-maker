@@ -82,6 +82,8 @@
                     class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Help Center') }}</a>
                 <a href="{{ route('public.blog.index') }}"
                     class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Blog') }}</a>
+                <a href="https://allocore.de/" target="_blank" rel="noopener" title="Visit Allocore Main Website"
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Allocore.de') }}</a>
 
                 <!-- Language Selector -->
                 <div class="relative" x-data="{ open: false }">
@@ -195,6 +197,8 @@
                     class="block text-lg font-medium text-txmain">{{ __('Help Center') }}</a>
                 <a href="{{ route('public.blog.index') }}" @click="mobileMenuOpen = false"
                     class="block text-lg font-medium text-txmain">{{ __('Blog') }}</a>
+                <a href="https://allocore.de/" target="_blank" rel="noopener" title="Visit Allocore Main Website"
+                    class="block text-lg font-medium text-txmain">{{ __('Allocore.de') }}</a>
                 <div class="pt-6 border-t border-gray-100 space-y-4">
                     @auth
                         <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
@@ -227,6 +231,7 @@
                 </p>
             </div>
             <div class="mt-8 md:mt-0 md:order-1 flex justify-center space-x-6">
+                <a href="https://allocore.de/" target="_blank" rel="noopener" title="Visit Allocore Main Website" class="text-gray-400 hover:text-gray-500 font-medium text-sm">Allocore.de</a>
                 <a href="{{ url('/') }}" class="text-gray-400 hover:text-gray-500 font-medium text-sm">Home</a>
                 <a href="{{ route('public.blog.index') }}"
                     class="text-gray-400 hover:text-gray-500 font-medium text-sm">Blog</a>

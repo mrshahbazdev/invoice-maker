@@ -146,6 +146,8 @@
                     class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Help Center') }}</a>
                 <a href="{{ route('public.blog.index') }}"
                     class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Blog') }}</a>
+                <a href="https://allocore.de/" target="_blank" rel="noopener" title="Visit Allocore Main Website"
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Allocore.de') }}</a>
 
                 <!-- Language Selector -->
                 <div class="relative" x-data="{ open: false }">
@@ -259,6 +261,8 @@
                     class="block text-lg font-medium text-txmain">{{ __('Help Center') }}</a>
                 <a href="{{ route('public.blog.index') }}" @click="mobileMenuOpen = false"
                     class="block text-lg font-medium text-txmain">{{ __('Blog') }}</a>
+                <a href="https://allocore.de/" target="_blank" rel="noopener" title="Visit Allocore Main Website"
+                    class="block text-lg font-medium text-txmain">{{ __('Allocore.de') }}</a>
                 <div class="pt-6 border-t border-gray-100 space-y-4">
                     @auth
                         <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
@@ -310,6 +314,24 @@
                                 class="hover:text-amber-200 transition-colors">{{ __('Client Portal') }}</a></li>
                         <li><a href="{{ route('public.blog.index') }}"
                                 class="hover:text-amber-200 transition-colors">{{ __('Blog') }}</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-1 md:col-span-1">
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-widest text-sm">{{ __('Company') }}</h4>
+                    <ul class="space-y-4">
+                        <li><a href="https://allocore.de/" target="_blank" rel="noopener"
+                                title="Visit Allocore Main Website"
+                                class="text-gray-400 hover:text-amber-200 transition-colors font-medium">Allocore.de</a>
+                        </li>
+                        <li><a href="/#features"
+                                class="text-gray-400 hover:text-amber-200 transition-colors font-medium">{{ __('Features') }}</a>
+                        </li>
+                        <li><a href="/#how-it-works"
+                                class="text-gray-400 hover:text-amber-200 transition-colors font-medium">{{ __('How it Works') }}</a>
+                        </li>
+                        <li><a href="{{ route('public.blog.index') }}"
+                                class="text-gray-400 hover:text-amber-200 transition-colors font-medium">{{ __('Blog') }}</a>
+                        </li>
                     </ul>
                 </div>
                 <div>
