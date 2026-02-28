@@ -321,16 +321,16 @@
                     <ul class="space-y-4">
                         <li><a href="https://allocore.de/" target="_blank" rel="noopener"
                                 title="Visit Allocore Main Website"
-                                class="text-gray-400 hover:text-amber-200 transition-colors font-medium">Allocore.de</a>
+                                class="text-white hover:text-amber-200 transition-colors font-medium">Allocore.de</a>
                         </li>
                         <li><a href="/#features"
-                                class="text-gray-400 hover:text-amber-200 transition-colors font-medium">{{ __('Features') }}</a>
+                                class="text-white hover:text-amber-200 transition-colors font-medium">{{ __('Features') }}</a>
                         </li>
                         <li><a href="/#how-it-works"
-                                class="text-gray-400 hover:text-amber-200 transition-colors font-medium">{{ __('How it Works') }}</a>
+                                class="text-white hover:text-amber-200 transition-colors font-medium">{{ __('How it Works') }}</a>
                         </li>
                         <li><a href="{{ route('public.blog.index') }}"
-                                class="text-gray-400 hover:text-amber-200 transition-colors font-medium">{{ __('Blog') }}</a>
+                                class="text-white hover:text-amber-200 transition-colors font-medium">{{ __('Blog') }}</a>
                         </li>
                     </ul>
                 </div>
