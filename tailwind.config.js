@@ -25,8 +25,8 @@ export default {
                 page: 'var(--color-page-bg, #ffffff)',
                 card: 'var(--color-card-bg, #f5f7fa)',
                 txmain: 'var(--color-text-main, #4a4a4a)',
-                heading: '#000000',
-                darkbox: '#000000',
+                heading: '#1f2937',
+                darkbox: '#ff8c00',
                 unpaid: {
                     text: '#ff8c00',
                     bg: '#ff8c001a',
