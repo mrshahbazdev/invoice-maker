@@ -62,12 +62,17 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('public.blog.index') }}"
-                        class="text-txmain hover:text-txmain font-semibold text-sm transition-colors hidden sm:block">Blog</a>
-                    <a href="{{ route('login') }}"
-                        class="text-txmain hover:text-txmain font-semibold text-sm transition-colors">Sign In</a>
-                    <a href="{{ route('register') }}"
-                        class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm">Get
-                        Started</a>
+                        class="text-txmain hover:text-brand-600 font-semibold text-sm transition-colors hidden sm:block">{{ __('Blog') }}</a>
+
+                    @auth
+                        <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
+                            class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm">{{ __('Go to Dashboard') }}</a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="text-txmain hover:text-brand-600 font-semibold text-sm transition-colors">{{ __('Sign In') }}</a>
+                        <a href="{{ route('register') }}"
+                            class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm">{{ __('Get Started') }}</a>
+                    @endauth
                 </div>
             </div>
         </div>
