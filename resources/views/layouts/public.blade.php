@@ -46,37 +46,171 @@
 </head>
 
 <body class="bg-card text-txmain antialiased font-sans flex flex-col min-h-screen">
-    <!-- Navbar -->
-    <nav class="bg-card/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <div class="flex items-center">
-                    <a href="{{ url('/') }}" class="flex-shrink-0 flex items-center">
-                        @if($logo = \App\Models\Setting::get('site.logo'))
-                            <img class="h-10 w-auto" src="{{ Storage::url($logo) }}" alt="Logo">
-                        @else
-                            <span
-                                class="text-2xl font-extrabold text-brand-600 tracking-tight">{{ \App\Models\Setting::get('site.name', config('app.name')) }}</span>
-                        @endif
-                    </a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="{{ route('public.blog.index') }}"
-                        class="text-txmain hover:text-brand-600 font-semibold text-sm transition-colors hidden sm:block">{{ __('Blog') }}</a>
+    <!-- Header -->
+    <header x-data="{ scrolled: false, mobileMenuOpen: false }" @scroll.window="scrolled = (window.pageYOffset > 20)"
+        :class="scrolled ? 'bg-card/80 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'"
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8">
+        <nav class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center group">
+                    @if($logo = \App\Models\Setting::get('site.logo'))
+                        <img src="{{ Storage::url($logo) }}" alt="Logo"
+                            class="h-10 w-auto group-hover:scale-105 transition-transform">
+                    @else
+                        <div
+                            class="w-10 h-10 bg-brand-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <span class="ml-3 text-2xl font-bold text-brand-600">
+                            {{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}
+                        </span>
+                    @endif
+                </a>
+            </div>
 
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/#features"
+                    class="text-sm font-medium text-txmain hover:text-brand-600 transition-colors">{{ __('Features') }}</a>
+                <a href="/#how-it-works"
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('How it Works') }}</a>
+                <a href="{{ route('docs.index', ['lang' => app()->getLocale()]) }}"
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Help Center') }}</a>
+                <a href="{{ route('public.blog.index') }}"
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Blog') }}</a>
+
+                <!-- Language Selector -->
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="flex items-center text-sm font-medium text-txmain hover:text-brand-600 transition-colors">
+                        <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.53 3 18.051">
+                            </path>
+                        </svg>
+                        {{ strtoupper(app()->getLocale()) }}
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-cloak
+                        class="absolute right-0 mt-2 w-48 bg-card rounded-xl shadow-xl border border-gray-100 py-2 z-50 overflow-hidden transform transition-all">
+                        @php
+                            $locales = \App\Models\Setting::get('site.enabled_languages', [
+                                'en' => 'English',
+                                'de' => 'Deutsch',
+                                'es' => 'Español',
+                                'fr' => 'Français',
+                                'it' => 'Italiano',
+                                'pt' => 'Português',
+                                'ar' => 'العربية',
+                                'zh' => '中文',
+                                'ja' => '日本語',
+                                'ru' => 'Русский',
+                            ]);
+                         @endphp
+                        @foreach($locales as $code => $name)
+                            <a href="{{ route('language.switch', $code) }}"
+                                class="block px-4 py-2 text-sm text-txmain hover:bg-brand-50 hover:text-brand-700 {{ app()->getLocale() == $code ? 'font-bold bg-page' : '' }}">
+                                {{ $name }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4 ml-4 pl-4 border-l border-gray-200">
                     @auth
                         <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
-                            class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm">{{ __('Go to Dashboard') }}</a>
+                            class="inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-white bg-brand-600 rounded-full hover: shadow-lg shadow-brand-200 transition-all transform hover:-translate-y-0.5">
+                            {{ __('Go to Dashboard') }}
+                        </a>
                     @else
                         <a href="{{ route('login') }}"
-                            class="text-txmain hover:text-brand-600 font-semibold text-sm transition-colors">{{ __('Sign In') }}</a>
+                            class="text-sm font-semibold text-txmain hover:text-brand-600 transition-colors">{{ __('Sign In') }}</a>
                         <a href="{{ route('register') }}"
-                            class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full text-sm font-bold transition-all shadow-sm">{{ __('Get Started') }}</a>
+                            class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-brand-600 rounded-full hover:bg-brand-700 shadow-lg shadow-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-all">
+                            {{ __('Get Started') }}
+                        </a>
+                    @endauth
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center space-x-4">
+                <!-- Language Selector Mobile -->
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" class="p-2 text-txmain hover:text-brand-600 transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 11.37 9.198 15.53 3 18.051">
+                            </path>
+                        </svg>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-cloak
+                        class="absolute right-0 mt-2 w-48 bg-card rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                        @foreach($locales as $code => $name)
+                            <a href="{{ route('language.switch', $code) }}"
+                                class="block px-4 py-2 text-sm text-txmain hover:bg-brand-50">
+                                {{ $name }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
+                <button @click="mobileMenuOpen = true" class="p-2 text-txmain hover:text-brand-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Nav Overlay -->
+        <div x-show="mobileMenuOpen" x-cloak class="md:hidden fixed inset-0 z-50 flex flex-col bg-card overflow-y-auto">
+            <div class="px-4 py-5 flex items-center justify-between border-b border-gray-100">
+                <a href="/" class="flex items-center">
+                    @if($logo = \App\Models\Setting::get('site.logo'))
+                        <img src="{{ Storage::url($logo) }}" alt="Logo" class="h-8 w-auto">
+                    @else
+                        <span class="text-xl font-bold text-brand-600">
+                            {{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}
+                        </span>
+                    @endif
+                </a>
+                <button @click="mobileMenuOpen = false" class="p-2 text-txmain">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="px-4 py-8 space-y-6">
+                <a href="/#features" @click="mobileMenuOpen = false"
+                    class="block text-lg font-medium text-txmain">{{ __('Features') }}</a>
+                <a href="/#how-it-works" @click="mobileMenuOpen = false"
+                    class="block text-lg font-medium text-txmain">{{ __('How it Works') }}</a>
+                <a href="{{ route('docs.index', ['lang' => app()->getLocale()]) }}" @click="mobileMenuOpen = false"
+                    class="block text-lg font-medium text-txmain">{{ __('Help Center') }}</a>
+                <a href="{{ route('public.blog.index') }}" @click="mobileMenuOpen = false"
+                    class="block text-lg font-medium text-txmain">{{ __('Blog') }}</a>
+                <div class="pt-6 border-t border-gray-100 space-y-4">
+                    @auth
+                        <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
+                            class="block w-full text-center px-6 py-4 text-lg font-bold text-white bg-brand-600 rounded-2xl shadow-xl">
+                            {{ __('Go to Dashboard') }}
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}"
+                            class="block w-full text-center px-6 py-3 text-lg font-semibold text-txmain border border-gray-200 rounded-2xl">{{ __('Sign In') }}</a>
+                        <a href="{{ route('register') }}"
+                            class="block w-full text-center px-6 py-3 text-lg font-semibold text-white bg-brand-600 rounded-2xl">{{ __('Get Started') }}</a>
                     @endauth
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
 
     <main class="flex-grow">
         {{ $slot }}
