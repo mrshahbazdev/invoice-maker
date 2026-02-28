@@ -50,11 +50,13 @@ class Business extends Model
         'enable_automated_reminders',
         'reminder_days_interval',
         'accept_network_invoices',
+        'late_fee_percentage',
     ];
 
     protected $casts = [
         'enable_automated_reminders' => 'boolean',
         'accept_network_invoices' => 'boolean',
+        'late_fee_percentage' => 'float',
     ];
 
     protected static function booted()
