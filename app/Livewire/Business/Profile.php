@@ -47,6 +47,7 @@ class Profile extends Component
     public bool $enable_automated_reminders = true;
     public int $reminder_days_interval = 7;
     public bool $accept_network_invoices = false;
+    public float $late_fee_percentage = 0;
 
     protected function rules(): array
     {
@@ -80,6 +81,7 @@ class Profile extends Component
             'enable_automated_reminders' => 'boolean',
             'reminder_days_interval' => 'required_if:enable_automated_reminders,true|integer|min:1|max:365',
             'accept_network_invoices' => 'boolean',
+            'late_fee_percentage' => 'nullable|numeric|min:0|max:100',
         ];
     }
 
@@ -116,6 +118,7 @@ class Profile extends Component
             $this->enable_automated_reminders = $this->business->enable_automated_reminders ?? true;
             $this->reminder_days_interval = $this->business->reminder_days_interval ?? 7;
             $this->accept_network_invoices = $this->business->accept_network_invoices ?? false;
+            $this->late_fee_percentage = $this->business->late_fee_percentage ?? 0;
         } else {
             // Defaults for new business
             $this->name = Auth::user()->name;
@@ -159,6 +162,7 @@ class Profile extends Component
             'enable_automated_reminders' => $this->enable_automated_reminders,
             'reminder_days_interval' => $this->reminder_days_interval,
             'accept_network_invoices' => $this->accept_network_invoices,
+            'late_fee_percentage' => $this->late_fee_percentage,
         ];
 
         if ($this->logo) {

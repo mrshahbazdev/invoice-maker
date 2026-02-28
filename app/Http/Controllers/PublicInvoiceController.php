@@ -67,9 +67,50 @@ class PublicInvoiceController
             abort(404);
         }
 
-        $invoice->update(['status' => 'sent']); // Or a specific 'approved' status if needed
+        if ($invoice->status === 'paid') {
+            return redirect()->back()->with('success', 'Estimate is already approved.');
+        }
 
-        return redirect()->back()->with('success', 'Estimate approved successfully.');
+        // Technically 'paid' means the estimate life cycle is closed/accepted
+        $invoice->update(['status' => 'paid']);
+
+        // Log the approval comment natively
+        InvoiceComment::create([
+            'invoice_id' => $invoice->id,
+            'user_id' => $invoice->client->user_id ?? 1,
+            'comment' => 'The client approved this Estimate. It has been automatically converted into a regular Draft Invoice.',
+            'is_internal' => true,
+        ]);
+
+        // Auto-convert to Draft Invoice
+        $business = $invoice->business;
+        $defaultTerms = \App\Models\Setting::get('invoice.default_due_days', 14);
+
+        // Use the InvoiceNumberService to get the next standard invoice number
+        $numberService = app(\App\Services\InvoiceNumberService::class);
+
+        $newInvoice = $invoice->replicate();
+        $newInvoice->uuid = (string) \Illuminate\Support\Str::uuid();
+        $newInvoice->invoice_number = $numberService->generate($business);
+        $newInvoice->type = 'invoice';
+        $newInvoice->status = 'draft';
+        $newInvoice->invoice_date = now();
+        $newInvoice->due_date = now()->addDays($defaultTerms);
+
+        // Reset dynamic tracking fields
+        $newInvoice->amount_paid = 0;
+        $newInvoice->amount_due = $newInvoice->grand_total;
+        $newInvoice->inventory_deducted = false;
+        $newInvoice->save();
+
+        // Replicate Items
+        foreach ($invoice->items as $item) {
+            $newItem = $item->replicate();
+            $newItem->invoice_id = $newInvoice->id;
+            $newItem->save();
+        }
+
+        return redirect()->back()->with('success', 'Estimate has been approved and successfully converted into an Invoice. The business owner has been notified.');
     }
 
     public function requestRevision(Request $request, Invoice $invoice)

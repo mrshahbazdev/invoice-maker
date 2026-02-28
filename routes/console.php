@@ -11,3 +11,4 @@ Artisan::command('inspire', function () {
 Schedule::command('app:process-recurring-invoices')->hourly();
 Schedule::command('invoices:send-reminders')->hourly();
 Schedule::command('invoices:send-scheduled')->hourly();
+Schedule::command('app:process-late-fees')->daily();
