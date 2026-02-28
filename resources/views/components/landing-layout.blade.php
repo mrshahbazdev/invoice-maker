@@ -112,8 +112,8 @@
 
     <!-- Header -->
     <header x-data="{ scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)"
-        :class="scrolled ? 'bg-card/80 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'"
-        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8">
+        :class="scrolled ? 'bg-card shadow-sm py-3' : 'bg-card py-5'"
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
         <nav class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center">
                 <a href="/" class="flex items-center group">
@@ -326,7 +326,8 @@
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">{{ __('Newsletter') }}</h4>
                     <p class="text-xs mb-4 text-white font-medium">
-                        {{ __('Subscribe to get the latest business tips.') }}</p>
+                        {{ __('Subscribe to get the latest business tips.') }}
+                    </p>
                     <div class="flex">
                         <input type="email" placeholder="{{ __('Email address') }}"
                             class="bg-gray-800 border-none rounded-l-lg px-4 py-2 w-full text-white text-sm focus:ring-1 focus:ring-brand-500">

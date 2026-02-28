@@ -48,8 +48,8 @@
 <body class="bg-card text-txmain antialiased font-sans flex flex-col min-h-screen">
     <!-- Header -->
     <header x-data="{ scrolled: false, mobileMenuOpen: false }" @scroll.window="scrolled = (window.pageYOffset > 20)"
-        :class="scrolled ? 'bg-card/80 backdrop-blur-lg shadow-sm py-3' : 'bg-transparent py-5'"
-        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8">
+        :class="scrolled ? 'bg-card shadow-sm py-3' : 'bg-card py-5'"
+        class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
         <nav class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center">
                 <a href="/" class="flex items-center group">
