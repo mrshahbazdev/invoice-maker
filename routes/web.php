@@ -48,6 +48,9 @@ Route::post('/v/{invoice}/comment', [PublicInvoiceController::class, 'addComment
 Route::get('/v/{invoice}/save', [ClientPortalController::class, 'showRegistrationForm'])->name('client.register')->middleware('signed');
 Route::post('/v/{invoice}/save', [ClientPortalController::class, 'register'])->name('client.register.post')->middleware('signed');
 
+// Secure Client Portal Dashboard
+Route::get('/portal/{client}', [ClientPortalController::class, 'index'])->name('client.portal')->middleware('signed');
+
 // Stripe Payments
 Route::get('/v/{invoice}/pay', [StripeController::class, 'createCheckoutSession'])->name('invoices.pay');
 
@@ -125,6 +128,10 @@ Route::middleware(['auth', 'business.member'])->group(function () {
         Route::get('/profitability', \App\Livewire\Reports\Profitability::class)->name('reports.profitability');
         Route::get('/profitability/export', [App\Http\Controllers\ProfitabilityExportController::class, 'exportExcel'])->name('reports.profitability.export');
         Route::get('/{expense}', ExpensesShow::class)->name('expenses.show');
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::get('/', \App\Livewire\Admin\Reports\Index::class)->name('reports.index');
     });
 });
 

@@ -167,6 +167,16 @@
                     {{ __('Cash Book') }}
                 </a>
 
+                <a href="{{ route('reports.index') }}"
+                    class="flex items-center px-4 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('reports.index') ? 'bg-brand-50 text-brand-700' : 'text-txmain hover:bg-page' }}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    {{ __('Reports Dashboard') }}
+                </a>
+
                 <a href="{{ route('reports.profitability') }}"
                     class="flex items-center px-4 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('reports.profitability') ? 'bg-brand-50 text-brand-700' : 'text-txmain hover:bg-page' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
