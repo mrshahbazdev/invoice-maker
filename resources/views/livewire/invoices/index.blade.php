@@ -1,188 +1,194 @@
 @php $title = __('Invoices'); @endphp
 
 <div>
- <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
- <div>
- <h2 class="text-2xl font-bold text-txmain">{{ __('Invoices') }}</h2>
- <p class="text-txmain">{{ __('Manage your invoices') }}</p>
- </div>
- <div class="flex gap-2">
- <a href="{{ route('invoices.create', ['quick' => 1]) }}"
- class="bg-card text-txmain py-2 px-4 rounded-lg border border-gray-300 shadow-sm hover:bg-page transition duration-200 text-center font-medium">
- ⚡ {{ __('Quick Invoice') }}
- </a>
- <a href="{{ route('invoices.create') }}"
- class="bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 shadow-sm transition duration-200 text-center font-medium">
- + {{ __('Create Invoice') }}
- </a>
- </div>
- </div>
+    <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-txmain">{{ __('Invoices') }}</h2>
+            <p class="text-txmain">{{ __('Manage your invoices') }}</p>
+        </div>
+        <div class="flex gap-2">
+            <a href="{{ route('invoices.create', ['quick' => 1]) }}"
+                class="bg-card text-txmain py-2 px-4 rounded-lg border border-gray-300 shadow-sm hover:bg-page transition duration-200 text-center font-medium">
+                ⚡ {{ __('Quick Invoice') }}
+            </a>
+            <a href="{{ route('invoices.create') }}"
+                class="bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 shadow-sm transition duration-200 text-center font-medium">
+                + {{ __('Create Invoice') }}
+            </a>
+        </div>
+    </div>
 
- <div class="bg-card rounded-lg shadow">
- <div class="p-4 border-b flex flex-col md:flex-row gap-4">
- <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search invoices...') }}"
- class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
- <select wire:model.live="status"
- class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
- <option value="">{{ __('All Statuses') }}</option>
- <option value="draft">{{ __('Draft') }}</option>
- <option value="sent">{{ __('Sent') }}</option>
- <option value="paid">{{ __('Paid') }}</option>
- <option value="overdue">{{ __('Overdue') }}</option>
- <option value="cancelled">{{ __('Cancelled') }}</option>
- </select>
- </div>
+    <div class="bg-card rounded-lg shadow">
+        <div class="p-4 border-b flex flex-col md:flex-row gap-4">
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search invoices...') }}"
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
+            <select wire:model.live="status"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
+                <option value="">{{ __('All Statuses') }}</option>
+                <option value="draft">{{ __('Draft') }}</option>
+                <option value="sent">{{ __('Sent') }}</option>
+                <option value="paid">{{ __('Paid') }}</option>
+                <option value="overdue">{{ __('Overdue') }}</option>
+                <option value="cancelled">{{ __('Cancelled') }}</option>
+            </select>
+        </div>
 
- <div class="overflow-x-auto">
- <table class="w-full">
- <thead>
- <tr class="border-b bg-page">
- <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
- wire:click="sortBy('invoice_number')">
- {{ __('Invoice') }}
- @if($sortBy === 'invoice_number')
- <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
- @endif
- </th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Client') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
- wire:click="sortBy('invoice_date')">
- {{ __('Date') }}
- @if($sortBy === 'invoice_date')
- <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
- @endif
- </th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Due Date') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Amount') }}</th>
- <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Status') }}</th>
- <th class="text-right py-3 px-4 text-sm font-semibold text-txmain">{{ __('Actions') }}</th>
- </tr>
- </thead>
- <tbody>
- @forelse($invoices as $invoice)
- <tr class="border-b hover:bg-page">
- <td class="py-3 px-4">
- <div class="flex items-center gap-2">
- <a href="{{ route('invoices.show', $invoice) }}"
- class="text-brand-600 hover:text-brand-700 font-medium">
- {{ $invoice->invoice_number }}
- </a>
- @if($invoice->is_recurring)
- <span
- class="inline-flex items-center rounded-md bg-purple-50 px-1.5 py-0.5 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10"
- title="{{ __('Recurring Invoice') }}">
- <svg class="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
- d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
- </path>
- </svg>
- R
- </span>
- @endif
- </div>
- </td>
- <td class="py-3 px-4 text-txmain">{{ $invoice->client->name }}</td>
- <td class="py-3 px-4 text-txmain">{{ $invoice->invoice_date->format('M d, Y') }}</td>
- <td class="py-3 px-4 text-txmain">{{ $invoice->due_date->format('M d, Y') }}</td>
- <td class="py-3 px-4 text-txmain font-medium">
- {{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}
- </td>
- <td class="py-3 px-4">
- <span
- class="px-2 py-1 text-xs font-medium rounded-full bg-{{ $invoice->status_color }}-100 text-{{ $invoice->status_color }}-700">
- {{ __(ucfirst($invoice->status)) }}
- </span>
- </td>
- <td class="py-3 px-4 text-right">
- <div class="flex justify-end gap-2">
- <a href="{{ route('invoices.show', $invoice) }}"
- class="text-brand-600 hover:text-brand-700 text-sm font-medium">{{ __('View') }}</a>
- @if($invoice->status !== 'paid' && $invoice->status !== 'cancelled')
- <button wire:click="openPaidModal({{ $invoice->id }})"
- class="text-green-600 hover:text-green-700 text-sm font-medium">{{ __('Paid') }}</button>
- @endif
- @if($invoice->status === 'draft')
- <a href="{{ route('invoices.edit', $invoice) }}"
- class="text-brand-600 hover:text-brand-700 text-sm font-medium">{{ __('Edit') }}</a>
- @endif
- <button wire:click="delete({{ $invoice->id }})"
- wire:confirm="{{ __('Are you sure you want to delete this invoice?') }}"
- class="text-red-600 hover:text-red-700 text-sm font-medium">{{ __('Delete') }}</button>
- </div>
- </td>
- </tr>
- @empty
- <tr>
- <td colspan="7" class="py-8 text-center text-gray-500">
- {{ __('No invoices found.') }} <a href="{{ route('invoices.create') }}"
- class="text-brand-600 hover:text-brand-700">{{ __('Create your first invoice') }}</a>
- </td>
- </tr>
- @endforelse
- </tbody>
- </table>
- </div>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b bg-page">
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
+                            wire:click="sortBy('invoice_number')">
+                            {{ __('Invoice') }}
+                            @if($sortBy === 'invoice_number')
+                                <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                            @endif
+                        </th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Client') }}</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
+                            wire:click="sortBy('invoice_date')">
+                            {{ __('Date') }}
+                            @if($sortBy === 'invoice_date')
+                                <span>{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
+                            @endif
+                        </th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Due Date') }}</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Amount') }}</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Status') }}</th>
+                        <th class="text-right py-3 px-4 text-sm font-semibold text-txmain">{{ __('Actions') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($invoices as $invoice)
+                        <tr class="border-b hover:bg-page">
+                            <td class="py-3 px-4">
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('invoices.show', $invoice) }}"
+                                        class="text-brand-600 hover:text-brand-700 font-medium">
+                                        {{ $invoice->invoice_number }}
+                                    </a>
+                                    @if($invoice->is_recurring)
+                                        <span
+                                            class="inline-flex items-center rounded-md bg-purple-50 px-1.5 py-0.5 text-xs font-medium text-purple-700 ring-1 ring-inset ring-purple-700/10"
+                                            title="{{ __('Recurring Invoice') }}">
+                                            <svg class="w-3 h-3 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                                                </path>
+                                            </svg>
+                                            R
+                                        </span>
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="py-3 px-4 text-txmain">{{ $invoice->client->name }}</td>
+                            <td class="py-3 px-4 text-txmain">{{ $invoice->invoice_date->format('M d, Y') }}</td>
+                            <td class="py-3 px-4 text-txmain">{{ $invoice->due_date->format('M d, Y') }}</td>
+                            <td class="py-3 px-4 text-txmain font-medium">
+                                {{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}
+                            </td>
+                            <td class="py-3 px-4">
+                                @if($invoice->status === 'sent')
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full bg-unpaid-bg text-unpaid-text">
+                                        {{ __('Unpaid') }}
+                                    </span>
+                                @else
+                                    <span
+                                        class="px-2 py-1 text-xs font-medium rounded-full bg-{{ $invoice->status_color }}-100 text-{{ $invoice->status_color }}-700">
+                                        {{ __(ucfirst($invoice->status)) }}
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="py-3 px-4 text-right">
+                                <div class="flex justify-end gap-2">
+                                    <a href="{{ route('invoices.show', $invoice) }}"
+                                        class="text-brand-600 hover:text-brand-700 text-sm font-medium">{{ __('View') }}</a>
+                                    @if($invoice->status !== 'paid' && $invoice->status !== 'cancelled')
+                                        <button wire:click="openPaidModal({{ $invoice->id }})"
+                                            class="text-green-600 hover:text-green-700 text-sm font-medium">{{ __('Paid') }}</button>
+                                    @endif
+                                    @if($invoice->status === 'draft')
+                                        <a href="{{ route('invoices.edit', $invoice) }}"
+                                            class="text-brand-600 hover:text-brand-700 text-sm font-medium">{{ __('Edit') }}</a>
+                                    @endif
+                                    <button wire:click="delete({{ $invoice->id }})"
+                                        wire:confirm="{{ __('Are you sure you want to delete this invoice?') }}"
+                                        class="text-red-600 hover:text-red-700 text-sm font-medium">{{ __('Delete') }}</button>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="7" class="py-8 text-center text-gray-500">
+                                {{ __('No invoices found.') }} <a href="{{ route('invoices.create') }}"
+                                    class="text-brand-600 hover:text-brand-700">{{ __('Create your first invoice') }}</a>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
 
- @if($invoices->hasPages())
- <div class="p-4 border-t flex justify-between items-center">
- <span class="text-sm text-txmain">
- {{ __('Showing') }} {{ $invoices->firstItem() }} {{ __('to') }} {{ $invoices->lastItem() }}
- {{ __('of') }} {{ $invoices->total() }} {{ __('results') }}
- </span>
- {{ $invoices->links() }}
- </div>
- @endif
- </div>
+        @if($invoices->hasPages())
+            <div class="p-4 border-t flex justify-between items-center">
+                <span class="text-sm text-txmain">
+                    {{ __('Showing') }} {{ $invoices->firstItem() }} {{ __('to') }} {{ $invoices->lastItem() }}
+                    {{ __('of') }} {{ $invoices->total() }} {{ __('results') }}
+                </span>
+                {{ $invoices->links() }}
+            </div>
+        @endif
+    </div>
 
- <!-- Mark as Paid Modal -->
- @if($showPaidModal)
- <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
- <div class="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
- <div class="p-6 border-b flex justify-between items-center bg-page">
- <h3 class="text-xl font-bold text-txmain">{{ __('Mark as Paid') }}</h3>
- <button wire:click="closePaidModal()" class="text-gray-400 hover:text-txmain">
- <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
- d="M6 18L18 6M6 6l12 12" />
- </svg>
- </button>
- </div>
- <form wire:submit="markAsPaid">
- <div class="p-6 space-y-4">
- <div>
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Payment Date') }} *</label>
- <input type="date" wire:model="paymentDate"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
- @error('paymentDate') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
- </div>
- <div>
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Source') }} *</label>
- <select wire:model="paymentSource"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
- <option value="bank">{{ __('Bank') }}</option>
- <option value="cash">{{ __('Cash (Kasse)') }}</option>
- </select>
- @error('paymentSource') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
- </div>
- <div>
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Description') }} *</label>
- <input type="text" wire:model="paymentDescription"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
- @error('paymentDescription') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
- </div>
- </div>
- <div class="p-6 bg-page border-t flex justify-end gap-3">
- <button type="button" wire:click="closePaidModal()"
- class="px-4 py-2 text-txmain hover:text-txmain font-medium">
- {{ __('Cancel') }}
- </button>
- <button type="submit"
- class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 shadow-sm transition font-bold">
- {{ __('Save Payment') }}
- </button>
- </div>
- </form>
- </div>
- </div>
- @endif
+    <!-- Mark as Paid Modal -->
+    @if($showPaidModal)
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div class="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+                <div class="p-6 border-b flex justify-between items-center bg-page">
+                    <h3 class="text-xl font-bold text-txmain">{{ __('Mark as Paid') }}</h3>
+                    <button wire:click="closePaidModal()" class="text-gray-400 hover:text-txmain">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <form wire:submit="markAsPaid">
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-txmain mb-1">{{ __('Payment Date') }} *</label>
+                            <input type="date" wire:model="paymentDate"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
+                            @error('paymentDate') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-txmain mb-1">{{ __('Source') }} *</label>
+                            <select wire:model="paymentSource"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
+                                <option value="bank">{{ __('Bank') }}</option>
+                                <option value="cash">{{ __('Cash (Kasse)') }}</option>
+                            </select>
+                            @error('paymentSource') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-txmain mb-1">{{ __('Description') }} *</label>
+                            <input type="text" wire:model="paymentDescription"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
+                            @error('paymentDescription') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+                    <div class="p-6 bg-page border-t flex justify-end gap-3">
+                        <button type="button" wire:click="closePaidModal()"
+                            class="px-4 py-2 text-txmain hover:text-txmain font-medium">
+                            {{ __('Cancel') }}
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 shadow-sm transition font-bold">
+                            {{ __('Save Payment') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
 </div>

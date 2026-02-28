@@ -93,7 +93,7 @@
                         </a>
                     @endif
                     <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.download', ['invoice' => $invoice->id]) }}"
-                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-heading bg-card hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
@@ -213,7 +213,7 @@
                                 <img src="{{ Storage::url($invoice->business->logo) }}" alt="Logo"
                                     class="max-h-20 max-w-[200px] mb-4 object-contain">
                             @else
-                                <h2 class="text-3xl font-extrabold tracking-tight" style="color: {{ $primaryColor }};">
+                                <h2 class="text-3xl font-extrabold tracking-tight text-heading">
                                     {{ $invoice->business->name }}
                                 </h2>
                             @endif
@@ -246,8 +246,8 @@
                                             class="w-[72px] h-[72px]">
                                     </div>
                                 @endif
-                                <h1 class="text-4xl md:text-5xl font-black uppercase tracking-widest"
-                                    style="color: {{ $primaryColor }}; opacity: 0.9;">
+                                <h1
+                                    class="text-4xl md:text-5xl font-black uppercase tracking-widest text-heading opacity-90">
                                     {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
                                 </h1>
                             </div>
@@ -284,7 +284,7 @@
                     </div>
 
                     <!-- Billing To -->
-                    <div class="mb-12 pl-6 border-l-4" style="border-color: {{ $primaryColor }}30;">
+                    <div class="mb-12 p-6 bg-card rounded-2xl border border-gray-100 shadow-sm">
                         <div class="text-sm text-txmain leading-relaxed">
                             <strong class="text-base text-txmain block mb-1">{{ $invoice->client->name }}</strong>
                             @if($invoice->client->company_name)
@@ -441,17 +441,17 @@
 
                         <!-- Totals Table -->
                         <div class="w-full lg:w-2/5 order-1 lg:order-2">
-                            <div class="bg-page rounded-2xl p-6 shadow-sm border border-gray-100 text-sm">
-                                <div class="flex justify-between py-2 text-txmain">
+                            <div class="bg-darkbox text-white rounded-2xl p-6 shadow-sm border border-gray-800 text-sm">
+                                <div class="flex justify-between py-2">
                                     <span>{{ __('Subtotal') }}:</span>
                                     <span
-                                        class="font-medium text-txmain">{{ $invoice->currency_symbol }}{{ number_format($invoice->subtotal, 2) }}</span>
+                                        class="font-medium text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->subtotal, 2) }}</span>
                                 </div>
                                 @if($template->show_tax ?? true)
-                                    <div class="flex justify-between py-2 text-txmain">
+                                    <div class="flex justify-between py-2 text-gray-300">
                                         <span>{{ __('Total Tax') }}:</span>
                                         <span
-                                            class="font-medium text-txmain">{{ $invoice->currency_symbol }}{{ number_format($invoice->tax_total, 2) }}</span>
+                                            class="font-medium text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->tax_total, 2) }}</span>
                                     </div>
                                 @endif
                                 @if(($template->show_discount ?? true) && $invoice->discount > 0)
@@ -465,9 +465,9 @@
                                 <div class="my-4 border-t border-gray-200"></div>
 
                                 <div class="flex justify-between items-center py-2">
-                                    <span class="text-base font-bold text-txmain">{{ __('Total') }}:</span>
+                                    <span class="text-base font-bold text-white">{{ __('Total') }}:</span>
                                     <span
-                                        class="text-xl font-black text-txmain">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
+                                        class="text-xl font-black text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
                                 </div>
 
                                 @if($invoice->amount_paid > 0)
@@ -478,11 +478,10 @@
                                             class="font-bold">-{{ $invoice->currency_symbol }}{{ number_format($invoice->amount_paid, 2) }}</span>
                                     </div>
                                     <div class="flex justify-between items-center py-4 -mx-6 px-6 rounded-b-2xl border-t-2"
-                                        style="background-color: {{ $invoice->amount_due <= 0 ? '#f0fdf4' : '#fef2f2' }}; border-color: {{ $invoice->amount_due <= 0 ? '#22c55e' : '#ef4444' }};">
-                                        <span class="text-base font-bold"
-                                            style="color: {{ $invoice->amount_due <= 0 ? '#15803d' : '#b91c1c' }};">{{ __('Balance Due') }}:</span>
-                                        <span class="text-xl font-black"
-                                            style="color: {{ $invoice->amount_due <= 0 ? '#15803d' : '#b91c1c' }};">{{ $invoice->currency_symbol }}{{ number_format($invoice->amount_due, 2) }}</span>
+                                        style="background-color: {{ $invoice->amount_due <= 0 ? '#1f2937' : '#1f2937' }}; border-color: {{ $invoice->amount_due <= 0 ? '#22c55e' : '#ff8c00' }};">
+                                        <span class="text-base font-bold text-white">{{ __('Balance Due') }}:</span>
+                                        <span
+                                            class="text-xl font-black text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->amount_due, 2) }}</span>
                                     </div>
                                 @endif
                             </div>

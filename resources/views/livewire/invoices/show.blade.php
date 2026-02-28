@@ -284,10 +284,16 @@
             <div class="bg-card rounded-lg shadow p-6">
                 <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Status') }}</h3>
                 <div class="flex items-center justify-between">
-                    <span
-                        class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-{{ $invoice->status_color }}-100 text-{{ $invoice->status_color }}-700">
-                        {{ __(ucfirst($invoice->status)) }}
-                    </span>
+                    @if($invoice->status === 'sent')
+                        <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-unpaid-bg text-unpaid-text">
+                            {{ __('Unpaid') }}
+                        </span>
+                    @else
+                        <span
+                            class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-{{ $invoice->status_color }}-100 text-{{ $invoice->status_color }}-700">
+                            {{ __(ucfirst($invoice->status)) }}
+                        </span>
+                    @endif
                     @if($invoice->last_reminder_sent_at)
                         <span class="text-xs text-gray-500" title="{{ __('Last automated reminder sent') }}">
                             <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -22,9 +22,15 @@ export default {
                     900: 'var(--color-brand-900, #312e81)',
                     950: 'var(--color-brand-950, #1e1b4b)',
                 },
-                page: 'var(--color-page-bg, #f3f4f6)',
-                card: 'var(--color-card-bg, #ffffff)',
-                txmain: 'var(--color-text-main, #1f2937)',
+                page: 'var(--color-page-bg, #ffffff)',
+                card: 'var(--color-card-bg, #f5f7fa)',
+                txmain: 'var(--color-text-main, #4a4a4a)',
+                heading: '#000000',
+                darkbox: '#000000',
+                unpaid: {
+                    text: '#ff8c00',
+                    bg: '#ff8c001a',
+                }
             }
         },
     },
