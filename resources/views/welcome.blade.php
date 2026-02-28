@@ -119,14 +119,14 @@
                             <div class="p-10 space-y-6">
                                 <div class="flex justify-between items-center group">
                                     <span
-                                        class="text-xs font-mono text-gray-500 group-hover:text-brand-400 transition-colors tracking-tighter uppercase">{{ __('[RECORD]') }}
+                                        class="text-xs font-mono text-white group-hover:text-white transition-colors tracking-tighter uppercase">{{ __('[RECORD]') }}
                                         {{ __('RE-2024-001') }}</span>
                                     <span class="text-sm font-black text-green-400 tracking-tight">+€1,250.00</span>
                                 </div>
                                 <div class="h-px bg-card/5"></div>
                                 <div class="flex justify-between items-center group">
                                     <span
-                                        class="text-xs font-mono text-gray-500 group-hover:text-red-400 transition-colors tracking-tighter uppercase">{{ __('[DEBIT]') }}
+                                        class="text-xs font-mono text-white group-hover:text-red-400 transition-colors tracking-tighter uppercase">{{ __('[DEBIT]') }}
                                         {{ __('OFFICE EQUIP.') }}</span>
                                     <span class="text-sm font-black text-red-400 tracking-tight">-€79.00</span>
                                 </div>
@@ -134,7 +134,7 @@
                                 <div
                                     class="flex justify-between items-center bg-brand-500/5 p-4 rounded-xl border border-brand-500/10">
                                     <span
-                                        class="text-xs font-mono text-brand-400 uppercase font-black tracking-widest">{{ __('Net Profit') }}</span>
+                                        class="text-xs font-mono text-white uppercase font-black tracking-widest">{{ __('Net Profit') }}</span>
                                     <span class="text-xl font-black text-white tracking-tight">€1,171.00</span>
                                 </div>
                             </div>
@@ -146,7 +146,7 @@
                         {{ __('Accountant-Grade') }}<br /><span
                             class="text-brand-500">{{ __('Cash Book Ledger') }}</span>
                     </h2>
-                    <p class="text-gray-400 text-lg mb-10 leading-relaxed font-medium">
+                    <p class="text-white text-medium mb-10 leading-relaxed font-bold">
                         {{ __('No more messy spreadsheets. Our professional Cash Book Ledger system automatically tracks every transaction with double-entry precision. Built for speed, accuracy, and accountants.') }}
                     </p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -159,8 +159,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="text-white font-bold text-sm mb-1">{{ __('Unified Ledger') }}</h4>
-                                <p class="text-gray-500 text-xs">{{ __('Income & Expense in one view.') }}</p>
+                                <h4 class="text-white font-black text-sm mb-1">{{ __('Unified Ledger') }}</h4>
+                                <p class="text-amber-100 text-xs font-medium">{{ __('Income & Expense in one view.') }}
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start space-x-4">
@@ -172,8 +173,9 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="text-white font-bold text-sm mb-1">{{ __('Smart Profitability') }}</h4>
-                                <p class="text-gray-500 text-xs">{{ __('Real-time job margin analysis.') }}</p>
+                                <h4 class="text-white font-black text-sm mb-1">{{ __('Smart Profitability') }}</h4>
+                                <p class="text-amber-100 text-xs font-medium">{{ __('Real-time job margin analysis.') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -337,10 +339,10 @@
                     class="text-brand-500">{{ __('financial empire?') }}</span>
             </h2>
             <a href="{{ route('register') }}"
-                class="inline-block px-12 py-6 bg-card text-brand-600 font-black text-xl rounded-3xl hover:scale-110 transition-all shadow-[0_20px_50px_rgba(255,255,255,0.15)] transform active:scale-95">
+                class="inline-block px-12 py-6 bg-white text-darkbox font-black text-xl rounded-3xl hover:scale-110 transition-all shadow-[0_20px_50px_rgba(255,255,255,0.15)] transform active:scale-95">
                 {{ __('Create Your Account Free') }}
             </a>
-            <p class="mt-8 text-gray-500 font-bold uppercase tracking-widest text-[10px]">
+            <p class="mt-8 text-amber-100 font-bold uppercase tracking-widest text-[10px]">
                 {{ __('No credit card required') }}
             </p>
         </div>

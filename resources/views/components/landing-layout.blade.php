@@ -295,42 +295,43 @@
                                 class="text-2xl font-bold text-white">{{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}</span>
                         @endif
                     </a>
-                    <p class="text-sm leading-relaxed text-gray-400">
+                    <p class="text-sm leading-relaxed text-white">
                         {{ __('Manage your business smarter, not harder. The most automated invoicing platform built for modern entrepreneurs.') }}
                     </p>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">{{ __('Product') }}</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="/#features" class="hover:text-brand-400 transition-colors">{{ __('Features') }}</a>
+                    <ul class="space-y-4 text-sm text-white font-medium">
+                        <li><a href="/#features" class="hover:text-amber-200 transition-colors">{{ __('Features') }}</a>
                         </li>
-                        <li><a href="/#pricing" class="hover:text-brand-400 transition-colors">{{ __('Pricing') }}</a>
+                        <li><a href="/#pricing" class="hover:text-amber-200 transition-colors">{{ __('Pricing') }}</a>
                         </li>
                         <li><a href="/client/login"
-                                class="hover:text-brand-400 transition-colors">{{ __('Client Portal') }}</a></li>
+                                class="hover:text-amber-200 transition-colors">{{ __('Client Portal') }}</a></li>
                         <li><a href="{{ route('public.blog.index') }}"
-                                class="hover:text-brand-400 transition-colors">{{ __('Blog') }}</a></li>
+                                class="hover:text-amber-200 transition-colors">{{ __('Blog') }}</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">{{ __('Support') }}</h4>
-                    <ul class="space-y-4 text-sm text-gray-400">
-                        <li><a href="#" class="hover:text-brand-400 transition-colors">{{ __('Documentation') }}</a>
+                    <ul class="space-y-4 text-sm text-white font-medium">
+                        <li><a href="#" class="hover:text-amber-200 transition-colors">{{ __('Documentation') }}</a>
                         </li>
-                        <li><a href="#" class="hover:text-brand-400 transition-colors">{{ __('Privacy Policy') }}</a>
+                        <li><a href="#" class="hover:text-amber-200 transition-colors">{{ __('Privacy Policy') }}</a>
                         </li>
-                        <li><a href="#" class="hover:text-brand-400 transition-colors">{{ __('Terms of Service') }}</a>
+                        <li><a href="#" class="hover:text-amber-200 transition-colors">{{ __('Terms of Service') }}</a>
                         </li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">{{ __('Newsletter') }}</h4>
-                    <p class="text-xs mb-4">{{ __('Subscribe to get the latest business tips.') }}</p>
+                    <p class="text-xs mb-4 text-white font-medium">
+                        {{ __('Subscribe to get the latest business tips.') }}</p>
                     <div class="flex">
                         <input type="email" placeholder="{{ __('Email address') }}"
                             class="bg-gray-800 border-none rounded-l-lg px-4 py-2 w-full text-white text-sm focus:ring-1 focus:ring-brand-500">
                         <button
-                            class="bg-brand-600 text-white rounded-r-lg px-4 py-2 hover:bg-brand-700 transition-colors">
+                            class="bg-white text-darkbox font-bold rounded-r-lg px-4 py-2 hover:bg-gray-100 transition-colors">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                 <path
                                     d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z">
@@ -340,7 +341,8 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col md:flex-row justify-between items-center text-xs">
+            <div
+                class="flex flex-col md:flex-row justify-between items-center text-xs font-semibold mt-12 border-t border-orange-500 pt-8">
                 <p>&copy; {{ date('Y') }}
                     {{ \App\Models\Setting::get('site.name', config('app.name', 'InvoiceMaker')) }}.
                     {{ __('All rights reserved.') }}
