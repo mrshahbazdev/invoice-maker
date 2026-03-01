@@ -44,7 +44,7 @@ class InvoiceViewedNotification extends Notification
             'client_name' => optional($this->invoice->client)->name,
             'message' => "Client viewed " . ucfirst($this->invoice->type) . " {$this->invoice->invoice_number}.",
             'type' => 'invoice_viewed',
-            'url' => route('admin.invoices.show', $this->invoice->id),
+            'url' => route('invoices.show', $this->invoice->id),
         ];
     }
 }
