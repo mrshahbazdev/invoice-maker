@@ -9,9 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Services\PdfGenerationService;
+use PhpZip\ZipFile;
 
 class ClientPortalController
 {
+    protected PdfGenerationService $pdfService;
+
+    public function __construct(PdfGenerationService $pdfService)
+    {
+        $this->pdfService = $pdfService;
+    }
+
     /**
      * Display the client portal dashboard.
      *
@@ -128,7 +137,33 @@ class ClientPortalController
      */
     public function downloadAllInvoices(Request $request)
     {
-        abort(501, 'Downloading all invoices as a ZIP is not yet implemented.');
+        $user = $request->user();
+        $clients = $user->clients;
+        $clientIds = $clients->pluck('id');
+
+        $invoices = Invoice::whereIn('client_id', $clientIds)
+            ->where('type', 'invoice')
+            ->with(['business'])
+            ->orderBy('invoice_date', 'desc')
+            ->get();
+
+        if ($invoices->isEmpty()) {
+            return back()->with('info', 'No invoices found to download.');
+        }
+
+        $zip = new ZipFile();
+
+        foreach ($invoices as $invoice) {
+            $pdf = $this->pdfService->generate($invoice);
+            $zip->addFromString('Invoice-' . $invoice->invoice_number . '.pdf', $pdf);
+        }
+
+        $filename = 'Invoices-' . now()->format('Y-m-d-His') . '.zip';
+        $zipContent = $zip->outputAsString();
+
+        return response($zipContent)
+            ->header('Content-Type', 'application/zip')
+            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 
     /**
@@ -136,6 +171,35 @@ class ClientPortalController
      */
     public function downloadStatement(Request $request)
     {
-        abort(501, 'Downloading statement of account is not yet implemented.');
+        $user = $request->user();
+        $client = $user->clients->first();
+
+        if (!$client) {
+            return back()->with('error', 'No client information found.');
+        }
+
+        $invoices = Invoice::where('client_id', $client->id)
+            ->where('type', 'invoice')
+            ->orderBy('invoice_date', 'desc')
+            ->get();
+
+        $totalInvoiced = $invoices->sum('grand_total');
+        $totalPaid = $invoices->sum('amount_paid');
+        $totalOutstanding = $invoices->sum('amount_due');
+
+        $pdf = $this->pdfService->generateStatement(
+            $client,
+            $invoices,
+            $client->business,
+            $totalInvoiced,
+            $totalPaid,
+            $totalOutstanding
+        );
+
+        $filename = 'Statement-' . str_replace(' ', '-', $client->name) . '-' . now()->format('Y-m-d') . '.pdf';
+
+        return response($pdf)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
     }
 }
