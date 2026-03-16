@@ -119,8 +119,14 @@ class ProcessRecurringInvoices extends Command
                         $fromName = $newInvoice->business->smtp_from_name ?? $newInvoice->business->name ?? config('mail.from.name');
 
                         $mailer->to($newInvoice->client->email)
-                            ->from($fromAddress, $fromName)
-                            ->send(new \App\Mail\PaymentReminderMail($newInvoice, $pdfContent, $template['subject'], $template['body']));
+                            ->send(new \App\Mail\PaymentReminderMail(
+                                $newInvoice, 
+                                $pdfContent, 
+                                $template['subject'], 
+                                $template['body'],
+                                $fromAddress,
+                                $fromName
+                            ));
 
                         $this->info("Emailed invoice to {$newInvoice->client->email}");
                     }
