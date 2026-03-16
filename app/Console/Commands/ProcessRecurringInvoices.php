@@ -37,8 +37,6 @@ class ProcessRecurringInvoices extends Command
         $today = Carbon::today()->toDateString();
 
         // 1. Find all eligible recurring invoices
-        // We only clone invoices that are active (not cancelled or estimate)
-        // For simplicity, we assume if it has is_recurring = true and a next_run_date <= today, it's eligible.
         $invoices = Invoice::where('is_recurring', true)
             ->whereNotNull('next_run_date')
             ->whereDate('next_run_date', '<=', $today)
@@ -56,90 +54,81 @@ class ProcessRecurringInvoices extends Command
 
         foreach ($invoices as $parentInvoice) {
             try {
-                // Calculate new dates based on parent's offset
-                $issueDate = Carbon::today();
+                \Illuminate\Support\Facades\DB::transaction(function () use ($parentInvoice, $pdfService, $invoiceNumberService, &$count) {
+                    // Calculate new dates
+                    $issueDate = Carbon::today();
+                    $originalIssue = Carbon::parse($parentInvoice->invoice_date);
+                    $originalDue = Carbon::parse($parentInvoice->due_date);
+                    $diffInDays = $originalIssue->diffInDays($originalDue);
+                    $dueDate = $issueDate->copy()->addDays($diffInDays);
 
-                // Keep the same payment window (e.g. net 30 days)
-                $originalIssue = Carbon::parse($parentInvoice->invoice_date);
-                $originalDue = Carbon::parse($parentInvoice->due_date);
-                $diffInDays = $originalIssue->diffInDays($originalDue);
+                    // 2. Clone the invoice
+                    $newInvoice = $parentInvoice->replicate([
+                        'is_recurring',
+                        'recurring_frequency',
+                        'next_run_date',
+                        'last_run_date',
+                        'last_reminder_sent_at'
+                    ]);
 
-                $dueDate = $issueDate->copy()->addDays($diffInDays);
+                    $newInvoice->invoice_number = $invoiceNumberService->generate($parentInvoice->business);
+                    $newInvoice->invoice_date = $issueDate;
+                    $newInvoice->due_date = $dueDate;
+                    $newInvoice->status = Invoice::STATUS_SENT;
+                    $newInvoice->amount_paid = 0;
+                    $newInvoice->amount_due = $parentInvoice->grand_total;
+                    
+                    if (!$newInvoice->save()) {
+                        throw new \Exception("Failed to save new invoice copy for #{$parentInvoice->invoice_number}");
+                    }
 
-                // 2. Clone the invoice
-                $newInvoice = $parentInvoice->replicate([
-                    'is_recurring',
-                    'recurring_frequency',
-                    'next_run_date',
-                    'last_run_date',
-                    'last_reminder_sent_at'
-                ]);
+                    // 3. Clone items
+                    foreach ($parentInvoice->items as $item) {
+                        $newInvoice->items()->create($item->toArray());
+                    }
 
-                // Update identifying info
-                $newInvoice->invoice_number = $invoiceNumberService->generate($parentInvoice->business);
-                $newInvoice->invoice_date = $issueDate;
-                $newInvoice->due_date = $dueDate;
-                $newInvoice->status = Invoice::STATUS_SENT; // Because we are automatically emailing it
-                $newInvoice->amount_paid = 0; // Reset
-                $newInvoice->amount_due = $parentInvoice->grand_total; // Reset
-                $newInvoice->save();
-                $newInvoice->refresh();
+                    // 4. Update the parent invoice's next_run_date
+                    $nextRun = Carbon::parse($parentInvoice->next_run_date);
+                    match ($parentInvoice->recurring_frequency) {
+                        'weekly' => $nextRun->addWeek(),
+                        'monthly' => $nextRun->addMonth(),
+                        'quarterly' => $nextRun->addMonths(3),
+                        'yearly' => $nextRun->addYear(),
+                        default => $nextRun->addMonth(),
+                    };
 
-                // 3. Clone items
-                foreach ($parentInvoice->items as $item) {
-                    $newInvoice->items()->create($item->toArray());
-                }
+                    $parentInvoice->update([
+                        'last_run_date' => Carbon::now(),
+                        'next_run_date' => $nextRun,
+                        // Keep as draft so it remains a "template"
+                        'status' => Invoice::STATUS_DRAFT,
+                    ]);
 
-                $this->info("Created new invoice {$newInvoice->invoice_number} from {$parentInvoice->invoice_number}");
+                    $this->info("Created new invoice {$newInvoice->invoice_number} from {$parentInvoice->invoice_number}");
 
-                // 4. Update the parent invoice's next_run_date
-                $nextRun = Carbon::parse($parentInvoice->next_run_date);
-                match ($parentInvoice->recurring_frequency) {
-                    'weekly' => $nextRun->addWeek(),
-                    'monthly' => $nextRun->addMonth(),
-                    'quarterly' => $nextRun->addMonths(3),
-                    'yearly' => $nextRun->addYear(),
-                    default => $nextRun->addMonth(), // fallback
-                };
+                    // 5. Automatically Email the new Invoice using Business Mailer
+                    if ($newInvoice->client && $newInvoice->client->email) {
+                        $pdfContent = $pdfService->generate($newInvoice);
+                        $templateService = new \App\Services\EmailTemplateService();
+                        $template = $templateService->getParsedTemplate($newInvoice, 'invoice');
 
-                $parentInvoice->update([
-                    'last_run_date' => Carbon::now(),
-                    'next_run_date' => $nextRun,
-                    'status' => Invoice::STATUS_DRAFT, // User requested template status stays Draft so they visually know it'll fire next
-                ]);
+                        \App\Services\MailConfigurationService::getMailer($newInvoice->business)
+                            ->to($newInvoice->client->email)
+                            ->send(new \App\Mail\PaymentReminderMail($newInvoice, $pdfContent, $template['subject'], $template['body']));
 
-                // 5. Automatically Email the new Invoice
-                if ($newInvoice->client && $newInvoice->client->email) {
-                    $pdfContent = $pdfService->generate($newInvoice);
+                        $this->info("Emailed invoice to {$newInvoice->client->email}");
+                    }
 
-                    $templateService = new \App\Services\EmailTemplateService();
-                    $template = $templateService->getParsedTemplate($newInvoice, 'invoice');
-
-                    Mail::send([], [], function (Message $message) use ($newInvoice, $pdfContent, $template) {
-                        $message->to($newInvoice->client->email)
-                            ->subject($template['subject'])
-                            ->html($template['body'])
-                            ->attachData($pdfContent, "Invoice-{$newInvoice->invoice_number}.pdf", [
-                                'mime' => 'application/pdf',
-                            ]);
-
-                        // Reply-To Business Email if configured
-                        if ($newInvoice->business->email) {
-                            $message->replyTo($newInvoice->business->email, $newInvoice->business->name);
-                        }
-                    });
-
-                    $this->info("Emailed invoice to {$newInvoice->client->email}");
-                }
-
-                $count++;
+                    $count++;
+                });
 
             } catch (\Exception $e) {
                 Log::error("Failed to process recurring invoice ID {$parentInvoice->id}: " . $e->getMessage());
-                $this->error("Failed to process recurring invoice ID {$parentInvoice->id}");
+                $this->error("Failed to process recurring invoice ID {$parentInvoice->id}: " . $e->getMessage());
             }
         }
 
         $this->info("Successfully processed {$count} recurring invoices.");
     }
 }
+

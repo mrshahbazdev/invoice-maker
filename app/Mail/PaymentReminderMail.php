@@ -17,14 +17,18 @@ class PaymentReminderMail extends Mailable
 
     public Invoice $invoice;
     public string $pdfContent;
+    public ?string $customSubject;
+    public ?string $customBody;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Invoice $invoice, string $pdfContent)
+    public function __construct(Invoice $invoice, string $pdfContent, ?string $customSubject = null, ?string $customBody = null)
     {
         $this->invoice = $invoice;
         $this->pdfContent = $pdfContent;
+        $this->customSubject = $customSubject;
+        $this->customBody = $customBody;
     }
 
     /**
@@ -33,7 +37,7 @@ class PaymentReminderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "OVERDUE ACCOUNT: Invoice {$this->invoice->invoice_number} from {$this->invoice->business->name}",
+            subject: $this->customSubject ?? "OVERDUE ACCOUNT: Invoice {$this->invoice->invoice_number} from {$this->invoice->business->name}",
         );
     }
 
@@ -42,6 +46,12 @@ class PaymentReminderMail extends Mailable
      */
     public function content(): Content
     {
+        if ($this->customBody) {
+            return new Content(
+                htmlString: $this->customBody,
+            );
+        }
+
         return new Content(
             markdown: 'emails.payment-reminder',
         );
