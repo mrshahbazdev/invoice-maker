@@ -53,9 +53,5 @@
  </p>
  </div>
 
- <div class="mt-8 pt-6 border-t border-gray-200">
- <p class="text-xs text-gray-500 text-center mb-2">{{ __('Demo credentials:') }}</p>
- <p class="text-xs text-txmain text-center">{{ __('Email') }}: demo@invoicemaker.com</p>
- <p class="text-xs text-txmain text-center">{{ __('Password') }}: password</p>
  </div>
-</div>
+</div>
