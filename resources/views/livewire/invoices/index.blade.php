@@ -103,6 +103,10 @@
                                 <div class="flex justify-end gap-2">
                                     <a href="{{ route('invoices.show', $invoice) }}"
                                         class="text-brand-600 hover:text-brand-700 text-sm font-medium">{{ __('View') }}</a>
+                                    @if($invoice->status === 'cancelled')
+                                        <button wire:click="markAsUnpaid({{ $invoice->id }})"
+                                            class="text-brand-600 hover:text-brand-700 text-sm font-medium">{{ __('Mark as Unpaid') }}</button>
+                                    @endif
                                     @if($invoice->status !== 'paid' && $invoice->status !== 'cancelled')
                                         <button wire:click="openPaidModal({{ $invoice->id }})"
                                             class="text-green-600 hover:text-green-700 text-sm font-medium">{{ __('Paid') }}</button>

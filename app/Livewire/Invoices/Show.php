@@ -197,6 +197,12 @@ class Show extends Component
         session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' cancelled.');
     }
 
+    public function markAsUnpaid(): void
+    {
+        $this->invoice->update(['status' => Invoice::STATUS_SENT]);
+        session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' marked as unpaid.');
+    }
+
     public function recordPayment(): void
     {
         $this->validate();

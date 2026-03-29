@@ -33,7 +33,14 @@ class Index extends Component
  }
  }
 
- public function delete(int $id): void
+  public function markAsUnpaid(int $id): void
+  {
+  $invoice = Auth::user()->business->invoices()->findOrFail($id);
+  $invoice->update(['status' => \App\Models\Invoice::STATUS_SENT]);
+  session()->flash('message', 'Invoice marked as unpaid.');
+  }
+
+  public function delete(int $id): void
  {
  $invoice = Auth::user()->business->invoices()->findOrFail($id);
  $invoice->delete();
