@@ -208,7 +208,7 @@ class Create extends Component
  'business_id' => Auth::user()->business->id,
  'client_id' => $this->client_id,
  'template_id' => $this->template_id,
- 'invoice_number' => $this->invoiceNumberService->generate(Auth::user()->business),
+ 'invoice_number' => $this->invoiceNumberService->generate(Auth::user()->business, 'estimate'),
  'status' => Invoice::STATUS_DRAFT,
  'type' => Invoice::TYPE_ESTIMATE,
  'invoice_date' => $this->invoice_date,

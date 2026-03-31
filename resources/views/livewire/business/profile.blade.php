@@ -177,6 +177,21 @@
                 </div>
 
                 <div>
+                    <label class="block text-sm font-medium text-txmain mb-1">{{ __('Estimate Number Prefix') }}</label>
+                    <input type="text" wire:model="estimate_number_prefix"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                        placeholder="e.g. EST">
+                    @error('estimate_number_prefix') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-txmain mb-1">{{ __('Next Estimate Number') }}</label>
+                    <input type="number" wire:model="estimate_number_next"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                        placeholder="1">
+                    @error('estimate_number_next') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
                     <label
                         class="block text-sm font-medium text-txmain mb-1">{{ __('Booking Number Prefix (Expenses)') }}</label>
                     <input type="text" wire:model="booking_number_prefix"

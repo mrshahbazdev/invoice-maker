@@ -7,10 +7,17 @@ use App\Models\Invoice;
 
 class InvoiceNumberService
 {
-    public function generate(Business $business): string
+    public function generate(Business $business, string $type = 'invoice'): string
     {
-        $prefix = $business->invoice_number_prefix ?? 'INV';
-        $next = $business->invoice_number_next ?? 1;
+        if ($type === 'estimate') {
+            $prefix = $business->estimate_number_prefix ?? 'EST';
+            $next = $business->estimate_number_next ?? 1;
+            $updateField = 'estimate_number_next';
+        } else {
+            $prefix = $business->invoice_number_prefix ?? 'INV';
+            $next = $business->invoice_number_next ?? 1;
+            $updateField = 'invoice_number_next';
+        }
 
         $unique = false;
         $number = '';
@@ -31,7 +38,7 @@ class InvoiceNumberService
         }
 
         // Update the business's next number for future use
-        $business->update(['invoice_number_next' => $next + 1]);
+        $business->update([$updateField => $next + 1]);
 
         return $number;
     }

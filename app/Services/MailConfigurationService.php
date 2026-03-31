@@ -14,7 +14,7 @@ class MailConfigurationService
     /**
      * Configure and return a mailer instance for the given business.
      */
-    public static function getMailer(Business $business)
+    public static function getMailer($business)
     {
         if (!$business->hasCustomSmtp()) {
             return Mail::mailer();

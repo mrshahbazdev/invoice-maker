@@ -28,6 +28,8 @@ class Business extends Model
         'plan',
         'invoice_number_prefix',
         'invoice_number_next',
+        'estimate_number_prefix',
+        'estimate_number_next',
         'booking_number_prefix',
         'booking_number_next',
         'bank_booking_account',

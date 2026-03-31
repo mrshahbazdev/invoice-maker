@@ -31,6 +31,8 @@ class Profile extends Component
     public string $language = 'en';
     public string $invoice_number_prefix = 'INV';
     public int $invoice_number_next = 1;
+    public string $estimate_number_prefix = 'EST';
+    public int $estimate_number_next = 1;
     public string $booking_number_prefix = 'EXP';
     public int $booking_number_next = 1;
     public string $bank_booking_account = '1000';
@@ -66,6 +68,8 @@ class Profile extends Component
             'language' => 'required|string|in:en,de,es,fr,it,pt,ar,zh,ja,ru',
             'invoice_number_prefix' => 'required|string|max:10',
             'invoice_number_next' => 'required|integer|min:1',
+            'estimate_number_prefix' => 'required|string|max:10',
+            'estimate_number_next' => 'required|integer|min:1',
             'booking_number_prefix' => 'nullable|string|max:10',
             'booking_number_next' => 'required|integer|min:1',
             'bank_booking_account' => 'nullable|string|max:20',
@@ -103,6 +107,8 @@ class Profile extends Component
             $this->payment_terms = $this->business->payment_terms ?? '';
             $this->invoice_number_prefix = $this->business->invoice_number_prefix ?? 'INV';
             $this->invoice_number_next = $this->business->invoice_number_next ?? 1;
+            $this->estimate_number_prefix = $this->business->estimate_number_prefix ?? 'EST';
+            $this->estimate_number_next = $this->business->estimate_number_next ?? 1;
             $this->booking_number_prefix = $this->business->booking_number_prefix ?? 'EXP';
             $this->booking_number_next = $this->business->booking_number_next ?? 1;
             $this->bank_booking_account = $this->business->bank_booking_account ?? '1000';
@@ -148,6 +154,8 @@ class Profile extends Component
             'payment_terms' => $this->payment_terms,
             'invoice_number_prefix' => $this->invoice_number_prefix,
             'invoice_number_next' => $this->invoice_number_next,
+            'estimate_number_prefix' => $this->estimate_number_prefix,
+            'estimate_number_next' => $this->estimate_number_next,
             'booking_number_prefix' => $this->booking_number_prefix,
             'booking_number_next' => $this->booking_number_next,
             'bank_booking_account' => $this->bank_booking_account,
@@ -243,27 +251,19 @@ class Profile extends Component
         ]);
 
         try {
-            $mailer = MailConfigurationService::getMailer((object) [
-                'smtp_host' => $this->smtp_host,
-                'smtp_port' => $this->smtp_port,
-                'smtp_username' => $this->smtp_username,
-                'smtp_password' => $this->smtp_password,
-                'smtp_encryption' => $this->smtp_encryption,
-                'hasCustomSmtp' => function () {
-                    return true;
-                }
-            ]);
-
             // For testing, we send a simple raw email to the authenticated user
             $userEmail = Auth::user()->email;
 
-            MailConfigurationService::getMailer($this->business ?? new Business([
+            $testBusiness = $this->business ?? new Business();
+            $testBusiness->forceFill([
                 'smtp_host' => $this->smtp_host,
                 'smtp_port' => $this->smtp_port,
                 'smtp_username' => $this->smtp_username,
                 'smtp_password' => $this->smtp_password,
                 'smtp_encryption' => $this->smtp_encryption,
-            ]))->raw('This is a test email to verify your SMTP settings for ' . config('app.name'), function ($message) use ($userEmail) {
+            ]);
+
+            MailConfigurationService::getMailer($testBusiness)->raw('This is a test email to verify your SMTP settings for ' . config('app.name'), function ($message) use ($userEmail) {
                 $message->to($userEmail)
                     ->subject('SMTP Connection Test')
                     ->from($this->smtp_from_address, $this->smtp_from_name ?: config('mail.from.name'));

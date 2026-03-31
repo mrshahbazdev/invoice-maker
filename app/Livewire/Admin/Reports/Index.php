@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin\Reports;
 
 use App\Models\Invoice;
+use App\Models\Payment;
+use App\Models\CashBookEntry;
 use Livewire\Component;
 use Illuminate\Support\Facades\Response;
 
@@ -20,7 +22,7 @@ class Index extends Component
 
     public function exportTaxSummary()
     {
-        $businessId = auth()->user()->current_business_id;
+        $businessId = auth()->user()->business_id;
 
         $invoices = Invoice::where('business_id', $businessId)
             ->where('type', 'invoice')
@@ -67,15 +69,33 @@ class Index extends Component
 
     public function render()
     {
-        $businessId = auth()->user()->current_business_id;
+        $businessId = auth()->user()->business_id;
 
         $query = Invoice::where('business_id', $businessId)
             ->where('type', 'invoice')
             ->whereBetween('invoice_date', [$this->startDate, $this->endDate]);
 
-        // Calculate totals based on the date range
-        $totalRevenue = (clone $query)->where('status', 'paid')->sum('amount_paid');
+        // 1. Net Collected Revenue (Payments received in range)
+        $paymentRevenue = Payment::whereHas('invoice', function ($q) use ($businessId) {
+            $q->where('business_id', $businessId);
+        })
+            ->whereBetween('date', [$this->startDate, $this->endDate])
+            ->sum('amount');
+
+        // 2. Manual Income
+        $manualIncome = CashBookEntry::where('business_id', $businessId)
+            ->where('type', 'income')
+            ->whereNull('invoice_id')
+            ->whereBetween('date', [$this->startDate, $this->endDate])
+            ->sum('amount');
+
+        $totalRevenue = (float) $paymentRevenue + (float) $manualIncome;
+
+        // 3. Outstanding Balance (Invoices issued in range that are not paid)
         $outstandingBalance = (clone $query)->whereIn('status', ['sent', 'overdue'])->sum('amount_due');
+
+        // 4. Total Tax Collected (From paid invoices whose payments were in range)
+        // Note: This is an approximation. Ideally we track tax per payment.
         $totalTaxCollected = (clone $query)->where('status', 'paid')->sum('tax_total');
 
         // Recent paid invoices for the preview table

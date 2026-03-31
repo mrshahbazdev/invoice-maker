@@ -44,7 +44,7 @@
         <div class="bg-card rounded-xl shadow-sm border border-gray-100 p-6">
             <dt class="truncate text-sm font-medium text-gray-500">{{ __('Net Collected Revenue') }}</dt>
             <dd class="mt-2 text-3xl font-bold tracking-tight text-green-600">
-                {{ auth()->user()->currentBusiness->currency ?? 'USD' }} {{ number_format($totalRevenue, 2) }}
+                {{ auth()->user()->business->currency ?? 'USD' }} {{ number_format($totalRevenue, 2) }}
             </dd>
             <p class="mt-1 text-xs text-gray-500">{{ __('Only includes Paid invoices') }}</p>
         </div>
@@ -52,7 +52,7 @@
         <div class="bg-card rounded-xl shadow-sm border border-gray-100 p-6">
             <dt class="truncate text-sm font-medium text-gray-500">{{ __('Outstanding Balance') }}</dt>
             <dd class="mt-2 text-3xl font-bold tracking-tight text-red-600">
-                {{ auth()->user()->currentBusiness->currency ?? 'USD' }} {{ number_format($outstandingBalance, 2) }}
+                {{ auth()->user()->business->currency ?? 'USD' }} {{ number_format($outstandingBalance, 2) }}
             </dd>
             <p class="mt-1 text-xs text-gray-500">{{ __('Unpaid Sent/Overdue invoices') }}</p>
         </div>
@@ -60,7 +60,7 @@
         <div class="bg-card rounded-xl shadow-sm border border-gray-100 p-6">
             <dt class="truncate text-sm font-medium text-brand-600">{{ __('Total Tax Collected') }}</dt>
             <dd class="mt-2 text-3xl font-bold tracking-tight text-brand-700">
-                {{ auth()->user()->currentBusiness->currency ?? 'USD' }} {{ number_format($totalTaxCollected, 2) }}
+                {{ auth()->user()->business->currency ?? 'USD' }} {{ number_format($totalTaxCollected, 2) }}
             </dd>
             <p class="mt-1 text-xs text-brand-500/80">{{ __('Ready for tax reporting') }}</p>
         </div>

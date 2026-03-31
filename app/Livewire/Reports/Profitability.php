@@ -7,6 +7,8 @@ use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use App\Models\Product;
+use App\Models\Payment;
+use App\Models\CashBookEntry;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -36,11 +38,22 @@ class Profitability extends Component
  {
  $business = Auth::user()->business;
 
- // 1. Overall Net Income
- $totalRevenue = Invoice::where('business_id', $business->id)
- ->whereBetween('invoice_date', [$this->startDate, $this->endDate])
- ->where('status', 'paid')
- ->sum('grand_total');
+ // 1. Overall Net Income (Cash Basis)
+ // Sum all payments received in the date range
+ $paymentRevenue = Payment::whereHas('invoice', function ($query) use ($business) {
+ $query->where('business_id', $business->id);
+ })
+ ->whereBetween('date', [$this->startDate, $this->endDate])
+ ->sum('amount');
+
+ // Sum manual income from Cash Book (e.g. income not linked to an invoice)
+ $manualIncome = CashBookEntry::where('business_id', $business->id)
+ ->where('type', 'income')
+ ->whereNull('invoice_id')
+ ->whereBetween('date', [$this->startDate, $this->endDate])
+ ->sum('amount');
+
+ $totalRevenue = (float) $paymentRevenue + (float) $manualIncome;
 
  $totalExpenses = Expense::where('business_id', $business->id)
  ->whereBetween('date', [$this->startDate, $this->endDate])
@@ -58,13 +71,15 @@ class Profitability extends Component
  })
  ->with([
  'invoices' => function ($query) {
- $query->whereBetween('invoice_date', [$this->startDate, $this->endDate])
- ->where('status', 'paid');
+ $query->with(['payments' => function ($q) {
+ $q->whereBetween('date', [$this->startDate, $this->endDate]);
+ }]);
  }
  ])
  ->get()
  ->map(function ($client) {
- $sales = $client->invoices->sum('grand_total');
+ // Sum actual payments received for this client in the range
+ $sales = $client->invoices->flatMap->payments->sum('amount');
 
  // Sum ALL direct expenses linked to this client in the date range
  $directCosts = Expense::where('client_id', $client->id)
