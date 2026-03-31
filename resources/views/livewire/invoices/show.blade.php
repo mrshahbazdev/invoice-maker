@@ -3,10 +3,10 @@
 <div>
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-txmain">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
-                {{ __('Details') }}
+            <h2 class="text-2xl font-bold text-txmain">
+                {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} {{ __('Details') }}
             </h2>
-            <p class="text-txmain">{{ $invoice->invoice_number }}</p>
+            <p class="text-txmain">{{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}: {{ $invoice->invoice_number }}</p>
         </div>
         <div class="flex flex-wrap gap-2">
             @if($invoice->status === 'draft')
@@ -210,18 +210,15 @@
                 </h4>
                 <div class="space-y-1">
                     <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
-                            #:</span>
+                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}:</span>
                         <span class="font-medium text-txmain">{{ $invoice->invoice_number }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
-                            {{ __('Date') }}:</span>
+                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Estimate Date') : __('Invoice Date') }}:</span>
                         <span class="font-medium text-txmain">{{ $invoice->invoice_date->format('M d, Y') }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Expiration') : __('Due') }}
-                            {{ __('Date') }}:</span>
+                        <span class="text-gray-500">{{ $invoice->isEstimate() ? __('Expiry Date') : __('Due Date') }}:</span>
                         <span class="font-medium text-txmain">{{ $invoice->due_date->format('M d, Y') }}</span>
                     </div>
                 </div>

@@ -301,9 +301,9 @@
                                     {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
                                 </div>
                                 <div class="invoice-meta">
-                                    <p><strong>{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} #:</strong>
+                                    <p><strong>{{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}:</strong>
                                         {{ $invoice->invoice_number }}</p>
-                                    <p><strong>{{ __('Date') }}:</strong>
+                                    <p><strong>{{ $invoice->isEstimate() ? __('Estimate Date') : __('Invoice Date') }}:</strong>
                                         {{ $invoice->invoice_date->translatedFormat('M d, Y') }}</p>
                                     <p><strong>{{ $invoice->isEstimate() ? __('Expiry Date') : __('Due Date') }}:</strong>
                                         {{ $invoice->due_date->translatedFormat('M d, Y') }}</p>

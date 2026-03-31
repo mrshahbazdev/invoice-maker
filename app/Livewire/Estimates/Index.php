@@ -1,11 +1,8 @@
-<?php
-
-namespace App\Livewire\Estimates;
-
+use App\Models\Invoice;
+use App\Services\InvoiceNumberService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Invoice;
-use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
@@ -33,17 +30,19 @@ class Index extends Component
  session()->flash('message', 'Estimate deleted successfully.');
  }
 
- public function convertToInvoice(int $id): void
+ public function convertToInvoice(int $id, InvoiceNumberService $invoiceNumberService): void
  {
- $estimate = Auth::user()->business->invoices()->where('type', Invoice::TYPE_ESTIMATE)->findOrFail($id);
+ $business = Auth::user()->business;
+ $estimate = $business->invoices()->where('type', Invoice::TYPE_ESTIMATE)->findOrFail($id);
 
  $estimate->update([
  'type' => Invoice::TYPE_INVOICE,
  'status' => Invoice::STATUS_DRAFT,
+ 'invoice_number' => $invoiceNumberService->generate($business, 'invoice'),
  ]);
 
- session()->flash('message', 'Estimate converted to Invoice successfully.');
- $this->redirect(route('estimates.show', $estimate), navigate: true);
+ session()->flash('message', 'Estimate converted to Invoice successfully. New Invoice #: ' . $estimate->invoice_number);
+ $this->redirect(route('invoices.show', $estimate), navigate: true);
  }
 
  public function render()

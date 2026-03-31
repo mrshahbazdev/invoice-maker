@@ -40,6 +40,8 @@
     "Description": "Beschreibung",
     "Invoice Number": "Rechnungsnummer",
     "Estimate Number": "Angebotsnummer",
+    "Estimate #": "Angebotsnummer",
+    "Invoice #": "Rechnungsnummer",
     "Expiry Date": "Ablaufdatum",
     "Bill To": "Rechnung an",
     "Partial": "Teilweise",

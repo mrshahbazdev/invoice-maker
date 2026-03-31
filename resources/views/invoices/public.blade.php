@@ -56,7 +56,7 @@
                 <div class="flex items-center">
                     <span class="text-xl font-bold text-txmain">{{ $invoice->business->name }}</span>
                     <span class="ml-4 px-3 py-1 rounded-full text-xs font-medium bg-page text-txmain">
-                        {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} {{ $invoice->invoice_number }}
+                        {{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}: {{ $invoice->invoice_number }}
                     </span>
                     @if($invoice->status === 'paid')
                         <span class="ml-2 px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -255,9 +255,9 @@
                             <div
                                 class="bg-page rounded-2xl p-6 shadow-sm border border-gray-100 inline-block text-left w-full max-w-sm">
                                 <div class="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
-                                    <span
-                                        class="text-xs uppercase tracking-wider font-semibold text-gray-500">{{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
-                                        {{ __('No') }}:</span>
+                                    <span class="text-xs uppercase tracking-wider font-semibold text-gray-500">
+                                        {{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}:
+                                    </span>
                                     <span class="text-sm font-bold text-txmain">{{ $invoice->invoice_number }}</span>
                                 </div>
                                 <div class="flex justify-between items-center mb-3">
