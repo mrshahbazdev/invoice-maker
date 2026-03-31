@@ -1,3 +1,7 @@
+<?php
+
+namespace App\Livewire\Estimates;
+
 use App\Models\Invoice;
 use App\Services\InvoiceNumberService;
 use Illuminate\Support\Facades\Auth;
