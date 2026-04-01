@@ -69,9 +69,11 @@
  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
  </svg>
  </div>
+ <div class="absolute right-0 top-0 w-1 pt-12 h-full bg-brand-500"></div>
  <div>
  <span
- class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Total Revenue') }}</span>
+ class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Overall Revenue') }}</span>
+ <span class="text-[8px] text-gray-400 block -mt-1">{{ __('(Invoiced + Manual)') }}</span>
  <p class="text-2xl font-bold text-txmain mt-0.5">
  {{ number_format($totalRevenue, 2, '.', ',') }} €
  </p>
@@ -176,9 +178,9 @@
  <!-- Client ROI -->
  <div class="bg-card rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
  <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between bg-page/50">
- <h3 class="text-sm font-bold text-txmain uppercase tracking-wider">{{ __('Client ROI') }}</h3>
+ <h3 class="text-sm font-bold text-txmain uppercase tracking-wider">{{ __('Client Performance') }}</h3>
  <span
- class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Revenue vs Direct Costs') }}</span>
+ class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Total Invoiced vs Direct Costs') }}</span>
  </div>
  <div class="overflow-x-auto">
  <table class="w-full text-left border-collapse">
@@ -240,9 +242,9 @@
  <!-- Product Margins -->
  <div class="bg-card rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
  <div class="px-6 py-4 border-b border-gray-50 flex items-center justify-between bg-page/50">
- <h3 class="text-sm font-bold text-txmain uppercase tracking-wider">{{ __('Product Margins') }}</h3>
+ <h3 class="text-sm font-bold text-txmain uppercase tracking-wider">{{ __('Product Performance') }}</h3>
  <span
- class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Sales vs Purchase Cost') }}</span>
+ class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Total Invoiced vs Estimated Costs') }}</span>
  </div>
  <div class="overflow-x-auto">
  <table class="w-full text-left border-collapse">
@@ -267,8 +269,10 @@
  <td class="px-6 py-4">
  <span
  class="text-sm font-bold text-txmain group-hover:text-brand-600 transition-colors uppercase">{{ $product['name'] }}</span>
+ @if($product['sold'] > 0)
  <div class="text-[10px] text-gray-400 font-medium uppercase mt-0.5">
  {{ $product['sold'] }} {{ __('sold') }}</div>
+ @endif
  </td>
  <td class="px-6 py-4 text-right">
  <span

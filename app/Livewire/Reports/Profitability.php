@@ -38,22 +38,21 @@ class Profitability extends Component
  {
  $business = Auth::user()->business;
 
- // 1. Overall Net Income (Cash Basis)
- // Sum all payments received in the date range
- $paymentRevenue = Payment::whereHas('invoice', function ($query) use ($business) {
- $query->where('business_id', $business->id);
- })
- ->whereBetween('date', [$this->startDate, $this->endDate])
- ->sum('amount');
+ // 1. Overall Revenue (Accrual/Invoiced Basis)
+ // Sum all invoices issued in the date range (excluding drafts and cancelled)
+ $invoicedRevenue = Invoice::where('business_id', $business->id)
+ ->whereBetween('invoice_date', [$this->startDate, $this->endDate])
+ ->whereNotIn('status', ['draft', 'cancelled'])
+ ->sum('total_amount');
 
- // Sum manual income from Cash Book (e.g. income not linked to an invoice)
+ // Sum manual income from Cash Book (e.g. income not linked to an invoice - keep as cash basis)
  $manualIncome = CashBookEntry::where('business_id', $business->id)
  ->where('type', 'income')
  ->whereNull('invoice_id')
  ->whereBetween('date', [$this->startDate, $this->endDate])
  ->sum('amount');
 
- $totalRevenue = (float) $paymentRevenue + (float) $manualIncome;
+ $totalRevenue = (float) $invoicedRevenue + (float) $manualIncome;
 
  $totalExpenses = Expense::where('business_id', $business->id)
  ->whereBetween('date', [$this->startDate, $this->endDate])
@@ -71,15 +70,14 @@ class Profitability extends Component
  })
  ->with([
  'invoices' => function ($query) {
- $query->with(['payments' => function ($q) {
- $q->whereBetween('date', [$this->startDate, $this->endDate]);
- }]);
+ $query->whereBetween('invoice_date', [$this->startDate, $this->endDate])
+ ->whereNotIn('status', ['draft', 'cancelled']);
  }
  ])
  ->get()
  ->map(function ($client) {
- // Sum actual payments received for this client in the range
- $sales = $client->invoices->flatMap->payments->sum('amount');
+ // Sum total invoiced amount for this client in the range
+ $sales = $client->invoices->sum('total_amount');
 
  // Sum ALL direct expenses linked to this client in the date range
  $directCosts = Expense::where('client_id', $client->id)
@@ -95,20 +93,18 @@ class Profitability extends Component
  'margin' => $sales > 0 ? (($sales - $directCosts) / $sales) * 100 : ($directCosts > 0 ? -100 : 0)
  ];
  })
+ ->filter(fn($item) => $item['sales'] > 0 || $item['costs'] > 0)
  ->sortByDesc('difference');
 
  // 3. Product Profitability (Price vs Purchase Price) - Comprehensive List
  $productProfitability = Product::where('business_id', $business->id)
- ->when($this->search, function ($query) {
- $query->where('name', 'like', '%' . $this->search . '%');
- })
  ->get()
  ->map(function ($product) {
  // Sum sales for this product in range
  $salesData = DB::table('invoice_items')
  ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
  ->where('invoice_items.product_id', $product->id)
- ->where('invoices.status', 'paid')
+ ->whereNotIn('invoices.status', ['draft', 'cancelled'])
  ->whereBetween('invoices.invoice_date', [$this->startDate, $this->endDate])
  ->select(
  DB::raw('SUM(invoice_items.quantity) as total_sold'),
@@ -136,7 +132,30 @@ class Profitability extends Component
  'margin' => $totalRevenue > 0 ? (($totalRevenue - $totalCosts) / $totalRevenue) * 100 : ($totalCosts > 0 ? -100 : 0)
  ];
  })
- ->sortByDesc('difference');
+ ->filter(fn($item) => $item['sales'] > 0 || $item['costs'] > 0);
+
+ // Capture revenue from items with NO product_id (Uncategorized/One-off items)
+ $uncategorizedSales = DB::table('invoice_items')
+ ->join('invoices', 'invoice_items.invoice_id', '=', 'invoices.id')
+ ->where('invoices.business_id', $business->id)
+ ->whereNull('invoice_items.product_id')
+ ->whereNotIn('invoices.status', ['draft', 'cancelled'])
+ ->whereBetween('invoices.invoice_date', [$this->startDate, $this->endDate])
+ ->sum('invoice_items.total');
+
+ if ($uncategorizedSales > 0) {
+ $productProfitability->push([
+ 'id' => null,
+ 'name' => __('Other / Custom Line Items'),
+ 'sold' => 0,
+ 'sales' => (float) $uncategorizedSales,
+ 'costs' => 0,
+ 'difference' => (float) $uncategorizedSales,
+ 'margin' => 100
+ ]);
+ }
+
+ $productProfitability = $productProfitability->sortByDesc('difference');
 
  // Top Performers for Summary Overview
  $topClients = $clientProfitability->take(3);
