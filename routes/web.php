@@ -97,7 +97,7 @@ Route::middleware(['auth', 'business.member'])->group(function () {
     });
 
     Route::prefix('estimates')->name('estimates.')->group(function () {
-        Route::get('/', \App\Livewire\Estimates\Index::class)->name('estimates_index');
+        Route::get('/', \App\Livewire\Estimates\Index::class)->name('index');
         Route::get('/create', \App\Livewire\Estimates\Create::class)->name('create');
         Route::get('/{estimate}/edit', \App\Livewire\Estimates\Edit::class)->name('edit');
         Route::get('/{invoice}', \App\Livewire\Invoices\Show::class)->name('show');

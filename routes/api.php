@@ -25,9 +25,10 @@ Route::get('/blog/posts/{post}', [BlogPostController::class, 'show']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']); // Can be added later if needed
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->name('api.')->group(function () {
     // Auth User Profile
     Route::get('/user', [AuthController::class, 'user']);
+    // Auth Logout
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Dashboard Stats
