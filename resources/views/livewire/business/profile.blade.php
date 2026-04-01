@@ -7,6 +7,18 @@
     </div>
 
     <div class="">
+        @if(session()->has('message'))
+            <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative shadow-sm" role="alert">
+                <span class="block sm:inline">{{ session('message') }}</span>
+            </div>
+        @endif
+
+        @if(session()->has('error'))
+            <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative shadow-sm" role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
+
         <form wire:submit="save" class="bg-card rounded-lg shadow p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div>
@@ -358,7 +370,7 @@
                             placeholder="Your Company Name">
                         @error('smtp_from_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
-                    <div class="flex items-end pb-1">
+                    <div class="flex items-end pb-1 gap-4">
                         <button type="button" wire:click="testSmtpConnection" wire:loading.attr="disabled"
                             class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-txmain bg-card hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                             <svg wire:loading wire:target="testSmtpConnection"
@@ -373,6 +385,18 @@
                             </svg>
                             {{ __('Test Connection') }}
                         </button>
+
+                        @if(session()->has('message'))
+                            <span x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" class="text-sm text-green-600 font-medium animate-pulse">
+                                ✓ {{ session('message') }}
+                            </span>
+                        @endif
+
+                        @if(session()->has('error'))
+                            <span x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 8000)" class="text-sm text-red-600 font-medium">
+                                ✕ {{ session('error') }}
+                            </span>
+                        @endif
                     </div>
                 </div>
             </div>
