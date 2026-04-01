@@ -6,6 +6,7 @@ use App\Livewire\Dashboard;
 use App\Livewire\Business\Profile as BusinessProfile;
 use App\Livewire\Profile\Show as UserProfileShow;
 use App\Http\Controllers\StripeController;
+// Remove aliased imports for Livewire components to use fully qualified names or direct names
 use App\Livewire\Clients\Index as ClientsIndex;
 use App\Livewire\Clients\Create as ClientsCreate;
 use App\Livewire\Clients\Edit as ClientsEdit;
@@ -16,9 +17,6 @@ use App\Livewire\Invoices\Index as InvoicesIndex;
 use App\Livewire\Invoices\Create as InvoicesCreate;
 use App\Livewire\Invoices\Edit as InvoicesEdit;
 use App\Livewire\Invoices\Show as InvoicesShow;
-use App\Livewire\Estimates\Index as EstimatesIndex;
-use App\Livewire\Estimates\Create as EstimatesCreate;
-use App\Livewire\Estimates\Edit as EstimatesEdit;
 use App\Livewire\Templates\Index as TemplatesIndex;
 use App\Livewire\Templates\Builder as TemplatesBuilder;
 use App\Livewire\Expenses\Index as ExpensesIndex;
@@ -98,11 +96,11 @@ Route::middleware(['auth', 'business.member'])->group(function () {
         Route::get('/{invoice}/preview', [InvoiceController::class, 'previewPdf'])->name('invoices.preview');
     });
 
-    Route::prefix('estimates')->group(function () {
-        Route::get('/', EstimatesIndex::class)->name('estimates.index');
-        Route::get('/create', EstimatesCreate::class)->name('estimates.create');
-        Route::get('/{estimate}/edit', EstimatesEdit::class)->name('estimates.edit');
-        Route::get('/{invoice}', InvoicesShow::class)->name('estimates.show');
+    Route::prefix('estimates')->name('estimates.')->group(function () {
+        Route::get('/', \App\Livewire\Estimates\Index::class)->name('estimates_index');
+        Route::get('/create', \App\Livewire\Estimates\Create::class)->name('create');
+        Route::get('/{estimate}/edit', \App\Livewire\Estimates\Edit::class)->name('edit');
+        Route::get('/{invoice}', \App\Livewire\Invoices\Show::class)->name('show');
     });
 
     Route::prefix('templates')->group(function () {
