@@ -370,6 +370,21 @@
                             placeholder="Your Company Name">
                         @error('smtp_from_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
+                    <div class="flex items-center justify-between pt-6">
+                        <div>
+                            <h4 class="text-sm font-semibold text-txmain">{{ __('Verify SSL Certificate') }}</h4>
+                            <p class="text-xs text-gray-500">{{ __('Recommended. Disable if you have certificate mismatch issues.') }}</p>
+                        </div>
+                        <button type="button"
+                            wire:click="$set('smtp_verify_ssl', {{ !$smtp_verify_ssl ? 'true' : 'false' }})"
+                            class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-2 {{ $smtp_verify_ssl ? 'bg-brand-600' : 'bg-gray-200' }}">
+                            <span
+                                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-card shadow ring-0 transition duration-200 ease-in-out {{ $smtp_verify_ssl ? 'translate-x-5' : 'translate-x-0' }}"></span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="flex items-end pb-1 gap-4">
                         <button type="button" wire:click="testSmtpConnection" wire:loading.attr="disabled"
                             class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-txmain bg-card hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">

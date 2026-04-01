@@ -29,6 +29,8 @@ class MailConfigurationService
             'password' => $business->smtp_password,
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'verify_peer' => $business->smtp_verify_ssl ?? true,
+            'verify_peer_name' => $business->smtp_verify_ssl ?? true,
         ];
 
         // For Laravel 10+, we can use Mail::build() to create a temporary mailer

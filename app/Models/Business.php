@@ -53,12 +53,14 @@ class Business extends Model
         'reminder_days_interval',
         'accept_network_invoices',
         'late_fee_percentage',
+        'smtp_verify_ssl',
     ];
 
     protected $casts = [
         'enable_automated_reminders' => 'boolean',
         'accept_network_invoices' => 'boolean',
         'late_fee_percentage' => 'float',
+        'smtp_verify_ssl' => 'boolean',
     ];
 
     protected static function booted()

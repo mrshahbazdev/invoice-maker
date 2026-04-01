@@ -44,6 +44,7 @@ class Profile extends Component
     public string $smtp_encryption = 'tls';
     public string $smtp_from_address = '';
     public string $smtp_from_name = '';
+    public bool $smtp_verify_ssl = true;
     public $logo;
     public bool $stripe_onboarding_complete = false;
     public bool $enable_automated_reminders = true;
@@ -81,6 +82,7 @@ class Profile extends Component
             'smtp_encryption' => 'nullable|string|max:10',
             'smtp_from_address' => 'nullable|email|max:255',
             'smtp_from_name' => 'nullable|string|max:255',
+            'smtp_verify_ssl' => 'boolean',
             'logo' => 'nullable|image|max:2048',
             'enable_automated_reminders' => 'boolean',
             'reminder_days_interval' => 'required_if:enable_automated_reminders,true|integer|min:1|max:365',
@@ -120,6 +122,7 @@ class Profile extends Component
             $this->smtp_encryption = $this->business->smtp_encryption ?? 'tls';
             $this->smtp_from_address = $this->business->smtp_from_address ?? '';
             $this->smtp_from_name = $this->business->smtp_from_name ?? '';
+            $this->smtp_verify_ssl = $this->business->smtp_verify_ssl ?? true;
             $this->stripe_onboarding_complete = $this->business->stripe_onboarding_complete;
             $this->enable_automated_reminders = $this->business->enable_automated_reminders ?? true;
             $this->reminder_days_interval = $this->business->reminder_days_interval ?? 7;
@@ -167,6 +170,7 @@ class Profile extends Component
             'smtp_encryption' => $this->smtp_encryption,
             'smtp_from_address' => $this->smtp_from_address,
             'smtp_from_name' => $this->smtp_from_name,
+            'smtp_verify_ssl' => $this->smtp_verify_ssl,
             'enable_automated_reminders' => $this->enable_automated_reminders,
             'reminder_days_interval' => $this->reminder_days_interval,
             'accept_network_invoices' => $this->accept_network_invoices,
@@ -261,6 +265,7 @@ class Profile extends Component
                 'smtp_username' => $this->smtp_username,
                 'smtp_password' => $this->smtp_password,
                 'smtp_encryption' => $this->smtp_encryption,
+                'smtp_verify_ssl' => $this->smtp_verify_ssl,
             ]);
 
             MailConfigurationService::getMailer($testBusiness)->raw('This is a test email to verify your SMTP settings for ' . config('app.name'), function ($message) use ($userEmail) {
