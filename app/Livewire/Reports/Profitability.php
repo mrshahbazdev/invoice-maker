@@ -43,7 +43,7 @@ class Profitability extends Component
  $invoicedRevenue = Invoice::where('business_id', $business->id)
  ->whereBetween('invoice_date', [$this->startDate, $this->endDate])
  ->whereNotIn('status', ['draft', 'cancelled'])
- ->sum('total_amount');
+ ->sum('grand_total');
 
  // Sum manual income from Cash Book (e.g. income not linked to an invoice - keep as cash basis)
  $manualIncome = CashBookEntry::where('business_id', $business->id)
@@ -77,7 +77,7 @@ class Profitability extends Component
  ->get()
  ->map(function ($client) {
  // Sum total invoiced amount for this client in the range
- $sales = $client->invoices->sum('total_amount');
+ $sales = $client->invoices->sum('grand_total');
 
  // Sum ALL direct expenses linked to this client in the date range
  $directCosts = Expense::where('client_id', $client->id)
