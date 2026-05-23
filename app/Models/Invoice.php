@@ -57,6 +57,9 @@ class Invoice extends Model
         'last_reminder_sent_at',
         'inventory_deducted',
         'payment_terms',
+        'allocore_order_id',
+        'allocore_subscription_id',
+        'source',
     ];
 
     protected $casts = [

@@ -12,6 +12,7 @@ class Client extends Model
     protected $fillable = [
         'business_id',
         'user_id',
+        'allocore_user_id',
         'name',
         'email',
         'phone',
@@ -23,6 +24,7 @@ class Client extends Model
         'notes',
         'email_subject',
         'email_template',
+        'source',
     ];
 
     public function business()
