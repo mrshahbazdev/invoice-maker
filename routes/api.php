@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\BusinessController;
 use App\Http\Controllers\Api\BlogCategoryController;
 use App\Http\Controllers\Api\BlogPostController;
+use App\Http\Controllers\Api\AllocoreIntegrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,21 @@ Route::delete('/blog/categories/{category}', [BlogCategoryController::class, 'de
 Route::post('/blog/posts', [BlogPostController::class, 'store']);
 Route::post('/blog/posts/{post}', [BlogPostController::class, 'update']); // Use POST to support FormData image uploads
 Route::delete('/blog/posts/{post}', [BlogPostController::class, 'destroy']);
+
+/*
+|--------------------------------------------------------------------------
+| Allocore Integration API
+|--------------------------------------------------------------------------
+|
+| Endpoints called by the Allocore Tools Platform to create invoices,
+| sync clients, and record payments when users purchase bundles.
+|
+*/
+Route::prefix('allocore')->middleware(\App\Http\Middleware\AllocoreAuth::class)->group(function () {
+    Route::post('/clients/sync', [AllocoreIntegrationController::class, 'syncClient']);
+    Route::post('/invoices', [AllocoreIntegrationController::class, 'createInvoice']);
+    Route::get('/invoices/{invoice}', [AllocoreIntegrationController::class, 'showInvoice']);
+    Route::post('/invoices/{invoice}/payment', [AllocoreIntegrationController::class, 'recordPayment']);
+    Route::put('/invoices/{invoice}/status', [AllocoreIntegrationController::class, 'updateStatus']);
+    Route::get('/invoices/by-order/{orderId}', [AllocoreIntegrationController::class, 'findByOrder']);
+});
