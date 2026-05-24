@@ -168,6 +168,7 @@ Route::middleware(['auth', 'is_super_admin'])->prefix('admin')->name('admin.')->
     Route::get('/settings/ai', \App\Livewire\Admin\Settings\Ai::class)->name('settings.ai');
     Route::get('/settings/themes', \App\Livewire\Admin\Settings\Themes::class)->name('settings.themes');
     Route::get('/settings/languages', \App\Livewire\Admin\Settings\Languages::class)->name('settings.languages');
+    Route::get('/settings/allocore', \App\Livewire\Admin\Settings\Allocore::class)->name('settings.allocore');
 
     Route::prefix('blog')->name('blog.')->group(function () {
         Route::get('/categories', \App\Livewire\Admin\Blog\Categories::class)->name('categories');

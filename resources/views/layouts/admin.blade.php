@@ -142,6 +142,14 @@
                     </svg>
                     AI Configuration
                 </a>
+                <a href="{{ route('admin.settings.allocore') }}"
+                    class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.settings.allocore') ? 'bg-brand-600/20 text-brand-400 font-bold border border-brand-500/30' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                    </svg>
+                    Allocore Integration
+                </a>
                 <a href="{{ route('admin.support.index') }}"
                     class="flex items-center px-4 py-3 rounded-xl transition-all duration-200 {{ request()->routeIs('admin.support.*') ? 'bg-brand-600/20 text-brand-400 font-bold border border-brand-500/30' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
