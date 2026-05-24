@@ -10,7 +10,8 @@ class AllocoreAuth
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $apiKey = config('allocore.api_key');
+        $dbKey = \App\Models\Setting::get('allocore.api_key');
+        $apiKey = $dbKey ?: config('allocore.api_key');
 
         if (!$apiKey) {
             return response()->json(['error' => 'Allocore integration not configured'], 503);
