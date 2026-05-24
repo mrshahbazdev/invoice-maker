@@ -1,0 +1,295 @@
+<?php
+
+namespace App\Livewire\Profile;
+
+use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use PragmaRX\Google2FA\Google2FA;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Str;
+
+class Show extends Component
+{
+    // Profile Update
+    public string $name = '';
+    public string $email = '';
+
+    // Password Update
+    public string $current_password = '';
+    public string $password = '';
+    public string $password_confirmation = '';
+
+    // Two-Factor
+    public bool $showingQrCode = false;
+    public bool $showingRecoveryCodes = false;
+    public string $setupKey = '';
+    public string $qrCodeSvg = '';
+    public string $setupCode = '';
+    public array $recoveryCodes = [];
+
+    // AI Configuration
+    public ?string $openai_api_key = '';
+    public ?string $anthropic_api_key = '';
+    public string $default_ai_provider = 'openai';
+
+    // Theme Configuration
+    public ?int $theme_id = null;
+    public ?int $page_bg_color_id = null;
+    public ?int $card_bg_color_id = null;
+    public ?int $text_color_id = null;
+
+    // Payment Settings
+    public ?string $stripe_public_key = '';
+    public ?string $stripe_secret_key = '';
+
+    // AI Theme Generator
+    public string $aiThemePrompt = '';
+
+    public function mount()
+    {
+        $user = Auth::user();
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->openai_api_key = $user->openai_api_key;
+        $this->anthropic_api_key = $user->anthropic_api_key;
+        $this->default_ai_provider = $user->default_ai_provider ?? 'openai';
+        $this->theme_id = $user->business->theme_id ?? null;
+        $this->page_bg_color_id = $user->business->page_bg_color_id ?? null;
+        $this->card_bg_color_id = $user->business->card_bg_color_id ?? null;
+        $this->text_color_id = $user->business->text_color_id ?? null;
+        $this->stripe_public_key = $user->business->stripe_public_key ?? '';
+        $this->stripe_secret_key = $user->business->stripe_secret_key ?? '';
+    }
+
+    public function updateProfileInformation()
+    {
+        $this->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $user = Auth::user();
+        $user->name = $this->name;
+        $user->save();
+
+        session()->flash('profile_message', __('Profile information updated successfully.'));
+    }
+
+    public function updateAiSettings()
+    {
+        $this->validate([
+            'openai_api_key' => 'nullable|string',
+            'anthropic_api_key' => 'nullable|string',
+            'default_ai_provider' => 'required|in:openai,anthropic',
+        ]);
+
+        $user = Auth::user();
+        $user->openai_api_key = $this->openai_api_key;
+        $user->anthropic_api_key = $this->anthropic_api_key;
+        $user->default_ai_provider = $this->default_ai_provider;
+        $user->save();
+
+        session()->flash('ai_message', __('AI Configuration updated successfully.'));
+    }
+
+    public function updateThemeSettings()
+    {
+        $this->validate([
+            'theme_id' => 'nullable|exists:themes,id',
+            'page_bg_color_id' => 'nullable|exists:themes,id',
+            'card_bg_color_id' => 'nullable|exists:themes,id',
+            'text_color_id' => 'nullable|exists:themes,id',
+        ]);
+
+        $business = Auth::user()->business;
+        if ($business) {
+            $business->theme_id = $this->theme_id;
+            $business->page_bg_color_id = $this->page_bg_color_id;
+            $business->card_bg_color_id = $this->card_bg_color_id;
+            $business->text_color_id = $this->text_color_id;
+            $business->save();
+        }
+
+        session()->flash('theme_message', __('Theme preference updated successfully.'));
+    }
+
+    public function applyPreset($brandHex, $pageHex, $cardHex, $textHex)
+    {
+        $business = Auth::user()->business;
+        if (!$business)
+            return;
+
+        $this->theme_id = \App\Models\Theme::firstOrCreate(['primary_color' => $brandHex], ['name' => 'Preset Color ' . $brandHex])->id;
+        $this->page_bg_color_id = \App\Models\Theme::firstOrCreate(['primary_color' => $pageHex], ['name' => 'Preset Color ' . $pageHex])->id;
+        $this->card_bg_color_id = \App\Models\Theme::firstOrCreate(['primary_color' => $cardHex], ['name' => 'Preset Color ' . $cardHex])->id;
+        $this->text_color_id = \App\Models\Theme::firstOrCreate(['primary_color' => $textHex], ['name' => 'Preset Color ' . $textHex])->id;
+
+        $business->theme_id = $this->theme_id;
+        $business->page_bg_color_id = $this->page_bg_color_id;
+        $business->card_bg_color_id = $this->card_bg_color_id;
+        $business->text_color_id = $this->text_color_id;
+        $business->save();
+
+        session()->flash('theme_message', __('Theme combination applied successfully.'));
+    }
+
+    public function generateAiTheme()
+    {
+        $this->validate([
+            'aiThemePrompt' => 'required|string|max:200',
+        ]);
+
+        try {
+            $ai = new \App\Services\AiService();
+            $systemPrompt = "You are an expert UI/UX designer. The user wants a color theme based on this prompt: '{$this->aiThemePrompt}'. \nGenerate a beautiful, cohesive color palette. Return ONLY valid JSON with no backticks, no markdown, and no additional text. The JSON must contain these exact keys: 'brand' (primary interacting color), 'page' (main background color), 'card' (surface/box background color), 'text' (primary text color). Ensure great contrast between background and text for readability. Use standard hex codes starting with #.";
+
+            $response = $ai->generateText($systemPrompt);
+
+            $cleaned = str_replace(['```json', '```'], '', $response);
+            $cleaned = trim($cleaned);
+
+            $data = json_decode($cleaned, true);
+
+            if (is_array($data) && isset($data['brand'], $data['page'], $data['card'], $data['text'])) {
+                $this->applyPreset($data['brand'], $data['page'], $data['card'], $data['text']);
+                $this->aiThemePrompt = '';
+                session()->flash('theme_message', __('AI Theme combination generated and applied successfully!'));
+            } else {
+                throw new \Exception("AI returned invalid structure.");
+            }
+        } catch (\Exception $e) {
+            session()->flash('theme_error', __('Failed to generate AI theme: ') . $e->getMessage());
+        }
+    }
+
+    public function updatePaymentSettings()
+    {
+        $this->validate([
+            'stripe_public_key' => 'nullable|string',
+            'stripe_secret_key' => 'nullable|string',
+        ]);
+
+        $business = Auth::user()->business;
+        if ($business) {
+            $business->stripe_public_key = $this->stripe_public_key;
+            $business->stripe_secret_key = $this->stripe_secret_key;
+            $business->save();
+        }
+
+        session()->flash('payment_message', __('Payment Settings updated successfully.'));
+    }
+
+    public function updatePassword()
+    {
+        $this->validate([
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($this->current_password, $user->password)) {
+            throw ValidationException::withMessages([
+                'current_password' => __('The provided password does not match your current password.'),
+            ]);
+        }
+
+        $user->forceFill([
+            'password' => Hash::make($this->password),
+        ])->save();
+
+        $this->reset(['current_password', 'password', 'password_confirmation']);
+
+        session()->flash('password_message', __('Password updated successfully.'));
+    }
+
+    public function enableTwoFactorAuthentication()
+    {
+        $google2fa = new Google2FA();
+        $user = Auth::user();
+
+        $this->setupKey = $google2fa->generateSecretKey();
+        $this->qrCodeSvg = QrCode::size(200)->generate(
+            $google2fa->getQRCodeUrl(config('app.name'), $user->email, $this->setupKey)
+        );
+
+        $this->showingQrCode = true;
+        $this->showingRecoveryCodes = false;
+    }
+
+    public function confirmTwoFactorAuthentication()
+    {
+        $this->validate([
+            'setupCode' => 'required|string',
+        ]);
+
+        $google2fa = new Google2FA();
+
+        if (!$google2fa->verifyKey($this->setupKey, $this->setupCode)) {
+            throw ValidationException::withMessages([
+                'setupCode' => __('The provided code was invalid. Please scan the QR code and try again.'),
+            ]);
+        }
+
+        $user = Auth::user();
+        $user->forceFill([
+            'two_factor_secret' => $this->setupKey,
+            'two_factor_recovery_codes' => $this->generateRecoveryCodes(),
+            'two_factor_confirmed_at' => now(),
+        ])->save();
+
+        $this->showingQrCode = false;
+        $this->showingRecoveryCodes = true;
+        $this->recoveryCodes = $user->two_factor_recovery_codes;
+        $this->setupCode = '';
+
+        session()->flash('two_factor_message', __('Two-factor authentication is now enabled.'));
+    }
+
+    public function showRecoveryCodes()
+    {
+        $this->recoveryCodes = Auth::user()->two_factor_recovery_codes ?? [];
+        $this->showingRecoveryCodes = true;
+    }
+
+    public function regenerateRecoveryCodes()
+    {
+        $user = Auth::user();
+        $user->forceFill([
+            'two_factor_recovery_codes' => $this->generateRecoveryCodes(),
+        ])->save();
+
+        $this->recoveryCodes = $user->two_factor_recovery_codes;
+        session()->flash('two_factor_message', __('Recovery codes have been regenerated.'));
+    }
+
+    public function disableTwoFactorAuthentication()
+    {
+        $user = Auth::user();
+        $user->forceFill([
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'two_factor_confirmed_at' => null,
+        ])->save();
+
+        $this->showingQrCode = false;
+        $this->showingRecoveryCodes = false;
+
+        session()->flash('two_factor_message', __('Two-factor authentication has been disabled.'));
+    }
+
+    protected function generateRecoveryCodes()
+    {
+        return collect(range(1, 8))->map(function () {
+            return Str::random(10) . '-' . Str::random(10);
+        })->toArray();
+    }
+
+    public function render()
+    {
+        return view('livewire.profile.show', [
+            'availableThemes' => \App\Models\Theme::where('is_active', true)->orderBy('name')->get()
+        ]);
+    }
+}

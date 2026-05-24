@@ -1,0 +1,144 @@
+/* Underline Animation Menu Styles */
+
+.underline-navbar {
+  background-color: var(--bg-color);
+  box-shadow: var(--shadow);
+  position: relative;
+  z-index: 100;
+}
+
+.underline-navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.underline-navbar .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.underline-menu {
+  display: flex;
+  gap: var(--spacing-lg);
+  list-style: none;
+}
+
+.underline-menu a {
+  position: relative;
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-xs);
+  color: var(--text-color);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.underline-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  transition: width 0.3s ease;
+}
+
+.underline-menu a:hover,
+.underline-menu a.active {
+  color: var(--primary-color);
+}
+
+.underline-menu a:hover::after,
+.underline-menu a.active::after {
+  width: 100%;
+}
+
+.underline-style-2 .underline-menu a::after {
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.underline-style-2 .underline-menu a:hover::after,
+.underline-style-2 .underline-menu a.active::after {
+  width: 100%;
+}
+
+.underline-style-3 .underline-menu a::after {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.underline-style-3 .underline-menu a:hover::after,
+.underline-style-3 .underline-menu a.active::after {
+  transform: scaleX(1);
+}
+
+.underline-style-4 .underline-menu a::before,
+.underline-style-4 .underline-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  transition: width 0.3s ease;
+}
+
+.underline-style-4 .underline-menu a::before {
+  left: 50%;
+}
+
+.underline-style-4 .underline-menu a::after {
+  right: 50%;
+}
+
+.underline-style-4 .underline-menu a:hover::before,
+.underline-style-4 .underline-menu a:hover::after,
+.underline-style-4 .underline-menu a.active::before,
+.underline-style-4 .underline-menu a.active::after {
+  width: 50%;
+}
+
+.underline-style-5 .underline-menu a {
+  overflow: hidden;
+}
+
+.underline-style-5 .underline-menu a::after {
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  transition: left 0.3s ease;
+}
+
+.underline-style-5 .underline-menu a:hover::after,
+.underline-style-5 .underline-menu a.active::after {
+  left: 0;
+}
+
+@media (max-width: 768px) {
+  .underline-navbar .container {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .underline-menu {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    width: 100%;
+  }
+
+  .underline-menu a {
+    text-align: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}

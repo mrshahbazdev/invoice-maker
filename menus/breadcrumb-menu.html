@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breadcrumb Menu | Navigation Menus</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/breadcrumb-menu.css">
+</head>
+<body>
+  <div class="demo-section" style="padding-top: 2rem;">
+    <div class="demo-content">
+      <h2>Breadcrumb Navigation</h2>
+      <p>Breadcrumb navigation users को current page की location बताता है site hierarchy में। यह navigation path को visual तरीके से represent करता है।</p>
+
+      <h3>Style 1: Simple Breadcrumb</h3>
+      <div class="breadcrumb-container">
+        <ul class="breadcrumb">
+          <li><span class="icon">🏠</span></li>
+          <li><a href="#">होम</a></li>
+          <li><span class="separator">›</span></li>
+          <li><a href="#">उत्पाद</a></li>
+          <li><span class="separator">›</span></li>
+          <li><a href="#">इलेक्ट्रॉनिक्स</a></li>
+          <li><span class="separator">›</span></li>
+          <li><span class="current">लैपटॉप</span></li>
+        </ul>
+      </div>
+
+      <h3>Style 2: Arrow Breadcrumb</h3>
+      <div class="breadcrumb-container breadcrumb-style-2">
+        <ul class="breadcrumb">
+          <li><a href="#">होम</a></li>
+          <li><a href="#">सेवाएं</a></li>
+          <li><a href="#">वेब डिज़ाइन</a></li>
+          <li><span class="current">UI/UX</span></li>
+        </ul>
+      </div>
+
+      <h3>Style 3: Gradient Breadcrumb</h3>
+      <div class="breadcrumb-container breadcrumb-style-3">
+        <ul class="breadcrumb">
+          <li><span class="icon">🏠</span></li>
+          <li><a href="#">होम</a></li>
+          <li><span class="separator">›</span></li>
+          <li><a href="#">ब्लॉग</a></li>
+          <li><span class="separator">›</span></li>
+          <li><a href="#">टेक्नोलॉजी</a></li>
+          <li><span class="separator">›</span></li>
+          <li><span class="current">Web Development</span></li>
+        </ul>
+      </div>
+      
+      <h3>विशेषताएं:</h3>
+      <p>✅ Clear hierarchical path</p>
+      <p>✅ Clickable parent links</p>
+      <p>✅ Visual separators</p>
+      <p>✅ Current page indication</p>
+      <p>✅ Multiple style variations</p>
+      
+      <h3>उपयोग के मामले:</h3>
+      <p>Breadcrumbs E-commerce sites, blogs, documentation sites, और multi-level websites के लिए essential हैं। Users को context provide करते हैं और navigation को easy बनाते हैं।</p>
+      
+      <h3>Best Practices:</h3>
+      <p>• हमेशा homepage से start करें</p>
+      <p>• Current page को non-clickable बनाएं</p>
+      <p>• Clear separators use करें</p>
+      <p>• Mobile पर truncate करने का option दें</p>
+      
+      <h3>Demo Content:</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+  </div>
+
+  <a href="../index.html" class="back-button">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    वापस जाएं
+  </a>
+
+  <script src="../js/common.js"></script>
+</body>
+</html>

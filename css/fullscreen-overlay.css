@@ -1,0 +1,194 @@
+/* Fullscreen Overlay Menu Styles */
+
+.fullscreen-header {
+  background-color: var(--bg-color);
+  box-shadow: var(--shadow);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.fullscreen-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.fullscreen-header .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  z-index: 1001;
+}
+
+.fullscreen-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: var(--spacing-xs);
+  background: none;
+  border: none;
+}
+
+.fullscreen-toggle span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: var(--text-color);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.fullscreen-overlay.active ~ .fullscreen-header .fullscreen-toggle span {
+  background-color: white;
+}
+
+.fullscreen-overlay.active ~ .fullscreen-header .fullscreen-toggle span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.fullscreen-overlay.active ~ .fullscreen-header .fullscreen-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.fullscreen-overlay.active ~ .fullscreen-header .fullscreen-toggle span:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -8px);
+}
+
+.fullscreen-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.98) 0%, rgba(118, 75, 162, 0.98) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  z-index: 998;
+}
+
+.fullscreen-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.fullscreen-menu {
+  list-style: none;
+  text-align: center;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.4s ease 0.2s;
+}
+
+.fullscreen-overlay.active .fullscreen-menu {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.fullscreen-menu li {
+  margin-bottom: var(--spacing-md);
+  animation: slideUp 0.5s ease;
+  animation-fill-mode: both;
+}
+
+.fullscreen-overlay.active .fullscreen-menu li:nth-child(1) { animation-delay: 0.3s; }
+.fullscreen-overlay.active .fullscreen-menu li:nth-child(2) { animation-delay: 0.4s; }
+.fullscreen-overlay.active .fullscreen-menu li:nth-child(3) { animation-delay: 0.5s; }
+.fullscreen-overlay.active .fullscreen-menu li:nth-child(4) { animation-delay: 0.6s; }
+.fullscreen-overlay.active .fullscreen-menu li:nth-child(5) { animation-delay: 0.7s; }
+
+.fullscreen-menu a {
+  display: inline-block;
+  color: white;
+  font-size: 3rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.fullscreen-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 4px;
+  background: white;
+  transition: width 0.3s ease;
+}
+
+.fullscreen-menu a:hover::after,
+.fullscreen-menu a.active::after {
+  width: 100%;
+}
+
+.fullscreen-menu a:hover {
+  transform: scale(1.1);
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.fullscreen-close {
+  position: absolute;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.fullscreen-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.fullscreen-style-2 {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.fullscreen-style-3 {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+}
+
+.fullscreen-content {
+  margin-top: 70px;
+  padding: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .fullscreen-menu a {
+    font-size: 2rem;
+  }
+
+  .fullscreen-close {
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 40px;
+    height: 40px;
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fullscreen-menu a {
+    font-size: 1.5rem;
+  }
+}
