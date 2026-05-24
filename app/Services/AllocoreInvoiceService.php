@@ -52,10 +52,20 @@ class AllocoreInvoiceService
     }
 
     /**
-     * Get or create the Allocore seller Business entity.
+     * Get the Allocore seller Business entity.
+     * If admin linked an existing business in settings, use that.
+     * Otherwise, create a dedicated Allocore business.
      */
     public function getOrCreateAllocoreBusiness(): Business
     {
+        $linkedId = $this->cfg('linked_business_id');
+        if ($linkedId) {
+            $linked = Business::find($linkedId);
+            if ($linked) {
+                return $linked;
+            }
+        }
+
         $cfg = [
             'name' => $this->cfg('business_name', 'Allocore GmbH'),
             'email' => $this->cfg('business_email', 'billing@allocore.com'),

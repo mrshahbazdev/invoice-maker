@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Settings;
 
 use Livewire\Component;
+use App\Models\Business;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Http;
 
@@ -10,16 +11,20 @@ class Allocore extends Component
 {
     public $allocore_api_key;
     public $allocore_webhook_url;
+    public $allocore_linked_business_id;
     public $allocore_business_name;
     public $allocore_business_email;
     public $allocore_invoice_prefix;
     public $allocore_default_tax_rate;
     public $allocore_payment_terms_days;
+    public $businesses = [];
 
     public function mount()
     {
+        $this->businesses = Business::select('id', 'name', 'email')->orderBy('name')->get()->toArray();
         $this->allocore_api_key = Setting::get('allocore.api_key');
         $this->allocore_webhook_url = Setting::get('allocore.webhook_url');
+        $this->allocore_linked_business_id = Setting::get('allocore.linked_business_id');
         $this->allocore_business_name = Setting::get('allocore.business_name', 'Allocore GmbH');
         $this->allocore_business_email = Setting::get('allocore.business_email', 'billing@allocore.com');
         $this->allocore_invoice_prefix = Setting::get('allocore.invoice_prefix', 'ALC');
@@ -32,6 +37,7 @@ class Allocore extends Component
         $this->validate([
             'allocore_api_key' => 'nullable|string|max:255',
             'allocore_webhook_url' => 'nullable|url|max:255',
+            'allocore_linked_business_id' => 'nullable|integer|exists:businesses,id',
             'allocore_business_name' => 'nullable|string|max:255',
             'allocore_business_email' => 'nullable|email|max:255',
             'allocore_invoice_prefix' => 'nullable|string|max:10',
@@ -41,6 +47,7 @@ class Allocore extends Component
 
         Setting::set('allocore.api_key', $this->allocore_api_key);
         Setting::set('allocore.webhook_url', $this->allocore_webhook_url);
+        Setting::set('allocore.linked_business_id', $this->allocore_linked_business_id);
         Setting::set('allocore.business_name', $this->allocore_business_name);
         Setting::set('allocore.business_email', $this->allocore_business_email);
         Setting::set('allocore.invoice_prefix', $this->allocore_invoice_prefix);

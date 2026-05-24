@@ -24,6 +24,43 @@
         </div>
     @endif
 
+    {{-- Linked Business Section --}}
+    <div class="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 sm:p-8 mb-6">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                </svg>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-white">{{ __('Linked Business / Company') }}</h3>
+                <p class="text-sm text-gray-500">{{ __('Select an existing business account to receive Allocore invoices. If none selected, a new Allocore business will be auto-created.') }}</p>
+            </div>
+        </div>
+
+        <form wire:submit="save" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">{{ __('Attach to Business') }}</label>
+                <select wire:model="allocore_linked_business_id"
+                    class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl focus:ring-brand-500 focus:border-brand-500 block px-4 py-3">
+                    <option value="">{{ __('-- Auto-create new Allocore business --') }}</option>
+                    @foreach($businesses as $biz)
+                        <option value="{{ $biz['id'] }}">{{ $biz['name'] }} ({{ $biz['email'] }})</option>
+                    @endforeach
+                </select>
+                <p class="text-xs text-gray-500 mt-1">{{ __('All Allocore-generated invoices will appear under this business account. Clients from Allocore will be added as clients of this business.') }}</p>
+                @error('allocore_linked_business_id') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
+            </div>
+
+            <div class="flex justify-end pt-2">
+                <button type="submit" wire:loading.attr="disabled"
+                    class="inline-flex items-center px-6 py-3 bg-brand-600 border border-transparent rounded-xl font-semibold text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 focus:ring-offset-gray-900 disabled:opacity-50 transition-colors shadow-lg shadow-brand-500/20">
+                    {{ __('Save') }}
+                </button>
+            </div>
+        </form>
+    </div>
+
     {{-- API Key Section --}}
     <div class="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6 sm:p-8 mb-6">
         <div class="flex items-center justify-between mb-6">
