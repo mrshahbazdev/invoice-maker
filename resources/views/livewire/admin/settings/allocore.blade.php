@@ -1,7 +1,7 @@
 <div class="max-w-4xl mx-auto">
     <div class="mb-8">
         <h2 class="text-2xl font-bold font-heading text-white">{{ __('Allocore Integration') }}</h2>
-        <p class="text-gray-400 mt-1">{{ __('Manage API keys and settings for the Allocore Tools Platform integration.') }}</p>
+        <p class="text-gray-300 mt-1">{{ __('Manage API keys and settings for the Allocore Tools Platform integration.') }}</p>
     </div>
 
     @if (session()->has('message'))
@@ -34,7 +34,7 @@
             </div>
             <div>
                 <h3 class="text-lg font-semibold text-white">{{ __('Linked Business / Company') }}</h3>
-                <p class="text-sm text-gray-500">{{ __('Select an existing business account to receive Allocore invoices. If none selected, a new Allocore business will be auto-created.') }}</p>
+                <p class="text-sm text-gray-400">{{ __('Select an existing business account to receive Allocore invoices. If none selected, a new Allocore business will be auto-created.') }}</p>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
                         <option value="{{ $biz['id'] }}">{{ $biz['name'] }} ({{ $biz['email'] }})</option>
                     @endforeach
                 </select>
-                <p class="text-xs text-gray-500 mt-1">{{ __('All Allocore-generated invoices will appear under this business account. Clients from Allocore will be added as clients of this business.') }}</p>
+                <p class="text-xs text-gray-400 mt-1">{{ __('All Allocore-generated invoices will appear under this business account. Clients from Allocore will be added as clients of this business.') }}</p>
                 @error('allocore_linked_business_id') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
             </div>
 
@@ -72,7 +72,7 @@
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold text-white">{{ __('API Authentication') }}</h3>
-                    <p class="text-sm text-gray-500">{{ __('API key for Allocore ↔ Invoice Maker communication') }}</p>
+                    <p class="text-sm text-gray-400">{{ __('API key for Allocore ↔ Invoice Maker communication') }}</p>
                 </div>
             </div>
             @if(!empty($allocore_api_key))
@@ -88,7 +88,7 @@
                 <input type="password" wire:model="allocore_api_key"
                     class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl focus:ring-brand-500 focus:border-brand-500 block px-4 py-3"
                     placeholder="alc_xxxxxxxxxxxx...">
-                <p class="text-xs text-gray-500 mt-1">{{ __('Must match the INVOICE_MAKER_API_KEY configured in Allocore') }}</p>
+                <p class="text-xs text-gray-400 mt-1">{{ __('Must match the INVOICE_MAKER_API_KEY configured in Allocore') }}</p>
                 @error('allocore_api_key') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
             </div>
 
@@ -97,7 +97,7 @@
                 <input type="url" wire:model="allocore_webhook_url"
                     class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl focus:ring-brand-500 focus:border-brand-500 block px-4 py-3"
                     placeholder="https://allocore.example.com/api/webhooks/invoice-status">
-                <p class="text-xs text-gray-500 mt-1">{{ __('Allocore webhook endpoint to receive invoice status updates') }}</p>
+                <p class="text-xs text-gray-400 mt-1">{{ __('Allocore webhook endpoint to receive invoice status updates') }}</p>
                 @error('allocore_webhook_url') <span class="text-red-400 text-sm mt-1 block">{{ $message }}</span> @enderror
             </div>
 
@@ -136,7 +136,7 @@
             </div>
             <div>
                 <h3 class="text-lg font-semibold text-white">{{ __('Allocore Business & Invoice Defaults') }}</h3>
-                <p class="text-sm text-gray-500">{{ __('Default values for invoices created from Allocore orders') }}</p>
+                <p class="text-sm text-gray-400">{{ __('Default values for invoices created from Allocore orders') }}</p>
             </div>
         </div>
 
@@ -198,7 +198,7 @@
     {{-- Info Section --}}
     <div class="bg-gray-800/30 border border-gray-700/30 rounded-2xl p-6">
         <h4 class="text-sm font-semibold text-white mb-3">{{ __('Setup Guide') }}</h4>
-        <ul class="space-y-2 text-xs text-gray-400">
+        <ul class="space-y-2 text-sm text-gray-300">
             <li class="flex items-start gap-2">
                 <span class="text-brand-400 font-bold mt-0.5">1.</span>
                 {{ __('Generate an API key here or enter the one from Allocore admin panel.') }}
