@@ -20,12 +20,62 @@ class AllocoreInvoiceService
         $this->numberService = $numberService;
     }
 
+    protected function cfg(string $key, mixed $default = null): mixed
+    {
+        $dbKey = 'allocore.' . $key;
+        $dbVal = \App\Models\Setting::get($dbKey);
+        if ($dbVal !== null && $dbVal !== '') {
+            return $dbVal;
+        }
+
+        $configMap = [
+            'business_name' => 'allocore.business.name',
+            'business_email' => 'allocore.business.email',
+            'tax_number' => 'allocore.business.tax_number',
+            'business_address' => 'allocore.business.address',
+            'business_phone' => 'allocore.business.phone',
+            'currency' => 'allocore.business.currency',
+            'iban' => 'allocore.business.iban',
+            'bic' => 'allocore.business.bic',
+            'invoice_prefix' => 'allocore.invoice.prefix',
+            'default_tax_rate' => 'allocore.invoice.default_tax_rate',
+            'payment_terms_days' => 'allocore.invoice.payment_terms_days',
+            'payment_terms_text' => 'allocore.invoice.payment_terms_text',
+            'webhook_url' => 'allocore.webhook_url',
+        ];
+
+        if (isset($configMap[$key])) {
+            return config($configMap[$key], $default);
+        }
+
+        return $default;
+    }
+
     /**
-     * Get or create the Allocore seller Business entity.
+     * Get the Allocore seller Business entity.
+     * If admin linked an existing business in settings, use that.
+     * Otherwise, create a dedicated Allocore business.
      */
     public function getOrCreateAllocoreBusiness(): Business
     {
-        $cfg = config('allocore.business');
+        $linkedId = $this->cfg('linked_business_id');
+        if ($linkedId) {
+            $linked = Business::find($linkedId);
+            if ($linked) {
+                return $linked;
+            }
+        }
+
+        $cfg = [
+            'name' => $this->cfg('business_name', 'Allocore GmbH'),
+            'email' => $this->cfg('business_email', 'billing@allocore.com'),
+            'tax_number' => $this->cfg('tax_number', ''),
+            'address' => $this->cfg('business_address', ''),
+            'phone' => $this->cfg('business_phone', ''),
+            'currency' => $this->cfg('currency', 'EUR'),
+            'iban' => $this->cfg('iban', ''),
+            'bic' => $this->cfg('bic', ''),
+        ];
 
         $business = Business::where('email', $cfg['email'])->first();
 
@@ -55,7 +105,7 @@ class AllocoreInvoiceService
             'currency' => $cfg['currency'],
             'iban' => $cfg['iban'],
             'bic' => $cfg['bic'],
-            'invoice_number_prefix' => config('allocore.invoice.prefix'),
+            'invoice_number_prefix' => $this->cfg('invoice_prefix', 'ALC'),
             'invoice_number_next' => 1,
         ]);
     }
@@ -89,7 +139,7 @@ class AllocoreInvoiceService
             'email' => $userData['email'] ?? '',
             'company_name' => $userData['company'] ?? null,
             'phone' => $userData['phone'] ?? null,
-            'currency' => config('allocore.business.currency'),
+            'currency' => $this->cfg('currency', 'EUR'),
             'source' => 'allocore',
         ]);
     }
@@ -110,11 +160,11 @@ class AllocoreInvoiceService
             return $existing;
         }
 
-        $taxRate = config('allocore.invoice.default_tax_rate');
+        $taxRate = (float) $this->cfg('default_tax_rate', 19);
         $netAmount = (float) $orderData['amount'];
         $taxAmount = round($netAmount * ($taxRate / 100), 2);
         $grossAmount = $netAmount + $taxAmount;
-        $termsDays = config('allocore.invoice.payment_terms_days');
+        $termsDays = (int) $this->cfg('payment_terms_days', 14);
 
         return DB::transaction(function () use (
             $business, $client, $orderData, $taxRate, $netAmount, $taxAmount, $grossAmount, $termsDays
@@ -141,7 +191,7 @@ class AllocoreInvoiceService
                 'amount_paid' => $orderData['status'] === 'paid' ? $grossAmount : 0,
                 'amount_due' => $orderData['status'] === 'paid' ? 0 : $grossAmount,
                 'notes' => $orderData['notes'] ?? null,
-                'payment_terms' => config('allocore.invoice.payment_terms_text'),
+                'payment_terms' => $this->cfg('payment_terms_text', 'Zahlbar innerhalb von 14 Tagen.'),
                 'source' => 'allocore',
                 'is_recurring' => $isRecurring,
                 'recurring_frequency' => $isRecurring ? $interval : null,
@@ -225,7 +275,7 @@ class AllocoreInvoiceService
      */
     protected function notifyAllocore(Invoice $invoice): void
     {
-        $webhookUrl = config('allocore.webhook_url');
+        $webhookUrl = $this->cfg('webhook_url');
 
         if (!$webhookUrl || !$invoice->allocore_order_id) {
             return;
