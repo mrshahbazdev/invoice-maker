@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Invoice;
+use App\Models\EmailLog;
 use App\Mail\PaymentReminderMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -96,9 +97,27 @@ class SendInvoiceReminders extends Command
                 'last_reminder_sent_at' => now(),
             ]);
 
+            EmailLog::create([
+                'invoice_id' => $invoice->id,
+                'business_id' => $invoice->business_id,
+                'recipient_email' => $invoice->client->email,
+                'subject' => 'Payment Reminder: ' . $invoice->invoice_number,
+                'type' => EmailLog::TYPE_REMINDER,
+                'status' => EmailLog::STATUS_SENT,
+            ]);
+
             $this->info("Overdue Reminder sent for Invoice #{$invoice->invoice_number} to {$invoice->client->email}");
             Log::info("Payment Reminder Sent: Invoice #{$invoice->id}");
         } catch (\Exception $e) {
+            EmailLog::create([
+                'invoice_id' => $invoice->id,
+                'business_id' => $invoice->business_id,
+                'recipient_email' => $invoice->client->email ?? '',
+                'subject' => 'Payment Reminder: ' . $invoice->invoice_number,
+                'type' => EmailLog::TYPE_REMINDER,
+                'status' => EmailLog::STATUS_FAILED,
+                'error_message' => $e->getMessage(),
+            ]);
             $this->error("Failed to send reminder for Invoice #{$invoice->invoice_number}: " . $e->getMessage());
             Log::error("Failed to send payment reminder: " . $e->getMessage());
         }

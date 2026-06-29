@@ -135,6 +135,11 @@ class Invoice extends Model
         return $this->hasMany(Expense::class);
     }
 
+    public function emailLogs()
+    {
+        return $this->hasMany(EmailLog::class);
+    }
+
     public function getStatusColorAttribute()
     {
         return match ($this->status) {

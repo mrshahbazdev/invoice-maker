@@ -465,6 +465,63 @@
                     </div>
                 </div>
             @endif
+
+            {{-- Email Log --}}
+            @php $emailLogs = $invoice->emailLogs()->latest()->get(); @endphp
+            <div class="bg-card rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-txmain mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    {{ __('Email Log') }}
+                </h3>
+                @if($emailLogs->isEmpty())
+                    <p class="text-sm text-gray-500">{{ __('No emails have been sent for this invoice yet.') }}</p>
+                @else
+                    <div class="space-y-3">
+                        @foreach($emailLogs as $log)
+                            <div class="flex justify-between items-start pb-3 border-b last:border-0">
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        @if($log->status === 'sent')
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                                {{ __('Sent') }}
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                                {{ __('Failed') }}
+                                            </span>
+                                        @endif
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                                            @if($log->type === 'manual')
+                                                {{ __('Manual') }}
+                                            @elseif($log->type === 'scheduled')
+                                                {{ __('Automatic') }}
+                                            @else
+                                                {{ __('Reminder') }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-txmain mt-1">{{ $log->recipient_email }}</p>
+                                    @if($log->subject)
+                                        <p class="text-xs text-gray-500 mt-0.5 truncate max-w-xs">{{ $log->subject }}</p>
+                                    @endif
+                                    @if($log->error_message)
+                                        <p class="text-xs text-red-500 mt-0.5">{{ $log->error_message }}</p>
+                                    @endif
+                                </div>
+                                <div class="text-right text-sm text-gray-500 whitespace-nowrap">
+                                    {{ $log->created_at->format('M d, Y') }}
+                                    <br>
+                                    <span class="text-xs">{{ $log->created_at->format('H:i') }}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Invoice;
+use App\Models\EmailLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Services\PdfGenerationService;
@@ -75,13 +76,32 @@ class SendScheduledInvoices extends Command
                         }
                     });
 
-                    // Update status to sent so we don't send it again
                     $invoice->update(['status' => Invoice::STATUS_SENT]);
+
+                    EmailLog::create([
+                        'invoice_id' => $invoice->id,
+                        'business_id' => $invoice->business_id,
+                        'recipient_email' => $invoice->client->email,
+                        'subject' => $template['subject'],
+                        'type' => EmailLog::TYPE_SCHEDULED,
+                        'status' => EmailLog::STATUS_SENT,
+                    ]);
 
                     $this->info("Emailed scheduled invoice {$invoice->invoice_number} to {$invoice->client->email}");
                     $count++;
                 }
             } catch (\Exception $e) {
+                if (isset($invoice->client) && $invoice->client->email) {
+                    EmailLog::create([
+                        'invoice_id' => $invoice->id,
+                        'business_id' => $invoice->business_id,
+                        'recipient_email' => $invoice->client->email,
+                        'subject' => $template['subject'] ?? null,
+                        'type' => EmailLog::TYPE_SCHEDULED,
+                        'status' => EmailLog::STATUS_FAILED,
+                        'error_message' => $e->getMessage(),
+                    ]);
+                }
                 Log::error("Failed to send scheduled invoice ID {$invoice->id}: " . $e->getMessage());
                 $this->error("Failed to send scheduled invoice ID {$invoice->id}");
             }

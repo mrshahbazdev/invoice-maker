@@ -110,7 +110,10 @@ class Index extends Component
 
  public function render()
  {
- $query = Auth::user()->business->invoices()->where('type', Invoice::TYPE_INVOICE)->with('client');
+ $query = Auth::user()->business->invoices()->where('type', Invoice::TYPE_INVOICE)->with('client')
+            ->withCount(['emailLogs as emails_sent_count' => function ($q) {
+                $q->where('status', 'sent');
+            }]);
 
  if ($this->search) {
  $query->where(function ($q) {
