@@ -463,5 +463,12 @@
     "Anthropic (Claude)": "Anthropic (Claude)",
     "OpenAI API Key": "OpenAI API-Schlüssel",
     "Anthropic API Key": "Anthropic API-Schlüssel",
-    "AI Configuration updated successfully.": "KI-Konfiguration erfolgreich aktualisiert."
+    "AI Configuration updated successfully.": "KI-Konfiguration erfolgreich aktualisiert.",
+    "Email Log": "E-Mail-Protokoll",
+    "No emails have been sent for this invoice yet.": "Bisher wurden keine E-Mails f\u00fcr diese Rechnung versendet.",
+    "Email sent": "E-Mail gesendet",
+    "Manual": "Manuell",
+    "Automatic": "Automatisch",
+    "Reminder": "Erinnerung",
+    "Failed to send email: ": "E-Mail konnte nicht gesendet werden: "
 }

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Invoice;
+use App\Models\EmailLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Services\PdfGenerationService;
@@ -127,6 +128,15 @@ class ProcessRecurringInvoices extends Command
                                 $fromAddress,
                                 $fromName
                             ));
+
+                        EmailLog::create([
+                            'invoice_id' => $newInvoice->id,
+                            'business_id' => $newInvoice->business_id,
+                            'recipient_email' => $newInvoice->client->email,
+                            'subject' => $template['subject'],
+                            'type' => EmailLog::TYPE_SCHEDULED,
+                            'status' => EmailLog::STATUS_SENT,
+                        ]);
 
                         $this->info("Emailed invoice to {$newInvoice->client->email}");
                     }

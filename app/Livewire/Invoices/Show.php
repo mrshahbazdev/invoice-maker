@@ -5,6 +5,7 @@ namespace App\Livewire\Invoices;
 use Livewire\Component;
 use App\Models\Invoice;
 use App\Models\Payment;
+use App\Models\EmailLog;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InvoiceMail;
 use App\Services\PdfGenerationService;
@@ -98,9 +99,34 @@ class Show extends Component
 
         $pdfContent = $pdfService->generate($this->invoice);
 
-        \App\Services\MailConfigurationService::getMailer($this->invoice->business)
-            ->to($this->invoice->client->email)
-            ->send(new InvoiceMail($this->invoice, $pdfContent, $this->emailSubject, $this->emailBody));
+        try {
+            \App\Services\MailConfigurationService::getMailer($this->invoice->business)
+                ->to($this->invoice->client->email)
+                ->send(new InvoiceMail($this->invoice, $pdfContent, $this->emailSubject, $this->emailBody));
+
+            EmailLog::create([
+                'invoice_id' => $this->invoice->id,
+                'business_id' => $this->invoice->business_id,
+                'recipient_email' => $this->invoice->client->email,
+                'subject' => $this->emailSubject,
+                'type' => EmailLog::TYPE_MANUAL,
+                'status' => EmailLog::STATUS_SENT,
+            ]);
+        } catch (\Exception $e) {
+            EmailLog::create([
+                'invoice_id' => $this->invoice->id,
+                'business_id' => $this->invoice->business_id,
+                'recipient_email' => $this->invoice->client->email,
+                'subject' => $this->emailSubject,
+                'type' => EmailLog::TYPE_MANUAL,
+                'status' => EmailLog::STATUS_FAILED,
+                'error_message' => $e->getMessage(),
+            ]);
+
+            $this->closeEmailModal();
+            session()->flash('error', __('Failed to send email: ') . $e->getMessage());
+            return;
+        }
 
         if ($this->invoice->status === Invoice::STATUS_DRAFT) {
             $this->invoice->update(['status' => Invoice::STATUS_SENT]);
