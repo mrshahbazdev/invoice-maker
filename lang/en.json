@@ -456,5 +456,11 @@
     "Manual": "Manual",
     "Automatic": "Automatic",
     "Reminder": "Reminder",
-    "Failed to send email: ": "Failed to send email: "
+    "Failed to send email: ": "Failed to send email: ",
+    "Reopen": "Reopen",
+    "Invoice reopened. Payments and cash book entries have been reversed.": "Invoice reopened. Payments and cash book entries have been reversed.",
+    "Invoice cancelled and payments reversed.": "Invoice cancelled and payments reversed.",
+    "This will reverse all payments and cash book entries for this invoice. Continue?": "This will reverse all payments and cash book entries for this invoice. Continue?",
+    "This will cancel the invoice and reverse all payments and cash book entries. Use this for duplicate invoices. Continue?": "This will cancel the invoice and reverse all payments and cash book entries. Use this for duplicate invoices. Continue?",
+    "Are you sure you want to cancel this invoice?": "Are you sure you want to cancel this invoice?"
 }

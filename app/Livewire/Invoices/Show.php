@@ -219,8 +219,44 @@ class Show extends Component
 
     public function cancelInvoice(): void
     {
-        $this->invoice->update(['status' => Invoice::STATUS_CANCELLED]);
+        $wasPaid = $this->invoice->status === Invoice::STATUS_PAID;
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($wasPaid) {
+            if ($wasPaid) {
+                // Remove payments and associated cash book entries
+                $this->invoice->payments()->delete();
+                \App\Models\CashBookEntry::where('invoice_id', $this->invoice->id)->delete();
+
+                $this->invoice->update([
+                    'status' => Invoice::STATUS_CANCELLED,
+                    'amount_paid' => 0,
+                    'amount_due' => $this->invoice->grand_total,
+                ]);
+            } else {
+                $this->invoice->update(['status' => Invoice::STATUS_CANCELLED]);
+            }
+        });
+
+        $this->invoice->load('payments');
         session()->flash('message', ($this->invoice->isEstimate() ? 'Estimate' : 'Invoice') . ' cancelled.');
+    }
+
+    public function reopenInvoice(): void
+    {
+        \Illuminate\Support\Facades\DB::transaction(function () {
+            // Remove payments and associated cash book entries
+            $this->invoice->payments()->delete();
+            \App\Models\CashBookEntry::where('invoice_id', $this->invoice->id)->delete();
+
+            $this->invoice->update([
+                'status' => Invoice::STATUS_SENT,
+                'amount_paid' => 0,
+                'amount_due' => $this->invoice->grand_total,
+            ]);
+        });
+
+        $this->invoice->load('payments');
+        session()->flash('message', __('Invoice reopened. Payments and cash book entries have been reversed.'));
     }
 
     public function markAsUnpaid(): void
