@@ -50,6 +50,33 @@
             @endif
             @if(in_array($invoice->status, ['draft', 'sent', 'overdue']))
                 <button wire:click="cancelInvoice" wire:loading.attr="disabled"
+                    wire:confirm="{{ __('Are you sure you want to cancel this invoice?') }}"
+                    class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition disabled:opacity-50">
+                    <svg wire:loading wire:target="cancelInvoice" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span>{{ __('Cancel') }}</span>
+                </button>
+            @endif
+            @if($invoice->status === 'paid')
+                <button wire:click="reopenInvoice" wire:loading.attr="disabled"
+                    wire:confirm="{{ __('This will reverse all payments and cash book entries for this invoice. Continue?') }}"
+                    class="inline-flex items-center px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition disabled:opacity-50">
+                    <svg wire:loading wire:target="reopenInvoice" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span>{{ __('Reopen') }}</span>
+                </button>
+                <button wire:click="cancelInvoice" wire:loading.attr="disabled"
+                    wire:confirm="{{ __('This will cancel the invoice and reverse all payments and cash book entries. Use this for duplicate invoices. Continue?') }}"
                     class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition disabled:opacity-50">
                     <svg wire:loading wire:target="cancelInvoice" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
                         fill="none" viewBox="0 0 24 24">

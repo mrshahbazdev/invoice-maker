@@ -118,6 +118,14 @@
                                         <button wire:click="markAsUnpaid({{ $invoice->id }})"
                                             class="text-brand-600 hover:text-brand-700 text-sm font-medium">{{ __('Mark as Unpaid') }}</button>
                                     @endif
+                                    @if($invoice->status === 'paid')
+                                        <button wire:click="reopenInvoice({{ $invoice->id }})"
+                                            wire:confirm="{{ __('This will reverse all payments and cash book entries for this invoice. Continue?') }}"
+                                            class="text-yellow-600 hover:text-yellow-700 text-sm font-medium">{{ __('Reopen') }}</button>
+                                        <button wire:click="cancelPaidInvoice({{ $invoice->id }})"
+                                            wire:confirm="{{ __('This will cancel the invoice and reverse all payments and cash book entries. Use this for duplicate invoices. Continue?') }}"
+                                            class="text-red-600 hover:text-red-700 text-sm font-medium">{{ __('Cancel') }}</button>
+                                    @endif
                                     @if($invoice->status !== 'paid' && $invoice->status !== 'cancelled')
                                         <button wire:click="openPaidModal({{ $invoice->id }})"
                                             class="text-green-600 hover:text-green-700 text-sm font-medium">{{ __('Paid') }}</button>

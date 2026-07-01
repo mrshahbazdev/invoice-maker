@@ -40,6 +40,42 @@ class Index extends Component
   session()->flash('message', 'Invoice marked as unpaid.');
   }
 
+  public function reopenInvoice(int $id): void
+  {
+      $invoice = Auth::user()->business->invoices()->findOrFail($id);
+
+      \Illuminate\Support\Facades\DB::transaction(function () use ($invoice) {
+          $invoice->payments()->delete();
+          \App\Models\CashBookEntry::where('invoice_id', $invoice->id)->delete();
+
+          $invoice->update([
+              'status' => \App\Models\Invoice::STATUS_SENT,
+              'amount_paid' => 0,
+              'amount_due' => $invoice->grand_total,
+          ]);
+      });
+
+      session()->flash('message', __('Invoice reopened. Payments and cash book entries have been reversed.'));
+  }
+
+  public function cancelPaidInvoice(int $id): void
+  {
+      $invoice = Auth::user()->business->invoices()->findOrFail($id);
+
+      \Illuminate\Support\Facades\DB::transaction(function () use ($invoice) {
+          $invoice->payments()->delete();
+          \App\Models\CashBookEntry::where('invoice_id', $invoice->id)->delete();
+
+          $invoice->update([
+              'status' => \App\Models\Invoice::STATUS_CANCELLED,
+              'amount_paid' => 0,
+              'amount_due' => $invoice->grand_total,
+          ]);
+      });
+
+      session()->flash('message', __('Invoice cancelled and payments reversed.'));
+  }
+
   public function delete(int $id): void
  {
  $invoice = Auth::user()->business->invoices()->findOrFail($id);

@@ -470,5 +470,11 @@
     "Manual": "Manuell",
     "Automatic": "Automatisch",
     "Reminder": "Erinnerung",
-    "Failed to send email: ": "E-Mail konnte nicht gesendet werden: "
+    "Failed to send email: ": "E-Mail konnte nicht gesendet werden: ",
+    "Reopen": "Wieder\u00f6ffnen",
+    "Invoice reopened. Payments and cash book entries have been reversed.": "Rechnung wieder ge\u00f6ffnet. Zahlungen und Kassenbucheintr\u00e4ge wurden storniert.",
+    "Invoice cancelled and payments reversed.": "Rechnung storniert und Zahlungen r\u00fcckg\u00e4ngig gemacht.",
+    "This will reverse all payments and cash book entries for this invoice. Continue?": "Dies wird alle Zahlungen und Kassenbucheintr\u00e4ge f\u00fcr diese Rechnung stornieren. Fortfahren?",
+    "This will cancel the invoice and reverse all payments and cash book entries. Use this for duplicate invoices. Continue?": "Dies storniert die Rechnung und macht alle Zahlungen und Kassenbucheintr\u00e4ge r\u00fcckg\u00e4ngig. Verwenden Sie dies f\u00fcr doppelte Rechnungen. Fortfahren?",
+    "Are you sure you want to cancel this invoice?": "Sind Sie sicher, dass Sie diese Rechnung stornieren m\u00f6chten?"
 }
