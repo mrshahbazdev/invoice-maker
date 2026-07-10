@@ -2,171 +2,304 @@
 
 namespace App\Livewire\Invoices;
 
-use Livewire\Component;
-use Livewire\WithPagination;
 use App\Models\Invoice;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
- use WithPagination;
+    use WithPagination;
 
- public string $search = '';
- public string $status = '';
- public string $sortBy = 'invoice_date';
- public string $sortDirection = 'desc';
+    public string $search = '';
 
- // Mark as Paid State
- public bool $showPaidModal = false;
- public $selectedInvoiceId;
- public $paymentDate;
- public $paymentSource = 'bank';
- public $paymentDescription = '';
+    public string $status = '';
 
- public function sortBy(string $field): void
- {
- if ($this->sortBy === $field) {
- $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
- } else {
- $this->sortBy = $field;
- $this->sortDirection = 'desc';
- }
- }
+    public string $sortBy = 'invoice_date';
 
-  public function markAsUnpaid(int $id): void
-  {
-  $invoice = Auth::user()->business->invoices()->findOrFail($id);
-  $invoice->update(['status' => \App\Models\Invoice::STATUS_SENT]);
-  session()->flash('message', 'Invoice marked as unpaid.');
-  }
+    public string $sortDirection = 'desc';
 
-  public function reopenInvoice(int $id): void
-  {
-      $invoice = Auth::user()->business->invoices()->findOrFail($id);
+    // Mark as Paid State
+    public bool $showPaidModal = false;
 
-      \Illuminate\Support\Facades\DB::transaction(function () use ($invoice) {
-          $invoice->payments()->delete();
-          \App\Models\CashBookEntry::where('invoice_id', $invoice->id)->delete();
+    public $selectedInvoiceId;
 
-          $invoice->update([
-              'status' => \App\Models\Invoice::STATUS_SENT,
-              'amount_paid' => 0,
-              'amount_due' => $invoice->grand_total,
-          ]);
-      });
+    public $paymentDate;
 
-      session()->flash('message', __('Invoice reopened. Payments and cash book entries have been reversed.'));
-  }
+    public $paymentSource = 'bank';
 
-  public function cancelPaidInvoice(int $id): void
-  {
-      $invoice = Auth::user()->business->invoices()->findOrFail($id);
+    public $paymentDescription = '';
 
-      \Illuminate\Support\Facades\DB::transaction(function () use ($invoice) {
-          $invoice->payments()->delete();
-          \App\Models\CashBookEntry::where('invoice_id', $invoice->id)->delete();
+    // Bulk recurring loop state
+    public array $selected = [];
 
-          $invoice->update([
-              'status' => \App\Models\Invoice::STATUS_CANCELLED,
-              'amount_paid' => 0,
-              'amount_due' => $invoice->grand_total,
-          ]);
-      });
+    public bool $showBulkRecurringModal = false;
 
-      session()->flash('message', __('Invoice cancelled and payments reversed.'));
-  }
+    public string $bulkRecurringFrequency = 'monthly';
 
-  public function delete(int $id): void
- {
- $invoice = Auth::user()->business->invoices()->findOrFail($id);
- $invoice->delete();
- session()->flash('message', 'Invoice deleted successfully.');
- }
+    public string $bulkRecurringNextRunDate = '';
 
- public function openPaidModal(int $id): void
- {
- $invoice = Auth::user()->business->invoices()->findOrFail($id);
- $this->selectedInvoiceId = $id;
- $this->paymentDate = now()->format('Y-m-d');
- $this->paymentDescription = __('Payment for Invoice') . ' ' . $invoice->invoice_number;
- $this->showPaidModal = true;
- }
+    protected const PER_PAGE = 10;
 
- public function closePaidModal(): void
- {
- $this->showPaidModal = false;
- $this->reset(['selectedInvoiceId', 'paymentDate', 'paymentSource', 'paymentDescription']);
- }
+    public function sortBy(string $field): void
+    {
+        if ($this->sortBy === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $field;
+            $this->sortDirection = 'desc';
+        }
+    }
 
- public function markAsPaid(): void
- {
- $this->validate([
- 'paymentDate' => 'required|date',
- 'paymentSource' => 'required|in:cash,bank',
- 'paymentDescription' => 'required|string|max:255',
- ]);
+    public function markAsUnpaid(int $id): void
+    {
+        $invoice = Auth::user()->business->invoices()->findOrFail($id);
+        $invoice->update(['status' => \App\Models\Invoice::STATUS_SENT]);
+        session()->flash('message', 'Invoice marked as unpaid.');
+    }
 
- \Illuminate\Support\Facades\DB::transaction(function () {
- $invoice = Auth::user()->business->invoices()->findOrFail($this->selectedInvoiceId);
+    public function reopenInvoice(int $id): void
+    {
+        $invoice = Auth::user()->business->invoices()->findOrFail($id);
 
- // Update Invoice Status
- $invoice->update([
- 'status' => \App\Models\Invoice::STATUS_PAID,
- 'amount_paid' => $invoice->grand_total,
- 'amount_due' => 0,
- ]);
+        \Illuminate\Support\Facades\DB::transaction(function () use ($invoice) {
+            $invoice->payments()->delete();
+            \App\Models\CashBookEntry::where('invoice_id', $invoice->id)->delete();
 
- // Create Payment History record
- \App\Models\Payment::create([
- 'invoice_id' => $invoice->id,
- 'amount' => $invoice->grand_total,
- 'method' => $this->paymentSource === 'cash' ? 'cash' : 'bank_transfer',
- 'date' => $this->paymentDate,
- 'notes' => $this->paymentDescription,
- ]);
+            $invoice->update([
+                'status' => \App\Models\Invoice::STATUS_SENT,
+                'amount_paid' => 0,
+                'amount_due' => $invoice->grand_total,
+            ]);
+        });
 
- // Create Cash Book Entry
- \App\Models\CashBookEntry::create([
- 'business_id' => Auth::user()->business_id,
- 'date' => $this->paymentDate,
- 'document_date' => $invoice->invoice_date,
- 'amount' => $invoice->grand_total,
- 'type' => 'income',
- 'source' => $this->paymentSource,
- 'description' => $this->paymentDescription,
- 'partner_name' => $invoice->client->company_name ?? $invoice->client->name,
- 'reference_number' => $invoice->invoice_number,
- 'invoice_id' => $invoice->id,
- ]);
- });
+        session()->flash('message', __('Invoice reopened. Payments and cash book entries have been reversed.'));
+    }
 
- $this->closePaidModal();
- session()->flash('message', __('Invoice marked as paid and Cash Book entry created.'));
- }
+    public function cancelPaidInvoice(int $id): void
+    {
+        $invoice = Auth::user()->business->invoices()->findOrFail($id);
 
- public function render()
- {
- $query = Auth::user()->business->invoices()->where('type', Invoice::TYPE_INVOICE)->with('client')
+        \Illuminate\Support\Facades\DB::transaction(function () use ($invoice) {
+            $invoice->payments()->delete();
+            \App\Models\CashBookEntry::where('invoice_id', $invoice->id)->delete();
+
+            $invoice->update([
+                'status' => \App\Models\Invoice::STATUS_CANCELLED,
+                'amount_paid' => 0,
+                'amount_due' => $invoice->grand_total,
+            ]);
+        });
+
+        session()->flash('message', __('Invoice cancelled and payments reversed.'));
+    }
+
+    public function delete(int $id): void
+    {
+        $invoice = Auth::user()->business->invoices()->findOrFail($id);
+        $invoice->delete();
+        session()->flash('message', 'Invoice deleted successfully.');
+    }
+
+    public function openPaidModal(int $id): void
+    {
+        $invoice = Auth::user()->business->invoices()->findOrFail($id);
+        $this->selectedInvoiceId = $id;
+        $this->paymentDate = now()->format('Y-m-d');
+        $this->paymentDescription = __('Payment for Invoice').' '.$invoice->invoice_number;
+        $this->showPaidModal = true;
+    }
+
+    public function closePaidModal(): void
+    {
+        $this->showPaidModal = false;
+        $this->reset(['selectedInvoiceId', 'paymentDate', 'paymentSource', 'paymentDescription']);
+    }
+
+    public function markAsPaid(): void
+    {
+        $this->validate([
+            'paymentDate' => 'required|date',
+            'paymentSource' => 'required|in:cash,bank',
+            'paymentDescription' => 'required|string|max:255',
+        ]);
+
+        \Illuminate\Support\Facades\DB::transaction(function () {
+            $invoice = Auth::user()->business->invoices()->findOrFail($this->selectedInvoiceId);
+
+            // Update Invoice Status
+            $invoice->update([
+                'status' => \App\Models\Invoice::STATUS_PAID,
+                'amount_paid' => $invoice->grand_total,
+                'amount_due' => 0,
+            ]);
+
+            // Create Payment History record
+            \App\Models\Payment::create([
+                'invoice_id' => $invoice->id,
+                'amount' => $invoice->grand_total,
+                'method' => $this->paymentSource === 'cash' ? 'cash' : 'bank_transfer',
+                'date' => $this->paymentDate,
+                'notes' => $this->paymentDescription,
+            ]);
+
+            // Create Cash Book Entry
+            \App\Models\CashBookEntry::create([
+                'business_id' => Auth::user()->business_id,
+                'date' => $this->paymentDate,
+                'document_date' => $invoice->invoice_date,
+                'amount' => $invoice->grand_total,
+                'type' => 'income',
+                'source' => $this->paymentSource,
+                'description' => $this->paymentDescription,
+                'partner_name' => $invoice->client->company_name ?? $invoice->client->name,
+                'reference_number' => $invoice->invoice_number,
+                'invoice_id' => $invoice->id,
+            ]);
+        });
+
+        $this->closePaidModal();
+        session()->flash('message', __('Invoice marked as paid and Cash Book entry created.'));
+    }
+
+    public function updatedSearch(): void
+    {
+        $this->selected = [];
+        $this->resetPage();
+    }
+
+    public function updatedStatus(): void
+    {
+        $this->selected = [];
+        $this->resetPage();
+    }
+
+    public function updatedSortBy(): void
+    {
+        $this->selected = [];
+        $this->resetPage();
+    }
+
+    public function updatedSortDirection(): void
+    {
+        $this->selected = [];
+        $this->resetPage();
+    }
+
+    public function toggleSelectAll(): void
+    {
+        $visibleIds = $this->getBaseQuery()->paginate(self::PER_PAGE)->pluck('id')->map(fn ($id) => (string) $id)->all();
+        $selected = collect($this->selected);
+
+        if ($selected->intersect($visibleIds)->count() === count($visibleIds)) {
+            $this->selected = $selected->diff($visibleIds)->values()->all();
+        } else {
+            $this->selected = $selected->merge($visibleIds)->unique()->values()->all();
+        }
+    }
+
+    public function selectAllMatching(): void
+    {
+        $this->selected = $this->getBaseQuery()->select('id')->pluck('id')->map(fn ($id) => (string) $id)->all();
+    }
+
+    public function removeFromRecurringLoop(): void
+    {
+        if (empty($this->selected)) {
+            session()->flash('error', __('Please select at least one invoice.'));
+
+            return;
+        }
+
+        $count = Auth::user()->business->invoices()
+            ->where('type', Invoice::TYPE_INVOICE)
+            ->whereIn('id', $this->selected)
+            ->where('is_recurring', true)
+            ->update([
+                'is_recurring' => false,
+                'recurring_frequency' => null,
+                'next_run_date' => null,
+                'last_run_date' => null,
+            ]);
+
+        session()->flash('message', __(':count invoice(s) removed from the recurring loop.', ['count' => $count]));
+        $this->selected = [];
+    }
+
+    public function openBulkRecurringModal(): void
+    {
+        if (empty($this->selected)) {
+            session()->flash('error', __('Please select at least one invoice.'));
+
+            return;
+        }
+
+        $this->bulkRecurringFrequency = 'monthly';
+        $this->bulkRecurringNextRunDate = now()->toDateString();
+        $this->showBulkRecurringModal = true;
+    }
+
+    public function closeBulkRecurringModal(): void
+    {
+        $this->showBulkRecurringModal = false;
+        $this->reset(['bulkRecurringFrequency', 'bulkRecurringNextRunDate']);
+    }
+
+    public function insertIntoRecurringLoop(): void
+    {
+        if (empty($this->selected)) {
+            session()->flash('error', __('Please select at least one invoice.'));
+
+            return;
+        }
+
+        $this->validate([
+            'bulkRecurringFrequency' => 'required|in:weekly,monthly,quarterly,yearly',
+            'bulkRecurringNextRunDate' => 'required|date',
+        ]);
+
+        $count = Auth::user()->business->invoices()
+            ->where('type', Invoice::TYPE_INVOICE)
+            ->whereIn('id', $this->selected)
+            ->update([
+                'is_recurring' => true,
+                'recurring_frequency' => $this->bulkRecurringFrequency,
+                'next_run_date' => $this->bulkRecurringNextRunDate,
+            ]);
+
+        $this->closeBulkRecurringModal();
+        $this->selected = [];
+        session()->flash('message', __(':count invoice(s) inserted into the recurring loop.', ['count' => $count]));
+    }
+
+    protected function getBaseQuery()
+    {
+        $query = Auth::user()->business->invoices()->where('type', Invoice::TYPE_INVOICE)->with('client')
             ->withCount(['emailLogs as emails_sent_count' => function ($q) {
                 $q->where('status', 'sent');
             }]);
 
- if ($this->search) {
- $query->where(function ($q) {
- $q->where('invoice_number', 'like', '%' . $this->search . '%')
- ->orWhereHas('client', function ($cq) {
- $cq->where('name', 'like', '%' . $this->search . '%')
- ->orWhere('company_name', 'like', '%' . $this->search . '%');
- });
- });
- }
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('invoice_number', 'like', '%'.$this->search.'%')
+                    ->orWhereHas('client', function ($cq) {
+                        $cq->where('name', 'like', '%'.$this->search.'%')
+                            ->orWhere('company_name', 'like', '%'.$this->search.'%');
+                    });
+            });
+        }
 
- if ($this->status) {
- $query->where('status', $this->status);
- }
+        if ($this->status) {
+            $query->where('status', $this->status);
+        }
 
- $invoices = $query->orderBy($this->sortBy, $this->sortDirection)->paginate(10);
+        return $query->orderBy($this->sortBy, $this->sortDirection);
+    }
 
- return view('livewire.invoices.index', compact('invoices'));
- }
+    public function render()
+    {
+        $invoices = $this->getBaseQuery()->paginate(self::PER_PAGE);
+
+        return view('livewire.invoices.index', compact('invoices'));
+    }
 }

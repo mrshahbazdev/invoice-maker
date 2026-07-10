@@ -33,10 +33,41 @@
             </select>
         </div>
 
+        @if(count($selected) > 0)
+            <div class="p-4 border-b bg-page flex flex-col sm:flex-row gap-3 sm:items-center">
+                <span class="text-sm text-txmain">
+                    {{ count($selected) }} {{ __('selected') }}
+                </span>
+                <div class="flex flex-wrap gap-2">
+                    <button wire:click="removeFromRecurringLoop"
+                        wire:confirm="{{ __('Are you sure you want to remove the selected invoices from the recurring loop?') }}"
+                        class="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 text-sm font-medium">
+                        {{ __('Remove from loop') }}
+                    </button>
+                    <button wire:click="openBulkRecurringModal"
+                        class="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 text-sm font-medium">
+                        {{ __('Re-insert into loop') }}
+                    </button>
+                </div>
+            </div>
+            @if($invoices->total() > count($selected))
+                <div class="px-4 py-2 border-b bg-page text-sm">
+                    <button wire:click="selectAllMatching" class="text-brand-600 hover:text-brand-700 font-medium">
+                        {{ __('Select all :count results', ['count' => $invoices->total()]) }}
+                    </button>
+                </div>
+            @endif
+        @endif
+
         <div class="overflow-x-auto">
             <table class="w-full">
                 <thead>
                     <tr class="border-b bg-page">
+                        <th class="py-3 px-4 text-left w-10">
+                            <input type="checkbox" wire:click="toggleSelectAll"
+                                @checked(collect($invoices->pluck('id'))->every(fn ($id) => in_array($id, $selected)))
+                                class="w-4 h-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500">
+                        </th>
                         <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"
                             wire:click="sortBy('invoice_number')">
                             {{ __('Invoice') }}
@@ -61,6 +92,10 @@
                 <tbody>
                     @forelse($invoices as $invoice)
                         <tr class="border-b hover:bg-page">
+                            <td class="py-3 px-4">
+                                <input type="checkbox" wire:model.live="selected" value="{{ $invoice->id }}"
+                                    class="w-4 h-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500">
+                            </td>
                             <td class="py-3 px-4">
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('invoices.show', $invoice) }}"
@@ -142,7 +177,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-8 text-center text-gray-500">
+                            <td colspan="8" class="py-8 text-center text-gray-500">
                                 {{ __('No invoices found.') }} <a href="{{ route('invoices.create') }}"
                                     class="text-brand-600 hover:text-brand-700">{{ __('Create your first invoice') }}</a>
                             </td>
@@ -208,6 +243,57 @@
                         <button type="submit"
                             class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 shadow-sm transition font-bold">
                             {{ __('Save Payment') }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
+
+    <!-- Bulk Re-insert into Loop Modal -->
+    @if($showBulkRecurringModal)
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div class="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+                <div class="p-6 border-b flex justify-between items-center bg-page">
+                    <h3 class="text-xl font-bold text-txmain">{{ __('Re-insert into Recurring Loop') }}</h3>
+                    <button wire:click="closeBulkRecurringModal()" class="text-gray-400 hover:text-txmain">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <form wire:submit="insertIntoRecurringLoop">
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-txmain mb-1">{{ __('Frequency') }} *</label>
+                            <select wire:model="bulkRecurringFrequency"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
+                                <option value="weekly">{{ __('Weekly') }}</option>
+                                <option value="monthly">{{ __('Monthly') }}</option>
+                                <option value="quarterly">{{ __('Quarterly') }}</option>
+                                <option value="yearly">{{ __('Yearly') }}</option>
+                            </select>
+                            @error('bulkRecurringFrequency') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-txmain mb-1">{{ __('Next Run Date') }} *</label>
+                            <input type="date" wire:model="bulkRecurringNextRunDate"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
+                            @error('bulkRecurringNextRunDate') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                        </div>
+                        <p class="text-sm text-gray-500">
+                            {{ __('This will affect :count invoice(s).', ['count' => count($selected)]) }}
+                        </p>
+                    </div>
+                    <div class="p-6 bg-page border-t flex justify-end gap-3">
+                        <button type="button" wire:click="closeBulkRecurringModal()"
+                            class="px-4 py-2 text-txmain hover:text-txmain font-medium">
+                            {{ __('Cancel') }}
+                        </button>
+                        <button type="submit"
+                            class="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 shadow-sm transition font-bold">
+                            {{ __('Re-insert') }}
                         </button>
                     </div>
                 </form>
