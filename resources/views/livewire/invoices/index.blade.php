@@ -169,6 +169,11 @@
                                         <a href="{{ route('invoices.edit', $invoice) }}"
                                             class="text-brand-600 hover:text-brand-700 text-sm font-medium">{{ __('Edit') }}</a>
                                     @endif
+                                    @if($invoice->is_recurring)
+                                        <button wire:click="stopRecurring({{ $invoice->id }})"
+                                            wire:confirm="{{ __('Are you sure you want to stop automatic sending for this invoice?') }}"
+                                            class="text-orange-600 hover:text-orange-700 text-sm font-medium">{{ __('Stop Auto-send') }}</button>
+                                    @endif
                                     <button wire:click="delete({{ $invoice->id }})"
                                         wire:confirm="{{ __('Are you sure you want to delete this invoice?') }}"
                                         class="text-red-600 hover:text-red-700 text-sm font-medium">{{ __('Delete') }}</button>

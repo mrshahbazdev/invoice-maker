@@ -101,6 +101,20 @@ class Index extends Component
         session()->flash('message', 'Invoice deleted successfully.');
     }
 
+    public function stopRecurring(int $id): void
+    {
+        $invoice = Auth::user()->business->invoices()->findOrFail($id);
+        
+        $invoice->update([
+            'is_recurring' => false,
+            'recurring_frequency' => null,
+            'next_run_date' => null,
+            'last_run_date' => null,
+        ]);
+
+        session()->flash('message', __('Automatic sending stopped for invoice :number.', ['number' => $invoice->invoice_number]));
+    }
+
     public function openPaidModal(int $id): void
     {
         $invoice = Auth::user()->business->invoices()->findOrFail($id);
