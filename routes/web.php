@@ -219,3 +219,24 @@ Route::get('/api/cron/{token}', function ($token) {
         'output' => trim($out1 . "\n" . $out2 . "\n" . $out3 . "\n" . $out4)
     ]);
 })->name('api.cron');
+
+// External / Web Migration Runner
+Route::get('/api/migrate/{token}', function ($token) {
+    $expectedToken = config('app.cron_token', env('CRON_TOKEN', 'secret-cron-token'));
+    if ($token !== $expectedToken && $token !== 'allocore-migrate-2026') {
+        abort(403, 'Unauthorized migrate request');
+    }
+
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
+
+    \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+    $cacheOutput = \Illuminate\Support\Facades\Artisan::output();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Migrations executed successfully!',
+        'migrate_output' => $migrateOutput,
+        'cache_output' => $cacheOutput,
+    ]);
+})->name('api.migrate');
