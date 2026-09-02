@@ -1,4 +1,4 @@
-﻿@php  = __('Accounting Categories'); @endphp
+﻿@php $title = __('Accounting Categories'); @endphp
 
 <div>
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -31,19 +31,19 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
-                @forelse( as )
+                @forelse($categories as $category)
                     <tr class="hover:bg-page transition">
-                        <td class="py-3 px-4 text-txmain font-medium">{{ ->name }}</td>
-                        <td class="py-3 px-4 text-txmain text-sm font-mono">{{ ->booking_account ?: '-' }}</td>
+                        <td class="py-3 px-4 text-txmain font-medium">{{ $category->name }}</td>
+                        <td class="py-3 px-4 text-txmain text-sm font-mono">{{ $category->booking_account ?: '-' }}</td>
                         <td class="py-3 px-4">
                             <span
-                                class="px-2 py-1 rounded-full text-xs font-semibold {{ ->type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                {{ ucfirst(__(->type)) }}
+                                class="px-2 py-1 rounded-full text-xs font-semibold {{ $category->type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                {{ ucfirst(__($category->type)) }}
                             </span>
                         </td>
                         <td class="py-3 px-4">
-                            @if(->type === 'expense')
-                                @if((->cost_type ?? 'F') === 'F')
+                            @if($category->type === 'expense')
+                                @if(($category->cost_type ?? 'F') === 'F')
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200" title="{{ __('Fixed Cost (Fixkosten)') }}">
                                         <span class="font-extrabold mr-1">F</span> {{ __('Fixed') }}
                                     </span>
@@ -56,16 +56,16 @@
                                 <span class="text-xs text-gray-400 font-mono">-</span>
                             @endif
                         </td>
-                        <td class="py-3 px-4 text-txmain text-sm truncate max-w-xs" title="{{ ->posting_rule }}">
-                            {{ ->posting_rule ?: __('No rule defined') }}
+                        <td class="py-3 px-4 text-txmain text-sm truncate max-w-xs" title="{{ $category->posting_rule }}">
+                            {{ $category->posting_rule ?: __('No rule defined') }}
                         </td>
                         <td class="py-3 px-4 text-right">
                             <div class="flex justify-end gap-3 text-sm">
-                                <button wire:click="openModal({{ ->id }})"
+                                <button wire:click="openModal({{ $category->id }})"
                                     class="text-brand-600 hover:text-brand-800 font-medium">
                                     {{ __('Edit') }}
                                 </button>
-                                <button wire:click="delete({{ ->id }})"
+                                <button wire:click="delete({{ $category->id }})"
                                     wire:confirm="{{ __('Are you sure? This will not delete past entries but will remove the category for future ones.') }}"
                                     class="text-red-600 hover:text-red-800 font-medium">
                                     {{ __('Delete') }}
@@ -85,12 +85,12 @@
     </div>
 
     <!-- Category Modal -->
-    @if()
+    @if($showModal)
         <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
             <div
                 class="bg-card rounded-xl shadow-2xl w-full max-w-md flex flex-col max-h-[90vh] overflow-hidden transform transition-all">
                 <div class="p-6 border-b flex justify-between items-center bg-page">
-                    <h3 class="text-xl font-bold text-txmain">{{  ? __('Edit Category') : __('Add Category') }}
+                    <h3 class="text-xl font-bold text-txmain">{{ $isEditing ? __('Edit Category') : __('Add Category') }}
                     </h3>
                     <button wire:click="closeModal()" class="text-gray-400 hover:text-txmain">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -106,14 +106,14 @@
                             <input type="text" wire:model="name"
                                 placeholder="{{ __('e.g. Office Supplies, SaaS, Rent, Server Hosting') }}"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
-                            @error('name') <p class="mt-1 text-sm text-red-600">{{  }}</p> @enderror
+                            @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-txmain mb-1">{{ __('Booking Account') }}
                                 ({{ __('Number') }})</label>
                             <input type="text" wire:model="booking_account" placeholder="{{ __('e.g. 4200, 8400') }}"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
-                            @error('booking_account') <p class="mt-1 text-sm text-red-600">{{  }}</p> @enderror
+                            @error('booking_account') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-txmain mb-1">{{ __('Type') }}</label>
@@ -122,13 +122,13 @@
                                 <option value="expense">{{ __('Expense (Ausgabe)') }}</option>
                                 <option value="income">{{ __('Income (Einnahme)') }}</option>
                             </select>
-                            @error('type') <p class="mt-1 text-sm text-red-600">{{  }}</p> @enderror
+                            @error('type') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
-                        @if( === 'expense')
+                        @if($type === 'expense')
                             <div>
                                 <label class="block text-sm font-medium text-txmain mb-1">{{ __('Cost Behavior (Fix / Variable Kosten)') }} *</label>
                                 <div class="grid grid-cols-2 gap-3 mt-1">
-                                    <label class="flex items-center p-3 border rounded-lg cursor-pointer transition {{  === 'F' ? 'border-brand-500 bg-brand-50/50 ring-2 ring-brand-500/20' : 'border-gray-200 hover:bg-page' }}">
+                                    <label class="flex items-center p-3 border rounded-lg cursor-pointer transition {{ $cost_type === 'F' ? 'border-brand-500 bg-brand-50/50 ring-2 ring-brand-500/20' : 'border-gray-200 hover:bg-page' }}">
                                         <input type="radio" wire:model="cost_type" value="F" class="text-brand-600 focus:ring-brand-500 mr-2">
                                         <div>
                                             <div class="font-bold text-sm text-txmain flex items-center gap-1">
@@ -138,7 +138,7 @@
                                             <div class="text-[11px] text-gray-500">{{ __('Fixkosten (e.g. Rent, Subscriptions)') }}</div>
                                         </div>
                                     </label>
-                                    <label class="flex items-center p-3 border rounded-lg cursor-pointer transition {{  === 'V' ? 'border-brand-500 bg-brand-50/50 ring-2 ring-brand-500/20' : 'border-gray-200 hover:bg-page' }}">
+                                    <label class="flex items-center p-3 border rounded-lg cursor-pointer transition {{ $cost_type === 'V' ? 'border-brand-500 bg-brand-50/50 ring-2 ring-brand-500/20' : 'border-gray-200 hover:bg-page' }}">
                                         <input type="radio" wire:model="cost_type" value="V" class="text-brand-600 focus:ring-brand-500 mr-2">
                                         <div>
                                             <div class="font-bold text-sm text-txmain flex items-center gap-1">
@@ -149,7 +149,7 @@
                                         </div>
                                     </label>
                                 </div>
-                                @error('cost_type') <p class="mt-1 text-sm text-red-600">{{  }}</p> @enderror
+                                @error('cost_type') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                             </div>
                         @endif
                         <div>
@@ -158,7 +158,7 @@
                             <textarea wire:model="posting_rule" rows="3"
                                 placeholder="{{ __('e.g. Requires receipt. Only deductible if business related.') }}"
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"></textarea>
-                            @error('posting_rule') <p class="mt-1 text-sm text-red-600">{{  }}</p> @enderror
+                            @error('posting_rule') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                         </div>
                     </div>
                     <div class="p-6 bg-page border-t flex justify-end gap-3">
