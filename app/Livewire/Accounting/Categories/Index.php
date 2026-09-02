@@ -9,13 +9,14 @@ use Illuminate\Support\Facades\Auth;
 class Index extends Component
 {
  public $categories;
- public $name, $type = 'expense', $booking_account, $posting_rule, $categoryId;
+ public $name, $type = 'expense', $cost_type = 'F', $booking_account, $posting_rule, $categoryId;
  public $isEditing = false;
  public $showModal = false;
 
  protected $rules = [
  'name' => 'required|string|max:255',
  'type' => 'required|in:income,expense',
+ 'cost_type' => 'required|in:F,V',
  'booking_account' => 'nullable|string|max:20',
  'posting_rule' => 'nullable|string',
  ];
@@ -41,6 +42,7 @@ class Index extends Component
  $category = AccountingCategory::find($id);
  $this->name = $category->name;
  $this->type = $category->type;
+ $this->cost_type = $category->cost_type ?? 'F';
  $this->booking_account = $category->booking_account;
  $this->posting_rule = $category->posting_rule;
  } else {
@@ -59,6 +61,7 @@ class Index extends Component
  {
  $this->name = '';
  $this->type = 'expense';
+ $this->cost_type = 'F';
  $this->booking_account = '';
  $this->posting_rule = '';
  $this->categoryId = null;
@@ -74,6 +77,7 @@ class Index extends Component
  'business_id' => Auth::user()->business->id,
  'name' => $this->name,
  'type' => $this->type,
+ 'cost_type' => $this->cost_type,
  'booking_account' => $this->booking_account,
  'posting_rule' => $this->posting_rule,
  ]

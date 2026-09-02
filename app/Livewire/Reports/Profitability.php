@@ -54,11 +54,30 @@ class Profitability extends Component
 
  $totalRevenue = (float) $invoicedRevenue + (float) $manualIncome;
 
- $totalExpenses = Expense::where('business_id', $business->id)
- ->whereBetween('date', [$this->startDate, $this->endDate])
- ->sum('amount');
+        $totalExpenses = Expense::where('business_id', $business->id)
+            ->whereBetween('date', [$this->startDate, $this->endDate])
+            ->sum('amount');
 
- $netIncome = $totalRevenue - $totalExpenses;
+        // 1b. Fixed vs Variable Costs Breakdown (F vs V Cost Centers)
+        $fixedCosts = (float) Expense::where('business_id', $business->id)
+            ->whereBetween('date', [$this->startDate, $this->endDate])
+            ->where(function ($query) {
+                $query->whereHas('accounting_category', function ($q) {
+                    $q->where('cost_type', 'F');
+                })->orWhereNull('category_id');
+            })
+            ->sum('amount');
+
+        $variableCosts = (float) Expense::where('business_id', $business->id)
+            ->whereBetween('date', [$this->startDate, $this->endDate])
+            ->whereHas('accounting_category', function ($q) {
+                $q->where('cost_type', 'V');
+            })
+            ->sum('amount');
+
+        $salesRequirement = $fixedCosts; // Minimum sales requirement to cover fixed overheads
+
+        $netIncome = $totalRevenue - $totalExpenses;
 
  // 2. Customer Profitability (Invoices vs Linked Expenses)
  $clientProfitability = Client::where('business_id', $business->id)
@@ -161,14 +180,17 @@ class Profitability extends Component
  $topClients = $clientProfitability->take(3);
  $topProducts = $productProfitability->take(3);
 
- return view('livewire.reports.profitability', [
- 'totalRevenue' => $totalRevenue,
- 'totalExpenses' => $totalExpenses,
- 'netIncome' => $netIncome,
- 'clientProfitability' => $clientProfitability,
- 'productProfitability' => $productProfitability,
- 'topClients' => $topClients,
- 'topProducts' => $topProducts,
- ]);
- }
+        return view('livewire.reports.profitability', [
+            'totalRevenue' => $totalRevenue,
+            'totalExpenses' => $totalExpenses,
+            'fixedCosts' => $fixedCosts,
+            'variableCosts' => $variableCosts,
+            'salesRequirement' => $salesRequirement,
+            'netIncome' => $netIncome,
+            'clientProfitability' => $clientProfitability,
+            'productProfitability' => $productProfitability,
+            'topClients' => $topClients,
+            'topProducts' => $topProducts,
+        ]);
+    }
 }

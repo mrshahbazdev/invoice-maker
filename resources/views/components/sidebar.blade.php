@@ -197,6 +197,18 @@
                     {{ __('My Invoices') }}
                 </a>
             @endif
+
+            <div class="pt-4 mt-4 border-t border-gray-200/50">
+                <a href="{{ route('imprint') }}"
+                    class="flex items-center px-4 py-2 text-xs font-medium rounded-lg text-gray-500 hover:text-txmain hover:bg-page transition-colors">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                    {{ __('Imprint / Impressum') }}
+                </a>
+            </div>
         </nav>
 
         @if(auth()->user()->business_id)

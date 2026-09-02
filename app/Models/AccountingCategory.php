@@ -13,6 +13,7 @@ class AccountingCategory extends Model
         'business_id',
         'name',
         'type',
+        'cost_type',
         'booking_account',
         'posting_rule',
     ];

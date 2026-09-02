@@ -58,66 +58,104 @@
  </div>
  </div>
 
- <!-- Summary Cards -->
- <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
- <div
- class="bg-card p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-brand-200">
- <div
- class="w-12 h-12 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center mr-4 group-hover:bg-brand-600 group-hover:text-white transition-all duration-300">
- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
- d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
- </svg>
- </div>
- <div class="absolute right-0 top-0 w-1 pt-12 h-full bg-brand-500"></div>
- <div>
- <span
- class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Overall Revenue') }}</span>
- <span class="text-[8px] text-gray-400 block -mt-1">{{ __('(Invoiced + Manual)') }}</span>
- <p class="text-2xl font-bold text-txmain mt-0.5">
- {{ number_format($totalRevenue, 2, '.', ',') }} €
- </p>
- </div>
- </div>
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <!-- Revenue -->
+        <div
+            class="bg-card p-5 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-brand-200 relative overflow-hidden">
+            <div class="absolute right-0 top-0 w-1 pt-12 h-full bg-brand-500"></div>
+            <div
+                class="w-10 h-10 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center mr-3 group-hover:bg-brand-600 group-hover:text-white transition-all duration-300 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+            </div>
+            <div class="min-w-0">
+                <span
+                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block truncate">{{ __('Revenue') }}</span>
+                <p class="text-xl font-bold text-txmain mt-0.5 truncate">
+                    {{ number_format($totalRevenue, 2, '.', ',') }} €
+                </p>
+            </div>
+        </div>
 
- <div
- class="bg-card p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-red-200">
- <div
- class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center mr-4 group-hover:bg-red-600 group-hover:text-white transition-all duration-300">
- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
- d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
- </svg>
- </div>
- <div>
- <span
- class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Total Expenses') }}</span>
- <p class="text-2xl font-bold text-red-600 mt-0.5">
- {{ number_format($totalExpenses, 2, '.', ',') }} €
- </p>
- </div>
- </div>
+        <!-- Fixed Costs (F) -->
+        <div
+            class="bg-card p-5 rounded-2xl border border-amber-100/60 flex items-center group transition-all duration-300 shadow-sm hover:border-amber-300 relative overflow-hidden bg-amber-50/10">
+            <div class="absolute right-0 top-0 w-1 pt-12 h-full bg-amber-500"></div>
+            <div
+                class="w-10 h-10 bg-amber-100/80 text-amber-700 rounded-xl flex items-center justify-center mr-3 font-black text-sm group-hover:bg-amber-600 group-hover:text-white transition-all duration-300 shrink-0">
+                F
+            </div>
+            <div class="min-w-0">
+                <span
+                    class="text-[10px] font-bold text-amber-700/80 uppercase tracking-widest block truncate">{{ __('Fixed Costs') }}</span>
+                <p class="text-xl font-bold text-amber-700 mt-0.5 truncate" title="{{ __('Fixkosten (Overheads)') }}">
+                    {{ number_format($fixedCosts, 2, '.', ',') }} €
+                </p>
+            </div>
+        </div>
 
- <div
- class="bg-card p-6 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-emerald-200 relative overflow-hidden">
- <div class="absolute right-0 top-0 w-1 pt-12 h-full bg-emerald-500"></div>
- <div
- class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mr-4 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
- d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m0 10c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8m0-18C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z">
- </path>
- </svg>
- </div>
- <div>
- <span
- class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Net Profit') }}</span>
- <p class="text-2xl font-bold text-txmain mt-0.5">
- {{ number_format($netIncome, 2, '.', ',') }} €
- </p>
- </div>
- </div>
- </div>
+        <!-- Variable Costs (V) -->
+        <div
+            class="bg-card p-5 rounded-2xl border border-blue-100/60 flex items-center group transition-all duration-300 shadow-sm hover:border-blue-300 relative overflow-hidden bg-blue-50/10">
+            <div class="absolute right-0 top-0 w-1 pt-12 h-full bg-blue-500"></div>
+            <div
+                class="w-10 h-10 bg-blue-100/80 text-blue-700 rounded-xl flex items-center justify-center mr-3 font-black text-sm group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shrink-0">
+                V
+            </div>
+            <div class="min-w-0">
+                <span
+                    class="text-[10px] font-bold text-blue-700/80 uppercase tracking-widest block truncate">{{ __('Variable Costs') }}</span>
+                <p class="text-xl font-bold text-blue-700 mt-0.5 truncate" title="{{ __('Variable Kosten') }}">
+                    {{ number_format($variableCosts, 2, '.', ',') }} €
+                </p>
+            </div>
+        </div>
+
+        <!-- Sales Requirement / Break-Even threshold -->
+        <div
+            class="bg-card p-5 rounded-2xl border border-purple-100/60 flex items-center group transition-all duration-300 shadow-sm hover:border-purple-300 relative overflow-hidden bg-purple-50/10">
+            <div class="absolute right-0 top-0 w-1 pt-12 h-full bg-purple-500"></div>
+            <div
+                class="w-10 h-10 bg-purple-100/80 text-purple-700 rounded-xl flex items-center justify-center mr-3 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                    </path>
+                </svg>
+            </div>
+            <div class="min-w-0">
+                <span
+                    class="text-[10px] font-bold text-purple-700/80 uppercase tracking-widest block truncate">{{ __('Sales Req. (Fixed)') }}</span>
+                <p class="text-xl font-bold text-purple-700 mt-0.5 truncate" title="{{ __('Minimum Sales to cover Fixed Costs (∑F)') }}">
+                    {{ number_format($salesRequirement, 2, '.', ',') }} €
+                </p>
+            </div>
+        </div>
+
+        <!-- Net Profit -->
+        <div
+            class="bg-card p-5 rounded-2xl border border-gray-100 flex items-center group transition-all duration-300 shadow-sm hover:border-emerald-200 relative overflow-hidden">
+            <div class="absolute right-0 top-0 w-1 pt-12 h-full {{ $netIncome >= 0 ? 'bg-emerald-500' : 'bg-red-500' }}"></div>
+            <div
+                class="w-10 h-10 {{ $netIncome >= 0 ? 'bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600' : 'bg-red-50 text-red-600 group-hover:bg-red-600' }} rounded-xl flex items-center justify-center mr-3 group-hover:text-white transition-all duration-300 shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3m0 10c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8m0-18C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z">
+                    </path>
+                </svg>
+            </div>
+            <div class="min-w-0">
+                <span
+                    class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block truncate">{{ __('Net Profit') }}</span>
+                <p class="text-xl font-bold {{ $netIncome >= 0 ? 'text-emerald-600' : 'text-red-600' }} mt-0.5 truncate">
+                    {{ number_format($netIncome, 2, '.', ',') }} €
+                </p>
+            </div>
+        </div>
+    </div>
 
  <!-- Top Performers Overview -->
  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

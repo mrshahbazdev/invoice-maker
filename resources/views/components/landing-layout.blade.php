@@ -152,6 +152,8 @@
                     class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Blog') }}</a>
                 <a href="https://allocore.de/" target="_blank" rel="noopener" title="Visit Allocore Main Website"
                     class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Allocore.de') }}</a>
+                <a href="{{ route('imprint') }}"
+                    class="text-sm font-bold text-heading hover:text-brand-600 transition-colors">{{ __('Imprint') }}</a>
 
                 <!-- Language Selector -->
                 <div class="relative" x-data="{ open: false }">
@@ -267,6 +269,8 @@
                     class="block text-lg font-medium text-txmain">{{ __('Blog') }}</a>
                 <a href="https://allocore.de/" target="_blank" rel="noopener" title="Visit Allocore Main Website"
                     class="block text-lg font-medium text-txmain">{{ __('Allocore.de') }}</a>
+                <a href="{{ route('imprint') }}" @click="mobileMenuOpen = false"
+                    class="block text-lg font-medium text-txmain">{{ __('Imprint') }}</a>
                 <div class="pt-6 border-t border-gray-100 space-y-4">
                     @auth
                         <a href="{{ auth()->user()->role === 'client' ? route('client.dashboard') : route('dashboard') }}"
@@ -336,12 +340,17 @@
                         <li><a href="{{ route('public.blog.index') }}"
                                 class="text-white hover:text-amber-200 transition-colors font-medium">{{ __('Blog') }}</a>
                         </li>
+                        <li><a href="{{ route('imprint') }}"
+                                class="text-white hover:text-amber-200 transition-colors font-medium">{{ __('Imprint / Impressum') }}</a>
+                        </li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">{{ __('Support') }}</h4>
                     <ul class="space-y-4 text-sm text-white font-medium">
-                        <li><a href="#" class="hover:text-amber-200 transition-colors">{{ __('Documentation') }}</a>
+                        <li><a href="{{ route('docs.index', ['lang' => app()->getLocale()]) }}" class="hover:text-amber-200 transition-colors">{{ __('Documentation') }}</a>
+                        </li>
+                        <li><a href="{{ route('imprint') }}" class="hover:text-amber-200 transition-colors">{{ __('Legal & Imprint') }}</a>
                         </li>
                         <li><a href="#" class="hover:text-amber-200 transition-colors">{{ __('Privacy Policy') }}</a>
                         </li>
