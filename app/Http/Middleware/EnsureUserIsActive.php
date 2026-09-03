@@ -16,12 +16,18 @@ class EnsureUserIsActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && !Auth::user()->is_active) {
-            Auth::logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
+        if (Auth::check()) {
+            $user = Auth::user();
+            $rawStatus = $user->getRawOriginal('is_active');
+            
+            // Only deactivate if explicitly set to 0/false in the database (never when null or missing)
+            if ($rawStatus !== null && ($rawStatus === 0 || $rawStatus === '0' || $rawStatus === false)) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
 
-            return redirect()->route('login')->with('error', 'Your account has been suspended. Please contact support.');
+                return redirect()->route('login')->with('error', 'Your account has been suspended. Please contact support.');
+            }
         }
 
         return $next($request);

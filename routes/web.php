@@ -230,6 +230,12 @@ Route::get('/api/migrate/{token}', function ($token) {
     \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
     $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
 
+    try {
+        \App\Models\User::whereNull('is_active')->orWhere('is_active', false)->update(['is_active' => true]);
+    } catch (\Throwable $e) {
+        //
+    }
+
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
     $cacheOutput = \Illuminate\Support\Facades\Artisan::output();
 

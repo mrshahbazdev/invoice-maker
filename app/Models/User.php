@@ -32,6 +32,10 @@ class User extends Authenticatable
         'default_ai_provider',
     ];
 
+    protected $attributes = [
+        'is_active' => true,
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',
