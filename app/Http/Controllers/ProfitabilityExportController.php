@@ -44,20 +44,46 @@ class ProfitabilityExportController
             </style></head><body>');
 
             // --- 1. OVERALL EVALUATION ---
-            $totalRevenue = Invoice::where('business_id', $business->id)
+            $totalRevenue = (float) Invoice::where('business_id', $business->id)
                 ->whereBetween('invoice_date', [$startDate, $endDate])
-                ->where('status', 'paid')
+                ->whereNotIn('status', ['draft', 'cancelled'])
                 ->sum('grand_total');
 
-            $totalExpenses = Expense::where('business_id', $business->id)
+            $totalExpenses = (float) Expense::where('business_id', $business->id)
                 ->whereBetween('date', [$startDate, $endDate])
                 ->sum('amount');
+
+            $fixedCosts = (float) Expense::where('business_id', $business->id)
+                ->whereBetween('date', [$startDate, $endDate])
+                ->where(function ($query) {
+                    $query->whereHas('accounting_category', function ($q) {
+                        $q->where('cost_type', 'F');
+                    })->orWhereNull('category_id');
+                })
+                ->sum('amount');
+
+            $variableCosts = (float) Expense::where('business_id', $business->id)
+                ->whereBetween('date', [$startDate, $endDate])
+                ->whereHas('accounting_category', function ($q) {
+                    $q->where('cost_type', 'V');
+                })
+                ->sum('amount');
+
+            $start = \Carbon\Carbon::parse($startDate);
+            $end = \Carbon\Carbon::parse($endDate);
+            $daysDiff = max(1, $start->diffInDays($end) + 1);
+            $monthsCount = max(1.0, round($daysDiff / 30.4375, 1));
+            $avgMonthlyFixed = $fixedCosts / $monthsCount;
+            $avgMonthlyRevenue = $totalRevenue / $monthsCount;
 
             fwrite($handle, '<div class="title">' . __('Overall Financial Evaluation') . ' (' . $startDate . ' - ' . $endDate . ')</div>');
             fwrite($handle, '<table><thead><tr><th>' . __('Metric') . '</th><th>' . __('Value') . ' (' . $business->currency . ')</th></tr></thead><tbody>');
             fwrite($handle, '<tr><td>' . __('Total Revenue') . '</td><td class="amount positive" x:num="' . $totalRevenue . '">' . number_format($totalRevenue, 2) . '</td></tr>');
+            fwrite($handle, '<tr><td>' . __('Fixed Costs [F] (Fixkosten)') . '</td><td class="amount negative" x:num="-' . $fixedCosts . '">-' . number_format($fixedCosts, 2) . '</td></tr>');
+            fwrite($handle, '<tr><td>' . __('Variable Costs [V] (Variable Kosten)') . '</td><td class="amount negative" x:num="-' . $variableCosts . '">-' . number_format($variableCosts, 2) . '</td></tr>');
             fwrite($handle, '<tr><td>' . __('Total Expenses') . '</td><td class="amount negative" x:num="-' . $totalExpenses . '">-' . number_format($totalExpenses, 2) . '</td></tr>');
             fwrite($handle, '<tr><td><strong>' . __('Net Profit') . '</strong></td><td class="amount ' . ($totalRevenue >= $totalExpenses ? 'positive' : 'negative') . '" x:num="' . ($totalRevenue - $totalExpenses) . '"><strong>' . number_format($totalRevenue - $totalExpenses, 2) . '</strong></td></tr>');
+            fwrite($handle, '<tr><td><strong>' . __('Monthly Minimum Revenue Benchmark') . '</strong></td><td class="amount" x:num="' . $avgMonthlyFixed . '"><strong>' . number_format($avgMonthlyFixed, 2) . ' / mo</strong></td></tr>');
             fwrite($handle, '</tbody></table>');
 
             // --- 2. TOP CUSTOMERS ---
