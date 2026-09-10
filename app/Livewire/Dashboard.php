@@ -14,6 +14,10 @@ class Dashboard extends Component
 {
  public function mount()
  {
+ if (Auth::user()->is_super_admin && !Auth::user()->business_id) {
+ return redirect()->route('admin.dashboard');
+ }
+
  if (Auth::user()->role === 'client') {
  return redirect()->route('client.dashboard');
  }
@@ -27,6 +31,13 @@ class Dashboard extends Component
  public function render()
  {
  $business = Auth::user()->business;
+
+ if (!$business) {
+ if (Auth::user()->is_super_admin) {
+ return redirect()->route('admin.dashboard');
+ }
+ return redirect()->route('business.profile');
+ }
 
  $stats = [
  'total_invoices' => $business->invoices()->count(),

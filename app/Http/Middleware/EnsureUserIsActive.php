@@ -18,6 +18,11 @@ class EnsureUserIsActive
     {
         if (Auth::check()) {
             $user = Auth::user();
+
+            if ($user->is_super_admin) {
+                return $next($request);
+            }
+
             $rawStatus = $user->getRawOriginal('is_active');
             
             // Only deactivate if explicitly set to 0/false in the database (never when null or missing)

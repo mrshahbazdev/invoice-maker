@@ -14,6 +14,10 @@ return [
 
     'store' => null,
 
+    'table' => env('SESSION_TABLE', 'sessions'),
+
+    'connection' => env('SESSION_CONNECTION'),
+
     'lottery' => [2, 100],
 
     'cookie' => env('SESSION_COOKIE', 'laravel_session'),

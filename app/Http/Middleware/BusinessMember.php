@@ -19,6 +19,11 @@ class BusinessMember
         // If the user is authenticated but does not have a business_id,
         // they are not considered a business member for this middleware's purpose.
         if (Auth::check() && !Auth::user()->business_id) {
+            // If the user is a super admin, redirect to admin dashboard
+            if (Auth::user()->is_super_admin) {
+                return redirect()->route('admin.dashboard');
+            }
+
             // If the user's role is 'client', redirect them to their client dashboard.
             // This prevents clients from accessing business-specific areas.
             if (Auth::user()->role === 'client') {

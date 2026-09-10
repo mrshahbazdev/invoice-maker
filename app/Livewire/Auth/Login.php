@@ -37,10 +37,15 @@ class Login extends Component
  Auth::login($user, $this->remember);
  session()->regenerate();
 
+ if (Auth::user()->is_super_admin) {
+ $this->redirect(route('admin.dashboard'));
+ return;
+ }
+
  if (Auth::user()->role === 'client') {
- $this->redirect(route('client.dashboard'), navigate: true);
+ $this->redirect(route('client.dashboard'));
  } else {
- $this->redirect(route('dashboard'), navigate: true);
+ $this->redirect(route('dashboard'));
  }
  }
 
