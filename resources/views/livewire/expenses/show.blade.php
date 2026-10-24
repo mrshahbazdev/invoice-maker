@@ -88,13 +88,13 @@
  <h3 class="text-lg font-bold text-txmain mb-4">{{ __('Receipt / Proof of Payment') }}</h3>
  <div class="flex justify-start">
  @if (in_array(strtolower(pathinfo($expense->receipt_path, PATHINFO_EXTENSION)), ['png', 'jpg', 'jpeg', 'gif', 'webp']))
- <a href="{{ Storage::url($expense->receipt_path) }}" target="_blank"
+ <a href="{{ str_starts_with($expense->receipt_path, 'private/') ? route('private-files.show', ['kind' => 'receipts', 'file' => basename($expense->receipt_path)]) : Storage::url($expense->receipt_path) }}" target="_blank"
  class="rounded-xl overflow-hidden shadow-md border hover:opacity-90 transition inline-block">
- <img src="{{ Storage::url($expense->receipt_path) }}"
+ <img src="{{ str_starts_with($expense->receipt_path, 'private/') ? route('private-files.show', ['kind' => 'receipts', 'file' => basename($expense->receipt_path)]) : Storage::url($expense->receipt_path) }}"
  class="max-w-full md:max-w-xl h-auto object-contain">
  </a>
  @else
- <a href="{{ Storage::url($expense->receipt_path) }}" target="_blank"
+ <a href="{{ str_starts_with($expense->receipt_path, 'private/') ? route('private-files.show', ['kind' => 'receipts', 'file' => basename($expense->receipt_path)]) : Storage::url($expense->receipt_path) }}" target="_blank"
  class="flex flex-col items-center justify-center p-8 border rounded-xl bg-page hover:bg-page transition min-w-[300px]">
  <svg class="h-16 w-16 text-gray-400 mb-2" fill="currentColor" viewBox="0 0 20 20">
  <path fill-rule="evenodd"

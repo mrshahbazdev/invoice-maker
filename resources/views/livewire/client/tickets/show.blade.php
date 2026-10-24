@@ -94,7 +94,7 @@
  @if($reply->attachment_path)
  <div class="mt-4 pt-4 border-t border-gray-100">
  <h4 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Attachment</h4>
- <a href="{{ Storage::url($reply->attachment_path) }}" target="_blank" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-txmain bg-page hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-colors">
+ <a href="{{ str_starts_with($reply->attachment_path, 'private/') ? route('private-files.show', ['kind' => 'tickets', 'file' => basename($reply->attachment_path)]) : Storage::url($reply->attachment_path) }}" target="_blank" class="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-txmain bg-page hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-colors">
  <svg class="h-4 w-4 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
  </svg>

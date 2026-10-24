@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Users;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class Index extends Component
 {
@@ -45,6 +46,16 @@ class Index extends Component
  if ($user->is_super_admin) {
  return;
  }
+
+ // Group G: audit every impersonation start and notify the target user
+ // (database notification only, no email).
+ Log::info('impersonation_started', [
+ 'admin_id' => auth()->id(),
+ 'target_id' => $user->id,
+ 'ip' => request()->ip(),
+ 'at' => now()->toIso8601String(),
+ ]);
+ $user->notify(new \App\Notifications\UserImpersonatedNotification(auth()->id()));
 
  // Store original admin ID in session
  session()->put('impersonated_by', auth()->id());

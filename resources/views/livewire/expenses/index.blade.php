@@ -90,7 +90,7 @@
  <a href="{{ route('expenses.show', $expense) }}"
  class="text-brand-600 hover:text-brand-700 text-sm font-medium pr-2">{{ __('View') }}</a>
  @if($expense->receipt_path)
- <a href="{{ Storage::url($expense->receipt_path) }}" target="_blank"
+ <a href="{{ str_starts_with($expense->receipt_path, 'private/') ? route('private-files.show', ['kind' => 'receipts', 'file' => basename($expense->receipt_path)]) : Storage::url($expense->receipt_path) }}" target="_blank"
  class="text-brand-600 hover:text-brand-700 text-sm font-medium"
  title="{{ __('View Receipt') }}">
  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

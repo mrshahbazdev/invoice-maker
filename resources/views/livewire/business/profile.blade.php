@@ -19,6 +19,14 @@
             </div>
         @endif
 
+        {{-- Group H (Phase 2): warning only — business email stays optional, no validation change. Shown only while the email field is empty; disappears as soon as an email is typed or saved. --}}
+        @if(empty(trim((string) $email)))
+            <div class="mb-4 bg-amber-50 border border-amber-400 text-amber-800 px-4 py-3 rounded relative shadow-sm" role="alert">
+                <p class="font-semibold">{{ __('Warning: Your business email is missing.') }}</p>
+                <p class="mt-1">{{ __('Invoice emails sent from this business may fail or arrive without a business contact or reply address. Please add your email in the Email field below before sending invoices.') }} <a href="#business-email" class="font-semibold underline">{{ __('Add business email') }}</a></p>
+            </div>
+        @endif
+
         <form wire:submit="save" class="bg-card rounded-lg shadow p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div>
@@ -31,7 +39,7 @@
 
                 <div>
                     <label class="block text-sm font-medium text-txmain mb-1">{{ __('Email') }}</label>
-                    <input type="email" wire:model="email"
+                    <input id="business-email" type="email" wire:model="email"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                         placeholder="{{ __('business@example.com') }}">
                     @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror

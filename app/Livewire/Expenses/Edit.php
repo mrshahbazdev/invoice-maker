@@ -84,9 +84,9 @@ class Edit extends Component
  if ($this->receipt) {
  // Delete old receipt if exists
  if ($this->expense->receipt_path) {
- Storage::disk('public')->delete($this->expense->receipt_path);
+ Storage::disk(str_starts_with($this->expense->receipt_path, 'private/') ? 'local' : 'public')->delete($this->expense->receipt_path);
  }
- $data['receipt_path'] = $this->receipt->store('receipts', 'public');
+ $data['receipt_path'] = $this->receipt->store('private/receipts', 'local');
  }
 
  \Illuminate\Support\Facades\DB::transaction(function () use ($data) {

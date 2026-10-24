@@ -531,9 +531,19 @@
                             <div class="w-full md:w-1/3 text-right flex flex-col items-end">
                                 @if($template->signature_path ?? false)
                                     <div class="inline-block text-center mt-4">
-                                        <img src="{{ Storage::url($template->signature_path) }}" alt="Signature"
-                                            class="max-h-16 max-w-[150px] mb-2 mx-auto"
-                                            style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));">
+                                        @if(str_starts_with($template->signature_path, 'private/') && file_exists(storage_path('app/' . $template->signature_path)))
+                                            @php
+                                                $pubSigExt = strtolower(pathinfo($template->signature_path, PATHINFO_EXTENSION));
+                                                $pubSigB64 = 'data:image/' . $pubSigExt . ';base64,' . base64_encode(file_get_contents(storage_path('app/' . $template->signature_path)));
+                                            @endphp
+                                            <img src="{{ $pubSigB64 }}" alt="Signature"
+                                                class="max-h-16 max-w-[150px] mb-2 mx-auto"
+                                                style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));">
+                                        @else
+                                            <img src="{{ Storage::url($template->signature_path) }}" alt="Signature"
+                                                class="max-h-16 max-w-[150px] mb-2 mx-auto"
+                                                style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));">
+                                        @endif
                                         <div
                                             class="border-t-2 border-dashed border-gray-300 pt-2 px-6 mt-1 text-xs font-semibold uppercase tracking-widest text-gray-400">
                                             {{ __('Authorized Signature') }}

@@ -186,6 +186,22 @@
                                 </div>
                             @endif
 
+                            <div class="mt-5 max-w-xl space-y-3">
+                                <p class="text-sm text-txmain">
+                                    {{ __('To disable two-factor authentication, enter your current password and the current code from your authenticator app.') }}
+                                </p>
+                                <div>
+                                    <input type="password" wire:model.defer="disable_password" placeholder="{{ __('Current password') }}"
+                                        class="w-full px-3 py-2 bg-card border border-gray-300 rounded-md text-sm text-txmain focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                                    @error('disable_password') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                    <input type="text" wire:model.defer="disable_code" inputmode="numeric" placeholder="{{ __('Authenticator code') }}"
+                                        class="w-full px-3 py-2 bg-card border border-gray-300 rounded-md text-sm text-txmain focus:outline-none focus:ring-2 focus:ring-brand-500" />
+                                    @error('disable_code') <span class="text-red-600 text-sm">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
                             <div class="mt-5 flex gap-3">
                                 @if(!$showingRecoveryCodes)
                                     <button wire:click="showRecoveryCodes"

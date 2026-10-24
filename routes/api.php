@@ -23,7 +23,7 @@ Route::get('/blog/categories/{category}', [BlogCategoryController::class, 'show'
 Route::get('/blog/posts', [BlogPostController::class, 'index']);
 Route::get('/blog/posts/{post}', [BlogPostController::class, 'show']);
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
 Route::post('/register', [AuthController::class, 'register']); // Can be added later if needed
 
 Route::middleware('auth:sanctum')->name('api.')->group(function () {

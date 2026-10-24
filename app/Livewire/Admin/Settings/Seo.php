@@ -22,6 +22,11 @@ class Seo extends Component
  public $google_analytics_id;
  public $custom_header_scripts;
 
+    protected $rules = [
+        // OG image must be a real image; 2MB matches the business-logo rule.
+        'new_og_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|extensions:jpeg,png,jpg,gif,webp|max:2048',
+    ];
+
  public function mount()
  {
  $this->meta_title = Setting::get('seo.meta_title', 'InvoiceMaker SaaS');
@@ -38,7 +43,10 @@ class Seo extends Component
 
  public function save()
  {
- // Save standard text settings
+        // Validate the OG image upload (previously unvalidated).
+        $this->validateOnly('new_og_image');
+
+        // Save standard text settings
  Setting::set('seo.meta_title', $this->meta_title);
  Setting::set('seo.meta_description', $this->meta_description);
  Setting::set('seo.meta_keywords', $this->meta_keywords);

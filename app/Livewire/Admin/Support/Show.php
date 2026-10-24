@@ -22,7 +22,7 @@ class Show extends Component
 
  protected $rules = [
  'message' => 'required|string',
- 'attachment' => 'nullable|file|max:5120', // 5MB Max
+ 'attachment' => 'nullable|file|mimes:jpeg,png,jpg,gif,webp,pdf,doc,docx,xls,xlsx,csv,txt|extensions:jpeg,png,jpg,gif,webp,pdf,doc,docx,xls,xlsx,csv,txt|max:5120', // 5MB Max, images + PDF + office docs only
  'status' => 'required|string|in:open,in_progress,resolved,closed',
  'priority' => 'required|string|in:low,medium,high,urgent',
  'category' => 'required|string|in:general,technical,billing',
@@ -43,7 +43,7 @@ class Show extends Component
 
  $attachmentPath = null;
  if ($this->attachment) {
- $attachmentPath = $this->attachment->store('tickets/attachments', 'public');
+ $attachmentPath = $this->attachment->store('private/tickets', 'local');
  }
 
  TicketReply::create([

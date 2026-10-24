@@ -104,7 +104,7 @@
  <label class="block text-sm font-medium text-txmain mb-1">{{ __('Signature Upload') }}</label>
  @if($signature_path)
  <div class="mb-4">
- <img src="{{ asset('storage/' . $signature_path) }}" alt="Signature"
+ <img src="{{ str_starts_with($signature_path, 'private/') ? route('private-files.show', ['kind' => 'signatures', 'file' => basename($signature_path)]) : asset('storage/' . $signature_path) }}" alt="Signature"
  class="h-16 w-auto border rounded p-1">
  </div>
  @endif
@@ -209,7 +209,7 @@
  @endif
  @if($signature_path)
  <div class="mt-6 border-b border-gray-300 inline-block px-10 pb-2 mb-2">
- <img src="{{ asset('storage/' . $signature_path) }}" alt="Signature" class="h-12 w-auto">
+ <img src="{{ str_starts_with($signature_path, 'private/') ? route('private-files.show', ['kind' => 'signatures', 'file' => basename($signature_path)]) : asset('storage/' . $signature_path) }}" alt="Signature" class="h-12 w-auto">
  </div>
  <p class="text-xs text-gray-500">{{ __('Authorized Signature') }}</p>
  @endif

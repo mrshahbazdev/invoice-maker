@@ -31,6 +31,7 @@ use App\Http\Controllers\PublicInvoiceController;
 use App\Http\Controllers\ClientPortalController;
 use App\Http\Controllers\CashBookExportController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\PrivateFileController;
 use App\Livewire\Accounting\Categories\Index as CategoriesIndex;
 use App\Livewire\Accounting\CashBook\Index as CashBookIndex;
 use App\Livewire\Accounting\Reconciliation;
@@ -149,6 +150,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/client/settings', App\Livewire\ClientPortal\Settings::class)->name('client.settings');
     Route::get('/client/invoices/download-all', [ClientPortalController::class, 'downloadAllInvoices'])->name('client.invoices.download-all');
     Route::get('/client/statement', [ClientPortalController::class, 'downloadStatement'])->name('client.statement');
+
+    // Private-disk file downloads (auth + ownership checked in controller)
+    Route::get('/private-files/{kind}/{file}', [PrivateFileController::class, 'show'])
+        ->where(['kind' => 'receipts|signatures|tickets', 'file' => '[^/]+'])
+        ->name('private-files.show');
 
     // Client Tickets
     Route::prefix('client/tickets')->name('client.tickets.')->group(function () {

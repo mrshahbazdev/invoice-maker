@@ -1,6 +1,13 @@
 @php $title = $invoice->isEstimate() ? __('View Estimate') : __('View Invoice'); @endphp
 
 <div>
+    {{-- Group H (Phase 2): warning only — sending is NOT blocked. Shown only when the invoice's business has no email. --}}
+    @if(empty(trim((string) ($invoice->business?->email ?? ''))))
+        <div class="mb-4 bg-amber-50 border border-amber-400 text-amber-800 px-4 py-3 rounded relative shadow-sm" role="alert">
+            <p class="font-semibold">{{ __('Warning: This business has no email address.') }}</p>
+            <p class="mt-1">{{ __('Invoice emails sent from this business may fail or arrive without a business contact or reply address. Add the business email before sending if you can.') }} <a href="{{ route('business.profile') }}" class="font-semibold underline">{{ __('Add business email') }}</a></p>
+        </div>
+    @endif
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
             <h2 class="text-2xl font-bold text-txmain">
@@ -627,6 +634,14 @@
                         <p class="text-sm text-txmain">
                             {{ __('Customize the email subject and body below before sending. Placeholders have already been replaced.') }}
                         </p>
+
+                        {{-- Group H (Phase 2): warning shown BEFORE the user confirms sending; the Send button below is unchanged and sending is NOT blocked. --}}
+                        @if(empty(trim((string) ($invoice->business?->email ?? ''))))
+                            <div class="bg-amber-50 border border-amber-400 text-amber-800 px-4 py-3 rounded" role="alert">
+                                <p class="font-semibold">{{ __('Warning: Your business email is missing.') }}</p>
+                                <p class="mt-1">{{ __('This email may fail or arrive without a business contact or reply address. You can still send it, but add your business email on your Business Profile first if you can.') }} <a href="{{ route('business.profile') }}" class="font-semibold underline">{{ __('Add business email') }}</a></p>
+                            </div>
+                        @endif
 
                         <div>
                             <label class="block text-sm font-medium text-txmain mb-1">{{ __('Subject') }} *</label>

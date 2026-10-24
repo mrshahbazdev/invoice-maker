@@ -78,7 +78,7 @@ class Create extends Component
 
  $receiptPath = null;
  if ($this->receipt) {
- $receiptPath = $this->receipt->store('receipts', 'public');
+ $receiptPath = $this->receipt->store('private/receipts', 'local');
  }
 
  \Illuminate\Support\Facades\DB::transaction(function () use ($receiptPath) {

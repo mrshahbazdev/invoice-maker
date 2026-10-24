@@ -29,6 +29,12 @@ class Show extends Component
     public string $setupCode = '';
     public array $recoveryCodes = [];
 
+ // Two-Factor Disable Confirmation (Group G): disabling confirmed 2FA
+ // requires the current password AND the current TOTP code. These are
+ // bound by the profile view; the method rejects when either is missing.
+ public string $disable_password = '';
+ public string $disable_code = '';
+
     // AI Configuration
     public ?string $openai_api_key = '';
     public ?string $anthropic_api_key = '';
@@ -287,6 +293,44 @@ class Show extends Component
     public function disableTwoFactorAuthentication()
     {
         $user = Auth::user();
+
+        // Cancelling setup (2FA not yet confirmed) stores no secret yet, so
+        // it needs no confirmation: just reset the setup UI state. This
+        // preserves the existing Cancel button behaviour during setup.
+        if (!$user->two_factor_secret || !$user->two_factor_confirmed_at) {
+            $user->forceFill([
+                'two_factor_secret' => null,
+                'two_factor_recovery_codes' => null,
+                'two_factor_confirmed_at' => null,
+            ])->save();
+
+            $this->showingQrCode = false;
+            $this->showingRecoveryCodes = false;
+
+            session()->flash('two_factor_message', __('Two-factor authentication has been disabled.'));
+            return;
+        }
+
+        // Group G: disabling confirmed 2FA requires password confirmation
+        // AND the current TOTP code (same Google2FA library as setup).
+        $this->validate([
+            'disable_password' => 'required|string',
+            'disable_code' => 'required|string',
+        ]);
+
+        if (!Hash::check($this->disable_password, $user->password)) {
+            throw ValidationException::withMessages([
+                'disable_password' => __('The provided password does not match your current password.'),
+            ]);
+        }
+
+        $google2fa = new Google2FA();
+        if (!$google2fa->verifyKey($user->two_factor_secret, $this->disable_code)) {
+            throw ValidationException::withMessages([
+                'disable_code' => __('The provided two-factor authentication code is invalid.'),
+            ]);
+        }
+
         $user->forceFill([
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
@@ -295,6 +339,7 @@ class Show extends Component
 
         $this->showingQrCode = false;
         $this->showingRecoveryCodes = false;
+        $this->reset(['disable_password', 'disable_code']);
 
         session()->flash('two_factor_message', __('Two-factor authentication has been disabled.'));
     }

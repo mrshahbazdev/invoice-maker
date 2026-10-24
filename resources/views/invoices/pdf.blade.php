@@ -393,12 +393,13 @@
 
 
 
-                @if($signaturePath && file_exists(storage_path('app/public/' . $signaturePath)))
+                @php $sigDiskPath = str_starts_with($signaturePath, 'private/') ? storage_path('app/' . $signaturePath) : storage_path('app/public/' . $signaturePath); @endphp
+                @if($signaturePath && file_exists($sigDiskPath))
                     <div class="signature-box" style="margin-top: 40px;">
                         @php
                             // DOMPDF requires base64 images or absolute local paths
-                            $type = pathinfo(storage_path('app/public/' . $signaturePath), PATHINFO_EXTENSION);
-                            $data = file_get_contents(storage_path('app/public/' . $signaturePath));
+                            $type = pathinfo($sigDiskPath, PATHINFO_EXTENSION);
+                            $data = file_get_contents($sigDiskPath);
                             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                          @endphp
                         <img src="{{ $base64 }}" class="signature-img" />

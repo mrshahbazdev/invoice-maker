@@ -73,7 +73,7 @@ class Builder extends Component
  ];
 
  if ($this->signature) {
- $data['signature_path'] = $this->signature->store('signatures', 'public');
+ $data['signature_path'] = $this->signature->store('private/signatures', 'local');
  }
 
  $this->template->update($data);
