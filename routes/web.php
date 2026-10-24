@@ -134,7 +134,9 @@ Route::middleware(['auth', 'business.member'])->group(function () {
     });
 
     Route::prefix('reports')->group(function () {
-        Route::get('/', \App\Livewire\Admin\Reports\Index::class)->name('reports.index');
+        // Per-business reports (scoped by the viewer's own business_id) —
+        // intentionally in the member group, not the super-admin group.
+        Route::get('/', \App\Livewire\Reports\Index::class)->name('reports.index');
     });
 });
 

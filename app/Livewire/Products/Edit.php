@@ -45,6 +45,7 @@ class Edit extends Component
 
  public function save(): void
  {
+ $this->authorize('update', $this->product);
  $this->validate();
 
  $this->product->update([

@@ -9,16 +9,16 @@ class ProductPolicy
 {
     public function view(User $user, Product $product): bool
     {
-        return $product->business->user_id === $user->id;
+        return $product->business_id === $user->business_id;
     }
 
     public function update(User $user, Product $product): bool
     {
-        return $product->business->user_id === $user->id;
+        return $product->business_id === $user->business_id && $user->isAdmin();
     }
 
     public function delete(User $user, Product $product): bool
     {
-        return $product->business->user_id === $user->id;
+        return $product->business_id === $user->business_id && $user->isAdmin();
     }
 }

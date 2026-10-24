@@ -9,16 +9,16 @@ class ClientPolicy
 {
     public function view(User $user, Client $client): bool
     {
-        return $client->business->user_id === $user->id;
+        return $client->business_id === $user->business_id;
     }
 
     public function update(User $user, Client $client): bool
     {
-        return $client->business->user_id === $user->id;
+        return $client->business_id === $user->business_id && $user->isAdmin();
     }
 
     public function delete(User $user, Client $client): bool
     {
-        return $client->business->user_id === $user->id;
+        return $client->business_id === $user->business_id && $user->isAdmin();
     }
 }

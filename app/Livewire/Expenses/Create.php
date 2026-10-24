@@ -74,6 +74,10 @@ class Create extends Component
 
  public function save()
  {
+ $user = Auth::user();
+ if (!$user || !$user->isAdmin()) {
+  abort(403);
+ }
  $this->validate();
 
  $receiptPath = null;

@@ -68,6 +68,7 @@ class Edit extends Component
 
  public function save()
  {
+ $this->authorize('update', $this->expense);
  $this->validate();
 
  $data = [

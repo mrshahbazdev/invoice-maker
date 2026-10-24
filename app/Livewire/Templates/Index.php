@@ -11,6 +11,7 @@ class Index extends Component
  public function setDefault(int $id): void
  {
  $template = Auth::user()->business->templates()->findOrFail($id);
+ $this->authorize('update', $template);
 
  Auth::user()->business->templates()->update(['is_default' => false]);
  $template->update(['is_default' => true]);

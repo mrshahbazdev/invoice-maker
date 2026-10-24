@@ -107,7 +107,7 @@ class SendInvoiceReminders extends Command
             ]);
 
             $this->info("Overdue Reminder sent for Invoice #{$invoice->invoice_number} to {$invoice->client->email}");
-            Log::info("Payment Reminder Sent: Invoice #{$invoice->id}");
+            Log::info("Payment Reminder Sent: Invoice #{$invoice->invoice_number} (ID {$invoice->id})", ['invoice_id' => $invoice->id, 'invoice_number' => $invoice->invoice_number]);
         } catch (\Exception $e) {
             EmailLog::create([
                 'invoice_id' => $invoice->id,

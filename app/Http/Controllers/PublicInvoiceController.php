@@ -16,7 +16,7 @@ class PublicInvoiceController
 
         \Log::info('PublicInvoiceController@show access', [
             'id' => $invoice->id,
-            'url' => $request->fullUrl(),
+            'url' => $request->path(),
             'hasValidSignature' => $hasValidSignature,
             'user' => auth()->id(),
             'app_url' => config('app.url'),
@@ -142,7 +142,10 @@ class PublicInvoiceController
 
     public function addComment(Request $request, Invoice $invoice)
     {
-        if (!$request->hasValidSignature() && !auth()->check()) {
+        $user = auth()->user();
+        $isRelated = $user !== null && ($user->business_id === $invoice->business_id
+            || ($invoice->client && $invoice->client->user_id === $user->id));
+        if (!$request->hasValidSignature() && !$isRelated) {
             return response('Unauthorized.', 403);
         }
 

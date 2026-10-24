@@ -30,6 +30,10 @@ class Create extends Component
 
  public function save(): void
  {
+ $user = Auth::user();
+ if (!$user || !$user->isAdmin()) {
+  abort(403);
+ }
  $this->validate();
 
  Auth::user()->business->products()->create([

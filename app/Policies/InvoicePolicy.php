@@ -10,18 +10,18 @@ class InvoicePolicy
     public function view(?User $user, Invoice $invoice): bool
     {
         if (!$user) {
-            return true; // Allow guests for public views, routes handle the rest
+            return false; // Guests use signed public links, never the policy
         }
-        return $invoice->business->user_id === $user->id || $invoice->client->user_id === $user->id;
+        return $invoice->business_id === $user->business_id;
     }
 
     public function update(?User $user, Invoice $invoice): bool
     {
-        return $user && $invoice->business->user_id === $user->id;
+        return $user && $invoice->business_id === $user->business_id && $user->isAdmin();
     }
 
     public function delete(?User $user, Invoice $invoice): bool
     {
-        return $user && $invoice->business->user_id === $user->id;
+        return $user && $invoice->business_id === $user->business_id && $user->isAdmin();
     }
 }

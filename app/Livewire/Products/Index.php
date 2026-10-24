@@ -28,6 +28,7 @@ class Index extends Component
  public function delete(int $id): void
  {
  $product = Auth::user()->business->products()->findOrFail($id);
+ $this->authorize('delete', $product);
  $product->delete();
  session()->flash('message', 'Product deleted successfully.');
  }

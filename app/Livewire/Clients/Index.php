@@ -28,6 +28,7 @@ class Index extends Component
  public function delete(int $id): void
  {
  $client = Auth::user()->business->clients()->findOrFail($id);
+ $this->authorize('delete', $client);
  $client->delete();
  session()->flash('message', 'Client deleted successfully.');
  }

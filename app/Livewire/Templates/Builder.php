@@ -57,6 +57,7 @@ class Builder extends Component
 
  public function save(): void
  {
+ $this->authorize('update', $this->template);
  $this->validate();
 
  $data = [
