@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin\Reports;
+namespace App\Livewire\Reports;
 
 use App\Models\Invoice;
 use App\Models\Payment;
@@ -104,7 +104,7 @@ class Index extends Component
             ->take(10)
             ->get();
 
-        return view('livewire.admin.reports.index', [
+        return view('livewire.reports.index', [
             'totalRevenue' => $totalRevenue,
             'outstandingBalance' => $outstandingBalance,
             'totalTaxCollected' => $totalTaxCollected,
