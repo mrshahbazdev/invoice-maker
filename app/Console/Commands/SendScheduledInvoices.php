@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Services\PdfGenerationService;
 use App\Services\EmailTemplateService;
-use Illuminate\Support\Facades\Mail;
+use App\Services\MailConfigurationService;
 use Illuminate\Mail\Message;
 
 class SendScheduledInvoices extends Command
@@ -62,7 +62,9 @@ class SendScheduledInvoices extends Command
                     $templateService = new EmailTemplateService(); // Instantiated EmailTemplateService
                     $template = $templateService->getParsedTemplate($invoice, 'invoice'); // Get parsed template
 
-                    Mail::send([], [], function (Message $message) use ($invoice, $pdfContent, $template) { // Added $template to use clause
+                    $mailer = MailConfigurationService::getMailer($invoice->business);
+
+                    $mailer->send([], [], function (Message $message) use ($invoice, $pdfContent, $template) { // Added $template to use clause
                         $message->to($invoice->client->email)
                             ->subject($template['subject']) // Used template subject
                             ->html($template['body']) // Used template body

@@ -126,6 +126,9 @@ class Create extends Component
 
  public function selectProduct(Product $product): void
  {
+ if ($product->business_id != Auth::user()->business_id) {
+ abort(403);
+ }
  $newItem = [
  'product_id' => $product->id,
  'description' => $product->name . ' - ' . $product->description,
@@ -147,7 +150,7 @@ class Create extends Component
  public function updatedClientId($value): void
  {
  if ($value) {
- $client = Client::find($value);
+ $client = Auth::user()->business->clients()->find($value);
  if ($client && $client->currency) {
  $this->currency = $client->currency;
  }
@@ -167,6 +170,7 @@ class Create extends Component
  {
  if ($this->step === 1) {
  $this->validate(['client_id' => 'required|exists:clients,id']);
+ Auth::user()->business->clients()->findOrFail($this->client_id);
  } elseif ($this->step === 2) {
  if (count($this->items) === 0) {
  $this->addError('items', 'Please add at least one item.');
@@ -183,6 +187,7 @@ class Create extends Component
  'due_date' => 'required|date|after_or_equal:invoice_date',
  'template_id' => 'required|exists:templates,id',
  ]);
+ Auth::user()->business->templates()->findOrFail($this->template_id);
  }
 
  if ($this->step < 4) {
@@ -199,8 +204,25 @@ class Create extends Component
 
  public function save(): void
  {
+ // Group C2: viewers are read-only (owner/admin only, ExpensePolicy pattern).
+ // Placed before try{} so a 403 propagates instead of being flashed as an error.
+ $user = Auth::user();
+ if (!$user || !$user->isAdmin()) {
+ abort(403);
+ }
  try {
  $this->validate();
+
+ // Group C2: scope every persisted business-owned foreign key to the user's
+ // own business; a foreign id must 404 before any write happens.
+ $business = $user->business;
+ $business->clients()->findOrFail($this->client_id);
+ $business->templates()->findOrFail($this->template_id);
+ foreach ($this->items as $item) {
+ if (!empty($item['product_id'])) {
+ $business->products()->findOrFail($item['product_id']);
+ }
+ }
 
  $totals = $this->totals;
 

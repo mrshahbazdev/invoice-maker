@@ -54,8 +54,9 @@ class ProcessRecurringInvoices extends Command
         $count = 0;
 
         foreach ($invoices as $parentInvoice) {
+            $newInvoice = null;
             try {
-                \Illuminate\Support\Facades\DB::transaction(function () use ($parentInvoice, $pdfService, $invoiceNumberService, &$count) {
+                \Illuminate\Support\Facades\DB::transaction(function () use ($parentInvoice, $pdfService, $invoiceNumberService, &$newInvoice) {
                     // Calculate new dates
                     $issueDate = Carbon::today();
                     $originalIssue = Carbon::parse($parentInvoice->invoice_date);
@@ -107,8 +108,13 @@ class ProcessRecurringInvoices extends Command
 
                     $this->info("Created new invoice {$newInvoice->invoice_number} from {$parentInvoice->invoice_number}");
 
-                    // 5. Automatically Email the new Invoice using Business Mailer
-                    if ($newInvoice->client && $newInvoice->client->email) {
+                });
+
+                // 5. Email the new invoice AFTER the transaction has committed, so an
+                // SMTP failure can no longer roll back the new invoice or the parent's
+                // next_run_date advance. The data written is unchanged; only the ordering moved.
+                try {
+                    if ($newInvoice && $newInvoice->client && $newInvoice->client->email) {
                         $pdfContent = $pdfService->generate($newInvoice);
                         $templateService = new \App\Services\EmailTemplateService();
                         $template = $templateService->getParsedTemplate($newInvoice, 'invoice');
@@ -140,9 +146,12 @@ class ProcessRecurringInvoices extends Command
 
                         $this->info("Emailed invoice to {$newInvoice->client->email}");
                     }
+                } catch (\Exception $mailException) {
+                    Log::error("Failed to email recurring invoice ID {$newInvoice->id}: " . $mailException->getMessage());
+                    $this->error("Failed to email recurring invoice ID {$newInvoice->id}: " . $mailException->getMessage());
+                }
 
-                    $count++;
-                });
+                $count++;
 
             } catch (\Exception $e) {
                 Log::error("Failed to process recurring invoice ID {$parentInvoice->id}: " . $e->getMessage());

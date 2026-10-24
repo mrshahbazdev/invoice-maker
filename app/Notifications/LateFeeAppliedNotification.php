@@ -44,7 +44,7 @@ class LateFeeAppliedNotification extends Notification
             'client_name' => optional($this->invoice->client)->name,
             'message' => "Late fee applied to overdue Invoice {$this->invoice->invoice_number}.",
             'type' => 'late_fee_applied',
-            'url' => route('admin.invoices.show', $this->invoice->id),
+            'url' => route('invoices.show', $this->invoice->id),
         ];
     }
 }

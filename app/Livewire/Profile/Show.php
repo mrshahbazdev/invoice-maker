@@ -78,6 +78,11 @@ class Show extends Component
 
     public function updateAiSettings()
     {
+        // Group C2: viewers are read-only (owner/admin only, ExpensePolicy pattern).
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $this->validate([
             'openai_api_key' => 'nullable|string',
             'anthropic_api_key' => 'nullable|string',
@@ -95,6 +100,11 @@ class Show extends Component
 
     public function updateThemeSettings()
     {
+        // Group C2: viewers are read-only (owner/admin only, ExpensePolicy pattern).
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $this->validate([
             'theme_id' => 'nullable|exists:themes,id',
             'page_bg_color_id' => 'nullable|exists:themes,id',
@@ -116,6 +126,11 @@ class Show extends Component
 
     public function applyPreset($brandHex, $pageHex, $cardHex, $textHex)
     {
+        // Group C2: viewers are read-only (owner/admin only); this writes business theme rows.
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $business = Auth::user()->business;
         if (!$business)
             return;
@@ -165,6 +180,11 @@ class Show extends Component
 
     public function updatePaymentSettings()
     {
+        // Group C2: viewers are read-only (owner/admin only, ExpensePolicy pattern).
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $this->validate([
             'stripe_public_key' => 'nullable|string',
             'stripe_secret_key' => 'nullable|string',

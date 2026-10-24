@@ -150,6 +150,9 @@ class Edit extends Component
 
  public function selectProduct(Product $product): void
  {
+ if ($product->business_id != Auth::user()->business_id) {
+ abort(403);
+ }
  // Add the product data to the item array
  $newItem = [
  'product_id' => $product->id,
@@ -207,7 +210,20 @@ class Edit extends Component
 
  public function save(): void
  {
+ // Group C2: re-check the mount authorize() here; mount alone does not
+ // protect save() on a hydrated Livewire component.
+ $this->authorize('update', $this->invoice);
  $this->validate();
+
+ // Group C2: scope every persisted business-owned foreign key to the user's
+ // own business; a foreign id must 404 before any write happens.
+ $business = Auth::user()->business;
+ $business->clients()->findOrFail($this->client_id);
+ foreach ($this->items as $item) {
+ if (!empty($item['product_id'])) {
+ $business->products()->findOrFail($item['product_id']);
+ }
+ }
 
  $totals = $this->totals;
 

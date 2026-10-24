@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use App\Models\Invoice;
 use App\Services\AllocoreInvoiceService;
 use App\Services\PdfGenerationService;

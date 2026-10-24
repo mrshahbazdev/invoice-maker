@@ -32,8 +32,15 @@ class StripeController
         }
     }
 
-    public function createCheckoutSession(\App\Models\Invoice $invoice)
+    public function createCheckoutSession(Request $request, \App\Models\Invoice $invoice)
     {
+        // GROUP C1 FIX 3: unauthenticated checkout creation requires a valid
+        // signed URL, as PublicInvoiceController enforces in-controller for
+        // show/download. Unsigned /v/{invoice}/pay links are rejected 403.
+        if (!$request->hasValidSignature()) {
+            return response('Invalid or expired invoice link.', 403);
+        }
+
         // This will be called from the public invoice page
         $stripe = new StripeClient(env('STRIPE_SECRET'));
         $business = $invoice->business;
@@ -89,7 +96,7 @@ class StripeController
 
         if ($event->type === 'checkout.session.completed') {
             $session = $event->data->object;
-            $invoiceId = $session->metadata->invoice_id;
+            $invoiceId = $session->metadata->invoice_id ?? null;
 
             $invoice = \App\Models\Invoice::find($invoiceId);
             if ($invoice) {
@@ -99,14 +106,34 @@ class StripeController
                     'amount_due' => 0,
                 ]);
 
-                // Create a payment record if needed
-                \App\Models\Payment::create([
-                    'invoice_id' => $invoice->id,
-                    'amount' => $invoice->grand_total,
-                    'payment_date' => now(),
-                    'payment_method' => 'stripe',
-                    'notes' => 'Paid via Stripe. Reference: ' . $session->payment_intent,
-                ]);
+                // GROUP C1 FIX 2: Payment::$fillable and the payments table
+                // use method/date. payment_method/payment_date were silently
+                // dropped by mass assignment, leaving NOT NULL date empty, so
+                // the insert failed and the webhook 500ed AFTER the invoice
+                // was already marked paid above.
+                // Idempotency (existing columns only -- there is no dedicated
+                // payment-intent column): reuse the notes text, which already
+                // stores the intent and which PaymentController::success()
+                // also searches, so a retried webhook does not double-log.
+                $paymentIntentId = is_string($session->payment_intent)
+                    ? $session->payment_intent
+                    : ($session->payment_intent->id ?? null);
+                $existingPayment = null;
+                if (!empty($paymentIntentId)) {
+                    $existingPayment = \App\Models\Payment::where('invoice_id', $invoice->id)
+                        ->where('notes', 'LIKE', '%' . $paymentIntentId . '%')
+                        ->first();
+                }
+
+                if (!$existingPayment) {
+                    \App\Models\Payment::create([
+                        'invoice_id' => $invoice->id,
+                        'amount' => $invoice->grand_total,
+                        'method' => 'stripe',
+                        'date' => now(),
+                        'notes' => 'Paid via Stripe. Reference: ' . $paymentIntentId,
+                    ]);
+                }
             }
         }
 

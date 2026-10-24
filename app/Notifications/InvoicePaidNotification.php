@@ -44,7 +44,7 @@ class InvoicePaidNotification extends Notification
             'client_name' => optional($this->invoice->client)->name,
             'message' => "Payment received for Invoice {$this->invoice->invoice_number}.",
             'type' => 'invoice_paid',
-            'url' => route('admin.invoices.show', $this->invoice->id),
+            'url' => route('invoices.show', $this->invoice->id),
         ];
     }
 }

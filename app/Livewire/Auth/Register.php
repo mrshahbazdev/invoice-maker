@@ -51,6 +51,13 @@ class Register extends Component
  $invitation = null;
  if ($this->invitation_token) {
  $invitation = \App\Models\Invitation::where('token', $this->invitation_token)->first();
+ // Group C2: a token alone must not grant membership. It must still be valid
+ // (not expired, not already accepted) AND addressed to the email being
+ // registered; otherwise reject outright instead of joining that business.
+ if (!$invitation || !$invitation->isValid() || $invitation->email !== $this->email) {
+ $this->addError('invitation_token', 'This invitation is invalid or was not issued for this email address.');
+ return;
+ }
  }
 
  $user = User::create([

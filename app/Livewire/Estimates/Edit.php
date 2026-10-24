@@ -45,6 +45,14 @@ class Edit extends Component
  {
  $this->estimate = $estimate;
 
+ // Group C2: close cross-business IDOR (ExpensePolicy pattern: business match + admin).
+ // InvoicePolicy::update() is owner-only (business->user_id), which would newly
+ // lock out legitimate team admins, so this gate uses business_id + isAdmin() instead.
+ $user = Auth::user();
+ if (!$user || $estimate->business_id != $user->business_id || !$user->isAdmin()) {
+ abort(403);
+ }
+
  if ($estimate->type !== Invoice::TYPE_ESTIMATE) {
  abort(404);
  }
@@ -144,6 +152,9 @@ class Edit extends Component
 
  public function selectProduct(Product $product): void
  {
+ if ($product->business_id != Auth::user()->business_id) {
+ abort(403);
+ }
  $this->items[] = [
  'product_id' => $product->id,
  'description' => $product->name,
@@ -168,7 +179,26 @@ class Edit extends Component
 
  public function save(): void
  {
+ // Group C2: re-check the mount gate before any write (mount alone does not
+ // protect save(), which Livewire can invoke on a hydrated component).
+ $user = Auth::user();
+ if (!$user || $this->estimate->business_id != $user->business_id || !$user->isAdmin()) {
+ abort(403);
+ }
  $this->validate();
+
+ // Group C2: scope every persisted business-owned foreign key to the user's
+ // own business; a foreign id must 404 before any write happens.
+ $business = $user->business;
+ $business->clients()->findOrFail($this->client_id);
+ if ($this->template_id) {
+ $business->templates()->findOrFail($this->template_id);
+ }
+ foreach ($this->items as $item) {
+ if (!empty($item['product_id'])) {
+ $business->products()->findOrFail($item['product_id']);
+ }
+ }
 
  $totals = $this->totals;
 

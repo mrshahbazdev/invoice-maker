@@ -119,7 +119,7 @@ class SendInvoiceReminders extends Command
                 'error_message' => $e->getMessage(),
             ]);
             $this->error("Failed to send reminder for Invoice #{$invoice->invoice_number}: " . $e->getMessage());
-            Log::error("Failed to send payment reminder: " . $e->getMessage());
+            Log::error("Failed to send payment reminder for Invoice #" . $invoice->invoice_number . " (ID " . $invoice->id . "): " . $e->getMessage(), ['invoice_id' => $invoice->id, 'invoice_number' => $invoice->invoice_number]);
         }
     }
 }

@@ -39,7 +39,39 @@
  <div class="px-4 sm:px-6 lg:px-8">
  <div
  class="max-w-3xl mx-auto prose prose-lg prose-blue text-txmain prose-headings:font-bold prose-headings:text-txmain prose-a:text-brand-600 hover:prose-a:text-brand-800 prose-img:rounded-2xl prose-img:shadow-lg">
- {!! $post->content !!}
+ @php
+    // Group A stored-XSS fix: blog content is author-supplied HTML, so render it
+    // through a code-only allow-list sanitizer (no new packages). Formatting tags
+    // used by the existing posts (p, headings, lists, strong, links) are kept;
+    // every other tag is stripped, all attributes are dropped except a safe href
+    // on <a>, and event handlers plus javascript:/data:/vbscript: URIs are removed.
+    $allowedBlogTags = '<p><br><strong><b><em><i><u><ul><ol><li><h1><h2><h3><h4><h5><h6><blockquote><a>';
+    $sanitizedBlogContent = strip_tags($post->content, $allowedBlogTags);
+    $sanitizedBlogContent = preg_replace_callback(
+        '/<(\/?)(p|br|strong|b|em|i|u|ul|ol|li|h1|h2|h3|h4|h5|h6|blockquote|a)(\s[^>]*)?>/i',
+        function ($m) {
+            $closing = $m[1];
+            $tag = strtolower($m[2]);
+            if ($closing !== '' || $tag !== 'a') {
+                return '<' . $closing . $tag . '>';
+            }
+            $href = '';
+            if (preg_match('/href\s*=\s*"([^"]*)"|href\s*=\s*\'([^\']*)\'|href\s*=\s*([^\s>]+)/i', $m[3] ?? '', $hm)) {
+                $href = $hm[1] !== '' ? $hm[1] : ($hm[2] !== '' ? $hm[2] : ($hm[3] ?? ''));
+                $href = trim(html_entity_decode($href, ENT_QUOTES, 'UTF-8'));
+                if (! preg_match('~^(https?://|mailto:|/|#|[^:/?#]+(?:[/?#]|$))~i', $href)) {
+                    $href = '';
+                }
+            }
+            return $href !== '' ? '<a href="' . e($href) . '">' : '<a>';
+        },
+        $sanitizedBlogContent
+    );
+    if (! is_string($sanitizedBlogContent)) {
+        $sanitizedBlogContent = e($post->content);
+    }
+@endphp
+        {!! $sanitizedBlogContent !!}
  </div>
  </div>
  </article>

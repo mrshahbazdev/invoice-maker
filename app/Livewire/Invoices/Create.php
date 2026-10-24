@@ -161,6 +161,9 @@ class Create extends Component
 
     public function selectProduct(Product $product): void
     {
+        if ($product->business_id != Auth::user()->business_id) {
+            abort(403);
+        }
         $newItem = [
             'product_id' => $product->id,
             'description' => $product->name.' - '.$product->description,
@@ -184,7 +187,7 @@ class Create extends Component
     public function updatedClientId($value): void
     {
         if ($value) {
-            $client = Client::find($value);
+            $client = Auth::user()->business->clients()->find($value);
             if ($client && $client->currency) {
                 $this->currency = $client->currency;
             }
@@ -204,6 +207,7 @@ class Create extends Component
     {
         if ($this->step === 1) {
             $this->validate(['client_id' => 'required|exists:clients,id']);
+            Auth::user()->business->clients()->findOrFail($this->client_id);
         } elseif ($this->step === 2) {
             $this->validate([
                 'items' => 'required|array|min:1',
@@ -256,7 +260,25 @@ class Create extends Component
 
     public function save(): void
     {
+        // Group C2: viewers are read-only (owner/admin only, ExpensePolicy pattern).
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $this->validate();
+
+        // Group C2: scope every persisted business-owned foreign key to the user's
+        // own business; a foreign id must 404 before any write happens.
+        $business = $user->business;
+        $business->clients()->findOrFail($this->client_id);
+        if ($this->template_id) {
+            $business->templates()->findOrFail($this->template_id);
+        }
+        foreach ($this->items as $item) {
+            if (!empty($item['product_id'])) {
+                $business->products()->findOrFail($item['product_id']);
+            }
+        }
 
         if (! $this->forceCreate) {
             $duplicate = $this->findPotentialDuplicate();

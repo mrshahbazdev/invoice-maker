@@ -48,17 +48,21 @@ Route::middleware('auth:sanctum')->name('api.')->group(function () {
     // Invoices
     Route::apiResource('invoices', InvoiceController::class);
     Route::put('/invoices/{invoice}/status', [InvoiceController::class, 'updateStatus']);
+
+    // Blog Management (Super Admin only): previously public; now requires a
+    // Sanctum token AND the existing 'is_super_admin' middleware (same gate as
+    // the /admin/* web routes, which checks the user's is_super_admin flag).
+    Route::middleware('is_super_admin')->group(function () {
+        Route::post('/blog/categories', [BlogCategoryController::class, 'store']);
+        Route::put('/blog/categories/{category}', [BlogCategoryController::class, 'update']);
+        Route::delete('/blog/categories/{category}', [BlogCategoryController::class, 'destroy']);
+
+        Route::post('/blog/posts', [BlogPostController::class, 'store']);
+        Route::post('/blog/posts/{post}', [BlogPostController::class, 'update']); // Use POST to support FormData image uploads
+        Route::delete('/blog/posts/{post}', [BlogPostController::class, 'destroy']);
+    });
 });
 
-// Admin/Global: Blog Management
-// Note: If you want these strictly limited to Super Admins, you would apply the 'is_super_admin' middleware here.
-Route::post('/blog/categories', [BlogCategoryController::class, 'store']);
-Route::put('/blog/categories/{category}', [BlogCategoryController::class, 'update']);
-Route::delete('/blog/categories/{category}', [BlogCategoryController::class, 'destroy']);
-
-Route::post('/blog/posts', [BlogPostController::class, 'store']);
-Route::post('/blog/posts/{post}', [BlogPostController::class, 'update']); // Use POST to support FormData image uploads
-Route::delete('/blog/posts/{post}', [BlogPostController::class, 'destroy']);
 
 /*
 |--------------------------------------------------------------------------

@@ -44,7 +44,7 @@ class EstimateAcceptedNotification extends Notification
             'client_name' => optional($this->invoice->client)->name,
             'message' => "Estimate {$this->invoice->invoice_number} was approved.",
             'type' => 'estimate_accepted',
-            'url' => route('admin.invoices.show', $this->invoice->id),
+            'url' => route('invoices.show', $this->invoice->id),
         ];
     }
 }

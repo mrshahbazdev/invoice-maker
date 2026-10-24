@@ -19,7 +19,7 @@ If you have already made this payment, please disregard this email. Otherwise, p
     Pay Invoice Online Now
     @endcomponent
 @else
-    @component('mail::button', ['url' => route('invoices.public.show', $invoice->uuid)])
+    @component('mail::button', ['url' => \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $invoice->id])])
     View Invoice Online
     @endcomponent
 @endif

@@ -53,6 +53,10 @@ class Index extends Component
 
     public function markAsUnpaid(int $id): void
     {
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $invoice = Auth::user()->business->invoices()->findOrFail($id);
         $invoice->update(['status' => \App\Models\Invoice::STATUS_SENT]);
         session()->flash('message', 'Invoice marked as unpaid.');
@@ -60,6 +64,10 @@ class Index extends Component
 
     public function reopenInvoice(int $id): void
     {
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $invoice = Auth::user()->business->invoices()->findOrFail($id);
 
         \Illuminate\Support\Facades\DB::transaction(function () use ($invoice) {
@@ -78,6 +86,10 @@ class Index extends Component
 
     public function cancelPaidInvoice(int $id): void
     {
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $invoice = Auth::user()->business->invoices()->findOrFail($id);
 
         \Illuminate\Support\Facades\DB::transaction(function () use ($invoice) {
@@ -96,6 +108,10 @@ class Index extends Component
 
     public function delete(int $id): void
     {
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $invoice = Auth::user()->business->invoices()->findOrFail($id);
         $invoice->delete();
         session()->flash('message', 'Invoice deleted successfully.');
@@ -103,6 +119,10 @@ class Index extends Component
 
     public function stopRecurring(int $id): void
     {
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $invoice = Auth::user()->business->invoices()->findOrFail($id);
         
         $invoice->update([
@@ -132,6 +152,10 @@ class Index extends Component
 
     public function markAsPaid(): void
     {
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $this->validate([
             'paymentDate' => 'required|date',
             'paymentSource' => 'required|in:cash,bank',
@@ -219,6 +243,10 @@ class Index extends Component
 
     public function removeFromRecurringLoop(): void
     {
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         if (empty($this->selected)) {
             session()->flash('error', __('Please select at least one invoice.'));
 
@@ -261,6 +289,10 @@ class Index extends Component
 
     public function insertIntoRecurringLoop(): void
     {
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         if (empty($this->selected)) {
             session()->flash('error', __('Please select at least one invoice.'));
 

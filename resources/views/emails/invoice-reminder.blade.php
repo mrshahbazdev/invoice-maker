@@ -105,7 +105,7 @@
  </div>
 
  <p style="text-align: center;">
- <a href="{{ route('invoices.public.show', $invoice->share_token) }}" class="button">View & Pay
+ <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $invoice->id]) }}" class="button">View & Pay
  Invoice</a>
  </p>
 

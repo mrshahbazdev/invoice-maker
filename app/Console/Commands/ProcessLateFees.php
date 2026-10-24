@@ -86,7 +86,12 @@ class ProcessLateFees extends Command
                         ]);
 
                         if ($business->user) {
-                            $business->user->notify(new \App\Notifications\LateFeeAppliedNotification($invoice));
+                            try {
+                                $business->user->notify(new \App\Notifications\LateFeeAppliedNotification($invoice));
+                            } catch (\Exception $e) {
+                                \Illuminate\Support\Facades\Log::error("Failed to send late fee notification for Invoice #" . $invoice->invoice_number . " (ID " . $invoice->id . "): " . $e->getMessage(), ['invoice_id' => $invoice->id, 'invoice_number' => $invoice->invoice_number]);
+                                $this->warn("Failed to notify for Invoice #" . $invoice->invoice_number . ": " . $e->getMessage());
+                            }
                         }
 
                         $processedCount++;

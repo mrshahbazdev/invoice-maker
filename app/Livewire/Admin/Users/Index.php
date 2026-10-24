@@ -28,6 +28,13 @@ class Index extends Component
 
  $user->is_active = !$user->is_active;
  $user->save();
+
+ // Group C2: deactivation must also revoke API access immediately. Web
+ // sessions are not killed here: they end on the next web request via
+ // the EnsureUserIsActive middleware (logout + session invalidate).
+ if (!$user->is_active) {
+ $user->tokens()->delete();
+ }
  }
 
  public function impersonate($userId)

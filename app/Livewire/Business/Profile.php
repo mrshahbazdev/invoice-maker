@@ -141,6 +141,11 @@ class Profile extends Component
 
     public function save(): void
     {
+        // Group C2: viewers are read-only (owner/admin only, ExpensePolicy pattern).
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         $this->validate();
 
         $data = [
@@ -199,6 +204,11 @@ class Profile extends Component
 
     public function removeLogo(): void
     {
+        // Group C2: viewers are read-only (owner/admin only).
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         if ($this->business) {
             $this->business->update(['logo' => null]);
             $this->logo = null;
@@ -208,6 +218,11 @@ class Profile extends Component
 
     public function connectStripe()
     {
+        // Group C2: viewers are read-only (owner/admin only).
+        $user = Auth::user();
+        if (!$user || !$user->isAdmin()) {
+            abort(403);
+        }
         if (!$this->business) {
             return;
         }
