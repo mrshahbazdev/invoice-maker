@@ -159,7 +159,7 @@
  <div class="mb-2 text-sm text-gray-400 font-mono">{{ $key }}</div>
  <div class="relative">
  <div class="absolute inset-y-0 left-0 w-1 bg-brand-500 rounded-l-md"></div>
- <textarea wire:model.defer="translations.{{ $key }}" rows="2"
+ <textarea wire:model.lazy="translations.{{ $key }}" rows="2"
  class="w-full bg-gray-800 border {{ empty($translations[$key]) ? 'border-red-500/30 focus:border-red-500' : 'border-gray-600 focus:border-brand-500' }} text-white rounded-md pl-4 pr-3 py-2 text-sm focus:ring-1 focus:ring-brand-500"
  placeholder="Translate this text..."></textarea>
  </div>
@@ -210,7 +210,7 @@
  <div class="space-y-4">
  <div>
  <label class="block text-sm font-medium text-gray-400 mb-1">Language Code</label>
- <input type="text" wire:model.defer="newLanguageCode"
+ <input type="text" wire:model.lazy="newLanguageCode"
  class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500 font-mono uppercase"
  placeholder="e.g. KO, HI, UR, etc." required>
  <p class="text-xs text-gray-500 mt-1">Short ISO code for the language.</p>
@@ -219,7 +219,7 @@
  </div>
  <div>
  <label class="block text-sm font-medium text-gray-400 mb-1">Language Name</label>
- <input type="text" wire:model.defer="newLanguageName"
+ <input type="text" wire:model.lazy="newLanguageName"
  class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2 focus:ring-brand-500 focus:border-brand-500"
  placeholder="e.g. Korean, Hindi, Urdu" required>
  @error('newLanguageName') <span class="text-red-400 text-xs mt-1">{{ $message }}</span>

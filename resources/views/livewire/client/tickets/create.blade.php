@@ -29,7 +29,7 @@
  <div>
  <label for="subject" class="block text-sm font-medium text-txmain">Subject <span
  class="text-red-500">*</span></label>
- <input type="text" wire:model.defer="subject" id="subject"
+ <input type="text" wire:model.lazy="subject" id="subject"
  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm"
  placeholder="Brief summary of your issue">
  @error('subject') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
@@ -41,7 +41,7 @@
  <div>
  <label for="category" class="block text-sm font-medium text-txmain">Category <span
  class="text-red-500">*</span></label>
- <select wire:model.defer="category" id="category"
+ <select wire:model.lazy="category" id="category"
  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm">
  <option value="general">General Inquiry</option>
  <option value="technical">Technical Support</option>
@@ -55,7 +55,7 @@
  <div>
  <label for="priority" class="block text-sm font-medium text-txmain">Priority <span
  class="text-red-500">*</span></label>
- <select wire:model.defer="priority" id="priority"
+ <select wire:model.lazy="priority" id="priority"
  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm">
  <option value="low">Low</option>
  <option value="medium">Medium</option>
@@ -71,7 +71,7 @@
  <div>
  <label for="message" class="block text-sm font-medium text-txmain">Message <span
  class="text-red-500">*</span></label>
- <textarea wire:model.defer="message" id="message" rows="8"
+ <textarea wire:model.lazy="message" id="message" rows="8"
  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm"
  placeholder="Please describe your issue in detail..."></textarea>
  @error('message') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>

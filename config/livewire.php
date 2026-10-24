@@ -6,7 +6,7 @@ return [
 
     'view_path' => resource_path('views/livewire'),
 
-    'layout' => 'layouts.app',
+    'component_layout' => 'layouts::app',
 
     'lazy_loading' => true,
 

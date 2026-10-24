@@ -115,7 +115,7 @@
  <form wire:submit.prevent="reply" class="space-y-4">
  
  <div>
- <textarea wire:model.defer="message" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm" placeholder="Type your reply here..."></textarea>
+ <textarea wire:model.lazy="message" rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:text-sm" placeholder="Type your reply here..."></textarea>
  @error('message') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
  </div>
 

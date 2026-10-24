@@ -37,8 +37,7 @@
 
  <!-- Quill Editor Container mapped to Livewire property via Alpine -->
  <div x-data="{
- content: @entangle('content'),
- quill: null
+  quill: null
  }" x-init="
  quill = new Quill($refs.quillEditor, {
  theme: 'snow',
@@ -54,12 +53,12 @@
  }
  });
  // Set initial content
- if (content) {
- quill.root.innerHTML = content;
- }
+ if ($wire.content) {
+        quill.root.innerHTML = $wire.content;
+    }
  // Update Livewire component on change
  quill.on('text-change', function () {
- content = quill.root.innerHTML;
+ $wire.set('content', quill.root.innerHTML);
  });
  " class="rounded-xl border border-gray-700 overflow-hidden bg-gray-900">
  <div wire:ignore>

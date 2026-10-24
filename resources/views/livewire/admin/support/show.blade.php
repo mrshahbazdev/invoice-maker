@@ -103,7 +103,7 @@
  <form wire:submit.prevent="reply" class="space-y-4">
  
  <div>
- <textarea wire:model.defer="message" rows="5" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm pl-4 pr-3 py-3 custom-scrollbar" placeholder="Type your response to the client..."></textarea>
+ <textarea wire:model.lazy="message" rows="5" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm pl-4 pr-3 py-3 custom-scrollbar" placeholder="Type your response to the client..."></textarea>
  @error('message') <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span> @enderror
  </div>
 
@@ -151,7 +151,7 @@
  <form wire:submit.prevent="updateTicketDetails" class="space-y-4">
  <div>
  <label class="block text-sm font-medium text-gray-400 mb-1">Status</label>
- <select wire:model.defer="status" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
+ <select wire:model.lazy="status" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
  <option value="open">Open</option>
  <option value="in_progress">In Progress</option>
  <option value="resolved">Resolved</option>
@@ -161,7 +161,7 @@
 
  <div>
  <label class="block text-sm font-medium text-gray-400 mb-1">Priority</label>
- <select wire:model.defer="priority" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
+ <select wire:model.lazy="priority" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
  <option value="low">Low</option>
  <option value="medium">Medium</option>
  <option value="high">High</option>
@@ -171,7 +171,7 @@
 
  <div>
  <label class="block text-sm font-medium text-gray-400 mb-1">Category</label>
- <select wire:model.defer="category" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
+ <select wire:model.lazy="category" class="block w-full bg-gray-900 border border-gray-700 rounded-xl text-gray-300 focus:ring-brand-500 focus:border-brand-500 sm:text-sm py-2">
  <option value="general">General</option>
  <option value="technical">Technical</option>
  <option value="billing">Billing</option>

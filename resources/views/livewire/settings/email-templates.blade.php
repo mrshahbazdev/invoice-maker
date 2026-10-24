@@ -134,7 +134,7 @@
                                     <div>
                                         <label
                                             class="block text-sm font-medium text-txmain mb-1">{{ __('Template Name') }}</label>
-                                        <input type="text" wire:model.defer="name"
+                                        <input type="text" wire:model.lazy="name"
                                             class="w-full border-gray-300 rounded-md shadow-sm focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
                                             placeholder="e.g. Standard Invoice">
                                         @error('name') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
@@ -143,7 +143,7 @@
                                     <div>
                                         <label
                                             class="block text-sm font-medium text-txmain mb-1">{{ __('Template Type') }}</label>
-                                        <select wire:model.defer="type"
+                                        <select wire:model.lazy="type"
                                             class="w-full border-gray-300 rounded-md shadow-sm focus:ring-brand-500 focus:border-brand-500 sm:text-sm">
                                             <option value="invoice">{{ __('Invoice') }}</option>
                                             <option value="reminder">{{ __('Reminder') }}</option>
@@ -157,7 +157,7 @@
                                 <div>
                                     <label
                                         class="block text-sm font-medium text-txmain mb-1">{{ __('Email Subject') }}</label>
-                                    <input type="text" wire:model.defer="subject"
+                                    <input type="text" wire:model.lazy="subject"
                                         class="w-full border-gray-300 rounded-md shadow-sm focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
                                         placeholder="e.g. New Invoice from [business_name] - [invoice_number]">
                                     @error('subject') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
@@ -167,7 +167,7 @@
                                 <div>
                                     <label
                                         class="block text-sm font-medium text-txmain mb-1">{{ __('Email Body (HTML allowed)') }}</label>
-                                    <textarea wire:model.defer="body" rows="8"
+                                    <textarea wire:model.lazy="body" rows="8"
                                         class="w-full border-gray-300 rounded-md shadow-sm focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
                                         placeholder="<p>Hi [client_name],</p><br><p>Please find attached...</p>"></textarea>
                                     @error('body') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span>
@@ -175,7 +175,7 @@
                                 </div>
 
                                 <div class="flex items-center mt-4">
-                                    <input id="is_default" type="checkbox" wire:model.defer="is_default"
+                                    <input id="is_default" type="checkbox" wire:model.lazy="is_default"
                                         class="h-4 w-4 text-brand-600 focus:ring-brand-500 border-gray-300 rounded">
                                     <label for="is_default" class="ml-2 block text-sm text-txmain">
                                         {{ __('Set as default template for this type') }}
