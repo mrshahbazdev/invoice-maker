@@ -79,12 +79,17 @@
         .pv-balance-band .pv-meta-label { color: #94a3b8; }
         .pv-balance-amount { font-size: 24px; font-weight: 800; color: #ffffff; font-variant-numeric: tabular-nums; }
         .pv-billto { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px 20px; background: #ffffff; }
-        /* Left-top brand block: one consistent vertical rhythm, so the name,
-           address, phone, email and tax lines read as a single aligned block
-           instead of unevenly spaced runs. */
+        /* Left-top brand block, redesigned as one polished unit: headline,
+           then a contact stack with a single gap system (every line — including
+           each address line — gets the same gap), then a deliberate QR card
+           separated by a hairline. Contact lines share one muted tone; the
+           email link looks exactly like the other lines (no stray underline). */
         .pv-brand-name { line-height: 1.15; }
-        .pv-brand-contact { line-height: 1.6; }
-        .pv-brand-contact > * + * { margin-top: 6px; }
+        .pv-brand-contact { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; line-height: 1.5; color: #64748b; }
+        .pv-brand-contact a { color: inherit; text-decoration: none; }
+        .pv-brand-contact a:hover { color: #334155; }
+        .pv-brand-qr { margin-top: 20px; padding-top: 20px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; }
+        .pv-brand-qr-tile { padding: 8px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06); line-height: 0; }
         .pv-brand-qr-caption { color: #64748b; line-height: 1.45; max-width: 190px; }
         .pv-items thead th { background: #0f172a; color: #ffffff; }
         .pv-items td, .pv-items th { font-variant-numeric: tabular-nums; }
@@ -113,6 +118,7 @@
             }
             .invoice-preview-inner { padding: 0; }
             .pv-balance-band, .pv-totals-band { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .pv-brand-qr-tile { box-shadow: none; }
         }
     </style>
 </head>
@@ -289,17 +295,21 @@
                                     {{ $invoice->business->name }}
                                 </h2>
                             @endif
-                            <div class="mt-4 text-sm text-gray-500 pv-brand-contact">
+                            <div class="text-sm pv-brand-contact">
                                 @if($invoice->business->address)
-                                <div>{!! nl2br(e($invoice->business->address)) !!}</div> @endif
+                                    @foreach(preg_split('/\r\n|\r|\n/', trim($invoice->business->address)) as $addressLine)
+                                        @if(trim($addressLine) !== '')
+                                            <div>{{ trim($addressLine) }}</div>
+                                        @endif
+                                    @endforeach
+                                @endif
                                 @if($invoice->business->phone)
                                 <div>{{ $invoice->business->phone }}</div> @endif
                                 @if($invoice->business->email)
-                                    <div><a href="mailto:{{ $invoice->business->email }}"
-                                            class="hover:text-txmain underline decoration-gray-300 underline-offset-2">{{ $invoice->business->email }}</a>
+                                    <div><a href="mailto:{{ $invoice->business->email }}">{{ $invoice->business->email }}</a>
                                 </div> @endif
                                 @if($invoice->business->tax_number)
-                                    <div class="text-gray-500">{{ __('Tax ID') }}: {{ $invoice->business->tax_number }}
+                                    <div>{{ __('Tax ID') }}: {{ $invoice->business->tax_number }}
                                     </div>
                                 @endif
                             </div>
@@ -307,12 +317,12 @@
                                 @php
                                     $epcQrString = $invoice->business->getEpcQrCodeString($invoice);
                                     $qrData = $epcQrString ?? URL::signedRoute('invoices.public.show', $invoice->id);
-                                    $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(72)->generate($qrData));
+                                    $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(84)->generate($qrData));
                                 @endphp
-                                <div class="mt-6 flex items-center gap-3">
-                                    <div class="p-1.5 bg-white rounded-xl shadow-sm border border-gray-100">
+                                <div class="pv-brand-qr">
+                                    <div class="pv-brand-qr-tile">
                                         <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code"
-                                            class="w-[72px] h-[72px]">
+                                            class="w-[84px] h-[84px]">
                                     </div>
                                     <span class="text-xs pv-brand-qr-caption">{{ __('Scan with your camera') }}</span>
                                 </div>
