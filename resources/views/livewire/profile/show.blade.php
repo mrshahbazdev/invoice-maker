@@ -141,7 +141,7 @@
                             <p class="text-sm text-txmain mb-4">
                                 {{ __('To finish enabling two-factor authentication, scan the following QR code using your phone\'s authenticator application or enter the setup key and provide the generated OTP code.') }}
                             </p>
-                            <div class="p-4 bg-card inline-block mb-4">
+                            <div class="p-4 bg-white light-tile inline-block mb-4 rounded-lg">
                                 {!! $qrCodeSvg !!}
                             </div>
 

@@ -20,7 +20,7 @@
 
 <div class="sm:flex sm:items-center sm:justify-between mb-8 gap-4">
  <div>
- <h2 class="text-2xl font-bold leading-7 text-txmain sm:truncate sm:text-3xl sm:tracking-tight">My
+ <h2 class="adm-title sm:truncate sm:tracking-tight">My
  Invoices</h2>
  <p class="mt-1 text-sm text-gray-500">Overview of your billing history and outstanding balances.</p>
  </div>
@@ -159,7 +159,7 @@
  </div>
 
  <div class="overflow-x-auto hidden md:block">
- <table class="min-w-full divide-y divide-gray-300">
+ <table class="min-w-full divide-y divide-gray-300 adm-table">
  <thead class="bg-page">
  <tr>
  <th scope="col"
@@ -249,7 +249,7 @@
  <div class="text-sm text-txmain">
  <h4 class="font-medium mb-3 text-txmain">Invoice Items</h4>
  <div class="ring-1 ring-gray-200 rounded-lg overflow-hidden bg-card">
- <table class="min-w-full divide-y divide-gray-200">
+ <table class="min-w-full divide-y divide-gray-200 adm-table">
  <thead class="bg-page">
  <tr>
  <th scope="col"

@@ -1,8 +1,8 @@
 <div>
     <div class="mb-8 flex justify-between items-center">
         <div>
-            <h2 class="text-2xl font-bold text-txmain">{{ __('Email Templates') }}</h2>
-            <p class="text-txmain">{{ __('Manage custom email templates for your invoices and reminders.') }}</p>
+            <h2 class="adm-title">{{ __('Email Templates') }}</h2>
+            <p class="adm-sub">{{ __('Manage custom email templates for your invoices and reminders.') }}</p>
         </div>
         <button wire:click="create"
             class="inline-flex items-center bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-700 transition-colors shadow-sm">

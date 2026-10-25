@@ -3,11 +3,11 @@
 <div>
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-txmain">{{ __('Accounting Categories') }}</h2>
-            <p class="text-txmain">{{ __('Manage categories, cost centers (Fix / Variable Kosten), and posting rules.') }}</p>
+            <h2 class="adm-title">{{ __('Accounting Categories') }}</h2>
+            <p class="adm-sub">{{ __('Manage categories, cost centers (Fix / Variable Kosten), and posting rules.') }}</p>
         </div>
         <button wire:click="openModal()"
-            class="bg-brand-600 text-white py-2 px-6 rounded-lg hover:bg-brand-700 shadow-sm transition duration-200 font-medium">
+            class="adm-btn adm-btn-primary shadow-sm transition duration-200 font-medium">
             + {{ __('Add Category') }}
         </button>
     </div>
@@ -19,7 +19,7 @@
     @endif
 
     <div class="bg-card rounded-lg shadow overflow-hidden">
-        <table class="w-full">
+        <table class="w-full adm-table">
             <thead>
                 <tr class="border-b bg-page">
                     <th class="text-left py-3 px-4 text-sm font-semibold text-txmain">{{ __('Name') }}</th>
@@ -86,7 +86,7 @@
 
     <!-- Category Modal -->
     @if($showModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+        <div class="fixed inset-0 z-50 adm-modal-backdrop flex items-center justify-center bg-black bg-opacity-50 p-4">
             <div
                 class="bg-card rounded-xl shadow-2xl w-full max-w-md flex flex-col max-h-[90vh] overflow-hidden transform transition-all">
                 <div class="p-6 border-b flex justify-between items-center bg-page">

@@ -3,8 +3,8 @@
 <div>
  <div class="mb-8 flex items-center justify-between">
  <div>
- <h2 class="text-2xl font-bold text-txmain">{{ __('Edit Invoice') }}</h2>
- <p class="text-txmain">{{ $invoice->invoice_number }}</p>
+ <h2 class="adm-title">{{ __('Edit Invoice') }}</h2>
+ <p class="adm-sub">{{ $invoice->invoice_number }}</p>
  </div>
  </div>
 

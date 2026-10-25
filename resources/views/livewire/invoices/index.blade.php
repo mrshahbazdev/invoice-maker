@@ -3,16 +3,16 @@
 <div>
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-txmain">{{ __('Invoices') }}</h2>
-            <p class="text-txmain">{{ __('Manage your invoices') }}</p>
+            <h2 class="adm-title">{{ __('Invoices') }}</h2>
+            <p class="adm-sub">{{ __('Manage your invoices') }}</p>
         </div>
         <div class="flex gap-2">
             <a href="{{ route('invoices.create', ['quick' => 1]) }}"
-                class="bg-card text-txmain py-2 px-4 rounded-lg border border-gray-300 shadow-sm hover:bg-page transition duration-200 text-center font-medium">
+                class="adm-btn adm-btn-secondary">
                 ⚡ {{ __('Quick Invoice') }}
             </a>
             <a href="{{ route('invoices.create') }}"
-                class="bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 shadow-sm transition duration-200 text-center font-medium">
+                class="adm-btn adm-btn-primary shadow-sm transition duration-200 text-center font-medium">
                 + {{ __('Create Invoice') }}
             </a>
         </div>
@@ -60,7 +60,7 @@
         @endif
 
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full adm-table">
                 <thead>
                     <tr class="border-b bg-page">
                         <th class="py-3 px-4 text-left w-10">
@@ -205,8 +205,8 @@
 
     <!-- Mark as Paid Modal -->
     @if($showPaidModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-            <div class="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+        <div class="fixed inset-0 z-50 adm-modal-backdrop flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div class="bg-card adm-modal-panel rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
                 <div class="p-6 border-b flex justify-between items-center bg-page">
                     <h3 class="text-xl font-bold text-txmain">{{ __('Mark as Paid') }}</h3>
                     <button wire:click="closePaidModal()" class="text-gray-400 hover:text-txmain">
@@ -257,8 +257,8 @@
 
     <!-- Bulk Re-insert into Loop Modal -->
     @if($showBulkRecurringModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-            <div class="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+        <div class="fixed inset-0 z-50 adm-modal-backdrop flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div class="bg-card adm-modal-panel rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
                 <div class="p-6 border-b flex justify-between items-center bg-page">
                     <h3 class="text-xl font-bold text-txmain">{{ __('Re-insert into Recurring Loop') }}</h3>
                     <button wire:click="closeBulkRecurringModal()" class="text-gray-400 hover:text-txmain">

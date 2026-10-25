@@ -3,8 +3,8 @@
 <div>
  <div class="mb-8 flex items-center justify-between">
  <div>
- <h2 class="text-2xl font-bold text-txmain">{{ __('Record Expense') }}</h2>
- <p class="text-txmain">{{ __('Enter your expense details and upload a receipt') }}</p>
+ <h2 class="adm-title">{{ __('Record Expense') }}</h2>
+ <p class="adm-sub">{{ __('Enter your expense details and upload a receipt') }}</p>
  </div>
  <a href="{{ route('expenses.index') }}" class="text-txmain hover:text-txmain">{{ __('Back to List') }}</a>
  </div>

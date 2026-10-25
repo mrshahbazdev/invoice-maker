@@ -2,7 +2,7 @@
  <x-slot name="header">
  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center">
  <div>
- <h2 class="font-semibold text-2xl text-txmain leading-tight">
+ <h2 class="adm-title">
  {{ __('Support Tickets') }}
  </h2>
  <p class="text-sm text-gray-500 mt-1">Manage your support requests</p>
@@ -40,7 +40,7 @@
 
  @if($tickets->count() > 0)
  <div class="overflow-x-auto">
- <table class="min-w-full divide-y divide-gray-200">
+ <table class="min-w-full divide-y divide-gray-200 adm-table">
  <thead class="bg-page">
  <tr>
  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticket ID</th>

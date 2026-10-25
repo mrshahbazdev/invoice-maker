@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-page">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full bg-page portal-html">
 
 <head>
     <meta charset="utf-8">
@@ -14,9 +14,11 @@
         rel="stylesheet">
 
     @vite(['resources/css/app.css'])
+    <link rel="stylesheet" href="{{ asset('css/admin-redesign.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user-redesign.css') }}">
 </head>
 
-<body class="h-full font-sans antialiased text-txmain">
+<body class="portal-shell h-full font-sans antialiased text-txmain">
     <div class="min-h-full">
         <!-- Top Navigation -->
         <nav class="bg-card shadow-sm border-b border-gray-100">
@@ -38,7 +40,7 @@
 
                 <div class="md:flex md:items-center md:justify-between mb-8">
                     <div class="min-w-0 flex-1">
-                        <h2 class="text-2xl font-bold leading-7 text-txmain sm:truncate sm:text-3xl sm:tracking-tight">
+                        <h2 class="adm-title sm:truncate sm:tracking-tight">
                             {{ __('Welcome, :name', ['name' => $client->name]) }}
                         </h2>
                         <p class="mt-1 flex text-sm text-gray-500">
@@ -49,21 +51,21 @@
 
                 <!-- Stats -->
                 <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3 mb-8">
-                    <div class="overflow-hidden rounded-2xl bg-card px-4 py-5 shadow-sm border border-gray-100 sm:p-6">
+                    <div class="adm-card adm-stat">
                         <dt class="truncate text-sm font-medium text-gray-500">{{ __('Outstanding Balance') }}</dt>
                         <dd class="mt-1 text-3xl font-bold tracking-tight text-brand-600">
                             {{ $client->currency ?? $business->currency }}{{ number_format($totalDue, 2) }}
                         </dd>
                     </div>
 
-                    <div class="overflow-hidden rounded-2xl bg-card px-4 py-5 shadow-sm border border-gray-100 sm:p-6">
+                    <div class="adm-card adm-stat">
                         <dt class="truncate text-sm font-medium text-gray-500">{{ __('Total Billed') }}</dt>
                         <dd class="mt-1 text-3xl font-bold tracking-tight text-txmain">
                             {{ $client->currency ?? $business->currency }}{{ number_format($totalBilled, 2) }}
                         </dd>
                     </div>
 
-                    <div class="overflow-hidden rounded-2xl bg-card px-4 py-5 shadow-sm border border-gray-100 sm:p-6">
+                    <div class="adm-card adm-stat">
                         <dt class="truncate text-sm font-medium text-gray-500">{{ __('Total Paid') }}</dt>
                         <dd class="mt-1 text-3xl font-bold tracking-tight text-green-600">
                             {{ $client->currency ?? $business->currency }}{{ number_format($totalPaid, 2) }}
@@ -72,13 +74,13 @@
                 </dl>
 
                 <!-- Invoices Table -->
-                <div class="bg-card shadow-sm border border-gray-100 sm:rounded-2xl overflow-hidden mb-8">
+                <div class="adm-card mb-8">
                     <div
-                        class="px-4 py-5 sm:px-6 border-b border-gray-100 flex justify-between items-center bg-page/50">
+                        class="adm-card-head flex justify-between items-center">
                         <h3 class="text-lg font-bold leading-6 text-txmain">{{ __('Recent Invoices') }}</h3>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200 adm-table">
                             <thead class="bg-card">
                                 <tr>
                                     <th scope="col"
@@ -148,13 +150,13 @@
 
                 @if($estimates->count() > 0)
                     <!-- Estimates Table -->
-                    <div class="bg-card shadow-sm border border-gray-100 sm:rounded-2xl overflow-hidden">
+                    <div class="adm-card">
                         <div
-                            class="px-4 py-5 sm:px-6 border-b border-gray-100 flex justify-between items-center bg-page/50">
+                            class="adm-card-head flex justify-between items-center">
                             <h3 class="text-lg font-bold leading-6 text-txmain">{{ __('Estimates') }}</h3>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
+                            <table class="min-w-full divide-y divide-gray-200 adm-table">
                                 <thead class="bg-card">
                                     <tr>
                                         <th scope="col"

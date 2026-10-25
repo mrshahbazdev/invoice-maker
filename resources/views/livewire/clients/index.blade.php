@@ -3,11 +3,11 @@
 <div>
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-txmain">{{ __('Clients') }}</h2>
-            <p class="text-txmain">{{ __('Manage your client list') }}</p>
+            <h2 class="adm-title">{{ __('Clients') }}</h2>
+            <p class="adm-sub">{{ __('Manage your client list') }}</p>
         </div>
         <a href="{{ route('clients.create') }}"
-            class="bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 transition duration-200 text-center">
+            class="adm-btn adm-btn-primary transition duration-200 text-center">
             + {{ __('Add Client') }}
         </a>
     </div>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full adm-table">
                 <thead>
                     <tr class="border-b bg-page">
                         <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"

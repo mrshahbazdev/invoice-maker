@@ -3,8 +3,8 @@
 <div>
  <div class="mb-8 flex items-center justify-between">
  <div>
- <h2 class="text-2xl font-bold text-txmain">{{ __('Create Estimate') }}</h2>
- <p class="text-txmain">{{ __('Step') }} {{ $step }} {{ __('of') }} 4</p>
+ <h2 class="adm-title">{{ __('Create Estimate') }}</h2>
+ <p class="adm-sub">{{ __('Step') }} {{ $step }} {{ __('of') }} 4</p>
  </div>
  <div class="flex space-x-2">
  <div class="h-2 w-8 rounded-full {{ $step >= 1 ? 'bg-brand-600' : 'bg-gray-200' }}"></div>

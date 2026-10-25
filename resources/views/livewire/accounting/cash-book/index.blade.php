@@ -9,7 +9,7 @@
 
     <div class="mb-8 flex flex-col xl:flex-row items-stretch justify-between gap-6">
         <div class="flex-1">
-            <h2 class="text-3xl font-extrabold text-txmain tracking-tight">{{ __('Cash Book') }}</h2>
+            <h2 class="adm-title">{{ __('Cash Book') }}</h2>
             <p class="text-gray-500 font-medium">{{ __('Monitor your flow of capital with precision.') }}</p>
         </div>
 
@@ -194,7 +194,7 @@
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-[13px] border-collapse">
+            <table class="w-full adm-table text-[13px] border-collapse">
                 <thead>
                     <tr class="bg-page border-b border-gray-200">
                         <th class="px-3 py-3 w-8"></th>

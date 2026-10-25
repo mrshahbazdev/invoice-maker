@@ -4,7 +4,7 @@
     <!-- Header & Period Filter Bar -->
     <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-6 border-b border-gray-100 pb-8">
         <div>
-            <h2 class="text-3xl font-bold text-txmain tracking-tight">{{ __('Profitability & Break-Even Analysis') }}</h2>
+            <h2 class="adm-title">{{ __('Profitability & Break-Even Analysis') }}</h2>
             <p class="text-gray-500 text-base">
                 {{ __('Track fixed & variable costs, evaluate monthly benchmarks, and monitor revenue requirements.') }}
             </p>
@@ -316,7 +316,7 @@
                 <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Invoiced vs Direct Costs') }}</span>
             </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full adm-table text-left border-collapse">
                     <thead>
                         <tr class="bg-page/50 border-b border-gray-100">
                             <th class="px-6 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider">{{ __('Client') }}</th>
@@ -354,7 +354,7 @@
                 <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Sales vs Purchase Cost') }}</span>
             </div>
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full adm-table text-left border-collapse">
                     <thead>
                         <tr class="bg-page/50 border-b border-gray-100">
                             <th class="px-6 py-3 text-[10px] font-bold text-gray-500 uppercase tracking-wider">{{ __('Product / Service') }}</th>

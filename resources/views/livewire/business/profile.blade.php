@@ -2,8 +2,8 @@
 
 <div>
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-txmain">{{ __('Business Profile') }}</h2>
-        <p class="text-txmain">{{ __('Manage your business information') }}</p>
+        <h2 class="adm-title">{{ __('Business Profile') }}</h2>
+        <p class="adm-sub">{{ __('Manage your business information') }}</p>
     </div>
 
     <div class="">
@@ -161,7 +161,7 @@
                     <label class="block text-sm font-medium text-txmain mb-1">{{ __('Logo') }}</label>
                     <div class="flex items-center gap-4">
                         @if($business && $business->logo)
-                            <div class="relative group">
+                            <div class="relative group light-tile rounded p-1">
                                 <img src="{{ asset('storage/' . $business->logo) }}" alt="Logo"
                                     class="h-12 w-auto rounded border">
                                 <button type="button" wire:click="removeLogo" wire:loading.attr="disabled"
@@ -465,7 +465,7 @@
 
             <div class="flex justify-end pt-4 border-t border-gray-100">
                 <button type="submit" wire:loading.attr="disabled"
-                    class="inline-flex items-center bg-brand-600 text-white py-2 px-6 rounded-lg hover:bg-brand-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="inline-flex items-center adm-btn adm-btn-primary transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
                     <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none"
                         viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">

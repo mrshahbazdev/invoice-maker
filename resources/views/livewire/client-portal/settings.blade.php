@@ -1,7 +1,7 @@
 <div>
  <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
  <div>
- <h2 class="text-xl font-extrabold leading-7 text-txmain sm:text-3xl sm:truncate sm:tracking-tight">
+ <h2 class="adm-title sm:truncate sm:tracking-tight">
  {{ __('Profile Settings') }}
  </h2>
  <p class="mt-1 text-xs sm:text-sm text-gray-500">

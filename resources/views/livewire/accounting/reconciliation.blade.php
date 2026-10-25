@@ -15,7 +15,7 @@
 
     <div class="mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-            <h2 class="text-3xl font-extrabold text-txmain tracking-tight">{{ __('Bank Reconciliation') }}</h2>
+            <h2 class="adm-title">{{ __('Bank Reconciliation') }}</h2>
             <p class="text-gray-500 font-medium">{{ __('Import your bank statement to automatically match transactions to your Cash Book.') }}</p>
         </div>
         <button wire:click="cancel" class="px-4 py-2 bg-card border border-gray-200 text-txmain rounded-lg shadow-sm hover:bg-page transition-colors font-bold text-sm">
@@ -113,7 +113,7 @@
                     <div class="mb-8">
                         <h4 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">{{ __('Data Preview (First 3 Rows)') }}</h4>
                         <div class="overflow-x-auto border border-gray-200 rounded-lg">
-                            <table class="w-full text-xs text-left">
+                            <table class="w-full adm-table text-xs text-left">
                                 <thead class="bg-gray-50 border-b border-gray-200">
                                     <tr>
                                         @foreach($csvHeaders as $header)
@@ -160,7 +160,7 @@
                     </div>
 
                     <div class="overflow-x-auto border border-gray-200 rounded-xl mb-8 shadow-sm">
-                        <table class="w-full text-sm text-left border-collapse">
+                        <table class="w-full adm-table text-sm text-left border-collapse">
                             <thead class="bg-page border-b border-gray-200 text-gray-500 uppercase tracking-wider text-[11px] font-bold">
                                 <tr>
                                     <th class="px-4 py-3 text-center w-12">{{ __('Import') }}</th>

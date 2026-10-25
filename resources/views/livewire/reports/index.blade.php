@@ -3,8 +3,8 @@
 <div>
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-txmain">{{ __('Financial & Tax Reports') }}</h2>
-            <p class="text-txmain">{{ __('View your revenue and download tax summaries for your accountant.') }}</p>
+            <h2 class="adm-title">{{ __('Financial & Tax Reports') }}</h2>
+            <p class="adm-sub">{{ __('View your revenue and download tax summaries for your accountant.') }}</p>
         </div>
         <div class="flex gap-2">
             <button wire:click="exportTaxSummary" wire:loading.attr="disabled"

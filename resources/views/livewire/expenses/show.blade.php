@@ -3,14 +3,14 @@
 <div>
  <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
  <div>
- <h2 class="text-2xl font-bold text-txmain">{{ __('View Expense') }}</h2>
- <p class="text-txmain">{{ __('Details of the recorded expenditure') }}</p>
+ <h2 class="adm-title">{{ __('View Expense') }}</h2>
+ <p class="adm-sub">{{ __('Details of the recorded expenditure') }}</p>
  </div>
  <div class="flex gap-2">
  <a href="{{ route('expenses.index') }}"
  class="text-txmain hover:text-txmain py-2">{{ __('Back to List') }}</a>
  <a href="{{ route('expenses.edit', $expense) }}"
- class="bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 shadow-sm transition duration-200 text-center font-medium">
+ class="adm-btn adm-btn-primary shadow-sm transition duration-200 text-center font-medium">
  {{ __('Edit Expense') }}
  </a>
  </div>

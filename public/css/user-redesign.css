@@ -1,0 +1,152 @@
+/* ==========================================================================
+   InvoiceMaker — Member / client-portal design system (plain CSS, no build)
+   Linked AFTER public/css/admin-redesign.css from layouts/app, layouts/client
+   and the standalone client-portal pages. It REUSES the admin tokens
+   (--adm-*) and .adm-* components, so both sides are one product:
+   dark navy #0b1220 surfaces, #111827 cards, orange #ff8c00 accent.
+   This file only REMAPS the member side's existing Tailwind utilities to
+   those tokens. No route, Livewire, wire:*, id, field-name or JS change
+   lives here. Business theme variables (--color-page-bg etc.) are
+   overridden on the shell element itself, so they lose to the nearer
+   ancestor for every descendant (the :root inline theme block is untouched).
+   Exceptions that MUST stay light (black-on-white QR codes, signature and
+   logo previews) use .light-tile, defined last in this file.
+   ========================================================================== */
+
+:is(.usr-shell, .portal-shell) {
+    --color-page-bg: #0b1220;
+    --color-card-bg: #111827;
+    --color-text-main: #f1f5f9;
+    background-color: #0b1220;
+    color: #f1f5f9;
+}
+html.portal-html {
+    --color-page-bg: #0b1220;
+    --color-card-bg: #111827;
+    --color-text-main: #f1f5f9;
+    background-color: #0b1220;
+}
+
+/* ---------- Surfaces: light Tailwind utilities -> dark navy ---------- */
+:is(.usr-shell, .portal-shell) .bg-white { background-color: #111827; }
+:is(.usr-shell, .portal-shell) .bg-gray-50 { background-color: #0f172a; }
+:is(.usr-shell, .portal-shell) .bg-gray-100 { background-color: #1e293b; }
+:is(.usr-shell, .portal-shell) .bg-gray-200 { background-color: #334155; }
+:is(.usr-shell, .portal-shell) .bg-gray-800 { background-color: #1e293b; }
+:is(.usr-shell, .portal-shell) .bg-gray-900 { background-color: #0b1220; }
+:is(.usr-shell, .portal-shell) div.bg-card {
+    background-color: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+}
+:is(.usr-shell, .portal-shell) .bg-page\/50 { background-color: rgba(11, 18, 32, .5); }
+
+/* ---------- Text: gray scale -> slate on dark ---------- */
+:is(.usr-shell, .portal-shell) .text-gray-900 { color: #ffffff; }
+:is(.usr-shell, .portal-shell) .text-gray-800 { color: #e2e8f0; }
+:is(.usr-shell, .portal-shell) .text-gray-700 { color: #cbd5e1; }
+:is(.usr-shell, .portal-shell) .text-gray-600 { color: #cbd5e1; }
+:is(.usr-shell, .portal-shell) .text-gray-500 { color: #94a3b8; }
+:is(.usr-shell, .portal-shell) .text-gray-400 { color: #94a3b8; }
+:is(.usr-shell, .portal-shell) .text-gray-300 { color: #cbd5e1; }
+
+/* ---------- Brand text: orange-600/700 on dark -> lighter orange ---------- */
+:is(.usr-shell, .portal-shell) .text-brand-500 { color: #fdba74; }
+:is(.usr-shell, .portal-shell) .text-brand-600 { color: #ffb454; }
+:is(.usr-shell, .portal-shell) .text-brand-700 { color: #ffb454; }
+:is(.usr-shell, .portal-shell) .text-brand-800 { color: #ffb454; }
+:is(.usr-shell, .portal-shell) .text-brand-900 { color: #ffb454; }
+:is(.usr-shell, .portal-shell) .text-unpaid-text { color: #ffb454; }
+:is(.usr-shell, .portal-shell) .bg-brand-50 { background-color: rgba(255, 140, 0, .12); }
+:is(.usr-shell, .portal-shell) .bg-brand-100 { background-color: rgba(255, 140, 0, .14); }
+:is(.usr-shell, .portal-shell) .hover\:bg-brand-50:hover { background-color: rgba(255, 140, 0, .12); }
+
+/* ---------- Soft badges / tinted boxes -> translucent on dark ---------- */
+:is(.usr-shell, .portal-shell) .bg-green-50,
+:is(.usr-shell, .portal-shell) .bg-green-100 { background-color: rgba(34, 197, 94, .12); }
+:is(.usr-shell, .portal-shell) .bg-red-50,
+:is(.usr-shell, .portal-shell) .bg-red-100 { background-color: rgba(239, 68, 68, .12); }
+:is(.usr-shell, .portal-shell) .bg-blue-50,
+:is(.usr-shell, .portal-shell) .bg-blue-100 { background-color: rgba(59, 130, 246, .12); }
+:is(.usr-shell, .portal-shell) .bg-purple-50,
+:is(.usr-shell, .portal-shell) .bg-purple-100 { background-color: rgba(168, 85, 247, .12); }
+:is(.usr-shell, .portal-shell) .bg-yellow-50,
+:is(.usr-shell, .portal-shell) .bg-yellow-100 { background-color: rgba(234, 179, 8, .12); }
+:is(.usr-shell, .portal-shell) .bg-amber-50 { background-color: rgba(251, 191, 36, .12); }
+:is(.usr-shell, .portal-shell) .bg-orange-50 { background-color: rgba(249, 115, 22, .12); }
+:is(.usr-shell, .portal-shell) .text-green-600,
+:is(.usr-shell, .portal-shell) .text-green-700 { color: #4ade80; }
+:is(.usr-shell, .portal-shell) .text-green-800 { color: #86efac; }
+:is(.usr-shell, .portal-shell) .text-red-600,
+:is(.usr-shell, .portal-shell) .text-red-700 { color: #fca5a5; }
+:is(.usr-shell, .portal-shell) .text-blue-600,
+:is(.usr-shell, .portal-shell) .text-blue-700 { color: #93c5fd; }
+:is(.usr-shell, .portal-shell) .text-purple-600,
+:is(.usr-shell, .portal-shell) .text-purple-700 { color: #d8b4fe; }
+:is(.usr-shell, .portal-shell) .text-yellow-600,
+:is(.usr-shell, .portal-shell) .text-yellow-700 { color: #fde047; }
+:is(.usr-shell, .portal-shell) .text-amber-800 { color: #fcd34d; }
+:is(.usr-shell, .portal-shell) .text-orange-600 { color: #fdba74; }
+:is(.usr-shell, .portal-shell) .text-green-400 { color: #4ade80; }
+:is(.usr-shell, .portal-shell) .hover\:bg-gray-50:hover { background-color: rgba(255, 255, 255, .03); }
+:is(.usr-shell, .portal-shell) .hover\:bg-gray-100:hover { background-color: rgba(255, 255, 255, .05); }
+:is(.usr-shell, .portal-shell) .hover\:bg-red-200:hover { background-color: rgba(239, 68, 68, .22); }
+:is(.usr-shell, .portal-shell) .hover\:bg-purple-200:hover { background-color: rgba(168, 85, 247, .22); }
+:is(.usr-shell, .portal-shell) .hover\:bg-green-200:hover { background-color: rgba(34, 197, 94, .22); }
+
+/* ---------- Borders: bare border widths default to the dark hairline ---------- */
+:is(.usr-shell, .portal-shell) :is(.border, .border-b, .border-t, .border-l, .border-r) { border-color: #1e293b; }
+/* ...then re-assert the coloured borders (same specificity, later wins) ... */
+:is(.usr-shell, .portal-shell) .border-gray-100 { border-color: #1e293b; }
+:is(.usr-shell, .portal-shell) .border-gray-200 { border-color: #1e293b; }
+:is(.usr-shell, .portal-shell) .border-gray-300 { border-color: #334155; }
+:is(.usr-shell, .portal-shell) .border-brand-200 { border-color: rgba(255, 140, 0, .3); }
+:is(.usr-shell, .portal-shell) .border-brand-500 { border-color: #ff8c00; }
+:is(.usr-shell, .portal-shell) .border-red-200 { border-color: rgba(239, 68, 68, .3); }
+:is(.usr-shell, .portal-shell) .border-red-400 { border-color: rgba(239, 68, 68, .45); }
+:is(.usr-shell, .portal-shell) .border-amber-400 { border-color: rgba(251, 191, 36, .4); }
+:is(.usr-shell, .portal-shell) .border-green-200 { border-color: rgba(34, 197, 94, .3); }
+:is(.usr-shell, .portal-shell) .divide-gray-100 > :not([hidden]) ~ :not([hidden]) { border-color: #1e293b; }
+:is(.usr-shell, .portal-shell) .divide-gray-200 > :not([hidden]) ~ :not([hidden]) { border-color: #1e293b; }
+:is(.usr-shell, .portal-shell) .divide-gray-300 > :not([hidden]) ~ :not([hidden]) { border-color: #334155; }
+:is(.usr-shell, .portal-shell) .ring-gray-300 { --tw-ring-color: #334155; }
+:is(.usr-shell, .portal-shell) .ring-gray-200 { --tw-ring-color: #1e293b; }
+:is(.usr-shell, .portal-shell) .ring-gray-900\/5 { --tw-ring-color: rgba(255, 255, 255, .05); }
+
+/* ---------- Tables (adm-table look for tables that keep Tailwind classes) ---------- */
+:is(.usr-shell, .portal-shell) table thead tr { border-bottom: 1px solid #1e293b; }
+:is(.usr-shell, .portal-shell) table thead th { color: #94a3b8; }
+:is(.usr-shell, .portal-shell) table tbody tr { border-color: #1e293b; }
+:is(.usr-shell, .portal-shell) table tbody tr:hover { background-color: rgba(255, 255, 255, .03); }
+:is(.usr-shell, .portal-shell) table tbody td { color: #cbd5e1; }
+
+/* ---------- Forms: dark fields, orange focus (adm-input look) ---------- */
+:is(.usr-shell, .portal-shell) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sr-only),
+:is(.usr-shell, .portal-shell) select,
+:is(.usr-shell, .portal-shell) textarea {
+    background-color: #0b1220;
+    border-color: #334155;
+    color: #ffffff;
+}
+:is(.usr-shell, .portal-shell) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sr-only)::placeholder,
+:is(.usr-shell, .portal-shell) textarea::placeholder { color: #64748b; }
+:is(.usr-shell, .portal-shell) input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="file"]):not(.sr-only):focus,
+:is(.usr-shell, .portal-shell) select:focus,
+:is(.usr-shell, .portal-shell) textarea:focus {
+    border-color: #ff8c00;
+    box-shadow: 0 0 0 3px rgba(255, 140, 0, .28);
+    outline: none;
+}
+:is(.usr-shell, .portal-shell) select option { background-color: #111827; color: #ffffff; }
+:is(.usr-shell, .portal-shell) input[type="checkbox"],
+:is(.usr-shell, .portal-shell) input[type="radio"] { accent-color: #ff8c00; }
+:is(.usr-shell, .portal-shell) input:disabled { opacity: .6; }
+
+/* ---------- Modals, dropdowns, tooltips ---------- */
+:is(.usr-shell, .portal-shell) .bg-black.bg-opacity-50 { background-color: rgba(3, 7, 18, .78); }
+
+/* ---------- Member topbar / sidebar polish on top of .adm-* ---------- */
+:is(.usr-shell, .portal-shell) .adm-topbar-title { color: #ffb454; }
+
+/* ---------- MUST stay light: QR codes, signature + logo previews ---------- */
+:is(.usr-shell, .portal-shell) .light-tile { background-color: #ffffff; }

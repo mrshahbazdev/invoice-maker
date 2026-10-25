@@ -2,8 +2,8 @@
 
 <div>
  <div class="mb-8">
- <h2 class="text-2xl font-bold text-txmain">{{ __('Edit Template') }}</h2>
- <p class="text-txmain">{{ __('Customize invoice appearance') }}</p>
+ <h2 class="adm-title">{{ __('Edit Template') }}</h2>
+ <p class="adm-sub">{{ __('Customize invoice appearance') }}</p>
  </div>
 
  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -115,7 +115,7 @@
 
  <div class="flex justify-end">
  <button type="submit"
- class="bg-brand-600 text-white py-2 px-6 rounded-lg hover:bg-brand-700 transition duration-200">
+ class="adm-btn adm-btn-primary transition duration-200">
  {{ __('Save Template') }}
  </button>
  </div>
@@ -208,7 +208,7 @@
  </div>
  @endif
  @if($signature_path)
- <div class="mt-6 border-b border-gray-300 inline-block px-10 pb-2 mb-2">
+ <div class="mt-6 border-b border-gray-300 inline-block px-10 pb-2 mb-2 light-tile rounded">
  <img src="{{ str_starts_with($signature_path, 'private/') ? route('private-files.show', ['kind' => 'signatures', 'file' => basename($signature_path)]) : asset('storage/' . $signature_path) }}" alt="Signature" class="h-12 w-auto">
  </div>
  <p class="text-xs text-gray-500">{{ __('Authorized Signature') }}</p>
@@ -216,7 +216,7 @@
  </div>
  <div>
  @if($enable_qr)
- <div class="border p-2 bg-page flex items-center justify-center w-24 h-24 rounded">
+ <div class="border p-2 bg-white light-tile flex items-center justify-center w-24 h-24 rounded">
  {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(80)->generate('https://example.com/invoice/preview') !!}
  </div>
  @endif

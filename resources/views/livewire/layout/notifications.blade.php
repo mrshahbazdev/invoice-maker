@@ -24,7 +24,7 @@
             x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75"
             x-transition:leave-start="transform opacity-100 scale-100"
             x-transition:leave-end="transform opacity-0 scale-95"
-            class="absolute right-0 mt-2 w-80 bg-card rounded-md shadow-lg border border-gray-100 ring-1 ring-black ring-opacity-5 z-50 overflow-hidden"
+            class="absolute right-0 mt-2 w-80 adm-card bg-card rounded-md shadow-lg border border-gray-100 ring-1 ring-black ring-opacity-5 z-50 overflow-hidden"
             style="display: none;">
 
             <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex justify-between items-center">

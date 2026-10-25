@@ -7,7 +7,7 @@
  <svg class="w-4 h-4 mx-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
  <span>#{{ $ticket->id }}</span>
  </div>
- <h2 class="font-semibold text-2xl text-txmain leading-tight">
+ <h2 class="adm-title">
  {{ $ticket->subject }}
  </h2>
  <div class="flex items-center gap-3 mt-2">
@@ -138,7 +138,7 @@
  </div>
 
  <div class="flex justify-end pt-2">
- <button type="submit" class="inline-flex justify-center items-center rounded-md border border-transparent bg-brand-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors disabled:opacity-50" wire:loading.attr="disabled">
+ <button type="submit" class="adm-btn adm-btn-primary" wire:loading.attr="disabled">
  <svg wire:loading wire:target="reply" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

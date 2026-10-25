@@ -2,8 +2,8 @@
 
 <div>
     <div class="mb-8">
-        <h2 class="text-2xl font-bold text-txmain">{{ __('Dashboard') }}</h2>
-        <p class="text-txmain">{{ __('Overview of your invoice business') }}</p>
+        <h2 class="adm-title">{{ __('Dashboard') }}</h2>
+        <p class="adm-sub">{{ __('Overview of your invoice business') }}</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -71,7 +71,7 @@
         <div class="bg-card rounded-lg shadow p-6">
             <h3 class="text-lg font-semibold text-txmain mb-4">{{ __('Recent Invoices') }}</h3>
             <div class="overflow-x-auto">
-                <table class="w-full">
+                <table class="w-full adm-table">
                     <thead>
                         <tr class="border-b">
                             <th class="text-left py-2 text-sm font-medium text-txmain">{{ __('Invoice') }}</th>

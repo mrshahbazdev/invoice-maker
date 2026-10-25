@@ -3,8 +3,8 @@
 <div>
  <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
  <div>
- <h2 class="text-2xl font-bold text-txmain">{{ __('Expenses') }}</h2>
- <p class="text-txmain">{{ __('Track and manage your business expenditures') }}</p>
+ <h2 class="adm-title">{{ __('Expenses') }}</h2>
+ <p class="adm-sub">{{ __('Track and manage your business expenditures') }}</p>
  </div>
  <div class="flex gap-2">
  <a href="{{ route('expenses.export') }}"
@@ -16,7 +16,7 @@
  {{ __('Export CSV') }}
  </a>
  <a href="{{ route('expenses.create') }}"
- class="bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 shadow-sm transition duration-200 text-center font-medium">
+ class="adm-btn adm-btn-primary shadow-sm transition duration-200 text-center font-medium">
  + {{ __('Record Expense') }}
  </a>
  </div>
@@ -43,7 +43,7 @@
  </div>
 
  <div class="overflow-x-auto">
- <table class="w-full">
+ <table class="w-full adm-table">
  <thead>
  <tr class="border-b bg-page">
  <th class="text-left py-3 px-4 text-sm font-semibold text-txmain cursor-pointer"

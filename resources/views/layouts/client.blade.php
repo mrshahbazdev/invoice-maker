@@ -14,22 +14,24 @@
         <meta name="description" content="Secure Client Portal for {{ config('app.name') }}">
     @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/admin-redesign.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user-redesign.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-            color: #111827;
+            background-color: #0b1220;
+            color: #f1f5f9;
         }
     </style>
     @livewireStyles
 </head>
 
-<body class="min-h-screen flex flex-col antialiased">
+<body class="usr-shell adm-shell min-h-screen flex flex-col antialiased">
 
     <!-- Navbar -->
-    <nav class="bg-card border-b border-gray-200 sticky top-0 z-50">
+    <nav class="adm-topbar bg-card border-b border-gray-200 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Left side -->

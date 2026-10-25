@@ -6,17 +6,19 @@
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <title>Secure Checkout - {{ config('app.name', 'InvoiceMaker') }}</title>
  @vite(['resources/css/app.css', 'resources/js/app.js'])
+ <link rel="stylesheet" href="{{ asset('css/admin-redesign.css') }}">
+ <link rel="stylesheet" href="{{ asset('css/user-redesign.css') }}">
  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
  <style>
  body {
  font-family: 'Inter', sans-serif;
- background-color: #f9fafb;
- color: #111827;
+ background-color: #0b1220;
+ color: #f1f5f9;
  }
  </style>
 </head>
 
-<body class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 antialiased">
+<body class="portal-shell min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 antialiased">
  <div class="sm:mx-auto sm:w-full sm:max-w-md">
  <!-- Optional Logo Placeholder -->
  <div class="mx-auto w-12 h-12 bg-brand-600 rounded flex items-center justify-center mb-6">
@@ -27,7 +29,7 @@
  </svg>
  </div>
 
- <h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-txmain">
+ <h2 class="adm-title text-center leading-9 tracking-tight">
  Save Your Invoice
  </h2>
  <p class="mt-2 text-center text-sm text-txmain">

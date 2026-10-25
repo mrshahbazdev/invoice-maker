@@ -24,6 +24,8 @@
     @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/admin-redesign.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user-redesign.css') }}">
     @livewireStyles
 
     @if(auth()->check() && auth()->user()->business)
@@ -45,7 +47,7 @@
     @endif
 </head>
 
-<body class="bg-page text-txmain antialiased font-sans flex flex-col min-h-screen" x-data="{ mobileMenuOpen: false }">
+<body class="usr-shell adm-shell bg-page text-txmain antialiased font-sans flex flex-col min-h-screen" x-data="{ mobileMenuOpen: false }">
 
     @if(session()->has('impersonated_by'))
         <div
@@ -76,7 +78,7 @@
         <div class="flex-1 flex flex-col @if(auth()->check()) lg:pl-64 @endif">
             @if(auth()->check())
                 <header
-                    class="bg-card border-b border-gray-200/50 px-4 sm:px-6 py-4 sticky top-0 z-40 transition-all duration-300">
+                    class="adm-topbar bg-card border-b border-gray-200/50 px-4 sm:px-6 py-4 sticky top-0 z-40 transition-all duration-300">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center min-w-0">
                             <!-- Mobile menu button -->
@@ -89,7 +91,7 @@
                                     </svg>
                                 </button>
                             @endif
-                            <h1 class="text-lg sm:text-2xl font-bold text-txmain truncate pr-2">
+                            <h1 class="adm-topbar-title text-lg sm:text-2xl font-bold text-txmain truncate pr-2">
                                 {{ $title ?? __('Dashboard') }}
                             </h1>
                         </div>
@@ -174,19 +176,19 @@
 
             <main class="flex-1 p-6">
                 @if(session('message'))
-                    <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                    <div class="adm-flash is-success">
                         {{ session('message') }}
                     </div>
                 @endif
 
                 @if(session('error'))
-                    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <div class="adm-flash is-error">
                         {{ session('error') }}
                     </div>
                 @endif
 
                 @if($errors->any())
-                    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <div class="adm-flash is-error">
                         <ul class="list-disc list-inside">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>

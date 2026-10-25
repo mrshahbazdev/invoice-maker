@@ -2,8 +2,8 @@
 
 <div>
  <div class="mb-8">
- <h2 class="text-2xl font-bold text-txmain">{{ __('Create Client') }}</h2>
- <p class="text-txmain">{{ __('Add a new client to your list') }}</p>
+ <h2 class="adm-title">{{ __('Create Client') }}</h2>
+ <p class="adm-sub">{{ __('Add a new client to your list') }}</p>
  </div>
 
  <div class="max-w-2xl">
@@ -134,7 +134,7 @@
  <a href="{{ route('clients.index') }}"
  class="text-txmain hover:text-txmain py-2 px-4 rounded-lg border border-gray-300">{{ __('Cancel') }}</a>
  <button type="submit" wire:loading.attr="disabled"
- class="inline-flex items-center bg-brand-600 text-white py-2 px-6 rounded-lg hover:bg-brand-700 transition duration-200 disabled:opacity-50">
+ class="inline-flex items-center adm-btn adm-btn-primary transition duration-200 disabled:opacity-50">
  <svg wire:loading wire:target="save" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none"
  viewBox="0 0 24 24">
  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">

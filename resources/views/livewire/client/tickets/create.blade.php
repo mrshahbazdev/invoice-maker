@@ -10,7 +10,7 @@
  </svg>
  <span>Create New Ticket</span>
  </div>
- <h2 class="font-semibold text-2xl text-txmain leading-tight">
+ <h2 class="adm-title">
  {{ __('Open a Support Request') }}
  </h2>
  <p class="text-sm text-gray-500 mt-1">Please provide details so we can assist you better.</p>

@@ -2,8 +2,8 @@
 
 <div>
  <div class="mb-8">
- <h2 class="text-2xl font-bold text-txmain">{{ __('Invoice Templates') }}</h2>
- <p class="text-txmain">{{ __('Customize your invoice templates') }}</p>
+ <h2 class="adm-title">{{ __('Invoice Templates') }}</h2>
+ <p class="adm-sub">{{ __('Customize your invoice templates') }}</p>
  </div>
 
  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

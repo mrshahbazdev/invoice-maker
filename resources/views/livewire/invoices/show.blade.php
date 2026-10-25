@@ -10,10 +10,10 @@
     @endif
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-txmain">
+            <h2 class="adm-title">
                 {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }} {{ __('Details') }}
             </h2>
-            <p class="text-txmain">{{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}: {{ $invoice->invoice_number }}</p>
+            <p class="adm-sub">{{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}: {{ $invoice->invoice_number }}</p>
         </div>
         <div class="flex flex-wrap gap-2">
             @if($invoice->status === 'draft')
@@ -182,7 +182,7 @@
             </a>
             @if($invoice->status === 'draft')
                 <a href="{{ $invoice->isEstimate() ? route('estimates.edit', $invoice) : route('invoices.edit', $invoice) }}"
-                    class="bg-card text-txmain py-2 px-4 rounded-lg border border-gray-300 shadow-sm hover:bg-page transition duration-200 text-center font-medium">
+                    class="adm-btn adm-btn-secondary">
                     {{ __('Edit') }} {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
                 </a>
             @endif
@@ -258,7 +258,7 @@
                 </div>
 
                 <div class="overflow-x-auto">
-                    <table class="w-full">
+                    <table class="w-full adm-table">
                         <thead>
                             <tr class="border-b">
                                 <th class="text-left py-3 text-sm font-semibold text-txmain">{{ __('Description') }}
@@ -560,8 +560,8 @@
     </div>
 
     @if($showPaidModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-            <div class="bg-card rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
+        <div class="fixed inset-0 z-50 adm-modal-backdrop flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div class="bg-card adm-modal-panel rounded-xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all">
                 <div class="p-6 border-b flex justify-between items-center bg-page">
                     <h3 class="text-xl font-bold text-txmain">{{ __('Mark as Paid') }}</h3>
                     <button wire:click="closePaidModal()" class="text-gray-400 hover:text-txmain">
@@ -618,7 +618,7 @@
         </div>
     @endif
     @if($showEmailModal)
-        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+        <div class="fixed inset-0 z-50 adm-modal-backdrop flex items-center justify-center bg-black bg-opacity-50 p-4">
             <div class="bg-card rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all">
                 <div class="p-6 border-b flex justify-between items-center bg-page">
                     <h3 class="text-xl font-bold text-txmain">{{ __('Send Email') }}</h3>

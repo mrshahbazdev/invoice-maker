@@ -2,8 +2,8 @@
 
 <div>
  <div class="mb-8 items-center justify-between">
- <h2 class="text-2xl font-bold text-txmain">{{ __('Team Management') }}</h2>
- <p class="text-txmain">{{ __('Invite and manage collaborators for') }} {{ auth()->user()->business->name }}
+ <h2 class="adm-title">{{ __('Team Management') }}</h2>
+ <p class="adm-sub">{{ __('Invite and manage collaborators for') }} {{ auth()->user()->business->name }}
  </p>
  </div>
 
