@@ -79,15 +79,18 @@
         .pv-balance-band .pv-meta-label { color: #94a3b8; }
         .pv-balance-amount { font-size: 24px; font-weight: 800; color: #ffffff; font-variant-numeric: tabular-nums; }
         .pv-billto { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px 20px; background: #ffffff; }
-        /* Left-top brand block, redesigned as one polished unit: headline,
-           then a contact stack with a single gap system (every line — including
-           each address line — gets the same gap), then a deliberate QR card
-           separated by a hairline. Contact lines share one muted tone; the
-           email link looks exactly like the other lines (no stray underline). */
+        /* Left-top brand block: business name headline, then the contact
+           details as a proper table mirroring the right-side meta panel
+           (same bordered card, hairline rows, uppercase muted labels, ink
+           values), then a deliberate QR card separated by a hairline. */
         .pv-brand-name { line-height: 1.15; }
-        .pv-brand-contact { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; line-height: 1.5; color: #64748b; }
-        .pv-brand-contact a { color: inherit; text-decoration: none; }
-        .pv-brand-contact a:hover { color: #334155; }
+        .pv-brand-table { width: 100%; margin-top: 14px; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; background: #ffffff; border-collapse: separate; border-spacing: 0; }
+        .pv-brand-table td { padding: 10px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+        .pv-brand-table tr:last-child td { border-bottom: none; }
+        .pv-brand-table-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: #94a3b8; width: 110px; white-space: nowrap; }
+        .pv-brand-table-value { font-size: 14px; font-weight: 600; color: #0f172a; line-height: 1.5; }
+        .pv-brand-table-value a { color: inherit; text-decoration: none; }
+        .pv-brand-table-value a:hover { color: #334155; }
         .pv-brand-qr { margin-top: 20px; padding-top: 20px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; gap: 12px; }
         .pv-brand-qr-tile { padding: 8px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06); line-height: 0; }
         .pv-brand-qr-caption { color: #64748b; line-height: 1.45; max-width: 190px; }
@@ -295,24 +298,36 @@
                                     {{ $invoice->business->name }}
                                 </h2>
                             @endif
-                            <div class="text-sm pv-brand-contact">
+                            @if($invoice->business->address || $invoice->business->phone || $invoice->business->email || $invoice->business->tax_number)
+                            <table class="pv-brand-table">
+                                <tbody>
                                 @if($invoice->business->address)
-                                    @foreach(preg_split('/\r\n|\r|\n/', trim($invoice->business->address)) as $addressLine)
-                                        @if(trim($addressLine) !== '')
-                                            <div>{{ trim($addressLine) }}</div>
-                                        @endif
-                                    @endforeach
+                                    <tr>
+                                        <td class="pv-brand-table-label">{{ __('Address') }}</td>
+                                        <td class="pv-brand-table-value">@foreach(preg_split('/\r\n|\r|\n/', trim($invoice->business->address)) as $addressLine)@if(trim($addressLine) !== '')<div>{{ trim($addressLine) }}</div>@endif @endforeach</td>
+                                    </tr>
                                 @endif
                                 @if($invoice->business->phone)
-                                <div>{{ $invoice->business->phone }}</div> @endif
-                                @if($invoice->business->email)
-                                    <div><a href="mailto:{{ $invoice->business->email }}">{{ $invoice->business->email }}</a>
-                                </div> @endif
-                                @if($invoice->business->tax_number)
-                                    <div>{{ __('Tax ID') }}: {{ $invoice->business->tax_number }}
-                                    </div>
+                                    <tr>
+                                        <td class="pv-brand-table-label">{{ __('Phone') }}</td>
+                                        <td class="pv-brand-table-value">{{ $invoice->business->phone }}</td>
+                                    </tr>
                                 @endif
-                            </div>
+                                @if($invoice->business->email)
+                                    <tr>
+                                        <td class="pv-brand-table-label">{{ __('Email') }}</td>
+                                        <td class="pv-brand-table-value"><a href="mailto:{{ $invoice->business->email }}">{{ $invoice->business->email }}</a></td>
+                                    </tr>
+                                @endif
+                                @if($invoice->business->tax_number)
+                                    <tr>
+                                        <td class="pv-brand-table-label">{{ __('Tax ID') }}</td>
+                                        <td class="pv-brand-table-value">{{ $invoice->business->tax_number }}</td>
+                                    </tr>
+                                @endif
+                                </tbody>
+                            </table>
+                            @endif
                             @if($enableQr)
                                 @php
                                     $epcQrString = $invoice->business->getEpcQrCodeString($invoice);
