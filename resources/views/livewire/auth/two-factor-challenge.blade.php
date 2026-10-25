@@ -1,7 +1,7 @@
 <div>
- <div class="text-center mb-8">
- <h1 class="text-2xl font-bold text-txmain">{{ __('Two-Factor Authentication') }}</h1>
- <p class="text-txmain mt-2">
+ <div class="auth-head">
+ <h1 class="auth-title">{{ __('Two-Factor Authentication') }}</h1>
+ <p class="auth-sub">
  @if($recovery)
  {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
  @else
@@ -12,26 +12,26 @@
 
  <form wire:submit="verify">
  @if($recovery)
- <div class="mb-4">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Recovery Code') }}</label>
+ <div class="auth-field">
+ <label class="auth-label">{{ __('Recovery Code') }}</label>
  <input type="text" wire:model="recovery_code"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  placeholder="{{ __('Emergency recovery code') }}">
- @error('recovery_code') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('recovery_code') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
  @else
- <div class="mb-4">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Authentication Code') }}</label>
+ <div class="auth-field">
+ <label class="auth-label">{{ __('Authentication Code') }}</label>
  <input type="text" wire:model="code" inputmode="numeric" pattern="[0-9]*"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent text-center tracking-widest text-lg"
+ class="auth-input auth-code"
  placeholder="XXXXXX">
- @error('code') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('code') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
  @endif
 
- <div class="mb-6 flex justify-end">
+ <div class="auth-row-end">
  <button type="button" wire:click="toggleRecovery"
- class="text-sm text-txmain hover:text-txmain underline">
+ class="auth-toggle">
  @if($recovery)
  {{ __('Use an authentication code') }}
  @else
@@ -41,7 +41,7 @@
  </div>
 
  <button type="submit" wire:loading.attr="disabled"
- class="w-full flex justify-center items-center bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 transition duration-200 disabled:opacity-50">
+ class="auth-btn">
  <svg wire:loading wire:target="verify" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none"
  viewBox="0 0 24 24">
  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

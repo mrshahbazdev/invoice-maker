@@ -1,11 +1,11 @@
 <div>
- <div class="text-center mb-8">
- <h1 class="text-2xl font-bold text-txmain">{{ __('Reset Password') }}</h1>
- <p class="text-txmain mt-2">{{ __('Enter your new password below') }}</p>
+ <div class="auth-head">
+ <h1 class="auth-title">{{ __('Reset Password') }}</h1>
+ <p class="auth-sub">{{ __('Enter your new password below') }}</p>
  </div>
 
  @if (session('status') || $status)
- <div class="mb-4 font-medium text-sm text-green-600">
+ <div class="auth-status">
  {{ session('status') ?? $status }}
  </div>
  @endif
@@ -13,31 +13,31 @@
  <form wire:submit="resetPassword">
  <input type="hidden" wire:model="token">
 
- <div class="mb-4">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Email') }}</label>
+ <div class="auth-field">
+ <label class="auth-label">{{ __('Email') }}</label>
  <input type="email" wire:model="email"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  readonly>
- @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('email') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
 
- <div class="mb-4">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('New Password') }}</label>
+ <div class="auth-field">
+ <label class="auth-label">{{ __('New Password') }}</label>
  <input type="password" wire:model="password"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  placeholder="••••••••">
- @error('password') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('password') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
 
- <div class="mb-6">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Confirm Password') }}</label>
+ <div class="auth-field-lg">
+ <label class="auth-label">{{ __('Confirm Password') }}</label>
  <input type="password" wire:model="password_confirmation"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  placeholder="••••••••">
  </div>
 
  <button type="submit" wire:loading.attr="disabled"
- class="w-full flex justify-center items-center bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 transition duration-200 disabled:opacity-50">
+ class="auth-btn">
  <svg wire:loading wire:target="resetPassword" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none"
  viewBox="0 0 24 24">
  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>

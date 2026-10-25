@@ -1,52 +1,52 @@
 <div>
- <div class="text-center mb-8">
- <h1 class="text-2xl font-bold text-txmain">{{ __('Create Account') }}</h1>
- <p class="text-txmain mt-2">{{ __('Start creating invoices today') }}</p>
+ <div class="auth-head">
+ <h1 class="auth-title">{{ __('Create Account') }}</h1>
+ <p class="auth-sub">{{ __('Start creating invoices today') }}</p>
  </div>
 
  <form wire:submit="register">
- <div class="mb-4">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Full Name') }}</label>
+ <div class="auth-field">
+ <label class="auth-label">{{ __('Full Name') }}</label>
  <input type="text" wire:model="name"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  placeholder="{{ __('John Doe') }}">
- @error('name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('name') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
 
- <div class="mb-4">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Email') }}</label>
+ <div class="auth-field">
+ <label class="auth-label">{{ __('Email') }}</label>
  <input type="email" wire:model="email"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  placeholder="{{ __('you@example.com') }}">
- @error('email') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('email') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
 
- <div class="mb-4">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Password') }}</label>
+ <div class="auth-field">
+ <label class="auth-label">{{ __('Password') }}</label>
  <input type="password" wire:model="password"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  placeholder="••••••••">
- @error('password') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('password') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
 
- <div class="mb-4">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Confirm Password') }}</label>
+ <div class="auth-field">
+ <label class="auth-label">{{ __('Confirm Password') }}</label>
  <input type="password" wire:model="password_confirmation"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  placeholder="••••••••">
- @error('password_confirmation') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('password_confirmation') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
 
- <div class="mb-6">
- <label class="block text-sm font-medium text-txmain mb-1">{{ __('Business Name') }}</label>
+ <div class="auth-field-lg">
+ <label class="auth-label">{{ __('Business Name') }}</label>
  <input type="text" wire:model="business_name"
- class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+ class="auth-input"
  placeholder="{{ __('Your Business Name') }}">
- @error('business_name') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+ @error('business_name') <p class="auth-error">{{ $message }}</p> @enderror
  </div>
 
  <button type="submit" wire:loading.attr="disabled"
- class="w-full flex justify-center items-center bg-brand-600 text-white py-2 px-4 rounded-lg hover:bg-brand-700 transition duration-200 disabled:opacity-50">
+ class="auth-btn">
  <svg wire:loading wire:target="register" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none"
  viewBox="0 0 24 24">
  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -58,10 +58,10 @@
  </button>
  </form>
 
- <div class="mt-6 text-center">
- <p class="text-sm text-txmain">
+ <div class="auth-foot">
+ <p class="auth-inline">
  {{ __('Already have an account?') }}
- <a href="{{ route('login') }}" class="text-brand-600 hover:text-brand-700 font-medium">{{ __('Sign in') }}</a>
+ <a href="{{ route('login') }}" class="auth-link">{{ __('Sign in') }}</a>
  </p>
  </div>
 </div>
