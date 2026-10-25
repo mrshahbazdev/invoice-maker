@@ -4,12 +4,63 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Models\Business;
 use App\Models\User;
 
 class AuthController
 {
+    /**
+     * API registration (POST /api/register).
+     *
+     * Mirrors the website registration (Livewire\Auth\Register) without the
+     * invitation flow and without the web session: validates name/email/
+     * password/business_name, creates the owner user, creates their business
+     * (USD/UTC defaults, default templates seeded by the Business model),
+     * links the two, and returns a Sanctum token exactly like login().
+     * No Registered event is fired: the API has no email-verification flow
+     * and nothing on the API path requires a verified email.
+     */
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'business_name' => 'required|string|max:255',
+        ]);
+
+        $user = DB::transaction(function () use ($validated) {
+            $user = User::create([
+                'business_id' => null,
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'role' => User::ROLE_OWNER,
+            ]);
+
+            $business = Business::create([
+                'user_id' => $user->id,
+                'name' => $validated['business_name'],
+                'currency' => 'USD',
+                'timezone' => 'UTC',
+            ]);
+
+            $user->update(['business_id' => $business->id]);
+
+            return $user;
+        });
+
+        $token = $user->createToken('mobile-app')->plainTextToken;
+
+        return response()->json([
+            'user' => $user->load('business'),
+            'token' => $token,
+        ], 201);
+    }
+
     public function login(Request $request)
     {
         $request->validate([
