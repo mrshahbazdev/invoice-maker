@@ -22,16 +22,25 @@
         .pv-btn-ghost:hover { background: #f9fafb; border-color: #9ca3af; }
         .pv-discussion { background: #ffffff; border: 1px solid #e5e7eb; }
         .pv-bubble { background: #f3f4f6; }
-        /* Premium sheet */
+        /* Premium sheet — proper document width so it fills the desktop
+           view instead of sitting narrow with vast empty margins. */
         .invoice-preview-wrapper {
             width: 100%;
-            max-width: 21cm; /* A4 width */
+            max-width: 920px;
             margin: 0 auto;
             background: white;
             border: 1px solid #e5e7eb;
             border-radius: 16px;
             box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 16px 40px rgba(16, 24, 40, 0.08);
             overflow: hidden;
+        }
+        /* Shared width for the banners + discussion so they align with the sheet. */
+        .pv-narrow { max-width: 920px; margin-left: auto; margin-right: auto; }
+        /* Totals when there are no notes/terms: wider, right-aligned block so the
+           bottom section does not sit empty on the left. */
+        .pv-totals-solo { width: 100%; }
+        @media (min-width: 1024px) {
+            .pv-totals-solo { width: 480px; margin-left: auto; }
         }
         .invoice-preview-inner {
             padding: 2.5rem 2.5rem 2rem;
@@ -48,7 +57,7 @@
             font-size: 40px;
             line-height: 1.05;
             font-weight: 800;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.04em;
             color: #0f172a;
         }
         .pv-meta { border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; background: #ffffff; }
@@ -59,7 +68,7 @@
         .pv-balance-band { background: #0f172a; color: #ffffff; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; }
         .pv-balance-band .pv-meta-label { color: #94a3b8; }
         .pv-balance-amount { font-size: 24px; font-weight: 800; color: #ffffff; font-variant-numeric: tabular-nums; }
-        .pv-billto { border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; background: #ffffff; }
+        .pv-billto { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px 20px; background: #ffffff; }
         .pv-items thead th { background: #0f172a; color: #ffffff; }
         .pv-items td, .pv-items th { font-variant-numeric: tabular-nums; }
         .pv-items tbody tr { border-bottom: 1px solid #f1f5f9; }
@@ -93,7 +102,7 @@
 
 <body class="pv-page min-h-screen pb-12">
     <!-- Top Action Bar -->
-    <div class="pv-topbar shadow-sm sticky top-0 z-50 no-print">
+    <div class="pv-topbar shadow-sm no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-wrap justify-between items-center gap-2 py-3">
                 <div class="flex items-center">
@@ -174,7 +183,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
 
         @if(request()->has('success'))
-            <div class="max-w-2xl mx-auto mb-8 bg-green-50 border-l-4 border-green-400 p-4 no-print">
+            <div class="pv-narrow mb-8 bg-green-50 border-l-4 border-green-400 p-4 no-print">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
@@ -191,7 +200,7 @@
         @endif
 
         @if(request()->has('cancelled'))
-            <div class="max-w-2xl mx-auto mb-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 no-print">
+            <div class="pv-narrow mb-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 no-print">
                 <div class="flex">
                     <div class="ml-3">
                         <p class="text-sm text-yellow-700">{{ __('Payment was cancelled. You can try again below.') }}</p>
@@ -201,7 +210,7 @@
         @endif
 
         @if($invoice->status === 'paid')
-            <div class="max-w-2xl mx-auto mb-8 bg-green-50 border-l-4 border-green-400 p-4 no-print">
+            <div class="pv-narrow mb-8 bg-green-50 border-l-4 border-green-400 p-4 no-print">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
@@ -218,7 +227,7 @@
                 </div>
             </div>
         @elseif($invoice->due_date->isPast())
-            <div class="max-w-2xl mx-auto mb-8 bg-red-50 border-l-4 border-red-400 p-4 no-print">
+            <div class="pv-narrow mb-8 bg-red-50 border-l-4 border-red-400 p-4 no-print">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
@@ -277,25 +286,26 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
-
-                        <div class="w-full md:w-1/2 flex flex-col md:items-end text-left md:text-right">
-                            <div class="flex items-start md:items-center justify-start md:justify-end gap-6 mb-6">
-                                @if($enableQr)
-                                    @php
-                                        $epcQrString = $invoice->business->getEpcQrCodeString($invoice);
-                                        $qrData = $epcQrString ?? URL::signedRoute('invoices.public.show', $invoice->id);
-                                        $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(72)->generate($qrData));
-                                     @endphp
-                                    <div class="p-1.5 bg-card rounded-xl shadow-sm border border-gray-100">
+                            @if($enableQr)
+                                @php
+                                    $epcQrString = $invoice->business->getEpcQrCodeString($invoice);
+                                    $qrData = $epcQrString ?? URL::signedRoute('invoices.public.show', $invoice->id);
+                                    $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(72)->generate($qrData));
+                                @endphp
+                                <div class="mt-5 flex items-center gap-3">
+                                    <div class="p-1.5 bg-white rounded-xl shadow-sm border border-gray-100">
                                         <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code"
                                             class="w-[72px] h-[72px]">
                                     </div>
-                                @endif
-                                <h1 class="pv-doc-title uppercase">
-                                    {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
-                                </h1>
-                            </div>
+                                    <span class="text-xs text-gray-400">{{ __('Scan with your camera') }}</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="w-full md:w-1/2 flex flex-col md:items-end text-left md:text-right">
+                            <h1 class="pv-doc-title uppercase mb-6">
+                                {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
+                            </h1>
 
                             <div class="pv-meta inline-block text-left w-full max-w-sm">
                                 <div class="pv-meta-row">
@@ -456,18 +466,19 @@
                     </div>
 
                     <!-- Totals Section -->
+                    @php
+                        // The generic "pay within 15 days" line is only meaningful while a balance is due.
+                        $displayTerms = $invoice->payment_terms ?: ($template->payment_terms ?? '');
+                        if ($invoice->amount_due <= 0) {
+                            $displayTerms = trim(str_replace('Please pay within 15 days.', '', $displayTerms));
+                        }
+                        $hasNotes = !empty($invoice->notes) || !empty($displayTerms);
+                    @endphp
                     <div class="flex flex-col lg:flex-row justify-between gap-12">
                         <!-- Notes / Payment Terms -->
+                        @if($hasNotes)
                         <div class="w-full lg:w-3/5 order-2 lg:order-1">
-                            @php
-                                // The generic "pay within 15 days" line is only meaningful while a balance is due.
-                                $displayTerms = $invoice->payment_terms ?: ($template->payment_terms ?? '');
-                                if ($invoice->amount_due <= 0) {
-                                    $displayTerms = trim(str_replace('Please pay within 15 days.', '', $displayTerms));
-                                }
-                            @endphp
-                            @if($invoice->notes || $displayTerms)
-                                <div class="pv-notes">
+                            <div class="pv-notes">
                                     @if($invoice->notes)
                                         <div class="mb-6">
                                             <h4 class="text-xs font-bold uppercase tracking-widest mb-2"
@@ -487,11 +498,11 @@
                                         </div>
                                     @endif
                                 </div>
-                            @endif
                         </div>
+                        @endif
 
                         <!-- Totals Table -->
-                        <div class="w-full lg:w-2/5 order-1 lg:order-2">
+                        <div class="{{ $hasNotes ? 'w-full lg:w-2/5 order-1 lg:order-2' : 'pv-totals-solo order-1' }}">
                             <div class="pv-totals text-sm">
                                 <div class="flex justify-between py-2">
                                     <span class="text-gray-500">{{ __('Subtotal') }}:</span>
@@ -614,7 +625,7 @@
     </div>
 
     <!-- Discussion Section -->
-    <div class="max-w-2xl mx-auto mt-12 pv-discussion shadow-sm sm:rounded-xl p-6 no-print">
+    <div class="pv-narrow mt-12 pv-discussion shadow-sm sm:rounded-xl p-6 no-print">
         <h3 class="text-lg font-semibold pv-ink mb-6">{{ __('Discussion') }}</h3>
 
         <div class="space-y-6 mb-8">
