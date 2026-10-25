@@ -22,11 +22,13 @@
         .pv-btn-ghost:hover { background: #f9fafb; border-color: #9ca3af; }
         .pv-discussion { background: #ffffff; border: 1px solid #e5e7eb; }
         .pv-bubble { background: #f3f4f6; }
-        /* Premium sheet — proper document width so it fills the desktop
-           view instead of sitting narrow with vast empty margins. */
+        /* Fluid sheet width: it grows with the viewport, so on wide screens
+           the document fills a proper share of the screen instead of sitting
+           as a narrow strip with vast empty margins. Capped so line lengths
+           stay comfortable even on ultra-wide displays. */
         .invoice-preview-wrapper {
             width: 100%;
-            max-width: 920px;
+            max-width: min(1200px, 92vw);
             margin: 0 auto;
             background: white;
             border: 1px solid #e5e7eb;
@@ -34,8 +36,16 @@
             box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 16px 40px rgba(16, 24, 40, 0.08);
             overflow: hidden;
         }
-        /* Shared width for the banners + discussion so they align with the sheet. */
-        .pv-narrow { max-width: 920px; margin-left: auto; margin-right: auto; }
+        /* Shared fluid width for banners + discussion + top bar + footer so
+           every page element aligns with the sheet on every viewport. */
+        .pv-narrow { max-width: min(1200px, 92vw); margin-left: auto; margin-right: auto; }
+        .pv-wide { max-width: min(1200px, 92vw); margin-left: auto; margin-right: auto; }
+        @media (min-width: 1600px) {
+            .invoice-preview-wrapper, .pv-narrow, .pv-wide { max-width: 1280px; }
+        }
+        @media (min-width: 1280px) {
+            .invoice-preview-inner { padding: 3rem 3.5rem 2.5rem; }
+        }
         /* Totals when there are no notes/terms: wider, right-aligned block so the
            bottom section does not sit empty on the left. */
         .pv-totals-solo { width: 100%; }
@@ -69,6 +79,13 @@
         .pv-balance-band .pv-meta-label { color: #94a3b8; }
         .pv-balance-amount { font-size: 24px; font-weight: 800; color: #ffffff; font-variant-numeric: tabular-nums; }
         .pv-billto { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px 20px; background: #ffffff; }
+        /* Left-top brand block: one consistent vertical rhythm, so the name,
+           address, phone, email and tax lines read as a single aligned block
+           instead of unevenly spaced runs. */
+        .pv-brand-name { line-height: 1.15; }
+        .pv-brand-contact { line-height: 1.6; }
+        .pv-brand-contact > * + * { margin-top: 6px; }
+        .pv-brand-qr-caption { color: #64748b; line-height: 1.45; max-width: 190px; }
         .pv-items thead th { background: #0f172a; color: #ffffff; }
         .pv-items td, .pv-items th { font-variant-numeric: tabular-nums; }
         .pv-items tbody tr { border-bottom: 1px solid #f1f5f9; }
@@ -103,7 +120,7 @@
 <body class="pv-page min-h-screen pb-12">
     <!-- Top Action Bar -->
     <div class="pv-topbar shadow-sm no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="pv-wide px-4 sm:px-6 lg:px-8">
             <div class="flex flex-wrap justify-between items-center gap-2 py-3">
                 <div class="flex items-center">
                     <span class="text-xl font-bold pv-ink">{{ $invoice->business->name }}</span>
@@ -180,7 +197,7 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="pv-wide px-4 sm:px-6 lg:px-8 mt-8">
 
         @if(request()->has('success'))
             <div class="pv-narrow mb-8 bg-green-50 border-l-4 border-green-400 p-4 no-print">
@@ -266,13 +283,13 @@
                         <div class="w-full md:w-1/2 mb-6 md:mb-0">
                             @if($invoice->business->logo)
                                 <img src="{{ Storage::url($invoice->business->logo) }}" alt="Logo"
-                                    class="max-h-20 max-w-[200px] mb-4 object-contain">
+                                    class="max-h-20 max-w-[200px] object-contain">
                             @else
-                                <h2 class="text-3xl font-extrabold tracking-tight text-heading">
+                                <h2 class="text-3xl font-extrabold tracking-tight text-heading pv-brand-name">
                                     {{ $invoice->business->name }}
                                 </h2>
                             @endif
-                            <div class="mt-4 text-sm text-gray-500 leading-relaxed space-y-1">
+                            <div class="mt-4 text-sm text-gray-500 pv-brand-contact">
                                 @if($invoice->business->address)
                                 <div>{!! nl2br(e($invoice->business->address)) !!}</div> @endif
                                 @if($invoice->business->phone)
@@ -282,7 +299,7 @@
                                             class="hover:text-txmain underline decoration-gray-300 underline-offset-2">{{ $invoice->business->email }}</a>
                                 </div> @endif
                                 @if($invoice->business->tax_number)
-                                    <div class="mt-2 text-gray-400">{{ __('Tax ID') }}: {{ $invoice->business->tax_number }}
+                                    <div class="text-gray-500">{{ __('Tax ID') }}: {{ $invoice->business->tax_number }}
                                     </div>
                                 @endif
                             </div>
@@ -292,12 +309,12 @@
                                     $qrData = $epcQrString ?? URL::signedRoute('invoices.public.show', $invoice->id);
                                     $qrCode = base64_encode(\SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(72)->generate($qrData));
                                 @endphp
-                                <div class="mt-5 flex items-center gap-3">
+                                <div class="mt-6 flex items-center gap-3">
                                     <div class="p-1.5 bg-white rounded-xl shadow-sm border border-gray-100">
                                         <img src="data:image/svg+xml;base64,{{ $qrCode }}" alt="QR Code"
                                             class="w-[72px] h-[72px]">
                                     </div>
-                                    <span class="text-xs text-gray-400">{{ __('Scan with your camera') }}</span>
+                                    <span class="text-xs pv-brand-qr-caption">{{ __('Scan with your camera') }}</span>
                                 </div>
                             @endif
                         </div>
@@ -663,7 +680,7 @@
         </form>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pb-12 text-center no-print">
+    <div class="pv-wide px-4 sm:px-6 lg:px-8 mt-12 pb-12 text-center no-print">
         <p class="text-sm text-gray-500">
             {{ __('Generated by InvoiceMaker on') }} {{ now()->translatedFormat('M d, Y') }} | <a
                 href="https://allocore.de" class="text-gray-500 hover:text-gray-900 transition-colors">Allocore.de</a>
