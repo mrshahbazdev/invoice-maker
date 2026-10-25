@@ -56,7 +56,7 @@ class ProcessRecurringInvoices extends Command
         foreach ($invoices as $parentInvoice) {
             $newInvoice = null;
             try {
-                \Illuminate\Support\Facades\DB::transaction(function () use ($parentInvoice, $pdfService, $invoiceNumberService, &$newInvoice) {
+                \Illuminate\Support\Facades\DB::transaction(function () use ($parentInvoice, $pdfService, $invoiceNumberService, &$newInvoice, $today) {
                     // Calculate new dates
                     $issueDate = Carbon::today();
                     $originalIssue = Carbon::parse($parentInvoice->invoice_date);
@@ -89,15 +89,17 @@ class ProcessRecurringInvoices extends Command
                         $newInvoice->items()->create($item->toArray());
                     }
 
-                    // 4. Update the parent invoice's next_run_date
+                    // 4. Update the parent invoice's next_run_date.
+                    // Catch-up jump: a long-overdue parent must land on the
+                    // next FUTURE occurrence, not just one period ahead —
+                    // otherwise every run creates one more duplicate until
+                    // it catches up (one duplicate per run, hourly).
                     $nextRun = Carbon::parse($parentInvoice->next_run_date);
-                    match ($parentInvoice->recurring_frequency) {
-                        'weekly' => $nextRun->addWeek(),
-                        'monthly' => $nextRun->addMonth(),
-                        'quarterly' => $nextRun->addMonths(3),
-                        'yearly' => $nextRun->addYear(),
-                        default => $nextRun->addMonth(),
-                    };
+                    $guard = 0;
+                    do {
+                        $nextRun = $this->advanceRecurringDate($nextRun, $parentInvoice->recurring_frequency);
+                        $guard++;
+                    } while ($nextRun->toDateString() <= $today && $guard < 520);
 
                     $parentInvoice->update([
                         'last_run_date' => Carbon::now(),
@@ -160,6 +162,20 @@ class ProcessRecurringInvoices extends Command
         }
 
         $this->info("Successfully processed {$count} recurring invoices.");
+    }
+
+    /**
+     * Advance a recurring date by exactly one period.
+     */
+    private function advanceRecurringDate(Carbon $date, ?string $frequency): Carbon
+    {
+        return match ($frequency) {
+            'weekly' => $date->copy()->addWeek(),
+            'monthly' => $date->copy()->addMonth(),
+            'quarterly' => $date->copy()->addMonths(3),
+            'yearly' => $date->copy()->addYear(),
+            default => $date->copy()->addMonth(),
+        };
     }
 }
 
