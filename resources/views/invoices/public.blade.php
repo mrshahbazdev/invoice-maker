@@ -9,6 +9,19 @@
     </title>
     @vite(['resources/css/app.css'])
     <style>
+        /* Public-page chrome in the dark navy + orange design system.
+           The invoice sheet itself stays white on purpose: it is the
+           client document and must print exactly as shown. Only the
+           surrounding chrome (page bg, top bar, discussion) goes dark. */
+        body.pub-dark { background: #0b1220; }
+        .pub-topbar { background: #0b1220; border-bottom: 1px solid rgba(255,255,255,.1); }
+        .pub-text { color: #f1f5f9; }
+        .pub-dim { color: #cbd5e1; }
+        .pub-pill { background: rgba(255,255,255,.1); color: #e5e7eb; }
+        .pub-btn-ghost { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2); color: #fff; }
+        .pub-btn-ghost:hover { background: rgba(255,255,255,.1); }
+        .pub-discussion { background: #111827; border: 1px solid rgba(255,255,255,.1); }
+        .pub-bubble { background: rgba(255,255,255,.05); }
         /* A4 aspect ratio wrapper for web preview */
         .invoice-preview-wrapper {
             width: 100%;
@@ -29,6 +42,9 @@
             body {
                 background: white;
             }
+            body.pub-dark {
+                background: white !important;
+            }
 
             .no-print {
                 display: none !important;
@@ -48,14 +64,14 @@
     </style>
 </head>
 
-<body class="bg-page min-h-screen pb-12">
+<body class="pub-dark min-h-screen pb-12">
     <!-- Top Action Bar -->
-    <div class="bg-card shadow-sm border-b sticky top-0 z-50 no-print">
+    <div class="pub-topbar shadow-sm sticky top-0 z-50 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+            <div class="flex flex-wrap justify-between items-center gap-2 py-3">
                 <div class="flex items-center">
-                    <span class="text-xl font-bold text-txmain">{{ $invoice->business->name }}</span>
-                    <span class="ml-4 px-3 py-1 rounded-full text-xs font-medium bg-page text-txmain">
+                    <span class="text-xl font-bold pub-text">{{ $invoice->business->name }}</span>
+                    <span class="ml-4 px-3 py-1 rounded-full text-xs font-medium pub-pill">
                         {{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}: {{ $invoice->invoice_number }}
                     </span>
                     @if($invoice->status === 'paid')
@@ -64,8 +80,8 @@
                         </span>
                     @endif
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button onclick="window.print()" class="text-txmain hover:text-txmain flex items-center">
+                <div class="flex flex-wrap items-center gap-4">
+                    <button onclick="window.print()" class="pub-dim hover:text-white flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
@@ -74,7 +90,7 @@
                         {{ __('Print') }}
                     </button>
                     <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('client.register', ['invoice' => $invoice->id]) }}"
-                        class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-txmain bg-card hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pub-btn-ghost focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
@@ -93,7 +109,7 @@
                         </a>
                     @endif
                     <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.download', ['invoice' => $invoice->id]) }}"
-                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-heading bg-card hover:bg-page focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pub-btn-ghost focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
@@ -107,7 +123,7 @@
                                 method="POST">
                                 @csrf
                                 <button type="submit"
-                                    class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-txmain bg-card hover:bg-page">
+                                    class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pub-btn-ghost">
                                     {{ __('Request Revision') }}
                                 </button>
                             </form>
@@ -449,20 +465,20 @@
                                 </div>
                                 @if($template->show_tax ?? true)
                                     <div class="flex justify-between py-2 text-gray-300">
-                                        <span>{{ __('Total Tax') }}:</span>
+                                        <span>{{ $invoice->business->tax_label ?? __('Total Tax') }}:</span>
                                         <span
                                             class="font-medium text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->tax_total, 2) }}</span>
                                     </div>
                                 @endif
                                 @if(($template->show_discount ?? true) && $invoice->discount > 0)
-                                    <div class="flex justify-between py-2 text-txmain">
+                                    <div class="flex justify-between py-2 text-gray-900">
                                         <span>{{ __('Discount') }}:</span>
                                         <span
-                                            class="font-medium text-red-500">-{{ $invoice->currency_symbol }}{{ number_format($invoice->discount, 2) }}</span>
+                                            class="font-medium" style="color: #7f1d1d;">-{{ $invoice->currency_symbol }}{{ number_format($invoice->discount, 2) }}</span>
                                     </div>
                                 @endif
 
-                                <div class="my-4 border-t border-gray-200"></div>
+                                <div class="my-4 border-t" style="border-color: rgba(255,255,255,.4);"></div>
 
                                 <div class="flex justify-between items-center py-2">
                                     <span class="text-base font-bold text-white">{{ __('Total') }}:</span>
@@ -563,22 +579,22 @@
     </div>
 
     <!-- Discussion Section -->
-    <div class="max-w-2xl mx-auto mt-12 bg-card shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl p-6 no-print">
-        <h3 class="text-lg font-semibold text-txmain mb-6">{{ __('Discussion') }}</h3>
+    <div class="max-w-2xl mx-auto mt-12 pub-discussion shadow-sm sm:rounded-xl p-6 no-print">
+        <h3 class="text-lg font-semibold text-white mb-6">{{ __('Discussion') }}</h3>
 
         <div class="space-y-6 mb-8">
             @forelse(\App\Models\InvoiceComment::where('invoice_id', $invoice->id)->where('is_internal', false)->get() as $comment)
                 <div class="flex space-x-3">
-                    <div class="flex-1 bg-page rounded-lg px-4 py-3">
+                    <div class="flex-1 pub-bubble rounded-lg px-4 py-3">
                         <div class="flex items-center justify-between mb-1">
-                            <h4 class="text-sm font-bold text-txmain">{{ $comment->user->name ?? __('Client') }}</h4>
-                            <span class="text-xs text-gray-500">{{ $comment->created_at->diffForHumans() }}</span>
+                            <h4 class="text-sm font-bold text-white">{{ $comment->user->name ?? __('Client') }}</h4>
+                            <span class="text-xs text-gray-400" title="{{ $invoice->business->timezoneOrFallback() }}">{{ $comment->created_at->diffForHumans() }} · {{ $invoice->business->formatDateTime($comment->created_at) }}</span>
                         </div>
-                        <p class="text-sm text-txmain">{{ $comment->comment }}</p>
+                        <p class="text-sm pub-dim">{{ $comment->comment }}</p>
                     </div>
                 </div>
             @empty
-                <p class="text-sm text-gray-500 italic">{{ __('No comments yet. Start a discussion below.') }}</p>
+                <p class="text-sm text-gray-400 italic">{{ __('No comments yet. Start a discussion below.') }}</p>
             @endforelse
         </div>
 
@@ -589,7 +605,7 @@
             <div>
                 <label for="comment" class="sr-only">{{ __('Add a comment') }}</label>
                 <textarea id="comment" name="comment" rows="3" required
-                    class="block w-full rounded-md border-0 py-1.5 text-txmain shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6"
+                    class="block w-full rounded-md border-0 py-1.5 bg-white text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-600 sm:text-sm sm:leading-6"
                     placeholder="{{ __('Ask a question or request a change...') }}"></textarea>
             </div>
             <div class="mt-3 flex justify-end">
@@ -604,7 +620,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pb-12 text-center no-print">
         <p class="text-sm text-gray-400">
             {{ __('Generated by InvoiceMaker on') }} {{ now()->translatedFormat('M d, Y') }} | <a
-                href="https://allocore.de" class="text-gray-400 hover:text-txmain transition-colors">Allocore.de</a>
+                href="https://allocore.de" class="text-gray-400 hover:text-white transition-colors">Allocore.de</a>
         </p>
     </div>
 </body>

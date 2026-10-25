@@ -241,6 +241,10 @@
                     class="text-gray-400 hover:text-gray-500 font-medium text-sm">Blog</a>
                 <a href="{{ route('docs.index', ['lang' => app()->getLocale()]) }}"
                     class="text-gray-400 hover:text-gray-500 font-medium text-sm">Help Center</a>
+                <a href="{{ route('privacy') }}"
+                    class="text-gray-400 hover:text-gray-500 font-medium text-sm">Privacy</a>
+                <a href="{{ route('terms') }}"
+                    class="text-gray-400 hover:text-gray-500 font-medium text-sm">Terms</a>
                 <a href="{{ route('login') }}" class="text-gray-400 hover:text-gray-500 font-medium text-sm">Login</a>
             </div>
         </div>

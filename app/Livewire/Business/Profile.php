@@ -24,6 +24,8 @@ class Profile extends Component
     public string $currency = 'USD';
     public string $timezone = 'UTC';
     public string $tax_number = '';
+    public string $tax_country = '';
+    public ?float $tax_rate = null;
     public string $bank_details = '';
     public string $iban = '';
     public string $bic = '';
@@ -62,6 +64,8 @@ class Profile extends Component
             'currency' => 'required|string|max:3',
             'timezone' => 'required|string',
             'tax_number' => 'nullable|string|max:255',
+            'tax_country' => 'nullable|string|size:2',
+            'tax_rate' => 'nullable|numeric|min:0|max:100',
             'bank_details' => 'nullable|string',
             'iban' => 'nullable|string|max:34',
             'bic' => 'nullable|string|max:11',
@@ -103,6 +107,8 @@ class Profile extends Component
             $this->currency = $this->business->currency;
             $this->timezone = $this->business->timezone;
             $this->tax_number = $this->business->tax_number ?? '';
+            $this->tax_country = $this->business->tax_country ?? '';
+            $this->tax_rate = $this->business->tax_rate !== null ? (float) $this->business->tax_rate : null;
             $this->bank_details = $this->business->bank_details ?? '';
             $this->iban = $this->business->iban ?? '';
             $this->bic = $this->business->bic ?? '';
@@ -156,6 +162,8 @@ class Profile extends Component
             'currency' => $this->currency,
             'timezone' => $this->timezone,
             'tax_number' => $this->tax_number,
+            'tax_country' => $this->tax_country ?: null,
+            'tax_rate' => $this->tax_rate,
             'bank_details' => $this->bank_details,
             'iban' => $this->iban,
             'bic' => $this->bic,
@@ -200,6 +208,19 @@ class Profile extends Component
         App::setLocale($this->language);
 
         session()->flash('message', 'Business profile and language updated successfully.');
+    }
+
+    /**
+     * Pre-fill the standard rate when the tax country changes; the owner
+     * can still edit the rate freely afterwards.
+     */
+    public function updatedTaxCountry(): void
+    {
+        $preset = config('tax_rates.' . strtoupper($this->tax_country) . '.rate');
+
+        if ($preset !== null) {
+            $this->tax_rate = (float) $preset;
+        }
     }
 
     public function removeLogo(): void

@@ -422,7 +422,7 @@
                 </div>
                 @if($showTax || $invoice->tax_total > 0)
                     <div class="total-row">
-                        <div class="total-label">{{ __('Tax') }}</div>
+                        <div class="total-label">{{ $invoice->business->tax_label ?? __('Tax') }}</div>
                         <div class="total-value">
                             {{ $invoice->currency_symbol }}{{ number_format((float) $invoice->tax_total, 2) }}
                         </div>

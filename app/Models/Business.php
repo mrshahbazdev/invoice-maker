@@ -19,6 +19,8 @@ class Business extends Model
         'currency',
         'timezone',
         'tax_number',
+        'tax_country',
+        'tax_rate',
         'bank_details',
         'last_reminder_sent_at',
         'inventory_deducted',
@@ -266,15 +268,67 @@ class Business extends Model
     public function getCurrencySymbolAttribute()
     {
         return match (strtoupper($this->currency)) {
-            'USD', 'CAD', 'AUD' => '$',
+            'USD', 'CAD', 'AUD', 'NZD', 'SGD', 'HKD', 'MXN' => '$',
             'EUR' => '€',
             'GBP' => '£',
-            'JPY' => '¥',
+            'JPY', 'CNY' => '¥',
             'INR' => '₹',
             'PKR', 'LKR', 'NPR' => 'Rs',
             'AED' => 'د.إ',
-            default => '$',
+            'CHF' => 'CHF ',
+            'SEK', 'NOK', 'DKK' => 'kr ',
+            'BRL' => 'R$ ',
+            'ZAR' => 'R ',
+            'THB' => '฿ ',
+            'MYR' => 'RM ',
+            'IDR' => 'Rp ',
+            'PHP' => '₱ ',
+            'KRW' => '₩ ',
+            'TRY' => '₺ ',
+            'PLN' => 'zł ',
+            'CZK' => 'Kč ',
+            'ILS' => '₪ ',
+            'VND' => '₫ ',
+            default => $this->currency . ' ',
         };
+    }
+
+    /**
+     * Tax label for this business (e.g. "VAT", "GST") from its tax country,
+     * or null when no country is set (templates fall back to "Tax").
+     */
+    public function getTaxLabelAttribute(): ?string
+    {
+        if (empty($this->tax_country)) {
+            return null;
+        }
+
+        return config('tax_rates.' . strtoupper($this->tax_country) . '.label');
+    }
+
+    /**
+     * Valid business timezone, falling back to UTC for empty/invalid values.
+     */
+    public function timezoneOrFallback(): string
+    {
+        $tz = $this->timezone ?: 'UTC';
+
+        return in_array($tz, \DateTimeZone::listIdentifiers(), true) ? $tz : 'UTC';
+    }
+
+    /**
+     * Format a datetime in the business timezone. Date-only values (invoice
+     * dates, due dates) are intentionally NOT shifted: they are stored as
+     * dates and must display exactly as stored, or a timezone shift would
+     * show the wrong day. This helper is for real datetimes (timestamps).
+     */
+    public function formatDateTime($value, string $format = 'M d, Y H:i'): string
+    {
+        if (empty($value)) {
+            return '';
+        }
+
+        return \Carbon\Carbon::parse($value)->timezone($this->timezoneOrFallback())->format($format);
     }
 
     public function hasCustomSmtp(): bool

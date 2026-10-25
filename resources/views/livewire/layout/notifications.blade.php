@@ -2,7 +2,7 @@
     <div class="relative" x-data="{ open: false }" @click.outside="open = false">
         <!-- Bell Icon with Badge -->
         <button @click="open = !open" type="button"
-            class="relative p-2 text-gray-500 hover:text-brand-600 focus:outline-none transition-colors border border-gray-200 rounded-md bg-card sm:bg-transparent flex items-center justify-center">
+            class="relative p-2 text-gray-300 hover:text-white focus:outline-none transition-colors border border-white/10 rounded-md bg-white/5 sm:bg-transparent flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -24,13 +24,13 @@
             x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75"
             x-transition:leave-start="transform opacity-100 scale-100"
             x-transition:leave-end="transform opacity-0 scale-95"
-            class="absolute right-0 mt-2 w-80 adm-card bg-card rounded-md shadow-lg border border-gray-100 ring-1 ring-black ring-opacity-5 z-50 overflow-hidden"
+            class="absolute right-0 mt-2 w-80 adm-card rounded-md shadow-lg border border-white/10 z-50 overflow-hidden"
             style="display: none;">
 
-            <div class="px-4 py-3 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                <h3 class="text-sm font-bold text-gray-800">Notifications</h3>
+            <div class="px-4 py-3 border-b border-white/10 flex justify-between items-center">
+                <h3 class="text-sm font-bold text-white">Notifications</h3>
                 @if($unreadCount > 0)
-                    <button wire:click="markAllAsRead" class="text-xs text-brand-600 hover:text-brand-800 font-medium ml-2">
+                    <button wire:click="markAllAsRead" class="text-xs text-[#ffb454] hover:text-white font-medium ml-2">
                         Mark all as read
                     </button>
                 @endif
@@ -38,9 +38,9 @@
 
             <div class="max-h-96 overflow-y-auto">
                 @if(count($unreadNotifications) > 0)
-                    <ul class="divide-y divide-gray-100">
+                    <ul class="divide-y divide-white/10">
                         @foreach($unreadNotifications as $notification)
-                            <li class="p-4 hover:bg-gray-50 transition duration-150 ease-in-out cursor-pointer"
+                            <li class="p-4 hover:bg-white/5 transition duration-150 ease-in-out cursor-pointer"
                                 wire:click="markAsRead('{{ $notification->id }}', '{{ $notification->data['url'] ?? '#' }}')">
                                 <div class="flex items-start">
                                     <div class="flex-shrink-0 pt-0.5">
@@ -81,10 +81,10 @@
                                         @endif
                                     </div>
                                     <div class="ml-3 w-0 flex-1">
-                                        <p class="text-sm font-medium text-gray-900">
+                                        <p class="text-sm font-medium text-white">
                                             {{ $notification->data['message'] ?? 'Notification' }}
                                         </p>
-                                        <p class="mt-1 text-xs text-gray-500">
+                                        <p class="mt-1 text-xs text-gray-400">
                                             {{ $notification->created_at->diffForHumans() }}
                                         </p>
                                     </div>
@@ -93,7 +93,7 @@
                         @endforeach
                     </ul>
                 @else
-                    <div class="p-6 text-center text-sm text-gray-500">
+                    <div class="p-6 text-center text-sm text-gray-400">
                         <svg class="mx-auto h-8 w-8 text-gray-300 mb-2" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

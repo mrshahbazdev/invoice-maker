@@ -61,6 +61,28 @@
                     @error('tax_number') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
 
+                <div>
+                    <label class="block text-sm font-medium text-txmain mb-1">{{ __('Tax Country') }}</label>
+                    <select wire:model.live="tax_country"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
+                        <option value="">{{ __('No country tax preset') }}</option>
+                        @foreach(config('tax_rates') as $code => $preset)
+                            <option value="{{ $code }}">{{ $preset['name'] }} ({{ $preset['label'] }} {{ rtrim(rtrim(number_format($preset['rate'], 2), '0'), '.') }}%)</option>
+                        @endforeach
+                    </select>
+                    <p class="mt-1 text-xs text-gray-500">{{ __('Picking a country fills the standard rate below — you can still change it.') }}</p>
+                    @error('tax_country') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-txmain mb-1">{{ __('Default Tax Rate (%)') }}</label>
+                    <input type="number" step="0.01" min="0" max="100" wire:model="tax_rate"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                        placeholder="{{ __('e.g. 19') }}">
+                    <p class="mt-1 text-xs text-gray-500">{{ __('Used as the default rate for new invoice and estimate items.') }}</p>
+                    @error('tax_rate') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                </div>
+
                 <div wire:ignore>
                     <label class="block text-sm font-medium text-txmain mb-1">{{ __('Address') }}</label>
                     <textarea wire:model="address" rows="3"
@@ -114,9 +136,30 @@
                         <option value="GBP">{{ __('GBP - British Pound') }}</option>
                         <option value="CAD">{{ __('CAD - Canadian Dollar') }}</option>
                         <option value="AUD">{{ __('AUD - Australian Dollar') }}</option>
+                        <option value="NZD">{{ __('NZD - New Zealand Dollar') }}</option>
+                        <option value="CHF">{{ __('CHF - Swiss Franc') }}</option>
+                        <option value="SEK">{{ __('SEK - Swedish Krona') }}</option>
+                        <option value="NOK">{{ __('NOK - Norwegian Krone') }}</option>
+                        <option value="DKK">{{ __('DKK - Danish Krone') }}</option>
+                        <option value="PLN">{{ __('PLN - Polish Zloty') }}</option>
+                        <option value="CZK">{{ __('CZK - Czech Koruna') }}</option>
                         <option value="JPY">{{ __('JPY - Japanese Yen') }}</option>
-                        <option value="PKR">{{ __('PKR - Pakistani Rupee') }}</option>
+                        <option value="CNY">{{ __('CNY - Chinese Yuan') }}</option>
+                        <option value="KRW">{{ __('KRW - South Korean Won') }}</option>
+                        <option value="SGD">{{ __('SGD - Singapore Dollar') }}</option>
+                        <option value="HKD">{{ __('HKD - Hong Kong Dollar') }}</option>
                         <option value="INR">{{ __('INR - Indian Rupee') }}</option>
+                        <option value="PKR">{{ __('PKR - Pakistani Rupee') }}</option>
+                        <option value="BRL">{{ __('BRL - Brazilian Real') }}</option>
+                        <option value="MXN">{{ __('MXN - Mexican Peso') }}</option>
+                        <option value="ZAR">{{ __('ZAR - South African Rand') }}</option>
+                        <option value="TRY">{{ __('TRY - Turkish Lira') }}</option>
+                        <option value="ILS">{{ __('ILS - Israeli Shekel') }}</option>
+                        <option value="THB">{{ __('THB - Thai Baht') }}</option>
+                        <option value="MYR">{{ __('MYR - Malaysian Ringgit') }}</option>
+                        <option value="IDR">{{ __('IDR - Indonesian Rupiah') }}</option>
+                        <option value="PHP">{{ __('PHP - Philippine Peso') }}</option>
+                        <option value="VND">{{ __('VND - Vietnamese Dong') }}</option>
                         <option value="AED">{{ __('AED - UAE Dirham') }}</option>
                     </select>
                     @error('currency') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
@@ -146,13 +189,43 @@
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
                         <option value="UTC">UTC</option>
                         <option value="America/New_York">America/New_York</option>
-                        <option value="America/Los_Angeles">America/Los_Angeles</option>
                         <option value="America/Chicago">America/Chicago</option>
+                        <option value="America/Denver">America/Denver</option>
+                        <option value="America/Los_Angeles">America/Los_Angeles</option>
+                        <option value="America/Toronto">America/Toronto</option>
+                        <option value="America/Mexico_City">America/Mexico_City</option>
+                        <option value="America/Sao_Paulo">America/Sao_Paulo</option>
+                        <option value="America/Bogota">America/Bogota</option>
                         <option value="Europe/London">Europe/London</option>
                         <option value="Europe/Paris">Europe/Paris</option>
-                        <option value="Asia/Tokyo">Asia/Tokyo</option>
+                        <option value="Europe/Berlin">Europe/Berlin</option>
+                        <option value="Europe/Madrid">Europe/Madrid</option>
+                        <option value="Europe/Rome">Europe/Rome</option>
+                        <option value="Europe/Amsterdam">Europe/Amsterdam</option>
+                        <option value="Europe/Warsaw">Europe/Warsaw</option>
+                        <option value="Europe/Istanbul">Europe/Istanbul</option>
+                        <option value="Europe/Moscow">Europe/Moscow</option>
+                        <option value="Africa/Cairo">Africa/Cairo</option>
+                        <option value="Africa/Lagos">Africa/Lagos</option>
+                        <option value="Africa/Johannesburg">Africa/Johannesburg</option>
+                        <option value="Africa/Nairobi">Africa/Nairobi</option>
+                        <option value="Asia/Dubai">Asia/Dubai</option>
+                        <option value="Asia/Riyadh">Asia/Riyadh</option>
+                        <option value="Asia/Karachi">Asia/Karachi</option>
+                        <option value="Asia/Kolkata">Asia/Kolkata</option>
+                        <option value="Asia/Dhaka">Asia/Dhaka</option>
+                        <option value="Asia/Bangkok">Asia/Bangkok</option>
+                        <option value="Asia/Jakarta">Asia/Jakarta</option>
+                        <option value="Asia/Kuala_Lumpur">Asia/Kuala_Lumpur</option>
                         <option value="Asia/Singapore">Asia/Singapore</option>
+                        <option value="Asia/Manila">Asia/Manila</option>
+                        <option value="Asia/Shanghai">Asia/Shanghai</option>
+                        <option value="Asia/Hong_Kong">Asia/Hong_Kong</option>
+                        <option value="Asia/Seoul">Asia/Seoul</option>
+                        <option value="Asia/Tokyo">Asia/Tokyo</option>
                         <option value="Australia/Sydney">Australia/Sydney</option>
+                        <option value="Australia/Melbourne">Australia/Melbourne</option>
+                        <option value="Pacific/Auckland">Pacific/Auckland</option>
                     </select>
                     @error('timezone') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>

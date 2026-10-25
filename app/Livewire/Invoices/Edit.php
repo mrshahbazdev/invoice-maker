@@ -117,14 +117,28 @@ class Edit extends Component
  public function currency_symbol()
  {
  return match (strtoupper($this->currency)) {
- 'EUR' => '€',
- 'GBP' => '£',
- 'JPY' => '¥',
- 'INR' => '₹',
- 'PKR' => 'Rs',
- 'CAD', 'AUD', 'USD' => '$',
- 'AED' => 'د.إ',
- default => $this->currency . ' ',
+            'EUR' => '€',
+            'GBP' => '£',
+            'JPY', 'CNY' => '¥',
+            'INR' => '₹',
+            'PKR' => 'Rs',
+            'CAD', 'AUD', 'USD', 'NZD', 'SGD', 'HKD', 'MXN' => '$',
+            'AED' => 'د.إ',
+            'CHF' => 'CHF ',
+            'SEK', 'NOK', 'DKK' => 'kr ',
+            'BRL' => 'R$ ',
+            'ZAR' => 'R ',
+            'THB' => '฿ ',
+            'MYR' => 'RM ',
+            'IDR' => 'Rp ',
+            'PHP' => '₱ ',
+            'KRW' => '₩ ',
+            'TRY' => '₺ ',
+            'PLN' => 'zł ',
+            'CZK' => 'Kč ',
+            'ILS' => '₪ ',
+            'VND' => '₫ ',
+             default => $this->currency . ' ',
  };
  }
 

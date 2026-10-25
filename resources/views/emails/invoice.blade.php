@@ -73,7 +73,7 @@
  this email.</p>
 
  <div class="amount-box">
- <p style="margin:0;"><strong>Amount Due:</strong> ${{ number_format($amountDue, 2) }}</p>
+ <p style="margin:0;"><strong>Amount Due:</strong> {{ $currencySymbol }}{{ number_format($amountDue, 2) }}</p>
  <p style="margin:0; margin-top: 5px;"><strong>Due Date:</strong> {{ $dueDate }}</p>
  </div>
 

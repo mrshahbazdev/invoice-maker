@@ -55,6 +55,7 @@ class InvoiceMail extends Mailable
                 'businessName' => $this->invoice->business->name,
                 'clientName' => $this->invoice->client->name,
                 'amountDue' => $this->invoice->amount_due,
+                'currencySymbol' => $this->invoice->currency_symbol,
                 'dueDate' => $this->invoice->due_date->format('M d, Y'),
                 'publicLink' => \Illuminate\Support\Facades\URL::signedRoute('invoices.public.show', ['invoice' => $this->invoice->id]),
                 'customBody' => $this->customBody,

@@ -60,6 +60,8 @@ Route::get('/', function () {
 // Imprint / Legal
 Route::view('/imprint', 'imprint')->name('imprint');
 Route::view('/impressum', 'imprint')->name('impressum');
+Route::view('/privacy', 'privacy')->name('privacy');
+Route::view('/terms', 'terms')->name('terms');
 
 // Public Blog Routes
 Route::get('/blog', \App\Livewire\Blog\Index::class)->name('public.blog.index');
