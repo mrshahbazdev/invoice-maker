@@ -69,6 +69,22 @@ class User extends Authenticatable
         return $this->hasOne(Business::class);
     }
 
+    /**
+     * Resolve the user's current business.
+     *
+     * Mirrors the resolution used by Api\DashboardController and
+     * Api\InvoiceController (which carry their own private
+     * resolveBusiness()): the web app uses ->business everywhere, so
+     * it takes precedence, and ownedBusiness is the fallback for an
+     * owner whose business_id is not set. Api\ClientController,
+     * Api\ProductController and Api\BusinessController call this
+     * method; it previously did not exist, so those endpoints 500'd.
+     */
+    public function currentBusiness()
+    {
+        return $this->business ?? $this->ownedBusiness;
+    }
+
     public function isOwner(): bool
     {
         return $this->role === self::ROLE_OWNER;
