@@ -9,69 +9,96 @@
     </title>
     @vite(['resources/css/app.css'])
     <style>
-        /* Public-page chrome in the dark navy + orange design system.
-           The invoice sheet itself stays white on purpose: it is the
-           client document and must print exactly as shown. Only the
-           surrounding chrome (page bg, top bar, discussion) goes dark. */
-        body.pub-dark { background: #0b1220; }
-        .pub-topbar { background: #0b1220; border-bottom: 1px solid rgba(255,255,255,.1); }
-        .pub-text { color: #f1f5f9; }
-        .pub-dim { color: #cbd5e1; }
-        .pub-pill { background: rgba(255,255,255,.1); color: #e5e7eb; }
-        .pub-btn-ghost { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.2); color: #fff; }
-        .pub-btn-ghost:hover { background: rgba(255,255,255,.1); }
-        .pub-discussion { background: #111827; border: 1px solid rgba(255,255,255,.1); }
-        .pub-bubble { background: rgba(255,255,255,.05); }
-        /* A4 aspect ratio wrapper for web preview */
+        /* Premium public invoice preview.
+           Light, airy document presentation: soft gray page, white top bar,
+           white sheet with layered shadow. The sheet stays white on purpose:
+           it is the client document and must print exactly as shown. */
+        body.pv-page { background: #f3f4f6; }
+        .pv-topbar { background: #ffffff; border-bottom: 1px solid #e5e7eb; }
+        .pv-ink { color: #0f172a; }
+        .pv-muted { color: #64748b; }
+        .pv-pill { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
+        .pv-btn-ghost { background: #ffffff; border: 1px solid #d1d5db; color: #0f172a; }
+        .pv-btn-ghost:hover { background: #f9fafb; border-color: #9ca3af; }
+        .pv-discussion { background: #ffffff; border: 1px solid #e5e7eb; }
+        .pv-bubble { background: #f3f4f6; }
+        /* Premium sheet */
         .invoice-preview-wrapper {
             width: 100%;
-            max-width: 21cm;
-            /* A4 width */
+            max-width: 21cm; /* A4 width */
             margin: 0 auto;
             background: white;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 16px 40px rgba(16, 24, 40, 0.08);
+            overflow: hidden;
         }
-
         .invoice-preview-inner {
-            padding: 2cm;
-            min-height: 29.7cm;
-            /* A4 height */
+            padding: 2.5rem 2.5rem 2rem;
+        }
+        .pv-accent-bar { height: 4px; }
+        .pv-eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+        .pv-doc-title {
+            font-size: 40px;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            color: #0f172a;
+        }
+        .pv-meta { border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; background: #ffffff; }
+        .pv-meta-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; border-bottom: 1px solid #f1f5f9; }
+        .pv-meta-row:last-of-type { border-bottom: none; }
+        .pv-meta-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: #94a3b8; }
+        .pv-meta-value { font-size: 14px; font-weight: 600; color: #0f172a; }
+        .pv-balance-band { background: #0f172a; color: #ffffff; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; }
+        .pv-balance-band .pv-meta-label { color: #94a3b8; }
+        .pv-balance-amount { font-size: 24px; font-weight: 800; color: #ffffff; font-variant-numeric: tabular-nums; }
+        .pv-billto { border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; background: #ffffff; }
+        .pv-items thead th { background: #0f172a; color: #ffffff; }
+        .pv-items td, .pv-items th { font-variant-numeric: tabular-nums; }
+        .pv-items tbody tr { border-bottom: 1px solid #f1f5f9; }
+        .pv-items tbody tr:last-child { border-bottom: none; }
+        .pv-totals { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; }
+        .pv-totals-band { background: #0f172a; border-radius: 0 0 12px 12px; margin: 16px -22px -20px; padding: 16px 22px; }
+        .pv-notes { background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px 22px; }
+
+        @media (max-width: 640px) {
+            .invoice-preview-inner { padding: 1.25rem; }
+            .pv-doc-title { font-size: 30px; }
+            .pv-balance-amount { font-size: 20px; }
         }
 
         @media print {
-            body {
-                background: white;
-            }
-            body.pub-dark {
-                background: white !important;
-            }
-
-            .no-print {
-                display: none !important;
-            }
-
+            body { background: white; }
+            body.pv-page { background: white !important; }
+            .no-print { display: none !important; }
             .invoice-preview-wrapper {
                 box-shadow: none;
+                border: none;
+                border-radius: 0;
                 max-width: none;
                 margin: 0;
             }
-
-            .invoice-preview-inner {
-                padding: 0;
-                min-height: auto;
-            }
+            .invoice-preview-inner { padding: 0; }
+            .pv-balance-band, .pv-totals-band { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
     </style>
 </head>
 
-<body class="pub-dark min-h-screen pb-12">
+<body class="pv-page min-h-screen pb-12">
     <!-- Top Action Bar -->
-    <div class="pub-topbar shadow-sm sticky top-0 z-50 no-print">
+    <div class="pv-topbar shadow-sm sticky top-0 z-50 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-wrap justify-between items-center gap-2 py-3">
                 <div class="flex items-center">
-                    <span class="text-xl font-bold pub-text">{{ $invoice->business->name }}</span>
-                    <span class="ml-4 px-3 py-1 rounded-full text-xs font-medium pub-pill">
+                    <span class="text-xl font-bold pv-ink">{{ $invoice->business->name }}</span>
+                    <span class="ml-4 px-3 py-1 rounded-full text-xs font-medium pv-pill">
                         {{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}: {{ $invoice->invoice_number }}
                     </span>
                     @if($invoice->status === 'paid')
@@ -81,7 +108,7 @@
                     @endif
                 </div>
                 <div class="flex flex-wrap items-center gap-4">
-                    <button onclick="window.print()" class="pub-dim hover:text-white flex items-center">
+                    <button onclick="window.print()" class="pv-muted hover:text-gray-900 flex items-center">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
@@ -90,7 +117,7 @@
                         {{ __('Print') }}
                     </button>
                     <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('client.register', ['invoice' => $invoice->id]) }}"
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pub-btn-ghost focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pv-btn-ghost focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
@@ -109,7 +136,7 @@
                         </a>
                     @endif
                     <a href="{{ \Illuminate\Support\Facades\URL::signedRoute('invoices.public.download', ['invoice' => $invoice->id]) }}"
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pub-btn-ghost focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pv-btn-ghost focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
@@ -123,7 +150,7 @@
                                 method="POST">
                                 @csrf
                                 <button type="submit"
-                                    class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pub-btn-ghost">
+                                    class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-md shadow-sm pv-btn-ghost">
                                     {{ __('Request Revision') }}
                                 </button>
                             </form>
@@ -221,9 +248,12 @@
                  @endphp
                 <div style="font-family: {{ $fontFamily }}; color: #333;" class="bg-card">
 
+                    <!-- Accent rule in the business brand color -->
+                    <div class="pv-accent-bar rounded-full mb-8" style="background-color: {{ $primaryColor }};"></div>
+
                     <!-- Header -->
                     <div
-                        class="flex flex-col md:flex-row justify-between items-start md:items-center pb-8 border-b border-gray-100 mb-10">
+                        class="flex flex-col md:flex-row justify-between items-start md:items-start pb-8 border-b border-gray-200 mb-8">
                         <div class="w-full md:w-1/2 mb-6 md:mb-0">
                             @if($invoice->business->logo)
                                 <img src="{{ Storage::url($invoice->business->logo) }}" alt="Logo"
@@ -262,45 +292,43 @@
                                             class="w-[72px] h-[72px]">
                                     </div>
                                 @endif
-                                <h1
-                                    class="text-4xl md:text-5xl font-black uppercase tracking-widest text-heading opacity-90">
+                                <h1 class="pv-doc-title uppercase">
                                     {{ $invoice->isEstimate() ? __('Estimate') : __('Invoice') }}
                                 </h1>
                             </div>
 
-                            <div
-                                class="bg-page rounded-2xl p-6 shadow-sm border border-gray-100 inline-block text-left w-full max-w-sm">
-                                <div class="flex justify-between items-center mb-3 pb-3 border-b border-gray-200">
-                                    <span class="text-xs uppercase tracking-wider font-semibold text-gray-500">
-                                        {{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}:
+                            <div class="pv-meta inline-block text-left w-full max-w-sm">
+                                <div class="pv-meta-row">
+                                    <span class="pv-meta-label">
+                                        {{ $invoice->isEstimate() ? __('Estimate #') : __('Invoice #') }}
                                     </span>
-                                    <span class="text-sm font-bold text-txmain">{{ $invoice->invoice_number }}</span>
+                                    <span class="pv-meta-value">{{ $invoice->invoice_number }}</span>
                                 </div>
-                                <div class="flex justify-between items-center mb-3">
-                                    <span
-                                        class="text-xs uppercase tracking-wider font-semibold text-gray-500">{{ __('Date') }}:</span>
-                                    <span
-                                        class="text-sm font-medium text-txmain">{{ $invoice->invoice_date->translatedFormat('M d, Y') }}</span>
+                                <div class="pv-meta-row">
+                                    <span class="pv-meta-label">{{ __('Date') }}</span>
+                                    <span class="pv-meta-value">{{ $invoice->invoice_date->translatedFormat('M d, Y') }}</span>
                                 </div>
-                                <div class="flex justify-between items-center mb-4">
-                                    <span
-                                        class="text-xs uppercase tracking-wider font-semibold text-gray-500">{{ $invoice->isEstimate() ? __('Expiry Date') : __('Due Date') }}:</span>
-                                    <span
-                                        class="text-sm font-medium text-txmain">{{ $invoice->due_date->translatedFormat('M d, Y') }}</span>
+                                <div class="pv-meta-row">
+                                    <span class="pv-meta-label">{{ $invoice->isEstimate() ? __('Expiry Date') : __('Due Date') }}</span>
+                                    <span class="pv-meta-value">{{ $invoice->due_date->translatedFormat('M d, Y') }}</span>
                                 </div>
-                                <div class="flex justify-between items-center pt-3 mt-1"
-                                    style="border-top: 1.5px dashed {{ $primaryColor }}40;">
-                                    <span class="text-xs uppercase tracking-wider font-bold"
-                                        style="color: {{ $primaryColor }};">{{ __('Balance Due') }}</span>
-                                    <span class="text-xl font-black"
-                                        style="color: {{ $primaryColor }};">{{ $invoice->currency_symbol }}{{ number_format($invoice->amount_due, 2) }}</span>
+                                <div class="pv-balance-band">
+                                    <span class="pv-meta-label">{{ __('Balance Due') }}</span>
+                                    <span class="pv-balance-amount">{{ $invoice->currency_symbol }}{{ number_format($invoice->amount_due, 2) }}</span>
                                 </div>
+                                @if($invoice->status === 'paid')
+                                    <div class="pv-meta-row" style="background: #f0fdf4;">
+                                        <span class="pv-meta-label" style="color: #15803d;">{{ __('Status') }}</span>
+                                        <span class="pv-meta-value" style="color: #15803d;">{{ __('Paid in full') }}</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
 
                     <!-- Billing To -->
-                    <div class="mb-12 p-6 bg-card rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="mb-10 pv-billto">
+                        <div class="pv-eyebrow mb-2">{{ __('Billed To') }}</div>
                         <div class="text-sm text-txmain leading-relaxed">
                             <strong class="text-base text-txmain block mb-1">{{ $invoice->client->name }}</strong>
                             @if($invoice->client->company_name)
@@ -323,10 +351,10 @@
                     </div>
 
                     <!-- Items Table (Desktop) -->
-                    <div class="mb-10 rounded-2xl overflow-hidden border border-gray-200 hidden md:block">
-                        <table class="w-full text-left border-collapse">
+                    <div class="mb-10 rounded-xl overflow-hidden border border-gray-200 hidden md:block">
+                        <table class="pv-items w-full text-left border-collapse">
                             <thead>
-                                <tr style="background-color: {{ $primaryColor }}; color: #ffffff;">
+                                <tr style="background-color: #0f172a; color: #ffffff;">
                                     <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider">
                                         {{ __('Description') }}
                                     </th>
@@ -431,8 +459,15 @@
                     <div class="flex flex-col lg:flex-row justify-between gap-12">
                         <!-- Notes / Payment Terms -->
                         <div class="w-full lg:w-3/5 order-2 lg:order-1">
-                            @if($invoice->notes || $invoice->payment_terms || ($template->payment_terms ?? false))
-                                <div class="bg-page/50 rounded-2xl p-6 border border-gray-100">
+                            @php
+                                // The generic "pay within 15 days" line is only meaningful while a balance is due.
+                                $displayTerms = $invoice->payment_terms ?: ($template->payment_terms ?? '');
+                                if ($invoice->amount_due <= 0) {
+                                    $displayTerms = trim(str_replace('Please pay within 15 days.', '', $displayTerms));
+                                }
+                            @endphp
+                            @if($invoice->notes || $displayTerms)
+                                <div class="pv-notes">
                                     @if($invoice->notes)
                                         <div class="mb-6">
                                             <h4 class="text-xs font-bold uppercase tracking-widest mb-2"
@@ -441,13 +476,13 @@
                                         </div>
                                     @endif
 
-                                    @if($invoice->payment_terms || ($template->payment_terms ?? false))
+                                    @if($displayTerms)
                                         <div>
                                             <h4 class="text-xs font-bold uppercase tracking-widest mb-2"
                                                 style="color: {{ $primaryColor }};">{{ __('Payment Terms & Instructions') }}
                                             </h4>
                                             <p class="text-sm text-txmain leading-relaxed whitespace-pre-line">
-                                                {!! e($invoice->payment_terms ?: $template->payment_terms) !!}
+                                                {!! e($displayTerms) !!}
                                             </p>
                                         </div>
                                     @endif
@@ -457,49 +492,49 @@
 
                         <!-- Totals Table -->
                         <div class="w-full lg:w-2/5 order-1 lg:order-2">
-                            <div class="bg-darkbox text-white rounded-2xl p-6 shadow-sm border border-gray-800 text-sm">
+                            <div class="pv-totals text-sm">
                                 <div class="flex justify-between py-2">
-                                    <span>{{ __('Subtotal') }}:</span>
+                                    <span class="text-gray-500">{{ __('Subtotal') }}:</span>
                                     <span
-                                        class="font-medium text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->subtotal, 2) }}</span>
+                                        class="font-semibold pv-ink">{{ $invoice->currency_symbol }}{{ number_format($invoice->subtotal, 2) }}</span>
                                 </div>
                                 @if($template->show_tax ?? true)
-                                    <div class="flex justify-between py-2 text-gray-300">
-                                        <span>{{ $invoice->business->tax_label ?? __('Total Tax') }}:</span>
+                                    <div class="flex justify-between py-2">
+                                        <span class="text-gray-500">{{ $invoice->business->tax_label ?? __('Total Tax') }}:</span>
                                         <span
-                                            class="font-medium text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->tax_total, 2) }}</span>
+                                            class="font-semibold pv-ink">{{ $invoice->currency_symbol }}{{ number_format($invoice->tax_total, 2) }}</span>
                                     </div>
                                 @endif
                                 @if(($template->show_discount ?? true) && $invoice->discount > 0)
-                                    <div class="flex justify-between py-2 text-gray-900">
-                                        <span>{{ __('Discount') }}:</span>
+                                    <div class="flex justify-between py-2">
+                                        <span class="pv-ink">{{ __('Discount') }}:</span>
                                         <span
-                                            class="font-medium" style="color: #7f1d1d;">-{{ $invoice->currency_symbol }}{{ number_format($invoice->discount, 2) }}</span>
+                                            class="font-semibold" style="color: #7f1d1d;">-{{ $invoice->currency_symbol }}{{ number_format($invoice->discount, 2) }}</span>
                                     </div>
                                 @endif
 
-                                <div class="my-4 border-t" style="border-color: rgba(255,255,255,.4);"></div>
+                                <div class="my-3 border-t border-gray-200"></div>
 
-                                <div class="flex justify-between items-center py-2">
-                                    <span class="text-base font-bold text-white">{{ __('Total') }}:</span>
+                                <div class="flex justify-between items-center py-1">
+                                    <span class="text-base font-bold pv-ink">{{ __('Total') }}:</span>
                                     <span
-                                        class="text-xl font-black text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
+                                        class="text-xl font-extrabold pv-ink">{{ $invoice->currency_symbol }}{{ number_format($invoice->grand_total, 2) }}</span>
                                 </div>
 
                                 @if($invoice->amount_paid > 0)
                                     <div
-                                        class="flex justify-between py-2 text-green-600 bg-green-50/50 -mx-6 px-6 mt-4 border-t border-green-100">
+                                        class="flex justify-between py-2 mt-3 text-green-700"
+                                        style="background: #f0fdf4; border-top: 1px solid #dcfce7; margin: 12px -22px 0; padding: 10px 22px;">
                                         <span class="font-medium">{{ __('Paid') }}:</span>
                                         <span
                                             class="font-bold">-{{ $invoice->currency_symbol }}{{ number_format($invoice->amount_paid, 2) }}</span>
                                     </div>
-                                    <div class="flex justify-between items-center py-4 -mx-6 px-6 rounded-b-2xl border-t-2"
-                                        style="background-color: {{ $invoice->amount_due <= 0 ? '#1f2937' : '#1f2937' }}; border-color: {{ $invoice->amount_due <= 0 ? '#22c55e' : '#ff8c00' }};">
-                                        <span class="text-base font-bold text-white">{{ __('Balance Due') }}:</span>
-                                        <span
-                                            class="text-xl font-black text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->amount_due, 2) }}</span>
-                                    </div>
                                 @endif
+                                <div class="pv-totals-band">
+                                    <span class="text-base font-bold text-white">{{ __('Balance Due') }}:</span>
+                                    <span
+                                        class="text-xl font-extrabold text-white">{{ $invoice->currency_symbol }}{{ number_format($invoice->amount_due, 2) }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -579,18 +614,18 @@
     </div>
 
     <!-- Discussion Section -->
-    <div class="max-w-2xl mx-auto mt-12 pub-discussion shadow-sm sm:rounded-xl p-6 no-print">
-        <h3 class="text-lg font-semibold text-white mb-6">{{ __('Discussion') }}</h3>
+    <div class="max-w-2xl mx-auto mt-12 pv-discussion shadow-sm sm:rounded-xl p-6 no-print">
+        <h3 class="text-lg font-semibold pv-ink mb-6">{{ __('Discussion') }}</h3>
 
         <div class="space-y-6 mb-8">
             @forelse(\App\Models\InvoiceComment::where('invoice_id', $invoice->id)->where('is_internal', false)->get() as $comment)
                 <div class="flex space-x-3">
-                    <div class="flex-1 pub-bubble rounded-lg px-4 py-3">
+                    <div class="flex-1 pv-bubble rounded-lg px-4 py-3">
                         <div class="flex items-center justify-between mb-1">
-                            <h4 class="text-sm font-bold text-white">{{ $comment->user->name ?? __('Client') }}</h4>
+                            <h4 class="text-sm font-bold pv-ink">{{ $comment->user->name ?? __('Client') }}</h4>
                             <span class="text-xs text-gray-400" title="{{ $invoice->business->timezoneOrFallback() }}">{{ $comment->created_at->diffForHumans() }} · {{ $invoice->business->formatDateTime($comment->created_at) }}</span>
                         </div>
-                        <p class="text-sm pub-dim">{{ $comment->comment }}</p>
+                        <p class="text-sm text-gray-600">{{ $comment->comment }}</p>
                     </div>
                 </div>
             @empty
@@ -618,9 +653,9 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pb-12 text-center no-print">
-        <p class="text-sm text-gray-400">
+        <p class="text-sm text-gray-500">
             {{ __('Generated by InvoiceMaker on') }} {{ now()->translatedFormat('M d, Y') }} | <a
-                href="https://allocore.de" class="text-gray-400 hover:text-white transition-colors">Allocore.de</a>
+                href="https://allocore.de" class="text-gray-500 hover:text-gray-900 transition-colors">Allocore.de</a>
         </p>
     </div>
 </body>
