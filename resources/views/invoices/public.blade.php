@@ -391,7 +391,7 @@
                                 @if($invoice->client->phone) <span class="block">{{ $invoice->client->phone }}</span>
                                 @endif
                                 @if($invoice->client->email) <a href="mailto:{{ $invoice->client->email }}"
-                                    class="text-gray-500 hover:text-txmain underline decoration-gray-300 underline-offset-2">{{ $invoice->client->email }}</a>
+                                    class="text-gray-500 hover:text-txmain">{{ $invoice->client->email }}</a>
                                 @endif
                             </div>
                             @if($invoice->client->tax_number)
