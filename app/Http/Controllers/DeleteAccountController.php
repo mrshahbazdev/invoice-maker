@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Mail;
  * address belongs to an account, so the page never reveals
  * whether an address is registered.
  */
-class DeleteAccountController extends Controller
+class DeleteAccountController
 {
     public function show()
     {
