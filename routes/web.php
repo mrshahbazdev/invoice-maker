@@ -63,6 +63,11 @@ Route::view('/impressum', 'imprint')->name('impressum');
 Route::view('/privacy', 'privacy')->name('privacy');
 Route::view('/terms', 'terms')->name('terms');
 
+// Public account-deletion request page (also the Google Play
+// Data safety "Delete account URL").
+Route::get('/delete-account', [\App\Http\Controllers\DeleteAccountController::class, 'show'])->name('account.delete-request');
+Route::post('/delete-account', [\App\Http\Controllers\DeleteAccountController::class, 'store'])->name('account.delete-request.store');
+
 // Public Blog Routes
 Route::get('/blog', \App\Livewire\Blog\Index::class)->name('public.blog.index');
 Route::get('/blog/{slug}', \App\Livewire\Blog\Show::class)->name('public.blog.show');

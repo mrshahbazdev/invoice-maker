@@ -28,7 +28,7 @@
                     </div>
                     <div>
                         <h2 class="text-xl font-bold mb-2">{{ __('Retention and security') }}</h2>
-                        <p>Your data is kept while your account is active. You can ask us to delete your account and associated data through the in-app support section; legal retention duties (for example tax records) may require us to keep invoice data for a defined period even after deletion. Access is protected by authentication, two-factor authentication options, and encrypted connections (HTTPS).</p>
+                        <p>Your data is kept while your account is active. You can ask us to delete your account and associated data on our <a href="{{ route('account.delete-request') }}" class="text-orange-600 hover:underline">delete-account page</a>; legal retention duties (for example tax records) may require us to keep invoice data for a defined period even after deletion. Access is protected by authentication, two-factor authentication options, and encrypted connections (HTTPS).</p>
                     </div>
                     <div>
                         <h2 class="text-xl font-bold mb-2">{{ __('International transfers') }}</h2>
